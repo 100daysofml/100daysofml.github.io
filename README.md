@@ -1,5 +1,3 @@
-### Hi there 👋
-
 # 100 Days of Machine Learning Challenge
 
 The **100 Days of Machine Learning Challenge** is a comprehensive learning journey aimed at individuals keen on exploring the world of machine learning. This challenge is ideal for a diverse range of learners, including:
