@@ -56,4 +56,4 @@ Connect with learners and experts in our community. Share your insights, partici
 - Discord: [Join us on Discord](https://discord.com/invite/BVhwgeqy)
 - Website: [https://www.100daysofml.com](https://www.100daysofml.com)
 
-We are excited to embark on this journey of exploration and discovery in machine learning with you. Let's learn and grow together! 🚀🎓
+We are excited to embark on this journey of exploration and discovery in machine learning with you. Let's learn and grow together!
