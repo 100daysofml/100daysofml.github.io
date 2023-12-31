@@ -1,0 +1,26 @@
+format: jb-book
+root: 00_Opening_page
+parts:
+  - caption: Preface
+    chapters:
+    - file: Week_0/00_Overview.md
+      title: "Welcome : Overview"
+      sections:
+      - file: Week_0/01_Errata.md
+        title: "Errata: Corrections History"
+
+  - caption: "Week 1 - Introduction to Python"
+    chapters:
+    - file: Week_1/Lesson_01.md
+      title: "Day 1 - Python Basics"
+    - file: Week_1/Lesson_02.md
+      title: "Day 2 - Python Data"
+    - file: Week_1/Lesson_03.md
+      title: "Day 3 - Control Structures in Python: Loops"
+    - file: Week_1/Lesson_04.md
+      title: "Day 4 - Control Structures in Python: Conditional Statements"
+    - file: Week_1/Lesson_05.md
+      title: "Day 5 - Functions and Modules"
+                 
+
+
