@@ -1,0 +1,775 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Day 5: Functions and Modules &#8212; My Jupyter Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_1_Introduction_to_Python/W1D5 - Functions and Modules';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Day 4: Control Structures - Conditionals" href="W1D4%20-%20Control%20Structures%2C%20Conditionals.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../00_Opening_page.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">My Jupyter Book</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../00_Opening_page.html">
+                    <no title>
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00%20_Welcome/00_Overview.html">Welcome : Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00%20_Welcome/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="W1D1%20-%20Python%20Basics.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="W1D2%20-%20Python%20Data.html">Day 2 - Python Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="W1D3%20-%20Control%20Structures%2C%20Loops.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="W1D4%20-%20Control%20Structures%2C%20Conditionals.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Day 5 - Functions and Modules</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_1_Introduction_to_Python/W1D5 - Functions and Modules.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Day 5: Functions and Modules</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-structure-of-a-function">Basic Structure of a Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-your-first-function">Writing Your First Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters-and-arguments">Parameters and Arguments</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding-on-args">Test Your Understanding on Args</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#return-values-and-return-statement">Return Values and <code class="docutils literal notranslate"><span class="pre">return</span></code> Statement</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding-on-return-values">Test Your Understanding on Return Values</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lesson-project-fizzbuzz-and-a-similar-challenge">Lesson Project: FizzBuzz and a Similar Challenge</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fizzbuzz-problem-statement">FizzBuzz Problem Statement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fizzbuzz-solution-in-python">FizzBuzz Solution in Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-lesson-project-temperature-analyzer">Alternative Lesson Project: Temperature Analyzer</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temperature-analyzer-problem-statement">Temperature Analyzer Problem Statement</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temperature-analyzer-solution-in-python">Temperature Analyzer Solution in Python</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#your-challenge-daily-step-counter">Your Challenge: Daily Step Counter</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#further-resources">Further Resources</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="day-5-functions-and-modules">
+<h1>Day 5: Functions and Modules<a class="headerlink" href="#day-5-functions-and-modules" title="Permalink to this heading">#</a></h1>
+<p>Functions are useful in two distinct scenarios: To repeat behavior without repeating an entire procedure, or to vary behavior based on the situation at hand. In programming, a function is a block of organized, reusable code used to perform a single, related action. They provide better modularity for your application and a high degree of code reusing.</p>
+<section id="basic-structure-of-a-function">
+<h2>Basic Structure of a Function<a class="headerlink" href="#basic-structure-of-a-function" title="Permalink to this heading">#</a></h2>
+<p>In Python, a function is defined using the <code class="docutils literal notranslate"><span class="pre">def</span></code> keyword, followed by a function name and parentheses <code class="docutils literal notranslate"><span class="pre">()</span></code>. The code block within every function starts with a colon <code class="docutils literal notranslate"><span class="pre">:</span></code> and is indented.</p>
+<p><em>Note about code blocks</em> - Keep your eyes peeled for <strong>blocks</strong> of code in Python. Whitespace is syntax: a code block shares the same level of indentation. Blocks always start with a line ending in a colon. When the indentation resumes its previous level, the block has ended.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">some_function</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Hello world!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><em>Parameters and Arguments</em>: Parameters are variables listed inside the parentheses in the function definition. Arguments are the values passed to these parameters. Arguments are specified after the function name, inside the parentheses.</p>
+<p><em>Return Values</em>: Functions can return values using the <code class="docutils literal notranslate"><span class="pre">return</span></code> statement. The return value can be any object, and a function can return multiple values. Function calls are expressions that evaluate to their return value.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">do_math</span><span class="p">():</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="mi">2</span>
+    
+<span class="n">x</span> <span class="o">=</span> <span class="n">do_math</span><span class="p">()</span> <span class="c1"># x takes the value of do_math()&#39;s return value, 4.</span>
+</pre></div>
+</div>
+</section>
+<section id="writing-your-first-function">
+<h2>Writing Your First Function<a class="headerlink" href="#writing-your-first-function" title="Permalink to this heading">#</a></h2>
+<p><em>Using <code class="docutils literal notranslate"><span class="pre">def</span></code> Keyword</em>: To create a function, use the <code class="docutils literal notranslate"><span class="pre">def</span></code> keyword, followed by a chosen function name and parentheses. Example: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">my_function():</span></code>. Empty parentheses indicate that the function takes no arguments.</p>
+<p><em>Function Naming Conventions</em>: Function names should be lowercase, with words separated by underscores as necessary to improve readability.</p>
+<p><em>Calling a Function</em>: To call a function, use the function name followed by parentheses. Example: <code class="docutils literal notranslate"><span class="pre">my_function()</span></code>. Arguments go inside the parentheses, and the function call’s arguments must match up with the definition.</p>
+<p>A function can contain all the same variable definitions, mathematical operations, conditional statements, and loops that you’re already familiar with. The only difference is that code written directly into your Python file or Jupyter notebook cell is executed immediately (“sequentially”); code inside a function is merely being defined. It won’t execute until the function is called.</p>
+</section>
+<section id="parameters-and-arguments">
+<h2>Parameters and Arguments<a class="headerlink" href="#parameters-and-arguments" title="Permalink to this heading">#</a></h2>
+<p><em>Understanding Local Variables</em>: Variables declared inside a function are called local variables. Their scope is limited to the function, meaning they can’t be accessed outside of it.</p>
+<p><em>Positional vs. Keyword Arguments</em>: Positional arguments are arguments that need to be included in the proper position or order. Keyword arguments are arguments accompanied by an identifier (e.g., <code class="docutils literal notranslate"><span class="pre">name='John'</span></code>) and can be listed in any order.</p>
+<p><em>Default Parameter Values</em>: The value provided to a keyword argument in the function’s definition is the <strong>default value</strong>, and it’s not mandatory to provide a value for that argument to call the function. The value can be overridden by whatever value is provided when the function is called, though.</p>
+<p><em>Using Keywords to Reorder Arguments</em>: With keyword arguments, the order of arguments can be shuffled, allowing more flexibility. Arguments passed in with no keyword have to match up with a position. Positional arguments can’t follow keyword arguments.</p>
+<p><em>Local vs. Global Variables</em>: Global variables are defined outside a function and can be accessed throughout the program, while local variables are confined within the function they are declared in.</p>
+<p><em>Variable Shadowing</em>: Don’t Do This. Avoid using the same name for local and global variables as it can lead to confusing “shadowing” effects, where the local variable “shadows” the global variable. The local variable will be used inside the function without modifying the global. This can be especially confusing for beginners, who may struggle with the same name being used for two separate variables in different scopes.</p>
+<p>Using the <code class="docutils literal notranslate"><span class="pre">global</span></code> keyword, you can explicitly name the global keyword, but this is generally regarded as a bad practice or anti-pattern. It’s not necessary to call methods on objects from your enclosing scope, just to assign them – see the examples below!</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="n">x</span> <span class="o">=</span> <span class="mi">42</span> <span class="c1"># global scope variable</span>
+
+<span class="k">def</span> <span class="nf">g</span><span class="p">():</span>
+  <span class="n">x</span> <span class="o">=</span> <span class="mi">50</span> <span class="c1"># shadowing; don&#39;t do this. You didn&#39;t change global &#39;x&#39;.</span>
+  
+<span class="k">def</span> <span class="nf">h</span><span class="p">():</span>
+  <span class="k">global</span> <span class="n">x</span>
+  <span class="n">x</span> <span class="o">+=</span> <span class="mi">1</span> <span class="c1"># modifies global variable &#39;x&#39;</span>
+
+<span class="n">stuff</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">def</span> <span class="nf">i</span><span class="p">():</span>
+  <span class="n">stuff</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;thing&quot;</span><span class="p">)</span> <span class="c1"># allowed. &#39;stuff&#39; will be found in the global scope that encloses this function.</span>
+</pre></div>
+</div>
+<section id="test-your-understanding-on-args">
+<h3>Test Your Understanding on Args<a class="headerlink" href="#test-your-understanding-on-args" title="Permalink to this heading">#</a></h3>
+<p>Consider this function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="k">def</span> <span class="nf">f</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">4</span><span class="p">):</span>
+  <span class="n">z</span> <span class="o">=</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">y</span>
+  <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;x = </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s2">, y = </span><span class="si">{</span><span class="n">y</span><span class="si">}</span><span class="s2">, z = </span><span class="si">{</span><span class="n">z</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+  <span class="k">return</span> <span class="n">z</span>
+</pre></div>
+</div>
+<p>Questions:</p>
+<ul class="simple">
+<li><p>What are the arguments?</p></li>
+<li><p>Which ones are required to call the function?</p></li>
+<li><p>What would the function print out if called with <code class="docutils literal notranslate"><span class="pre">f(6)</span></code>? How about <code class="docutils literal notranslate"><span class="pre">f(7,</span> <span class="pre">2)</span></code>? How about <code class="docutils literal notranslate"><span class="pre">f(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code>? How about <code class="docutils literal notranslate"><span class="pre">f(y=2,</span> <span class="pre">x=3)</span></code>?</p></li>
+</ul>
+<p>Answers:</p>
+<ul class="simple">
+<li><p>The arguments are <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">x</span></code> is mandatory, <code class="docutils literal notranslate"><span class="pre">y</span></code> is optional with a default value of 4.</p></li>
+<li><p>Function calls:</p></li>
+</ul>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">f(6)</span></code> prints <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">6,</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">4,</span> <span class="pre">z</span> <span class="pre">=</span> <span class="pre">16</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f(7,</span> <span class="pre">2)</span></code> prints <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">7,</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">2,</span> <span class="pre">z</span> <span class="pre">=</span> <span class="pre">16</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f(1,</span> <span class="pre">2,</span> <span class="pre">3)</span></code> causes a TypeError: you can’t call a function with more arguments than it has defined.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">f(y=2,</span> <span class="pre">x=3)</span></code> prints <code class="docutils literal notranslate"><span class="pre">x</span> <span class="pre">=</span> <span class="pre">3,</span> <span class="pre">y</span> <span class="pre">=</span> <span class="pre">2,</span> <span class="pre">z</span> <span class="pre">=</span> <span class="pre">8</span></code>. Note that the use of keywords has assigned the function’s values by name, not by position.</p></li>
+</ul>
+</section>
+</section>
+<section id="return-values-and-return-statement">
+<h2>Return Values and <code class="docutils literal notranslate"><span class="pre">return</span></code> Statement<a class="headerlink" href="#return-values-and-return-statement" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><em>How to Return Data from a Function</em>: To send back a result from a function to its caller, use the <code class="docutils literal notranslate"><span class="pre">return</span></code> statement.</p></li>
+<li><p><em>Multiple Return Values; Tuple Value Unpacking</em>: Functions in Python can return multiple values, usually in the form of a tuple, which can be unpacked into multiple variables.</p></li>
+<li><p><em>None: The Default Return Value</em>: If no return statement is used, or the return statement does not have an accompanying value, the function returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+<section id="test-your-understanding-on-return-values">
+<h3>Test Your Understanding on Return Values<a class="headerlink" href="#test-your-understanding-on-return-values" title="Permalink to this heading">#</a></h3>
+<p>Questions:</p>
+<ul class="simple">
+<li><p>asdf</p></li>
+<li><p>If we defined the function from the previous section and ran <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">f(2,</span> <span class="pre">4)</span></code>, what would <code class="docutils literal notranslate"><span class="pre">n</span></code>’s value be?</p></li>
+</ul>
+<p>Answers:</p>
+<ul class="simple">
+<li><p>qwer</p></li>
+<li><p>Since functions evaluate to their return value, <code class="docutils literal notranslate"><span class="pre">n</span></code> is assigned the value that <code class="docutils literal notranslate"><span class="pre">f</span></code> returns (8).</p></li>
+</ul>
+<p>xxxxxxxxx</p>
+</section>
+</section>
+<section id="lesson-project-fizzbuzz-and-a-similar-challenge">
+<h2>Lesson Project: FizzBuzz and a Similar Challenge<a class="headerlink" href="#lesson-project-fizzbuzz-and-a-similar-challenge" title="Permalink to this heading">#</a></h2>
+<section id="fizzbuzz-problem-statement">
+<h3>FizzBuzz Problem Statement<a class="headerlink" href="#fizzbuzz-problem-statement" title="Permalink to this heading">#</a></h3>
+<p>FizzBuzz is a classic programming task, often used in job interviews to assess basic programming skills. The challenge is as follows:</p>
+<ul class="simple">
+<li><p>Print numbers from 1 to 100.</p></li>
+<li><p>For multiples of 3, print “Fizz” instead of the number.</p></li>
+<li><p>For multiples of 5, print “Buzz” instead of the number.</p></li>
+<li><p>For numbers which are multiples of both 3 and 5, print “FizzBuzz”.</p></li>
+</ul>
+</section>
+<section id="fizzbuzz-solution-in-python">
+<h3>FizzBuzz Solution in Python<a class="headerlink" href="#fizzbuzz-solution-in-python" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FizzBuzz&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fizz&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Buzz&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This solution uses a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop to iterate through the numbers 1 to 100 and conditional statements (<code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">elif</span></code>, <code class="docutils literal notranslate"><span class="pre">else</span></code>) to determine what to print for each number.</p>
+</section>
+<section id="alternative-lesson-project-temperature-analyzer">
+<h3>Alternative Lesson Project: Temperature Analyzer<a class="headerlink" href="#alternative-lesson-project-temperature-analyzer" title="Permalink to this heading">#</a></h3>
+<section id="temperature-analyzer-problem-statement">
+<h4>Temperature Analyzer Problem Statement<a class="headerlink" href="#temperature-analyzer-problem-statement" title="Permalink to this heading">#</a></h4>
+<p>Create a program that analyzes temperature data and categorizes each temperature entry. The challenge is as follows:</p>
+<ul class="simple">
+<li><p>Iterate over a list of temperature readings (in Celsius).</p></li>
+<li><p>For each temperature:</p>
+<ul>
+<li><p>If it’s below 0, categorize it as “Freezing”.</p></li>
+<li><p>If it’s between 0 and 15 (inclusive), categorize it as “Cold”.</p></li>
+<li><p>If it’s between 16 and 25 (inclusive), categorize it as “Moderate”.</p></li>
+<li><p>If it’s above 25, categorize it as “Hot”.</p></li>
+</ul>
+</li>
+<li><p>Print the temperature and its category.</p></li>
+</ul>
+</section>
+<section id="temperature-analyzer-solution-in-python">
+<h4>Temperature Analyzer Solution in Python<a class="headerlink" href="#temperature-analyzer-solution-in-python" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temperatures</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">27</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="n">temperatures</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">temp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;Freezing&quot;</span>
+    <span class="k">elif</span> <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mi">15</span><span class="p">:</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;Cold&quot;</span>
+    <span class="k">elif</span> <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mi">25</span><span class="p">:</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;Moderate&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;Hot&quot;</span>
+    
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Temperature: </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">°C, Category: </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This solution uses a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop to iterate through a predefined list of temperatures and conditional statements (<code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">elif</span></code>, <code class="docutils literal notranslate"><span class="pre">else</span></code>) to determine the category for each temperature.</p>
+</section>
+<section id="your-challenge-daily-step-counter">
+<h4>Your Challenge: Daily Step Counter<a class="headerlink" href="#your-challenge-daily-step-counter" title="Permalink to this heading">#</a></h4>
+<p><strong>Problem Statement</strong>:
+Write a program that interprets a list of daily step counts. For each day’s step count:</p>
+<ul class="simple">
+<li><p>If the steps are less than 5,000, categorize as “Sedentary”.</p></li>
+<li><p>If the steps are between 5,000 and 7,499 (inclusive), categorize as “Lightly Active”.</p></li>
+<li><p>If the steps are between 7,500 and 9,999 (inclusive), categorize as “Moderately Active”.</p></li>
+<li><p>If the steps are 10,000 or more, categorize as “Very Active”.</p></li>
+<li><p>Print the day number and the corresponding activity category.</p></li>
+</ul>
+</section>
+<section id="further-resources">
+<h4>Further Resources<a class="headerlink" href="#further-resources" title="Permalink to this heading">#</a></h4>
+<hr class="docutils" />
+<p><strong>Lesson 5: Functions and Modules</strong></p>
+<ul class="simple">
+<li><p><strong>Advanced Function Concepts</strong></p>
+<ul>
+<li><p><em>Variable Number of Arguments (<code class="docutils literal notranslate"><span class="pre">*args</span></code> and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>)</em>: Use <code class="docutils literal notranslate"><span class="pre">*args</span></code> for a variable number of positional arguments and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> for a variable number of keyword arguments. This allows functions to handle an unspecified number of arguments.</p></li>
+<li><p><em>Call Stack: Calling Functions from Within Functions</em>: Understanding how functions can call other functions and how the call stack works, which is crucial for understanding function execution flow.</p></li>
+<li><p><em>Reading a Traceback</em>: Learning to read and interpret traceback errors to debug issues in function calls.</p></li>
+<li><p><em>Recursion</em>: Understanding recursion, a method where the solution to a problem depends on solutions to smaller instances of the same problem. This involves a function calling itself.</p></li>
+</ul>
+</li>
+<li><p><strong>Introduction to Python Modules</strong></p>
+<ul>
+<li><p><em>Definition and Importance of Modules</em>: Modules in Python are simply Python files with a <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension containing Python definitions and statements. Modules help in dividing the code into smaller parts and organizing it logically.</p></li>
+<li><p><em>Standard Library Modules</em>: Overview of Python’s standard library modules, which provide a range of functionality.</p></li>
+<li><p><em>Importing Modules using <code class="docutils literal notranslate"><span class="pre">import</span></code></em>: How to import modules into your Python script using the <code class="docutils literal notranslate"><span class="pre">import</span></code> statement.</p></li>
+<li><p><em>Accessing Functions from Modules</em>: Demonstrating how to access and use functions defined in imported modules.</p></li>
+</ul>
+</li>
+<li><p><strong>Math Focus: Functions for Mathematical Formulas</strong></p>
+<ul>
+<li><p><em>Writing Functions for Basic Arithmetic Operations</em>: Creating functions for addition, subtraction, multiplication, and division.</p></li>
+<li><p><em>Functions for Common Mathematical Formulas (Area, Perimeter, Volume)</em>: Developing functions to calculate the area, perimeter, and volume of various shapes.</p></li>
+<li><p><em>Utilizing Math Module for Advanced Mathematical Functions</em>: Exploring Python’s math module to perform more complex mathematical operations like trigonometric functions, exponential, square root, etc.</p></li>
+</ul>
+</li>
+<li><p><strong>Practical Exercises and Projects</strong></p>
+<ul>
+<li><p><em>Creating Custom Functions for Real-World Problems</em>: Practical exercises where students create functions to solve specific problems.</p></li>
+<li><p><em>Group Activity: Developing a Small Library of Mathematical Functions</em>: Working in groups to create a library of reusable mathematical functions.</p></li>
+<li><p><em>Homework: Implement a Function to Solve a Specific Mathematical Problem</em>: Assigning homework that involves writing a function to solve a mathematical or real-world problem, reinforcing the concepts learned.</p></li>
+</ul>
+</li>
+</ul>
+<hr class="docutils" />
+<p>Sure, let’s dive into a simple AI/ML example using NumPy, specifically demonstrating the matrix multiplication required in a linear regression calculation. We’ll compute the loss, which is a measure of how far our model’s predictions are from the actual outcomes.</p>
+<p>Here’s the step-by-step process:</p>
+<ol class="arabic">
+<li><p><strong>Import NumPy Library</strong></p>
+<ul class="simple">
+<li><p>First, we import NumPy: <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">numpy</span> <span class="pre">as</span> <span class="pre">np</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Define Coefficients and Data</strong></p>
+<ul>
+<li><p>Suppose we have a linear model with coefficients <code class="docutils literal notranslate"><span class="pre">a</span></code> and <code class="docutils literal notranslate"><span class="pre">b</span></code> (for a simple linear equation <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">ax</span> <span class="pre">+</span> <span class="pre">b</span></code>). We’ll represent these as a NumPy array:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">coefficients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+</pre></div>
+</div>
+</li>
+<li><p>Let’s also define our data points. In a simple linear regression, we often have input (<code class="docutils literal notranslate"><span class="pre">x</span></code>) and output (<code class="docutils literal notranslate"><span class="pre">y</span></code>) pairs. For this example, <code class="docutils literal notranslate"><span class="pre">x</span></code> and <code class="docutils literal notranslate"><span class="pre">y</span></code> are both arrays. Our <code class="docutils literal notranslate"><span class="pre">x</span></code> data needs an additional column of ones to account for the intercept <code class="docutils literal notranslate"><span class="pre">b</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="n">x1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="n">x2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="o">...</span><span class="p">,</span> <span class="p">[</span><span class="n">xn</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>
+<span class="n">y_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">y1</span><span class="p">,</span> <span class="n">y2</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">yn</span><span class="p">])</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Perform Matrix Multiplication for Prediction</strong></p>
+<ul>
+<li><p>We compute the predicted <code class="docutils literal notranslate"><span class="pre">y</span></code> values (<code class="docutils literal notranslate"><span class="pre">y_pred</span></code>) using matrix multiplication between our data (<code class="docutils literal notranslate"><span class="pre">x_data</span></code>) and coefficients. In NumPy, matrix multiplication is done using the <code class="docutils literal notranslate"><span class="pre">&#64;</span></code> operator or <code class="docutils literal notranslate"><span class="pre">np.dot()</span></code> function:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">y_pred</span> <span class="o">=</span> <span class="n">x_data</span> <span class="o">@</span> <span class="n">coefficients</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+<li><p><strong>Compute the Loss</strong></p>
+<ul>
+<li><p>The loss function quantifies how far our predictions are from the actual values. A common loss function in linear regression is Mean Squared Error (MSE), calculated as the average of the squares of the differences between actual (<code class="docutils literal notranslate"><span class="pre">y_data</span></code>) and predicted (<code class="docutils literal notranslate"><span class="pre">y_pred</span></code>) values:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">y_data</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</li>
+</ol>
+<p>Here’s the entire process in a cohesive code snippet:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Example coefficients for the linear model (y = ax + b)</span>
+<span class="n">a</span><span class="p">,</span> <span class="n">b</span> <span class="o">=</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span>  <span class="c1"># Replace with actual values</span>
+<span class="n">coefficients</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">])</span>
+
+<span class="c1"># Example data (Replace with actual data points)</span>
+<span class="n">x_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">]])</span>  <span class="c1"># Add a column of ones for the intercept</span>
+<span class="n">y_data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>  <span class="c1"># Actual y values</span>
+
+<span class="c1"># Predict y using matrix multiplication</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">x_data</span> <span class="o">@</span> <span class="n">coefficients</span>
+
+<span class="c1"># Calculate the loss (Mean Squared Error)</span>
+<span class="n">loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">((</span><span class="n">y_data</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Predicted y:&quot;</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loss (MSE):&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In this example, <code class="docutils literal notranslate"><span class="pre">x_data</span></code> and <code class="docutils literal notranslate"><span class="pre">coefficients</span></code> are multiplied, resulting in predictions <code class="docutils literal notranslate"><span class="pre">y_pred</span></code>. The loss is then calculated as the MSE, which gives us a quantitative measure of the model’s accuracy. This process is fundamental in linear regression and many other machine learning algorithms.</p>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_1_Introduction_to_Python"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="W1D4%20-%20Control%20Structures%2C%20Conditionals.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Day 4: Control Structures - Conditionals</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-structure-of-a-function">Basic Structure of a Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#writing-your-first-function">Writing Your First Function</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#parameters-and-arguments">Parameters and Arguments</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding-on-args">Test Your Understanding on Args</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#return-values-and-return-statement">Return Values and <code class="docutils literal notranslate"><span class="pre">return</span></code> Statement</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding-on-return-values">Test Your Understanding on Return Values</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lesson-project-fizzbuzz-and-a-similar-challenge">Lesson Project: FizzBuzz and a Similar Challenge</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fizzbuzz-problem-statement">FizzBuzz Problem Statement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fizzbuzz-solution-in-python">FizzBuzz Solution in Python</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-lesson-project-temperature-analyzer">Alternative Lesson Project: Temperature Analyzer</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temperature-analyzer-problem-statement">Temperature Analyzer Problem Statement</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temperature-analyzer-solution-in-python">Temperature Analyzer Solution in Python</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#your-challenge-daily-step-counter">Your Challenge: Daily Step Counter</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#further-resources">Further Resources</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

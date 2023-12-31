@@ -1,0 +1,725 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Day 3: Control Structures - Loops &#8212; My Jupyter Book</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_1_Introduction_to_Python/W1D3 - Control Structures, Loops';</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Day 4: Control Structures - Conditionals" href="W1D4%20-%20Control%20Structures%2C%20Conditionals.html" />
+    <link rel="prev" title="Day 2: Python Data Types" href="W1D2%20-%20Python%20Data.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../00_Opening_page.html">
+  
+  
+  
+  
+  
+  
+    <p class="title logo__title">My Jupyter Book</p>
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../00_Opening_page.html">
+                    <no title>
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00%20_Welcome/00_Overview.html">Welcome : Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00%20_Welcome/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="W1D1%20-%20Python%20Basics.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="W1D2%20-%20Python%20Data.html">Day 2 - Python Data</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="W1D4%20-%20Control%20Structures%2C%20Conditionals.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="W1D5%20-%20Functions%20and%20Modules.html">Day 5 - Functions and Modules</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_1_Introduction_to_Python/W1D3 - Control Structures, Loops.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Day 3: Control Structures - Loops</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-loop">Why Loop?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#collection-data-types">Collection Data Types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-while-loop">The <code class="docutils literal notranslate"><span class="pre">while</span></code> Loop</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-for-loop">The <code class="docutils literal notranslate"><span class="pre">for</span></code> Loop</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#range-objects">Range Objects</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-break-continue-and-the-else-clause-in-loops">Understanding “break”, “continue”, and the “else” Clause in Loops</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-break-statement">The <code class="docutils literal notranslate"><span class="pre">break</span></code> Statement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-continue-statement">The <code class="docutils literal notranslate"><span class="pre">continue</span></code> Statement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-else-clause-of-a-for-loop">The <code class="docutils literal notranslate"><span class="pre">else</span></code> Clause of a <code class="docutils literal notranslate"><span class="pre">for</span></code> Loop</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-combining-arithmetic-boolean-logic-and-loops">Project: Combining Arithmetic, Boolean Logic, and Loops</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-program-1-prime-number-checker">Example Program 1: Prime Number Checker</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-program-2-basic-arithmetic-quiz">Example Program 2: Basic Arithmetic Quiz</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#solution">Solution:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#your-task">Your Task:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-resources">Further Resources</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="day-3-control-structures-loops">
+<h1>Day 3: Control Structures - Loops<a class="headerlink" href="#day-3-control-structures-loops" title="Permalink to this heading">#</a></h1>
+<p>Loops are fundamental structures in programming that allow us to execute a block of code repeatedly, under certain conditions. They are essential for automating repetitive tasks, processing collections of data, and building the backbone of algorithms. Understanding loops and how to control them is crucial for writing efficient and effective code.</p>
+<section id="why-loop">
+<h2>Why Loop?<a class="headerlink" href="#why-loop" title="Permalink to this heading">#</a></h2>
+<p>Loops are necessary for efficient programming as they enable us to avoid repetitive code, making our scripts shorter and more readable. They are particularly valuable when dealing with large datasets or when a task needs to be repeated multiple times under certain conditions. Effective use of loops leads to cleaner, more organized, and more maintainable code.</p>
+</section>
+<section id="collection-data-types">
+<h2>Collection Data Types<a class="headerlink" href="#collection-data-types" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p><strong>List Type</strong>: In Python, a list is an ordered collection of items which can be of varied types. Lists are mutable, meaning their elements can be changed after they are created.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="s2">&quot;Python&quot;</span><span class="p">,</span> <span class="kc">True</span><span class="p">]</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Dictionary Type</strong>: A dictionary in Python is an unordered collection of data in a key:value pair form. It’s an efficient way to store and retrieve data based on a key.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">my_dict</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">,</span> <span class="s2">&quot;age&quot;</span><span class="p">:</span> <span class="mi">25</span><span class="p">,</span> <span class="s2">&quot;language&quot;</span><span class="p">:</span> <span class="s2">&quot;Python&quot;</span><span class="p">}</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="the-while-loop">
+<h2>The <code class="docutils literal notranslate"><span class="pre">while</span></code> Loop<a class="headerlink" href="#the-while-loop" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">while</span></code> loop in Python executes a block of code as long as a specified condition is true. It’s useful when the number of iterations is not known beforehand.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">count</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="k">while</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="mi">5</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
+    <span class="n">count</span> <span class="o">+=</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Warning About Infinite Loops</strong>: Be cautious with <code class="docutils literal notranslate"><span class="pre">while</span></code> loops, as they can lead to infinite loops if the condition never becomes false. Always ensure the loop has a clear end point.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Warning: This is an example of an infinite loop</span>
+<span class="c1"># while True:</span>
+<span class="c1">#    print(&quot;Infinite loop&quot;)</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Difficulty with Dictionaries</strong>: Iterating over dictionaries with <code class="docutils literal notranslate"><span class="pre">while</span></code> loops is less straightforward because dictionaries are not inherently ordered, and the loop requires external manipulation of the keys or values.</p></li>
+</ul>
+</section>
+<section id="the-for-loop">
+<h2>The <code class="docutils literal notranslate"><span class="pre">for</span></code> Loop<a class="headerlink" href="#the-for-loop" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p>The <code class="docutils literal notranslate"><span class="pre">for</span></code> loop is used for iterating over a sequence, such as a list, tuple, dictionary, or string. It’s more concise and preferable when the number of iterations is known or defined by the collection.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">my_list</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Iterating Through a List</strong>: Looping through a list is straightforward as it maintains order.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">element</span> <span class="ow">in</span> <span class="n">my_list</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">element</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Iterating Through a Dictionary</strong>: Iterating through a dictionary can be done over keys, values, or key-value pairs.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">key</span><span class="p">,</span> <span class="n">value</span> <span class="ow">in</span> <span class="n">my_dict</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">key</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">value</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Preferred Method</strong>: <code class="docutils literal notranslate"><span class="pre">for</span></code> loops are often preferred over <code class="docutils literal notranslate"><span class="pre">while</span></code> loops because they are less prone to errors like infinite loops and are generally more readable, especially when iterating over objects.</p></li>
+</ul>
+<section id="range-objects">
+<h3>Range Objects<a class="headerlink" href="#range-objects" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p>The Python <code class="docutils literal notranslate"><span class="pre">range</span></code> object generates a sequence of numbers. It is often used in <code class="docutils literal notranslate"><span class="pre">for</span></code> loops to specify the number of iterations. The <code class="docutils literal notranslate"><span class="pre">range</span></code> function can take one, two, or three arguments: start, stop, and step.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="understanding-break-continue-and-the-else-clause-in-loops">
+<h2>Understanding “break”, “continue”, and the “else” Clause in Loops<a class="headerlink" href="#understanding-break-continue-and-the-else-clause-in-loops" title="Permalink to this heading">#</a></h2>
+<p>Loops in Python become even more powerful and flexible when combined with <code class="docutils literal notranslate"><span class="pre">break</span></code>, <code class="docutils literal notranslate"><span class="pre">continue</span></code>, and the <code class="docutils literal notranslate"><span class="pre">else</span></code> clause. These control statements allow for more nuanced and controlled execution of loops.</p>
+<section id="the-break-statement">
+<h3>The <code class="docutils literal notranslate"><span class="pre">break</span></code> Statement<a class="headerlink" href="#the-break-statement" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p><strong>Purpose</strong>: The <code class="docutils literal notranslate"><span class="pre">break</span></code> statement is used to exit a loop prematurely, regardless of the iteration condition.</p></li>
+<li><p><strong>Usage in <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">while</span></code> Loops</strong>:</p>
+<ul class="simple">
+<li><p>In a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop, <code class="docutils literal notranslate"><span class="pre">break</span></code> can be used to exit the loop if a certain condition is met.</p></li>
+<li><p>In a <code class="docutils literal notranslate"><span class="pre">while</span></code> loop, it can serve as an exit point that’s more complex than the loop’s condition itself.</p></li>
+</ul>
+</li>
+<li><p><strong>Example</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">number</span> <span class="o">==</span> <span class="mi">5</span><span class="p">:</span>
+        <span class="k">break</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<span class="c1"># This will print numbers 1 through 4 and then exit the loop.</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="the-continue-statement">
+<h3>The <code class="docutils literal notranslate"><span class="pre">continue</span></code> Statement<a class="headerlink" href="#the-continue-statement" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p><strong>Purpose</strong>: The <code class="docutils literal notranslate"><span class="pre">continue</span></code> statement skips the current iteration and moves onto the next iteration of the loop.</p></li>
+<li><p><strong>Usage in <code class="docutils literal notranslate"><span class="pre">for</span></code> and <code class="docutils literal notranslate"><span class="pre">while</span></code> Loops</strong>:</p>
+<ul class="simple">
+<li><p>In both types of loops, <code class="docutils literal notranslate"><span class="pre">continue</span></code> can be used to bypass parts of the loop body for certain iterations.</p></li>
+</ul>
+</li>
+<li><p><strong>Example</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">number</span> <span class="o">%</span> <span class="mi">2</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="k">continue</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<span class="c1"># This will print only odd numbers between 1 and 9.</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+<section id="the-else-clause-of-a-for-loop">
+<h3>The <code class="docutils literal notranslate"><span class="pre">else</span></code> Clause of a <code class="docutils literal notranslate"><span class="pre">for</span></code> Loop<a class="headerlink" href="#the-else-clause-of-a-for-loop" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p><strong>Purpose</strong>: The <code class="docutils literal notranslate"><span class="pre">else</span></code> clause in a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop executes after the loop finishes its iterations, but only if the loop was not terminated by a <code class="docutils literal notranslate"><span class="pre">break</span></code>.</p></li>
+<li><p><strong>Usage</strong>:</p>
+<ul class="simple">
+<li><p>This is particularly useful when you are searching for an item in a collection and want to execute some code if the item was not found.</p></li>
+</ul>
+</li>
+<li><p><strong>Example</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">number</span> <span class="o">==</span> <span class="mi">6</span><span class="p">:</span>
+        <span class="k">break</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Number 6 not found in range.&quot;</span><span class="p">)</span>
+<span class="c1"># The else clause will execute here, as the break was not triggered.</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</section>
+</section>
+<section id="project-combining-arithmetic-boolean-logic-and-loops">
+<h2>Project: Combining Arithmetic, Boolean Logic, and Loops<a class="headerlink" href="#project-combining-arithmetic-boolean-logic-and-loops" title="Permalink to this heading">#</a></h2>
+<p>Work through these programs. Convince yourself you understand them and how they work. Think about the role that the loops play and how you might employ a different type of loop to accomplish the same task.</p>
+<section id="example-program-1-prime-number-checker">
+<h3>Example Program 1: Prime Number Checker<a class="headerlink" href="#example-program-1-prime-number-checker" title="Permalink to this heading">#</a></h3>
+<p><strong>Problem Statement</strong>:
+Create a program that checks whether a number is a prime number. A prime number is a natural number greater than 1 that has no positive divisors other than 1 and itself.</p>
+<p><strong>Solution</strong>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">is_prime</span><span class="p">(</span><span class="n">number</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">number</span> <span class="o">&lt;=</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">number</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">number</span> <span class="o">%</span> <span class="n">i</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">return</span> <span class="kc">True</span>
+
+<span class="c1"># Test the function</span>
+<span class="n">num</span> <span class="o">=</span> <span class="mi">29</span>
+<span class="k">if</span> <span class="n">is_prime</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num</span><span class="si">}</span><span class="s2"> is a prime number.&quot;</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">num</span><span class="si">}</span><span class="s2"> is not a prime number.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="example-program-2-basic-arithmetic-quiz">
+<h3>Example Program 2: Basic Arithmetic Quiz<a class="headerlink" href="#example-program-2-basic-arithmetic-quiz" title="Permalink to this heading">#</a></h3>
+<p><strong>Problem Statement</strong>:
+Create a simple arithmetic quiz program that asks the user to solve a series of basic math problems (addition, subtraction, multiplication). The program should:</p>
+<ul class="simple">
+<li><p>Present a new problem in each iteration of the loop.</p></li>
+<li><p>Ask the user for their answer.</p></li>
+<li><p>Use boolean logic to check if the answer is correct.</p></li>
+<li><p>Give immediate feedback (correct/incorrect) and provide the correct answer if incorrect.</p></li>
+<li><p>End the quiz after a certain number of questions.</p></li>
+</ul>
+<section id="solution">
+<h4>Solution:<a class="headerlink" href="#solution" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+
+<span class="c1"># Set the number of questions</span>
+<span class="n">num_questions</span> <span class="o">=</span> <span class="mi">5</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">num_questions</span><span class="p">):</span>
+    <span class="c1"># Generate two random numbers and a random operation</span>
+    <span class="n">num1</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">num2</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+    <span class="n">operation</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">choice</span><span class="p">([</span><span class="s1">&#39;+&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;*&#39;</span><span class="p">])</span>
+    <span class="n">correct_answer</span> <span class="o">=</span> <span class="mi">0</span>
+
+    <span class="c1"># Calculate the correct answer</span>
+    <span class="k">if</span> <span class="n">operation</span> <span class="o">==</span> <span class="s1">&#39;+&#39;</span><span class="p">:</span>
+        <span class="n">correct_answer</span> <span class="o">=</span> <span class="n">num1</span> <span class="o">+</span> <span class="n">num2</span>
+    <span class="k">elif</span> <span class="n">operation</span> <span class="o">==</span> <span class="s1">&#39;-&#39;</span><span class="p">:</span>
+        <span class="n">correct_answer</span> <span class="o">=</span> <span class="n">num1</span> <span class="o">-</span> <span class="n">num2</span>
+    <span class="k">elif</span> <span class="n">operation</span> <span class="o">==</span> <span class="s1">&#39;*&#39;</span><span class="p">:</span>
+        <span class="n">correct_answer</span> <span class="o">=</span> <span class="n">num1</span> <span class="o">*</span> <span class="n">num2</span>
+
+    <span class="c1"># Ask the user for their answer</span>
+    <span class="n">user_answer</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="nb">input</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Question </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s2">: What is </span><span class="si">{</span><span class="n">num1</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">operation</span><span class="si">}</span><span class="s2"> </span><span class="si">{</span><span class="n">num2</span><span class="si">}</span><span class="s2">? &quot;</span><span class="p">))</span>
+
+    <span class="c1"># Check the answer and give feedback</span>
+    <span class="k">if</span> <span class="n">user_answer</span> <span class="o">==</span> <span class="n">correct_answer</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Correct!&quot;</span><span class="p">)</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Incorrect. The correct answer was </span><span class="si">{</span><span class="n">correct_answer</span><span class="si">}</span><span class="s2">.&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="your-task">
+<h3>Your Task:<a class="headerlink" href="#your-task" title="Permalink to this heading">#</a></h3>
+<p>Your goal is to create a similar program that quizzes the user on simple arithmetic problems. Feel free to modify the range of numbers, types of operations, or the number of questions. This exercise will help reinforce your understanding of loops, basic arithmetic operations, and boolean logic in Python. Remember, the key is to write code that repeatedly presents questions and gives feedback based on the user’s input.</p>
+</section>
+</section>
+<section id="further-resources">
+<h2>Further Resources<a class="headerlink" href="#further-resources" title="Permalink to this heading">#</a></h2>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_1_Introduction_to_Python"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="W1D2%20-%20Python%20Data.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Day 2: Python Data Types</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="W1D4%20-%20Control%20Structures%2C%20Conditionals.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Day 4: Control Structures - Conditionals</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#why-loop">Why Loop?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#collection-data-types">Collection Data Types</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-while-loop">The <code class="docutils literal notranslate"><span class="pre">while</span></code> Loop</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#the-for-loop">The <code class="docutils literal notranslate"><span class="pre">for</span></code> Loop</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#range-objects">Range Objects</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-break-continue-and-the-else-clause-in-loops">Understanding “break”, “continue”, and the “else” Clause in Loops</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-break-statement">The <code class="docutils literal notranslate"><span class="pre">break</span></code> Statement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-continue-statement">The <code class="docutils literal notranslate"><span class="pre">continue</span></code> Statement</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-else-clause-of-a-for-loop">The <code class="docutils literal notranslate"><span class="pre">else</span></code> Clause of a <code class="docutils literal notranslate"><span class="pre">for</span></code> Loop</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#project-combining-arithmetic-boolean-logic-and-loops">Project: Combining Arithmetic, Boolean Logic, and Loops</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-program-1-prime-number-checker">Example Program 1: Prime Number Checker</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-program-2-basic-arithmetic-quiz">Example Program 2: Basic Arithmetic Quiz</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#solution">Solution:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#your-task">Your Task:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-resources">Further Resources</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By The Jupyter Book community
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2022.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
