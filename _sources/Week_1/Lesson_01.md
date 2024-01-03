@@ -11,6 +11,8 @@ In our 100 Days of Machine Learning challenge, Python will be our go-to programm
 
 For your coding environment, as long as you have a Google account, the best choice is likely Colab, accessible at [Google Colab](https://colab.research.google.com/). Colab is a free, cloud-based version of Jupyter Notebook. It allows you to write and execute Python code through your browser, without any setup required. Colab also provides free access to computing resources, including GPUs, which can be beneficial for some of the more computationally heavy machine learning tasks.
 
+**This notebook is available for you to follow along in Colab:** [Link to Colab notebook](https://colab.research.google.com/drive/1FOfXVclC2qMBrDKnP3rAg6DYYUqUYVrh?usp=sharing)
+
 Working locally is an option, but if you don't have a CPU, you probably want to get acquainted with Colab anyway for the later challenges.
 
 **Notebooks and Cells**
