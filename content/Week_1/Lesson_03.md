@@ -2,6 +2,8 @@
 
 Loops are fundamental structures in programming that allow us to execute a block of code repeatedly, under certain conditions. They are essential for automating repetitive tasks, processing collections of data, and building the backbone of algorithms. Understanding loops and how to control them is crucial for writing efficient and effective code.
 
+**This notebook is available for you to follow along in Colab:** [Link to Colab notebook](https://colab.research.google.com/drive/13h2TzSIfosqVcgljj7ps2zS7Bu8HH8O1?usp=sharing)
+
 ## Why Loop?
 
 Loops are necessary for efficient programming as they enable us to avoid repetitive code, making our scripts shorter and more readable. They are particularly valuable when dealing with large datasets or when a task needs to be repeated multiple times under certain conditions. Effective use of loops leads to cleaner, more organized, and more maintainable code.
