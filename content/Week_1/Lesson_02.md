@@ -2,9 +2,9 @@
 
 Welcome back to our journey through Python and its applications in machine learning! In our previous session, we laid the foundation by exploring Python's syntax, variables, and basic arithmetic operators. Today, we're going to delve deeper into Python's diverse world of data types, and we will also introduce logical and comparison operators. These elements are not only fundamental to programming in Python but are also crucial in performing calculations and making decisions in code - skills that are essential for data analysis and machine learning. By the end of this lesson, you'll have a stronger grasp of how to manipulate different types of data and how to apply logical reasoning in your programming.
 
-## More about Data Types
+**This notebook is available for you to follow along in Colab:** [Link to Colab notebook](https://colab.research.google.com/drive/1Nl3JQRaYy-P3grWSl2ER6mrEm36DOp4h?usp=sharing)
 
-**asdf?**
+## More about Data Types
 
 - **Boolean (`bool`)**: This data type is used to represent the truth values, True and False. It is often the result of comparisons or logical operations.
   
