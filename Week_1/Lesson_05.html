@@ -333,16 +333,10 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding-on-return-values">Test Your Understanding on Return Values</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lesson-project-fizzbuzz-and-a-similar-challenge">Lesson Project: FizzBuzz and a Similar Challenge</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fizzbuzz-problem-statement">FizzBuzz Problem Statement</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fizzbuzz-solution-in-python">FizzBuzz Solution in Python</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-lesson-project-temperature-analyzer">Alternative Lesson Project: Temperature Analyzer</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temperature-analyzer-problem-statement">Temperature Analyzer Problem Statement</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temperature-analyzer-solution-in-python">Temperature Analyzer Solution in Python</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#your-challenge-daily-step-counter">Your Challenge: Daily Step Counter</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#further-resources">Further Resources</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-new-functionality-fast-via-modules">Get New Functionality Fast Via Modules</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-syntax"><code class="docutils literal notranslate"><span class="pre">import</span></code> Syntax</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-library-highlights">Standard Library Highlights</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#every-ai-ml-developer-must-know-numpy">Every AI/ML Developer Must Know NumPy</a></li>
 </ul>
 </li>
 </ul>
@@ -449,131 +443,96 @@ document.write(`
 <h3>Test Your Understanding on Return Values<a class="headerlink" href="#test-your-understanding-on-return-values" title="Permalink to this heading">#</a></h3>
 <p>Questions:</p>
 <ul class="simple">
-<li><p>asdf</p></li>
 <li><p>If we defined the function from the previous section and ran <code class="docutils literal notranslate"><span class="pre">n</span> <span class="pre">=</span> <span class="pre">f(2,</span> <span class="pre">4)</span></code>, what would <code class="docutils literal notranslate"><span class="pre">n</span></code>’s value be?</p></li>
 </ul>
 <p>Answers:</p>
 <ul class="simple">
-<li><p>qwer</p></li>
 <li><p>Since functions evaluate to their return value, <code class="docutils literal notranslate"><span class="pre">n</span></code> is assigned the value that <code class="docutils literal notranslate"><span class="pre">f</span></code> returns (8).</p></li>
 </ul>
-<p>xxxxxxxxx</p>
 </section>
 </section>
-<section id="lesson-project-fizzbuzz-and-a-similar-challenge">
-<h2>Lesson Project: FizzBuzz and a Similar Challenge<a class="headerlink" href="#lesson-project-fizzbuzz-and-a-similar-challenge" title="Permalink to this heading">#</a></h2>
-<section id="fizzbuzz-problem-statement">
-<h3>FizzBuzz Problem Statement<a class="headerlink" href="#fizzbuzz-problem-statement" title="Permalink to this heading">#</a></h3>
-<p>FizzBuzz is a classic programming task, often used in job interviews to assess basic programming skills. The challenge is as follows:</p>
-<ul class="simple">
-<li><p>Print numbers from 1 to 100.</p></li>
-<li><p>For multiples of 3, print “Fizz” instead of the number.</p></li>
-<li><p>For multiples of 5, print “Buzz” instead of the number.</p></li>
-<li><p>For numbers which are multiples of both 3 and 5, print “FizzBuzz”.</p></li>
-</ul>
-</section>
-<section id="fizzbuzz-solution-in-python">
-<h3>FizzBuzz Solution in Python<a class="headerlink" href="#fizzbuzz-solution-in-python" title="Permalink to this heading">#</a></h3>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">101</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">and</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;FizzBuzz&quot;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">3</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Fizz&quot;</span><span class="p">)</span>
-    <span class="k">elif</span> <span class="n">i</span> <span class="o">%</span> <span class="mi">5</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Buzz&quot;</span><span class="p">)</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="n">i</span><span class="p">)</span>
+<section id="get-new-functionality-fast-via-modules">
+<h2>Get New Functionality Fast Via Modules<a class="headerlink" href="#get-new-functionality-fast-via-modules" title="Permalink to this heading">#</a></h2>
+<p><strong>Modules</strong> are a way to bring complex capabilities into your Python programs with the use of the <code class="docutils literal notranslate"><span class="pre">import</span></code> keyword. The Python standard library is sometimes described as “batteries included”, which includes functionality like: interacting with JSON data or CSV files, making web requests, mathematical functions, random numbers, interacting with dates and times, file compression, logging, cryptography, and the list goes on!</p>
+<p>Modules are also very important to the performance of Python programs. You may have heard that Python is a “slow language”. This is more or less true in many circumstances. However, when you import a popular data science or machine learning library like Pandas, Scikit, Keras, or PyTorch, the module itself is written in another language and has very few performance constraints. Modules written in C, C++, or Rust can run at the speed of highly efficient compiled languages, then we use Python as “glue code” to load these modules, provide them with data, and utilize their output.</p>
+<section id="import-syntax">
+<h3><code class="docutils literal notranslate"><span class="pre">import</span></code> Syntax<a class="headerlink" href="#import-syntax" title="Permalink to this heading">#</a></h3>
+<p>When you <code class="docutils literal notranslate"><span class="pre">import</span></code> something, that module will become available in your script’s namespace.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">math</span>
 </pre></div>
 </div>
-<p>This solution uses a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop to iterate through the numbers 1 to 100 and conditional statements (<code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">elif</span></code>, <code class="docutils literal notranslate"><span class="pre">else</span></code>) to determine what to print for each number.</p>
-</section>
-<section id="alternative-lesson-project-temperature-analyzer">
-<h3>Alternative Lesson Project: Temperature Analyzer<a class="headerlink" href="#alternative-lesson-project-temperature-analyzer" title="Permalink to this heading">#</a></h3>
-<section id="temperature-analyzer-problem-statement">
-<h4>Temperature Analyzer Problem Statement<a class="headerlink" href="#temperature-analyzer-problem-statement" title="Permalink to this heading">#</a></h4>
-<p>Create a program that analyzes temperature data and categorizes each temperature entry. The challenge is as follows:</p>
-<ul class="simple">
-<li><p>Iterate over a list of temperature readings (in Celsius).</p></li>
-<li><p>For each temperature:</p>
-<ul>
-<li><p>If it’s below 0, categorize it as “Freezing”.</p></li>
-<li><p>If it’s between 0 and 15 (inclusive), categorize it as “Cold”.</p></li>
-<li><p>If it’s between 16 and 25 (inclusive), categorize it as “Moderate”.</p></li>
-<li><p>If it’s above 25, categorize it as “Hot”.</p></li>
-</ul>
-</li>
-<li><p>Print the temperature and its category.</p></li>
-</ul>
-</section>
-<section id="temperature-analyzer-solution-in-python">
-<h4>Temperature Analyzer Solution in Python<a class="headerlink" href="#temperature-analyzer-solution-in-python" title="Permalink to this heading">#</a></h4>
-<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">temperatures</span> <span class="o">=</span> <span class="p">[</span><span class="mi">3</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">21</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">27</span><span class="p">]</span>
-
-<span class="k">for</span> <span class="n">temp</span> <span class="ow">in</span> <span class="n">temperatures</span><span class="p">:</span>
-    <span class="k">if</span> <span class="n">temp</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">:</span>
-        <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;Freezing&quot;</span>
-    <span class="k">elif</span> <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mi">15</span><span class="p">:</span>
-        <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;Cold&quot;</span>
-    <span class="k">elif</span> <span class="n">temp</span> <span class="o">&lt;=</span> <span class="mi">25</span><span class="p">:</span>
-        <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;Moderate&quot;</span>
-    <span class="k">else</span><span class="p">:</span>
-        <span class="n">category</span> <span class="o">=</span> <span class="s2">&quot;Hot&quot;</span>
-    
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Temperature: </span><span class="si">{</span><span class="n">temp</span><span class="si">}</span><span class="s2">°C, Category: </span><span class="si">{</span><span class="n">category</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<p>After importing, the module is an object that you can interact with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">math</span>
+<span class="go">&lt;module &#39;math&#39; (built-in)&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">type</span><span class="p">(</span><span class="n">math</span><span class="p">)</span>
+<span class="go">&lt;class &#39;module&#39;&gt;</span>
 </pre></div>
 </div>
-<p>This solution uses a <code class="docutils literal notranslate"><span class="pre">for</span></code> loop to iterate through a predefined list of temperatures and conditional statements (<code class="docutils literal notranslate"><span class="pre">if</span></code>, <code class="docutils literal notranslate"><span class="pre">elif</span></code>, <code class="docutils literal notranslate"><span class="pre">else</span></code>) to determine the category for each temperature.</p>
+<p>In fact, if you save any Python code in a <code class="docutils literal notranslate"><span class="pre">.py</span></code> file in the same directory as your notebook or additional files, you can import them as modules and access their contents. Just like using a function on any other object, you can use the dot operator (<code class="docutils literal notranslate"><span class="pre">.</span></code>) to access the contents of a module. Modules can contain any Python object.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">math</span><span class="o">.</span><span class="n">pi</span>
+<span class="go">3.141592653589793</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">math</span><span class="o">.</span><span class="n">pow</span>
+<span class="go">&lt;built-in function pow&gt;</span>
+</pre></div>
+</div>
+<p>The name of the module is not forced upon you, though. You can change the name of something at the time of import, or simply import all of the contents into your current namespace. The <code class="docutils literal notranslate"><span class="pre">import</span> <span class="pre">...</span> <span class="pre">as</span> <span class="pre">...</span></code> syntax allows you to import a module with a specific new name. Here’s one you’ll see frequently:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+<p>The module <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> contains a module <code class="docutils literal notranslate"><span class="pre">pyplot</span></code>, and typing <code class="docutils literal notranslate"><span class="pre">matplotlib.pyplot</span></code> dozens of times in your code would be exhausting. When importing <code class="docutils literal notranslate"><span class="pre">as</span></code>, the given name <code class="docutils literal notranslate"><span class="pre">plt</span></code> becomes an alias for the module.</p>
+<p>You can import specific parts of a module, leaving the rest behind:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="n">pi</span>
+</pre></div>
+</div>
+<p>This would solely create a variable <code class="docutils literal notranslate"><span class="pre">pi</span></code>, no dots required, sourced from the <code class="docutils literal notranslate"><span class="pre">math</span></code> module.</p>
+<p>Use this sparingly, but it’s possible to import all of the contents of a module without using a dot operator.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">math</span> <span class="kn">import</span> <span class="o">*</span>
+</pre></div>
+</div>
+<p>This would bring all of the contents into your current file; variables or functions like <code class="docutils literal notranslate"><span class="pre">pi</span></code> or <code class="docutils literal notranslate"><span class="pre">pow</span></code> would now be available directly. It’s often not recommended because it’s difficult to trace back a variable to the module it comes from. If you are using your own <code class="docutils literal notranslate"><span class="pre">.py</span></code> files to encapsulate imports and definitions, it’s occasionally OK to do this. Readability is greatly impacted, so use star imports with great caution.</p>
 </section>
-<section id="your-challenge-daily-step-counter">
-<h4>Your Challenge: Daily Step Counter<a class="headerlink" href="#your-challenge-daily-step-counter" title="Permalink to this heading">#</a></h4>
-<p><strong>Problem Statement</strong>:
-Write a program that interprets a list of daily step counts. For each day’s step count:</p>
-<ul class="simple">
-<li><p>If the steps are less than 5,000, categorize as “Sedentary”.</p></li>
-<li><p>If the steps are between 5,000 and 7,499 (inclusive), categorize as “Lightly Active”.</p></li>
-<li><p>If the steps are between 7,500 and 9,999 (inclusive), categorize as “Moderately Active”.</p></li>
-<li><p>If the steps are 10,000 or more, categorize as “Very Active”.</p></li>
-<li><p>Print the day number and the corresponding activity category.</p></li>
+<section id="standard-library-highlights">
+<h3>Standard Library Highlights<a class="headerlink" href="#standard-library-highlights" title="Permalink to this heading">#</a></h3>
+<p>There’s no way I could summarize the standard library adequately. As homework, peruse the <a class="reference external" href="https://docs.python.org/3/library/index.html">Python Standard Library documentation</a>.</p>
+<ul>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">random</span></code> module: very handy for games or testing your functions with a lot of diverse input.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">random</span>
+<span class="n">dice_roll</span> <span class="o">=</span> <span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)</span>
+<span class="n">random</span><span class="o">.</span><span class="n">random</span><span class="p">()</span> <span class="c1"># float between 0.0 and 1.0</span>
+</pre></div>
+</div>
+</li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">json</span></code> module: important for sending and retrieving data over web services or saving to file.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">json</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;a&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s1">&#39;b&#39;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">txt</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">data</span><span class="p">)</span> <span class="c1"># dump to string</span>
+<span class="n">loaded</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">txt</span><span class="p">)</span> <span class="c1"># load from string</span>
+</pre></div>
+</div>
+</li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">time</span></code> module: for measuring elapsed time or deliberately slowing down your program.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<span class="n">start</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+  <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+  <span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">()</span>
+<span class="n">end</span> <span class="o">=</span> <span class="n">time</span><span class="o">.</span><span class="n">time</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Elapsed: </span><span class="si">{</span><span class="n">end</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="n">start</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2"> seconds&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p>the <code class="docutils literal notranslate"><span class="pre">datetime</span></code> module: for interacting with calendars, timestamps, timezones, and durations.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">())</span>
+</pre></div>
+</div>
+</li>
 </ul>
 </section>
-<section id="further-resources">
-<h4>Further Resources<a class="headerlink" href="#further-resources" title="Permalink to this heading">#</a></h4>
-<hr class="docutils" />
-<p><strong>Lesson 5: Functions and Modules</strong></p>
-<ul class="simple">
-<li><p><strong>Advanced Function Concepts</strong></p>
-<ul>
-<li><p><em>Variable Number of Arguments (<code class="docutils literal notranslate"><span class="pre">*args</span></code> and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code>)</em>: Use <code class="docutils literal notranslate"><span class="pre">*args</span></code> for a variable number of positional arguments and <code class="docutils literal notranslate"><span class="pre">**kwargs</span></code> for a variable number of keyword arguments. This allows functions to handle an unspecified number of arguments.</p></li>
-<li><p><em>Call Stack: Calling Functions from Within Functions</em>: Understanding how functions can call other functions and how the call stack works, which is crucial for understanding function execution flow.</p></li>
-<li><p><em>Reading a Traceback</em>: Learning to read and interpret traceback errors to debug issues in function calls.</p></li>
-<li><p><em>Recursion</em>: Understanding recursion, a method where the solution to a problem depends on solutions to smaller instances of the same problem. This involves a function calling itself.</p></li>
-</ul>
-</li>
-<li><p><strong>Introduction to Python Modules</strong></p>
-<ul>
-<li><p><em>Definition and Importance of Modules</em>: Modules in Python are simply Python files with a <code class="docutils literal notranslate"><span class="pre">.py</span></code> extension containing Python definitions and statements. Modules help in dividing the code into smaller parts and organizing it logically.</p></li>
-<li><p><em>Standard Library Modules</em>: Overview of Python’s standard library modules, which provide a range of functionality.</p></li>
-<li><p><em>Importing Modules using <code class="docutils literal notranslate"><span class="pre">import</span></code></em>: How to import modules into your Python script using the <code class="docutils literal notranslate"><span class="pre">import</span></code> statement.</p></li>
-<li><p><em>Accessing Functions from Modules</em>: Demonstrating how to access and use functions defined in imported modules.</p></li>
-</ul>
-</li>
-<li><p><strong>Math Focus: Functions for Mathematical Formulas</strong></p>
-<ul>
-<li><p><em>Writing Functions for Basic Arithmetic Operations</em>: Creating functions for addition, subtraction, multiplication, and division.</p></li>
-<li><p><em>Functions for Common Mathematical Formulas (Area, Perimeter, Volume)</em>: Developing functions to calculate the area, perimeter, and volume of various shapes.</p></li>
-<li><p><em>Utilizing Math Module for Advanced Mathematical Functions</em>: Exploring Python’s math module to perform more complex mathematical operations like trigonometric functions, exponential, square root, etc.</p></li>
-</ul>
-</li>
-<li><p><strong>Practical Exercises and Projects</strong></p>
-<ul>
-<li><p><em>Creating Custom Functions for Real-World Problems</em>: Practical exercises where students create functions to solve specific problems.</p></li>
-<li><p><em>Group Activity: Developing a Small Library of Mathematical Functions</em>: Working in groups to create a library of reusable mathematical functions.</p></li>
-<li><p><em>Homework: Implement a Function to Solve a Specific Mathematical Problem</em>: Assigning homework that involves writing a function to solve a mathematical or real-world problem, reinforcing the concepts learned.</p></li>
-</ul>
-</li>
-</ul>
-<hr class="docutils" />
-<p>Sure, let’s dive into a simple AI/ML example using NumPy, specifically demonstrating the matrix multiplication required in a linear regression calculation. We’ll compute the loss, which is a measure of how far our model’s predictions are from the actual outcomes.</p>
+<section id="every-ai-ml-developer-must-know-numpy">
+<h3>Every AI/ML Developer Must Know NumPy<a class="headerlink" href="#every-ai-ml-developer-must-know-numpy" title="Permalink to this heading">#</a></h3>
+<p>Let’s introduce NumPy by demonstrating the matrix multiplication required in a linear regression calculation. We’ll compute the loss, which is a measure of how far our model’s predictions are from the actual outcomes.</p>
 <p>Here’s the step-by-step process:</p>
 <ol class="arabic">
 <li><p><strong>Import NumPy Library</strong></p>
@@ -636,8 +595,6 @@ Write a program that interprets a list of daily step counts. For each day’s st
 <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Loss (MSE):&quot;</span><span class="p">,</span> <span class="n">loss</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>In this example, <code class="docutils literal notranslate"><span class="pre">x_data</span></code> and <code class="docutils literal notranslate"><span class="pre">coefficients</span></code> are multiplied, resulting in predictions <code class="docutils literal notranslate"><span class="pre">y_pred</span></code>. The loss is then calculated as the MSE, which gives us a quantitative measure of the model’s accuracy. This process is fundamental in linear regression and many other machine learning algorithms.</p>
-</section>
 </section>
 </section>
 </section>
@@ -706,16 +663,10 @@ Write a program that interprets a list of daily step counts. For each day’s st
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#test-your-understanding-on-return-values">Test Your Understanding on Return Values</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lesson-project-fizzbuzz-and-a-similar-challenge">Lesson Project: FizzBuzz and a Similar Challenge</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fizzbuzz-problem-statement">FizzBuzz Problem Statement</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fizzbuzz-solution-in-python">FizzBuzz Solution in Python</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#alternative-lesson-project-temperature-analyzer">Alternative Lesson Project: Temperature Analyzer</a><ul class="nav section-nav flex-column">
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temperature-analyzer-problem-statement">Temperature Analyzer Problem Statement</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temperature-analyzer-solution-in-python">Temperature Analyzer Solution in Python</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#your-challenge-daily-step-counter">Your Challenge: Daily Step Counter</a></li>
-<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#further-resources">Further Resources</a></li>
-</ul>
-</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#get-new-functionality-fast-via-modules">Get New Functionality Fast Via Modules</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#import-syntax"><code class="docutils literal notranslate"><span class="pre">import</span></code> Syntax</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-library-highlights">Standard Library Highlights</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#every-ai-ml-developer-must-know-numpy">Every AI/ML Developer Must Know NumPy</a></li>
 </ul>
 </li>
 </ul>

@@ -108,120 +108,109 @@ Answers:
 
 Questions:
 
-* asdf
 * If we defined the function from the previous section and ran `n = f(2, 4)`, what would `n`'s value be?
 
 Answers:
 
-* qwer
 * Since functions evaluate to their return value, `n` is assigned the value that `f` returns (8).
 
+## Get New Functionality Fast Via Modules
 
-xxxxxxxxx
+**Modules** are a way to bring complex capabilities into your Python programs with the use of the `import` keyword. The Python standard library is sometimes described as "batteries included", which includes functionality like: interacting with JSON data or CSV files, making web requests, mathematical functions, random numbers, interacting with dates and times, file compression, logging, cryptography, and the list goes on!
 
+Modules are also very important to the performance of Python programs. You may have heard that Python is a "slow language". This is more or less true in many circumstances. However, when you import a popular data science or machine learning library like Pandas, Scikit, Keras, or PyTorch, the module itself is written in another language and has very few performance constraints. Modules written in C, C++, or Rust can run at the speed of highly efficient compiled languages, then we use Python as "glue code" to load these modules, provide them with data, and utilize their output.
 
+### `import` Syntax
 
-## Lesson Project: FizzBuzz and a Similar Challenge
-
-#### FizzBuzz Problem Statement
-FizzBuzz is a classic programming task, often used in job interviews to assess basic programming skills. The challenge is as follows:
-- Print numbers from 1 to 100.
-- For multiples of 3, print "Fizz" instead of the number.
-- For multiples of 5, print "Buzz" instead of the number.
-- For numbers which are multiples of both 3 and 5, print "FizzBuzz".
-
-#### FizzBuzz Solution in Python
+When you `import` something, that module will become available in your script's namespace.
 
 ```python
-for i in range(1, 101):
-    if i % 3 == 0 and i % 5 == 0:
-        print("FizzBuzz")
-    elif i % 3 == 0:
-        print("Fizz")
-    elif i % 5 == 0:
-        print("Buzz")
-    else:
-        print(i)
+import math
 ```
 
-This solution uses a `for` loop to iterate through the numbers 1 to 100 and conditional statements (`if`, `elif`, `else`) to determine what to print for each number.
+After importing, the module is an object that you can interact with:
 
-### Alternative Lesson Project: Temperature Analyzer
+```
+>>> math
+<module 'math' (built-in)>
+>>> type(math)
+<class 'module'>
+```
 
-#### Temperature Analyzer Problem Statement
-Create a program that analyzes temperature data and categorizes each temperature entry. The challenge is as follows:
-- Iterate over a list of temperature readings (in Celsius).
-- For each temperature:
-  - If it's below 0, categorize it as "Freezing".
-  - If it's between 0 and 15 (inclusive), categorize it as "Cold".
-  - If it's between 16 and 25 (inclusive), categorize it as "Moderate".
-  - If it's above 25, categorize it as "Hot".
-- Print the temperature and its category.
+In fact, if you save any Python code in a `.py` file in the same directory as your notebook or additional files, you can import them as modules and access their contents. Just like using a function on any other object, you can use the dot operator (`.`) to access the contents of a module. Modules can contain any Python object.
 
-#### Temperature Analyzer Solution in Python
+```
+>>> math.pi
+3.141592653589793
+>>> math.pow
+<built-in function pow>
+```
+
+The name of the module is not forced upon you, though. You can change the name of something at the time of import, or simply import all of the contents into your current namespace. The `import ... as ...` syntax allows you to import a module with a specific new name. Here's one you'll see frequently:
 
 ```python
-temperatures = [3, 16, -2, 21, 30, 15, 1, -5, 24, 27]
-
-for temp in temperatures:
-    if temp < 0:
-        category = "Freezing"
-    elif temp <= 15:
-        category = "Cold"
-    elif temp <= 25:
-        category = "Moderate"
-    else:
-        category = "Hot"
-    
-    print(f"Temperature: {temp}°C, Category: {category}")
+import matplotlib.pyplot as plt
 ```
 
-This solution uses a `for` loop to iterate through a predefined list of temperatures and conditional statements (`if`, `elif`, `else`) to determine the category for each temperature.
+The module `matplotlib` contains a module `pyplot`, and typing `matplotlib.pyplot` dozens of times in your code would be exhausting. When importing `as`, the given name `plt` becomes an alias for the module.
 
-#### Your Challenge: Daily Step Counter
+You can import specific parts of a module, leaving the rest behind:
 
-**Problem Statement**:
-Write a program that interprets a list of daily step counts. For each day's step count:
-- If the steps are less than 5,000, categorize as "Sedentary".
-- If the steps are between 5,000 and 7,499 (inclusive), categorize as "Lightly Active".
-- If the steps are between 7,500 and 9,999 (inclusive), categorize as "Moderately Active".
-- If the steps are 10,000 or more, categorize as "Very Active".
-- Print the day number and the corresponding activity category.
+```python
+from math import pi
+```
 
-#### Further Resources
+This would solely create a variable `pi`, no dots required, sourced from the `math` module.
+
+Use this sparingly, but it's possible to import all of the contents of a module without using a dot operator.
+
+```python
+from math import *
+```
+
+This would bring all of the contents into your current file; variables or functions like `pi` or `pow` would now be available directly. It's often not recommended because it's difficult to trace back a variable to the module it comes from. If you are using your own `.py` files to encapsulate imports and definitions, it's occasionally OK to do this. Readability is greatly impacted, so use star imports with great caution.
+
+### Standard Library Highlights
+
+There's no way I could summarize the standard library adequately. As homework, peruse the [Python Standard Library documentation](https://docs.python.org/3/library/index.html).
+
+* the `random` module: very handy for games or testing your functions with a lot of diverse input.
+  ```python
+  import random
+  dice_roll = random.randint(1, 6)
+  random.random() # float between 0.0 and 1.0
+  ```
+
+* the `json` module: important for sending and retrieving data over web services or saving to file.
+  ```python
+  import json
+  data = {'a': 1, 'b': 2}
+  txt = json.dumps(data) # dump to string
+  loaded = json.loads(txt) # load from string
+  ```
+
+* the `time` module: for measuring elapsed time or deliberately slowing down your program.
+  ```python
+  import time
+  start = time.time()
+  for i in range(5):
+    print(".", end='')
+    time.sleep(1.5)
+  print()
+  end = time.time()
+  print(f"Elapsed: {end - start:.2f} seconds")
+  ```
+
+* the `datetime` module: for interacting with calendars, timestamps, timezones, and durations.
+  ```python
+  from datetime import datetime
+  print(datetime.now())
+  ```
 
 
----
+### Every AI/ML Developer Must Know NumPy
 
-**Lesson 5: Functions and Modules**
-
-- **Advanced Function Concepts**
-  - *Variable Number of Arguments (`*args` and `**kwargs`)*: Use `*args` for a variable number of positional arguments and `**kwargs` for a variable number of keyword arguments. This allows functions to handle an unspecified number of arguments.
-  - *Call Stack: Calling Functions from Within Functions*: Understanding how functions can call other functions and how the call stack works, which is crucial for understanding function execution flow.
-  - *Reading a Traceback*: Learning to read and interpret traceback errors to debug issues in function calls.
-  - *Recursion*: Understanding recursion, a method where the solution to a problem depends on solutions to smaller instances of the same problem. This involves a function calling itself.
-
-- **Introduction to Python Modules**
-  - *Definition and Importance of Modules*: Modules in Python are simply Python files with a `.py` extension containing Python definitions and statements. Modules help in dividing the code into smaller parts and organizing it logically.
-  - *Standard Library Modules*: Overview of Python’s standard library modules, which provide a range of functionality.
-  - *Importing Modules using `import`*: How to import modules into your Python script using the `import` statement.
-  - *Accessing Functions from Modules*: Demonstrating how to access and use functions defined in imported modules.
-
-- **Math Focus: Functions for Mathematical Formulas**
-  - *Writing Functions for Basic Arithmetic Operations*: Creating functions for addition, subtraction, multiplication, and division.
-  - *Functions for Common Mathematical Formulas (Area, Perimeter, Volume)*: Developing functions to calculate the area, perimeter, and volume of various shapes.
-  - *Utilizing Math Module for Advanced Mathematical Functions*: Exploring Python's math module to perform more complex mathematical operations like trigonometric functions, exponential, square root, etc.
-
-- **Practical Exercises and Projects**
-  - *Creating Custom Functions for Real-World Problems*: Practical exercises where students create functions to solve specific problems.
-  - *Group Activity: Developing a Small Library of Mathematical Functions*: Working in groups to create a library of reusable mathematical functions.
-  - *Homework: Implement a Function to Solve a Specific Mathematical Problem*: Assigning homework that involves writing a function to solve a mathematical or real-world problem, reinforcing the concepts learned.
-  
-
-
----
-
-Sure, let's dive into a simple AI/ML example using NumPy, specifically demonstrating the matrix multiplication required in a linear regression calculation. We'll compute the loss, which is a measure of how far our model's predictions are from the actual outcomes.
+Let's introduce NumPy by demonstrating the matrix multiplication required in a linear regression calculation. We'll compute the loss, which is a measure of how far our model's predictions are from the actual outcomes.
 
 Here's the step-by-step process:
 
@@ -273,5 +262,3 @@ loss = np.mean((y_data - y_pred) ** 2)
 print("Predicted y:", y_pred)
 print("Loss (MSE):", loss)
 ```
-
-In this example, `x_data` and `coefficients` are multiplied, resulting in predictions `y_pred`. The loss is then calculated as the MSE, which gives us a quantitative measure of the model's accuracy. This process is fundamental in linear regression and many other machine learning algorithms.

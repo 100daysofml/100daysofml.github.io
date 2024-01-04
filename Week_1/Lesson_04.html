@@ -356,6 +356,7 @@ document.write(`
   <section class="tex2jax_ignore mathjax_ignore" id="day-4-control-structures-conditionals">
 <h1>Day 4: Control Structures - Conditionals<a class="headerlink" href="#day-4-control-structures-conditionals" title="Permalink to this heading">#</a></h1>
 <p>Conditional statements, commonly known as “if statements,” are a fundamental aspect of programming, allowing the code to execute different actions depending on certain conditions. This concept, often referred to as “branching,” enables programs to make decisions, thereby increasing their complexity and capability.</p>
+<p><strong>This notebook is available for you to follow along in Colab:</strong> <a class="reference external" href="https://colab.research.google.com/drive/1NeZoovYYPt_KREHVGT2_Rc75t48637M8?usp=sharing">Link to Colab notebook</a></p>
 <section id="if-this-then-that">
 <h2>If This, Then That<a class="headerlink" href="#if-this-then-that" title="Permalink to this heading">#</a></h2>
 <p>The <code class="docutils literal notranslate"><span class="pre">if</span></code> statement is the most basic form of conditional execution in Python. It tests a condition and executes a block of code if the condition is true. The syntax requires an indentation block, which defines the scope of the statement.</p>
@@ -482,45 +483,6 @@ Write a program that interprets a list of daily step counts. For each day’s st
 </section>
 <section id="further-resources">
 <h2>Further Resources<a class="headerlink" href="#further-resources" title="Permalink to this heading">#</a></h2>
-<p><strong>Lesson 5: Functions and Modules</strong></p>
-<ul class="simple">
-<li><p><strong>Introduction to Functions</strong></p>
-<ul>
-<li><p><em>Definition and Purpose of Functions</em>: Functions are useful in two distinct scenarios: To repeat behavior without repeating an entire procedure, or to vary behavior based on the situation at hand. In programming, a function is a block of organized, reusable code used to perform a single, related action. They provide better modularity for your application and a high degree of code reusing.</p></li>
-<li><p><em>Basic Structure of a Function in Python</em>: In Python, a function is defined using the <code class="docutils literal notranslate"><span class="pre">def</span></code> keyword, followed by a function name and parentheses <code class="docutils literal notranslate"><span class="pre">()</span></code>. The code block within every function starts with a colon <code class="docutils literal notranslate"><span class="pre">:</span></code> and is indented.</p></li>
-<li><p><em>Parameters and Arguments</em>: Parameters are variables listed inside the parentheses in the function definition. Arguments are the values passed to these parameters. Arguments are specified after the function name, inside the parentheses.</p></li>
-<li><p><em>Return Values</em>: Functions can return values using the <code class="docutils literal notranslate"><span class="pre">return</span></code> statement. The return value can be any object, and a function can return multiple values.</p></li>
-</ul>
-</li>
-<li><p><strong>Writing Your First Function</strong></p>
-<ul>
-<li><p><em>Using <code class="docutils literal notranslate"><span class="pre">def</span></code> Keyword</em>: To create a function, use the <code class="docutils literal notranslate"><span class="pre">def</span></code> keyword, followed by a chosen function name and parentheses. Example: <code class="docutils literal notranslate"><span class="pre">def</span> <span class="pre">my_function():</span></code>.</p></li>
-<li><p><em>Function Naming Conventions</em>: Function names should be lowercase, with words separated by underscores as necessary to improve readability.</p></li>
-<li><p><em>Calling a Function</em>: To call a function, use the function name followed by parentheses. Example: <code class="docutils literal notranslate"><span class="pre">my_function()</span></code>.</p></li>
-</ul>
-</li>
-<li><p><strong>Parameters and Arguments</strong></p>
-<ul>
-<li><p><em>Understanding Local Variables</em>: Variables declared inside a function are called local variables. Their scope is limited to the function, meaning they can’t be accessed outside of it.</p></li>
-<li><p><em>Positional vs. Keyword Arguments</em>: Positional arguments are arguments that need to be included in the proper position or order. Keyword arguments are arguments accompanied by an identifier (e.g., <code class="docutils literal notranslate"><span class="pre">name='John'</span></code>) and can be listed in any order.</p></li>
-<li><p><em>Using Keywords to Reorder Arguments</em>: With keyword arguments, the order of arguments can be shuffled, allowing more flexibility.</p></li>
-<li><p><em>Default Parameter Values</em>: Functions can have parameters with default values. If the argument is not provided, the function uses the default value.</p></li>
-</ul>
-</li>
-<li><p><strong>Return Values and <code class="docutils literal notranslate"><span class="pre">return</span></code> Statement</strong></p>
-<ul>
-<li><p><em>How to Return Data from a Function</em>: To send back a result from a function to its caller, use the <code class="docutils literal notranslate"><span class="pre">return</span></code> statement.</p></li>
-<li><p><em>Multiple Return Values; Tuple Value Unpacking</em>: Functions in Python can return multiple values, usually in the form of a tuple, which can be unpacked into multiple variables.</p></li>
-<li><p><em>None: The Default Return Value</em>: If no return statement is used, or the return statement does not have an accompanying value, the function returns <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
-</ul>
-</li>
-<li><p><strong>Scope and Lifetime of Variables</strong></p>
-<ul>
-<li><p><em>Local vs. Global Variables</em>: Global variables are defined outside a function and can be accessed throughout the program, while local variables are confined within the function they are declared in.</p></li>
-<li><p><em>Variable Shadowing - Don’t Do This</em>: Avoid using the same name for local and global variables as it can lead to confusing “shadowing” effects, where the local variable “shadows” the global variable.</p></li>
-</ul>
-</li>
-</ul>
 </section>
 </section>
 
