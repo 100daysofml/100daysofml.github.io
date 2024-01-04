@@ -2,6 +2,8 @@
 
 Conditional statements, commonly known as "if statements," are a fundamental aspect of programming, allowing the code to execute different actions depending on certain conditions. This concept, often referred to as "branching," enables programs to make decisions, thereby increasing their complexity and capability.
 
+**This notebook is available for you to follow along in Colab:** [Link to Colab notebook](https://colab.research.google.com/drive/1NeZoovYYPt_KREHVGT2_Rc75t48637M8?usp=sharing)
+
 ## If This, Then That
 
 The `if` statement is the most basic form of conditional execution in Python. It tests a condition and executes a block of code if the condition is true. The syntax requires an indentation block, which defines the scope of the statement.
@@ -125,35 +127,3 @@ Write a program that interprets a list of daily step counts. For each day's step
 
 ## Further Resources
 
-
-
-
-
-
-**Lesson 5: Functions and Modules**
-
-- **Introduction to Functions**
-  - *Definition and Purpose of Functions*: Functions are useful in two distinct scenarios: To repeat behavior without repeating an entire procedure, or to vary behavior based on the situation at hand. In programming, a function is a block of organized, reusable code used to perform a single, related action. They provide better modularity for your application and a high degree of code reusing.
-  - *Basic Structure of a Function in Python*: In Python, a function is defined using the `def` keyword, followed by a function name and parentheses `()`. The code block within every function starts with a colon `:` and is indented.
-  - *Parameters and Arguments*: Parameters are variables listed inside the parentheses in the function definition. Arguments are the values passed to these parameters. Arguments are specified after the function name, inside the parentheses.
-  - *Return Values*: Functions can return values using the `return` statement. The return value can be any object, and a function can return multiple values.
-
-- **Writing Your First Function**
-  - *Using `def` Keyword*: To create a function, use the `def` keyword, followed by a chosen function name and parentheses. Example: `def my_function():`.
-  - *Function Naming Conventions*: Function names should be lowercase, with words separated by underscores as necessary to improve readability.
-  - *Calling a Function*: To call a function, use the function name followed by parentheses. Example: `my_function()`.
-
-- **Parameters and Arguments**
-  - *Understanding Local Variables*: Variables declared inside a function are called local variables. Their scope is limited to the function, meaning they can't be accessed outside of it.
-  - *Positional vs. Keyword Arguments*: Positional arguments are arguments that need to be included in the proper position or order. Keyword arguments are arguments accompanied by an identifier (e.g., `name='John'`) and can be listed in any order.
-  - *Using Keywords to Reorder Arguments*: With keyword arguments, the order of arguments can be shuffled, allowing more flexibility.
-  - *Default Parameter Values*: Functions can have parameters with default values. If the argument is not provided, the function uses the default value.
-
-- **Return Values and `return` Statement**
-  - *How to Return Data from a Function*: To send back a result from a function to its caller, use the `return` statement.
-  - *Multiple Return Values; Tuple Value Unpacking*: Functions in Python can return multiple values, usually in the form of a tuple, which can be unpacked into multiple variables.
-  - *None: The Default Return Value*: If no return statement is used, or the return statement does not have an accompanying value, the function returns `None`.
-
-- **Scope and Lifetime of Variables**
-  - *Local vs. Global Variables*: Global variables are defined outside a function and can be accessed throughout the program, while local variables are confined within the function they are declared in.
-  - *Variable Shadowing - Don't Do This*: Avoid using the same name for local and global variables as it can lead to confusing "shadowing" effects, where the local variable "shadows" the global variable.
