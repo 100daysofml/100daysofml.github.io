@@ -23,4 +23,10 @@ parts:
       title: "Day 5 - Functions and Modules"
                  
 
+  - caption: "Week 2 - Introduction to Machine Learning Mathematics"
+    chapters:
+    - file: Week_2/Lesson_06.ipynb
+      title: "Day 6 - Linear Algebra - Vectors"
+    - file: Week_2/Lesson_07.ipynb
+      title: "Day 7 - Linear Algebra - Matrices and Matrix Operations"
 
