@@ -2,6 +2,8 @@
 
 Functions are useful in two distinct scenarios: To repeat behavior without repeating an entire procedure, or to vary behavior based on the situation at hand. In programming, a function is a block of organized, reusable code used to perform a single, related action. They provide better modularity for your application and a high degree of code reusing.
 
+**This notebook is available for you to follow along in Colab:** [Link to Colab notebook](https://colab.research.google.com/drive/1PqTVC5bvMIUp8scqZjY6LkBT5-fWDd9Z?usp=sharing)
+
 ## Basic Structure of a Function
 
 In Python, a function is defined using the `def` keyword, followed by a function name and parentheses `()`. The code block within every function starts with a colon `:` and is indented.
@@ -262,3 +264,7 @@ loss = np.mean((y_data - y_pred) ** 2)
 print("Predicted y:", y_pred)
 print("Loss (MSE):", loss)
 ```
+
+## Week 1 Conclusion Project
+
+
