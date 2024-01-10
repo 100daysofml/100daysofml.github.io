@@ -1,47 +1,19 @@
 
-
 <!DOCTYPE html>
 
-
-<html lang="en" data-content_root="" >
-
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Module 1: Introduction to Python and Basic Mathematics &#8212; My Jupyter Book</title>
-  
-  
-  
-  <script data-cfasync="false">
-    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
-    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
-  </script>
-  
-  <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
-
-  
-  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
-
+    <title>Module 1: Introduction to Python and Basic Mathematics &#8212; 100 Days of Machine Learning</title>
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/groundwork.css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
-  
-  <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
-  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
-
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
@@ -62,382 +34,46 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_0/00a_DailyChallenge';</script>
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Week 1: Python Basics and Numerical Operations with Jupyter Notebooks" href="00b_DailyResources.html" />
-    <link rel="prev" title="Welcome to your Jupyter Book" href="00_Overview.html" />
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <meta name="docsearch:language" content="en"/>
-  </head>
-  
-  
-  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+    <link rel="prev" title="100 Days of Machine Learning Challenge" href="00_Overview.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="00b_DailyResources.html" title="Week 1: Python Basics and Numerical Operations with Jupyter Notebooks"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="00_Overview.html" title="100 Days of Machine Learning Challenge"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../00_Opening_page.html">100 Days of Machine Learning</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="00_Overview.html" accesskey="U">100 Days of Machine Learning Challenge</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Module 1: Introduction to Python and Basic Mathematics</a></li> 
+      </ul>
+    </div>  
 
-  
-  
-  <a class="skip-link" href="#main-content">Skip to main content</a>
-  
-  <div id="pst-scroll-pixel-helper"></div>
-
-  
-  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
-    <i class="fa-solid fa-arrow-up"></i>
-    Back to top
-  </button>
-
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__primary"
-          id="__primary"/>
-  <label class="overlay overlay-primary" for="__primary"></label>
-  
-  <input type="checkbox"
-          class="sidebar-toggle"
-          name="__secondary"
-          id="__secondary"/>
-  <label class="overlay overlay-secondary" for="__secondary"></label>
-  
-  <div class="search-button__wrapper">
-    <div class="search-button__overlay"></div>
-    <div class="search-button__search-container">
-<form class="bd-search d-flex align-items-center"
-      action="../search.html"
-      method="get">
-  <i class="fa-solid fa-magnifying-glass"></i>
-  <input type="search"
-         class="form-control"
-         name="q"
-         id="search-input"
-         placeholder="Search this book..."
-         aria-label="Search this book..."
-         autocomplete="off"
-         autocorrect="off"
-         autocapitalize="off"
-         spellcheck="false"/>
-  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
-</form></div>
-  </div>
-  
-    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
-    </nav>
-  
-  <div class="bd-container">
-    <div class="bd-container__inner bd-page-width">
-      
-      <div class="bd-sidebar-primary bd-sidebar">
-        
-
-  
-  <div class="sidebar-header-items sidebar-primary__section">
-    
-    
-    
-    
-  </div>
-  
-    <div class="sidebar-primary-items__start sidebar-primary__section">
-        <div class="sidebar-primary-item">
-
-  
-
-<a class="navbar-brand logo" href="../00_Opening_page.html">
-  
-  
-  
-  
-  
-  
-    <p class="title logo__title">My Jupyter Book</p>
-  
-</a></div>
-        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
-    <div class="bd-toc-item navbar-nav active">
-        
-        <ul class="nav bd-sidenav bd-sidenav__home-link">
-            <li class="toctree-l1">
-                <a class="reference internal" href="../00_Opening_page.html">
-                    <no title>
-                </a>
-            </li>
-        </ul>
-        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1 current active has-children"><a class="reference internal" href="00_Overview.html">Welcome : Overview</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Module 1: Introduction to Python and Basic Mathematics</a></li>
-
-
-
-
-
-
-
-
-<li class="toctree-l2"><a class="reference internal" href="00b_DailyResources.html"><strong>Week 1: Python Basics and Numerical Operations with Jupyter Notebooks</strong></a></li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<li class="toctree-l2"><a class="reference internal" href="01_Errata.html">Errata: Corrections History</a></li>
-</ul>
-</li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../Week_1/Lesson_01.html">Day 1 - Python Basics</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Week_1/Lesson_02.html">Day 2 - Python Data</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Week_1/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Week_1/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Week_1/Lesson_05.html">Day 5 - Functions and Modules</a></li>
-</ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="../Week_2/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../Week_2/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
-</ul>
-
-    </div>
-</nav></div>
-    </div>
-  
-  
-  <div class="sidebar-primary-items__end sidebar-primary__section">
-  </div>
-  
-  <div id="rtd-footer-container"></div>
-
-
-      </div>
-      
-      <main id="main-content" class="bd-main">
-        
-        
-
-<div class="sbt-scroll-pixel-helper"></div>
-
-          <div class="bd-content">
-            <div class="bd-article-container">
-              
-              <div class="bd-header-article">
-<div class="header-article-items header-article__inner">
-  
-    <div class="header-article-items__start">
-      
-        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-  <span class="fa-solid fa-bars"></span>
-</label></div>
-      
-    </div>
-  
-  
-    <div class="header-article-items__end">
-      
-        <div class="header-article-item">
-
-<div class="article-header-buttons">
-
-
-
-
-
-<div class="dropdown dropdown-download-buttons">
-  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
-    <i class="fas fa-download"></i>
-  </button>
-  <ul class="dropdown-menu">
-      
-      
-      
-      <li><a href="../_sources/Week_0/00a_DailyChallenge.md" target="_blank"
-   class="btn btn-sm btn-download-source-button dropdown-item"
-   title="Download source file"
-   data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file"></i>
-  </span>
-<span class="btn__text-container">.md</span>
-</a>
-</li>
-      
-      
-      
-      
-      <li>
-<button onclick="window.print()"
-  class="btn btn-sm btn-download-pdf-button dropdown-item"
-  title="Print to PDF"
-  data-bs-placement="left" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-file-pdf"></i>
-  </span>
-<span class="btn__text-container">.pdf</span>
-</button>
-</li>
-      
-  </ul>
-</div>
-
-
-
-
-<button onclick="toggleFullScreen()"
-  class="btn btn-sm btn-fullscreen-button"
-  title="Fullscreen mode"
-  data-bs-placement="bottom" data-bs-toggle="tooltip"
->
-  
-
-<span class="btn__icon-container">
-  <i class="fas fa-expand"></i>
-  </span>
-
-</button>
-
-
-
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
-    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
-  </button>
-`);
-</script>
-
-
-<script>
-document.write(`
-  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
-  </button>
-`);
-</script>
-<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
-    <span class="fa-solid fa-list"></span>
-</label>
-</div></div>
-      
-    </div>
-  
-</div>
-</div>
-              
-              
-
-<div id="jb-print-docs-body" class="onlyprint">
-    <h1>Module 1: Introduction to Python and Basic Mathematics</h1>
-    <!-- Table of contents -->
-    <div id="print-main-content">
-        <div id="jb-print-toc">
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
             
-            <div>
-                <h2> Contents </h2>
-            </div>
-            <nav aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Module 1: Introduction to Python and Basic Mathematics</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-1-2">Weeks 1-2</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-1-python-basics-and-numerical-operations">Week 1: Python Basics and Numerical Operations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-2-introduction-to-mathematical-concepts-in-python">Week 2: Introduction to Mathematical Concepts in Python</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-2-data-preprocessing-and-exploratory-data-analysis">Module 2: Data Preprocessing and Exploratory Data Analysis</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-3-4">Weeks 3-4</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-3-data-preprocessing">Week 3: Data Preprocessing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-4-exploratory-data-analysis-eda">Week 4: Exploratory Data Analysis (EDA)</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-3-supervised-learning-regression-and-classification">Module 3: Supervised Learning - Regression and Classification</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-5-6">Weeks 5-6</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-5-supervised-learning-regression">Week 5: Supervised Learning - Regression</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-6-supervised-learning-classification">Week 6: Supervised Learning - Classification</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-4-unsupervised-learning-and-dimensionality-reduction">Module 4: Unsupervised Learning and Dimensionality Reduction</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-7-9">Weeks 7-9</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-7-ensemble-methods">Week 7: Ensemble Methods</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-8-unsupervised-learning">Week 8: Unsupervised Learning</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-9-dimensionality-reduction">Week 9: Dimensionality Reduction</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-5-deep-learning-foundations">Module 5: Deep Learning Foundations</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-10-12">Weeks 10-12</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-10-introduction-to-neural-networks">Week 10: Introduction to Neural Networks</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-11-deep-learning-convolutional-neural-networks-cnns">Week 11: Deep Learning - Convolutional Neural Networks (CNNs)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-12-deep-learning-recurrent-neural-networks-rnns">Week 12: Deep Learning - Recurrent Neural Networks (RNNs)</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-6-advanced-machine-learning-and-current-trends">Module 6: Advanced Machine Learning and Current Trends</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-13-14">Weeks 13-14</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-13-reinforcement-learning">Week 13: Reinforcement Learning</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-14-advanced-topics-and-current-trends">Week 14: Advanced Topics and Current Trends</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-7-practical-aspects-of-machine-learning">Module 7: Practical Aspects of Machine Learning</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-15-17">Weeks 15-17</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-15-mlops">Week 15: MLOps</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-16-etl-processes">Week 16: ETL Processes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-17-transformers-in-deep-learning">Week 17: Transformers in Deep Learning</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-8-applied-ai-and-ethical-considerations">Module 8: Applied AI and Ethical Considerations</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-18-19">Weeks 18-19</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-18-ethics-in-ai">Week 18: Ethics in AI</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-19-applied-industry-sector-applications">Week 19: Applied Industry Sector Applications</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-9-capstone-project">Module 9: Capstone Project</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-20-21">Weeks 20-21</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-20-applied-cybersecurity-for-ai">Week 20: Applied Cybersecurity for AI</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-21-capstone-project">Week 21: Capstone Project</a></li>
-</ul>
-</li>
-</ul>
-
-            </nav>
-        </div>
-    </div>
-</div>
-
-              
-                
-<div id="searchbox"></div>
-                <article class="bd-article" role="main">
-                  
   <section id="module-1-introduction-to-python-and-basic-mathematics">
-<h1>Module 1: Introduction to Python and Basic Mathematics<a class="headerlink" href="#module-1-introduction-to-python-and-basic-mathematics" title="Permalink to this heading">#</a></h1>
+<h1>Module 1: Introduction to Python and Basic Mathematics<a class="headerlink" href="#module-1-introduction-to-python-and-basic-mathematics" title="Permalink to this heading">¶</a></h1>
 <section id="weeks-1-2">
-<h2>Weeks 1-2<a class="headerlink" href="#weeks-1-2" title="Permalink to this heading">#</a></h2>
+<h2>Weeks 1-2<a class="headerlink" href="#weeks-1-2" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Focus: Basic Python programming skills and foundational mathematics.</p></li>
 <li><p>Topics include basic Python syntax, data types, control structures, linear algebra, calculus, and statistics.</p></li>
 </ul>
 </section>
 <section id="week-1-python-basics-and-numerical-operations">
-<h2>Week 1: Python Basics and Numerical Operations<a class="headerlink" href="#week-1-python-basics-and-numerical-operations" title="Permalink to this heading">#</a></h2>
+<h2>Week 1: Python Basics and Numerical Operations<a class="headerlink" href="#week-1-python-basics-and-numerical-operations" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 1:</strong> Python Basics - Syntax, Variables</p>
 <ul>
@@ -472,7 +108,7 @@ document.write(`
 </ul>
 </section>
 <section id="week-2-introduction-to-mathematical-concepts-in-python">
-<h2>Week 2: Introduction to Mathematical Concepts in Python<a class="headerlink" href="#week-2-introduction-to-mathematical-concepts-in-python" title="Permalink to this heading">#</a></h2>
+<h2>Week 2: Introduction to Mathematical Concepts in Python<a class="headerlink" href="#week-2-introduction-to-mathematical-concepts-in-python" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 6:</strong> Linear Algebra - Introduction, Vectors</p>
 <ul>
@@ -509,16 +145,16 @@ document.write(`
 </section>
 </section>
 <section id="module-2-data-preprocessing-and-exploratory-data-analysis">
-<h1>Module 2: Data Preprocessing and Exploratory Data Analysis<a class="headerlink" href="#module-2-data-preprocessing-and-exploratory-data-analysis" title="Permalink to this heading">#</a></h1>
+<h1>Module 2: Data Preprocessing and Exploratory Data Analysis<a class="headerlink" href="#module-2-data-preprocessing-and-exploratory-data-analysis" title="Permalink to this heading">¶</a></h1>
 <section id="weeks-3-4">
-<h2>Weeks 3-4<a class="headerlink" href="#weeks-3-4" title="Permalink to this heading">#</a></h2>
+<h2>Weeks 3-4<a class="headerlink" href="#weeks-3-4" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Focus: Techniques for preparing and exploring data.</p></li>
 <li><p>Topics include data preprocessing methods, exploratory data analysis, visualization, and descriptive statistics.</p></li>
 </ul>
 </section>
 <section id="week-3-data-preprocessing">
-<h2>Week 3: Data Preprocessing<a class="headerlink" href="#week-3-data-preprocessing" title="Permalink to this heading">#</a></h2>
+<h2>Week 3: Data Preprocessing<a class="headerlink" href="#week-3-data-preprocessing" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 11:</strong> Introduction to Data Preprocessing in Python</p>
 <ul>
@@ -553,7 +189,7 @@ document.write(`
 </ul>
 </section>
 <section id="week-4-exploratory-data-analysis-eda">
-<h2>Week 4: Exploratory Data Analysis (EDA)<a class="headerlink" href="#week-4-exploratory-data-analysis-eda" title="Permalink to this heading">#</a></h2>
+<h2>Week 4: Exploratory Data Analysis (EDA)<a class="headerlink" href="#week-4-exploratory-data-analysis-eda" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 16:</strong> Introduction to EDA and Data Visualization in Python</p>
 <ul>
@@ -590,16 +226,16 @@ document.write(`
 </section>
 </section>
 <section id="module-3-supervised-learning-regression-and-classification">
-<h1>Module 3: Supervised Learning - Regression and Classification<a class="headerlink" href="#module-3-supervised-learning-regression-and-classification" title="Permalink to this heading">#</a></h1>
+<h1>Module 3: Supervised Learning - Regression and Classification<a class="headerlink" href="#module-3-supervised-learning-regression-and-classification" title="Permalink to this heading">¶</a></h1>
 <section id="weeks-5-6">
-<h2>Weeks 5-6<a class="headerlink" href="#weeks-5-6" title="Permalink to this heading">#</a></h2>
+<h2>Weeks 5-6<a class="headerlink" href="#weeks-5-6" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Focus: Key concepts and algorithms in supervised learning.</p></li>
 <li><p>Topics include regression, classification algorithms, decision trees, SVM, and ensemble methods.</p></li>
 </ul>
 </section>
 <section id="week-5-supervised-learning-regression">
-<h2>Week 5: Supervised Learning - Regression<a class="headerlink" href="#week-5-supervised-learning-regression" title="Permalink to this heading">#</a></h2>
+<h2>Week 5: Supervised Learning - Regression<a class="headerlink" href="#week-5-supervised-learning-regression" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 21:</strong> Introduction to Regression Analysis in Python</p>
 <ul>
@@ -634,7 +270,7 @@ document.write(`
 </ul>
 </section>
 <section id="week-6-supervised-learning-classification">
-<h2>Week 6: Supervised Learning - Classification<a class="headerlink" href="#week-6-supervised-learning-classification" title="Permalink to this heading">#</a></h2>
+<h2>Week 6: Supervised Learning - Classification<a class="headerlink" href="#week-6-supervised-learning-classification" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 26:</strong> Introduction to Classification and Logistic Regression in Python</p>
 <ul>
@@ -671,16 +307,16 @@ document.write(`
 </section>
 </section>
 <section id="module-4-unsupervised-learning-and-dimensionality-reduction">
-<h1>Module 4: Unsupervised Learning and Dimensionality Reduction<a class="headerlink" href="#module-4-unsupervised-learning-and-dimensionality-reduction" title="Permalink to this heading">#</a></h1>
+<h1>Module 4: Unsupervised Learning and Dimensionality Reduction<a class="headerlink" href="#module-4-unsupervised-learning-and-dimensionality-reduction" title="Permalink to this heading">¶</a></h1>
 <section id="weeks-7-9">
-<h2>Weeks 7-9<a class="headerlink" href="#weeks-7-9" title="Permalink to this heading">#</a></h2>
+<h2>Weeks 7-9<a class="headerlink" href="#weeks-7-9" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Focus: Unsupervised learning techniques and reducing data complexity.</p></li>
 <li><p>Topics include clustering, Gaussian Mixture Models, PCA, and t-SNE.</p></li>
 </ul>
 </section>
 <section id="week-7-ensemble-methods">
-<h2>Week 7: Ensemble Methods<a class="headerlink" href="#week-7-ensemble-methods" title="Permalink to this heading">#</a></h2>
+<h2>Week 7: Ensemble Methods<a class="headerlink" href="#week-7-ensemble-methods" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 31:</strong> Introduction to Ensemble Learning Techniques</p>
 <ul>
@@ -715,7 +351,7 @@ document.write(`
 </ul>
 </section>
 <section id="week-8-unsupervised-learning">
-<h2>Week 8: Unsupervised Learning<a class="headerlink" href="#week-8-unsupervised-learning" title="Permalink to this heading">#</a></h2>
+<h2>Week 8: Unsupervised Learning<a class="headerlink" href="#week-8-unsupervised-learning" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 36:</strong> Introduction to Unsupervised Learning and Clustering Basics</p>
 <ul>
@@ -750,7 +386,7 @@ document.write(`
 </ul>
 </section>
 <section id="week-9-dimensionality-reduction">
-<h2>Week 9: Dimensionality Reduction<a class="headerlink" href="#week-9-dimensionality-reduction" title="Permalink to this heading">#</a></h2>
+<h2>Week 9: Dimensionality Reduction<a class="headerlink" href="#week-9-dimensionality-reduction" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 41:</strong> Introduction to Dimensionality Reduction and PCA Basics</p>
 <ul>
@@ -787,16 +423,16 @@ document.write(`
 </section>
 </section>
 <section id="module-5-deep-learning-foundations">
-<h1>Module 5: Deep Learning Foundations<a class="headerlink" href="#module-5-deep-learning-foundations" title="Permalink to this heading">#</a></h1>
+<h1>Module 5: Deep Learning Foundations<a class="headerlink" href="#module-5-deep-learning-foundations" title="Permalink to this heading">¶</a></h1>
 <section id="weeks-10-12">
-<h2>Weeks 10-12<a class="headerlink" href="#weeks-10-12" title="Permalink to this heading">#</a></h2>
+<h2>Weeks 10-12<a class="headerlink" href="#weeks-10-12" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Focus: Core concepts and architectures in deep learning.</p></li>
 <li><p>Topics include neural networks, CNNs, RNNs, and applications in image and sequence processing.</p></li>
 </ul>
 </section>
 <section id="week-10-introduction-to-neural-networks">
-<h2>Week 10: Introduction to Neural Networks<a class="headerlink" href="#week-10-introduction-to-neural-networks" title="Permalink to this heading">#</a></h2>
+<h2>Week 10: Introduction to Neural Networks<a class="headerlink" href="#week-10-introduction-to-neural-networks" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 46:</strong> Understanding Neural Networks and Perceptrons</p>
 <ul>
@@ -831,7 +467,7 @@ document.write(`
 </ul>
 </section>
 <section id="week-11-deep-learning-convolutional-neural-networks-cnns">
-<h2>Week 11: Deep Learning - Convolutional Neural Networks (CNNs)<a class="headerlink" href="#week-11-deep-learning-convolutional-neural-networks-cnns" title="Permalink to this heading">#</a></h2>
+<h2>Week 11: Deep Learning - Convolutional Neural Networks (CNNs)<a class="headerlink" href="#week-11-deep-learning-convolutional-neural-networks-cnns" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 51:</strong> Introduction to CNNs and Convolutional Layers</p>
 <ul>
@@ -866,7 +502,7 @@ document.write(`
 </ul>
 </section>
 <section id="week-12-deep-learning-recurrent-neural-networks-rnns">
-<h2>Week 12: Deep Learning - Recurrent Neural Networks (RNNs)<a class="headerlink" href="#week-12-deep-learning-recurrent-neural-networks-rnns" title="Permalink to this heading">#</a></h2>
+<h2>Week 12: Deep Learning - Recurrent Neural Networks (RNNs)<a class="headerlink" href="#week-12-deep-learning-recurrent-neural-networks-rnns" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 56:</strong> Introduction to RNNs and Their Architecture</p>
 <ul>
@@ -903,16 +539,16 @@ document.write(`
 </section>
 </section>
 <section id="module-6-advanced-machine-learning-and-current-trends">
-<h1>Module 6: Advanced Machine Learning and Current Trends<a class="headerlink" href="#module-6-advanced-machine-learning-and-current-trends" title="Permalink to this heading">#</a></h1>
+<h1>Module 6: Advanced Machine Learning and Current Trends<a class="headerlink" href="#module-6-advanced-machine-learning-and-current-trends" title="Permalink to this heading">¶</a></h1>
 <section id="weeks-13-14">
-<h2>Weeks 13-14<a class="headerlink" href="#weeks-13-14" title="Permalink to this heading">#</a></h2>
+<h2>Weeks 13-14<a class="headerlink" href="#weeks-13-14" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Focus: Advanced topics and emerging trends in machine learning.</p></li>
 <li><p>Topics include reinforcement learning, transfer learning, GANs, and attention mechanisms.</p></li>
 </ul>
 </section>
 <section id="week-13-reinforcement-learning">
-<h2>Week 13: Reinforcement Learning<a class="headerlink" href="#week-13-reinforcement-learning" title="Permalink to this heading">#</a></h2>
+<h2>Week 13: Reinforcement Learning<a class="headerlink" href="#week-13-reinforcement-learning" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 61:</strong> Fundamentals of Reinforcement Learning</p>
 <ul>
@@ -947,7 +583,7 @@ document.write(`
 </ul>
 </section>
 <section id="week-14-advanced-topics-and-current-trends">
-<h2>Week 14: Advanced Topics and Current Trends<a class="headerlink" href="#week-14-advanced-topics-and-current-trends" title="Permalink to this heading">#</a></h2>
+<h2>Week 14: Advanced Topics and Current Trends<a class="headerlink" href="#week-14-advanced-topics-and-current-trends" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 66:</strong> Transfer Learning in Depth</p>
 <ul>
@@ -984,16 +620,16 @@ document.write(`
 </section>
 </section>
 <section id="module-7-practical-aspects-of-machine-learning">
-<h1>Module 7: Practical Aspects of Machine Learning<a class="headerlink" href="#module-7-practical-aspects-of-machine-learning" title="Permalink to this heading">#</a></h1>
+<h1>Module 7: Practical Aspects of Machine Learning<a class="headerlink" href="#module-7-practical-aspects-of-machine-learning" title="Permalink to this heading">¶</a></h1>
 <section id="weeks-15-17">
-<h2>Weeks 15-17<a class="headerlink" href="#weeks-15-17" title="Permalink to this heading">#</a></h2>
+<h2>Weeks 15-17<a class="headerlink" href="#weeks-15-17" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Focus: Operationalizing machine learning models and understanding transformers.</p></li>
 <li><p>Topics include MLOps, ETL processes, and implementation of transformer models.</p></li>
 </ul>
 </section>
 <section id="week-15-mlops">
-<h2>Week 15: MLOps<a class="headerlink" href="#week-15-mlops" title="Permalink to this heading">#</a></h2>
+<h2>Week 15: MLOps<a class="headerlink" href="#week-15-mlops" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 71:</strong> Introduction to MLOps and Machine Learning Lifecycle</p>
 <ul>
@@ -1028,7 +664,7 @@ document.write(`
 </ul>
 </section>
 <section id="week-16-etl-processes">
-<h2>Week 16: ETL Processes<a class="headerlink" href="#week-16-etl-processes" title="Permalink to this heading">#</a></h2>
+<h2>Week 16: ETL Processes<a class="headerlink" href="#week-16-etl-processes" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 76:</strong> Introduction to ETL and Data Extraction Techniques</p>
 <ul>
@@ -1063,7 +699,7 @@ document.write(`
 </ul>
 </section>
 <section id="week-17-transformers-in-deep-learning">
-<h2>Week 17: Transformers in Deep Learning<a class="headerlink" href="#week-17-transformers-in-deep-learning" title="Permalink to this heading">#</a></h2>
+<h2>Week 17: Transformers in Deep Learning<a class="headerlink" href="#week-17-transformers-in-deep-learning" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 81:</strong> Understanding Transformers Architecture</p>
 <ul>
@@ -1100,16 +736,16 @@ document.write(`
 </section>
 </section>
 <section id="module-8-applied-ai-and-ethical-considerations">
-<h1>Module 8: Applied AI and Ethical Considerations<a class="headerlink" href="#module-8-applied-ai-and-ethical-considerations" title="Permalink to this heading">#</a></h1>
+<h1>Module 8: Applied AI and Ethical Considerations<a class="headerlink" href="#module-8-applied-ai-and-ethical-considerations" title="Permalink to this heading">¶</a></h1>
 <section id="weeks-18-19">
-<h2>Weeks 18-19<a class="headerlink" href="#weeks-18-19" title="Permalink to this heading">#</a></h2>
+<h2>Weeks 18-19<a class="headerlink" href="#weeks-18-19" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Focus: Application of AI in various industries and ethical considerations.</p></li>
 <li><p>Topics include AI applications in healthcare, finance, retail, manufacturing, and ethical issues</p></li>
 </ul>
 </section>
 <section id="week-18-ethics-in-ai">
-<h2>Week 18: Ethics in AI<a class="headerlink" href="#week-18-ethics-in-ai" title="Permalink to this heading">#</a></h2>
+<h2>Week 18: Ethics in AI<a class="headerlink" href="#week-18-ethics-in-ai" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 86:</strong> AI Ethics, Bias, and Fairness</p>
 <ul>
@@ -1144,7 +780,7 @@ document.write(`
 </ul>
 </section>
 <section id="week-19-applied-industry-sector-applications">
-<h2>Week 19: Applied Industry Sector Applications<a class="headerlink" href="#week-19-applied-industry-sector-applications" title="Permalink to this heading">#</a></h2>
+<h2>Week 19: Applied Industry Sector Applications<a class="headerlink" href="#week-19-applied-industry-sector-applications" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 91:</strong> AI in Healthcare</p>
 <ul>
@@ -1181,16 +817,16 @@ document.write(`
 </section>
 </section>
 <section id="module-9-capstone-project">
-<h1>Module 9: Capstone Project<a class="headerlink" href="#module-9-capstone-project" title="Permalink to this heading">#</a></h1>
+<h1>Module 9: Capstone Project<a class="headerlink" href="#module-9-capstone-project" title="Permalink to this heading">¶</a></h1>
 <section id="weeks-20-21">
-<h2>Weeks 20-21<a class="headerlink" href="#weeks-20-21" title="Permalink to this heading">#</a></h2>
+<h2>Weeks 20-21<a class="headerlink" href="#weeks-20-21" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p>Focus: Application of learned concepts in a comprehensive project.</p></li>
 <li><p>A practical project encompassing data analysis, model building, and evaluation.</p></li>
 </ul>
 </section>
 <section id="week-20-applied-cybersecurity-for-ai">
-<h2>Week 20: Applied Cybersecurity for AI<a class="headerlink" href="#week-20-applied-cybersecurity-for-ai" title="Permalink to this heading">#</a></h2>
+<h2>Week 20: Applied Cybersecurity for AI<a class="headerlink" href="#week-20-applied-cybersecurity-for-ai" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 96:</strong> Introduction to Cybersecurity in AI</p>
 <ul>
@@ -1225,7 +861,7 @@ document.write(`
 </ul>
 </section>
 <section id="week-21-capstone-project">
-<h2>Week 21: Capstone Project<a class="headerlink" href="#week-21-capstone-project" title="Permalink to this heading">#</a></h2>
+<h2>Week 21: Capstone Project<a class="headerlink" href="#week-21-capstone-project" title="Permalink to this heading">¶</a></h2>
 <ul class="simple">
 <li><p><strong>Lesson 101:</strong> Capstone Project Planning and Topic Selection</p>
 <ul>
@@ -1253,7 +889,7 @@ document.write(`
     {
         requestKernel: true,
         binderOptions: {
-            repo: "binder-examples/jupyter-stacks-datascience",
+            repo: "100daysofml/100daysofml.github.io",
             ref: "master",
         },
         codeMirrorConfig: {
@@ -1269,159 +905,129 @@ document.write(`
     </script>
     <script>kernelName = 'python3'</script>
 
-                </article>
-              
-
-              
-              
-              
-              
-                <footer class="prev-next-footer">
-                  
-<div class="prev-next-area">
-    <a class="left-prev"
-       href="00_Overview.html"
-       title="previous page">
-      <i class="fa-solid fa-angle-left"></i>
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Welcome to your Jupyter Book</p>
-      </div>
-    </a>
-    <a class="right-next"
-       href="00b_DailyResources.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><strong>Week 1: Python Basics and Numerical Operations with Jupyter Notebooks</strong></p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
-</div>
-                </footer>
-              
-            </div>
-            
-            
-              
-                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
-
-  <div class="sidebar-secondary-item">
-  <div class="page-toc tocsection onthispage">
-    <i class="fa-solid fa-list"></i> Contents
-  </div>
-  <nav class="bd-toc-nav page-toc">
-    <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Module 1: Introduction to Python and Basic Mathematics</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-1-2">Weeks 1-2</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-1-python-basics-and-numerical-operations">Week 1: Python Basics and Numerical Operations</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-2-introduction-to-mathematical-concepts-in-python">Week 2: Introduction to Mathematical Concepts in Python</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-2-data-preprocessing-and-exploratory-data-analysis">Module 2: Data Preprocessing and Exploratory Data Analysis</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-3-4">Weeks 3-4</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-3-data-preprocessing">Week 3: Data Preprocessing</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-4-exploratory-data-analysis-eda">Week 4: Exploratory Data Analysis (EDA)</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-3-supervised-learning-regression-and-classification">Module 3: Supervised Learning - Regression and Classification</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-5-6">Weeks 5-6</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-5-supervised-learning-regression">Week 5: Supervised Learning - Regression</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-6-supervised-learning-classification">Week 6: Supervised Learning - Classification</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-4-unsupervised-learning-and-dimensionality-reduction">Module 4: Unsupervised Learning and Dimensionality Reduction</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-7-9">Weeks 7-9</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-7-ensemble-methods">Week 7: Ensemble Methods</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-8-unsupervised-learning">Week 8: Unsupervised Learning</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-9-dimensionality-reduction">Week 9: Dimensionality Reduction</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-5-deep-learning-foundations">Module 5: Deep Learning Foundations</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-10-12">Weeks 10-12</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-10-introduction-to-neural-networks">Week 10: Introduction to Neural Networks</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-11-deep-learning-convolutional-neural-networks-cnns">Week 11: Deep Learning - Convolutional Neural Networks (CNNs)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-12-deep-learning-recurrent-neural-networks-rnns">Week 12: Deep Learning - Recurrent Neural Networks (RNNs)</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-6-advanced-machine-learning-and-current-trends">Module 6: Advanced Machine Learning and Current Trends</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-13-14">Weeks 13-14</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-13-reinforcement-learning">Week 13: Reinforcement Learning</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-14-advanced-topics-and-current-trends">Week 14: Advanced Topics and Current Trends</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-7-practical-aspects-of-machine-learning">Module 7: Practical Aspects of Machine Learning</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-15-17">Weeks 15-17</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-15-mlops">Week 15: MLOps</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-16-etl-processes">Week 16: ETL Processes</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-17-transformers-in-deep-learning">Week 17: Transformers in Deep Learning</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-8-applied-ai-and-ethical-considerations">Module 8: Applied AI and Ethical Considerations</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-18-19">Weeks 18-19</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-18-ethics-in-ai">Week 18: Ethics in AI</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-19-applied-industry-sector-applications">Week 19: Applied Industry Sector Applications</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-9-capstone-project">Module 9: Capstone Project</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-20-21">Weeks 20-21</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-20-applied-cybersecurity-for-ai">Week 20: Applied Cybersecurity for AI</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#week-21-capstone-project">Week 21: Capstone Project</a></li>
-</ul>
-</li>
-</ul>
-
-  </nav></div>
-
-</div></div>
-              
-            
+            <div class="clearer"></div>
           </div>
-          <footer class="bd-footer-content">
-            
-<div class="bd-footer-content__inner container">
-  
-  <div class="footer-item">
-    
-<p class="component-author">
-By The Jupyter Book community
-</p>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+            <p class="logo"><a href="../00_Opening_page.html">
+              <img class="logo" src="../_static/100days_circle.jpg" alt="Logo"/>
+            </a></p>
+  <div>
+    <h3><a href="../00_Opening_page.html">Table of Contents</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Module 1: Introduction to Python and Basic Mathematics</a><ul>
+<li><a class="reference internal" href="#weeks-1-2">Weeks 1-2</a></li>
+<li><a class="reference internal" href="#week-1-python-basics-and-numerical-operations">Week 1: Python Basics and Numerical Operations</a></li>
+<li><a class="reference internal" href="#week-2-introduction-to-mathematical-concepts-in-python">Week 2: Introduction to Mathematical Concepts in Python</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-2-data-preprocessing-and-exploratory-data-analysis">Module 2: Data Preprocessing and Exploratory Data Analysis</a><ul>
+<li><a class="reference internal" href="#weeks-3-4">Weeks 3-4</a></li>
+<li><a class="reference internal" href="#week-3-data-preprocessing">Week 3: Data Preprocessing</a></li>
+<li><a class="reference internal" href="#week-4-exploratory-data-analysis-eda">Week 4: Exploratory Data Analysis (EDA)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-3-supervised-learning-regression-and-classification">Module 3: Supervised Learning - Regression and Classification</a><ul>
+<li><a class="reference internal" href="#weeks-5-6">Weeks 5-6</a></li>
+<li><a class="reference internal" href="#week-5-supervised-learning-regression">Week 5: Supervised Learning - Regression</a></li>
+<li><a class="reference internal" href="#week-6-supervised-learning-classification">Week 6: Supervised Learning - Classification</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-4-unsupervised-learning-and-dimensionality-reduction">Module 4: Unsupervised Learning and Dimensionality Reduction</a><ul>
+<li><a class="reference internal" href="#weeks-7-9">Weeks 7-9</a></li>
+<li><a class="reference internal" href="#week-7-ensemble-methods">Week 7: Ensemble Methods</a></li>
+<li><a class="reference internal" href="#week-8-unsupervised-learning">Week 8: Unsupervised Learning</a></li>
+<li><a class="reference internal" href="#week-9-dimensionality-reduction">Week 9: Dimensionality Reduction</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-5-deep-learning-foundations">Module 5: Deep Learning Foundations</a><ul>
+<li><a class="reference internal" href="#weeks-10-12">Weeks 10-12</a></li>
+<li><a class="reference internal" href="#week-10-introduction-to-neural-networks">Week 10: Introduction to Neural Networks</a></li>
+<li><a class="reference internal" href="#week-11-deep-learning-convolutional-neural-networks-cnns">Week 11: Deep Learning - Convolutional Neural Networks (CNNs)</a></li>
+<li><a class="reference internal" href="#week-12-deep-learning-recurrent-neural-networks-rnns">Week 12: Deep Learning - Recurrent Neural Networks (RNNs)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-6-advanced-machine-learning-and-current-trends">Module 6: Advanced Machine Learning and Current Trends</a><ul>
+<li><a class="reference internal" href="#weeks-13-14">Weeks 13-14</a></li>
+<li><a class="reference internal" href="#week-13-reinforcement-learning">Week 13: Reinforcement Learning</a></li>
+<li><a class="reference internal" href="#week-14-advanced-topics-and-current-trends">Week 14: Advanced Topics and Current Trends</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-7-practical-aspects-of-machine-learning">Module 7: Practical Aspects of Machine Learning</a><ul>
+<li><a class="reference internal" href="#weeks-15-17">Weeks 15-17</a></li>
+<li><a class="reference internal" href="#week-15-mlops">Week 15: MLOps</a></li>
+<li><a class="reference internal" href="#week-16-etl-processes">Week 16: ETL Processes</a></li>
+<li><a class="reference internal" href="#week-17-transformers-in-deep-learning">Week 17: Transformers in Deep Learning</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-8-applied-ai-and-ethical-considerations">Module 8: Applied AI and Ethical Considerations</a><ul>
+<li><a class="reference internal" href="#weeks-18-19">Weeks 18-19</a></li>
+<li><a class="reference internal" href="#week-18-ethics-in-ai">Week 18: Ethics in AI</a></li>
+<li><a class="reference internal" href="#week-19-applied-industry-sector-applications">Week 19: Applied Industry Sector Applications</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-9-capstone-project">Module 9: Capstone Project</a><ul>
+<li><a class="reference internal" href="#weeks-20-21">Weeks 20-21</a></li>
+<li><a class="reference internal" href="#week-20-applied-cybersecurity-for-ai">Week 20: Applied Cybersecurity for AI</a></li>
+<li><a class="reference internal" href="#week-21-capstone-project">Week 21: Capstone Project</a></li>
+</ul>
+</li>
+</ul>
 
   </div>
-  
-  <div class="footer-item">
-    
-
-  <p class="copyright">
-    
-      © Copyright 2022.
-      <br/>
-    
-  </p>
-
+  <div>
+    <h4>Previous topic</h4>
+    <p class="topless"><a href="00_Overview.html"
+                          title="previous chapter">100 Days of Machine Learning Challenge</a></p>
   </div>
-  
-  <div class="footer-item">
-    
+  <div>
+    <h4>Next topic</h4>
+    <p class="topless"><a href="00b_DailyResources.html"
+                          title="next chapter"><strong>Week 1: Python Basics and Numerical Operations with Jupyter Notebooks</strong></a></p>
   </div>
-  
-  <div class="footer-item">
-    
-  </div>
-  
-</div>
-          </footer>
-        
-
-      </main>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="../_sources/Week_0/00a_DailyChallenge.md"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Go" />
+    </form>
     </div>
-  </div>
-  
-  <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
-
-  <footer class="bd-footer">
-  </footer>
+</div>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="00b_DailyResources.html" title="Week 1: Python Basics and Numerical Operations with Jupyter Notebooks"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="00_Overview.html" title="100 Days of Machine Learning Challenge"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../00_Opening_page.html">100 Days of Machine Learning</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="00_Overview.html" >100 Days of Machine Learning Challenge</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Module 1: Introduction to Python and Basic Mathematics</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2022.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 5.0.2.
+    </div>
   </body>
 </html>
