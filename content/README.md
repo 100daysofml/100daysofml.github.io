@@ -53,7 +53,7 @@ Connect with learners and experts in our community. Share your insights, partici
 ### Social Media and Contact
 - Twitter: [@100daysml](https://twitter.com/100daysml)
 - Reddit: [r/100daysml](https://www.reddit.com/r/100daysml/)
-- Discord: [Join us on Discord](https://discord.gg/Cq7xrK3X5Z)
+- Discord: [Join us on Discord](https://discord.com/invite/v4DsSSC5)
 - Website: [https://www.100daysofml.com](https://www.100daysofml.com)
 
 We are excited to embark on this journey of exploration and discovery in machine learning with you. Let's learn and grow together!

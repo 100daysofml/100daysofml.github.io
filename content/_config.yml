@@ -1,0 +1,67 @@
+title: 100 Days of Machine Learning
+subtitle: Python Code
+author: Aaron S. & John M.
+logo: _static/100days_circle.jpg
+#description: This website presents a set of lectures on dynamic programming for economics, designed and written by Thomas J. Sargent and John Stachurski.
+
+execute:
+  execute_notebooks: "cache"
+  timeout: 600 # 10 minutes
+  allow_errors: true
+
+only_build_toc_files: true
+
+
+
+#html:
+  #baseurl: https://www.100daysofml.com
+
+
+sphinx:
+  extra_extensions: [sphinx_multitoc_numbering, sphinxext.rediraffe, sphinx_tojupyter]
+  config:
+    html_favicon: _static/100days.ico
+    html_theme: groundwork
+    html_static_path: ['_static']
+    html_theme_options:
+      header_organisation_url: https://www.100daysofml.com
+      header_organisation: 100 Days of ML
+      repository_url: https://github.com/100daysofml/100daysofml.github.io/tree/gh-pages
+      #nb_repository_url: https://github.com/100daysofml/100daysofml.github.io
+      twitter: 100daysml
+      #twitter_logo_url: 
+      #og_logo_url: 
+      #description: This website presents 100 days of content focused on Machine Learning and Artificial Intelligence, written by Aaron S. and John M.
+      #keywords: Python, Machine Learning, Artificial Intelligence, Linear Algebra, Statistics, Calculus, Deep Learning, NLP, Computer Vision
+      #analytics:
+        #google_analytics_id: G-X7DH1M2DPY
+      launch_buttons:
+        notebook_interface        : classic  # The interface interactive links will activate ["classic", "jupyterlab"]
+        binderhub_url             : https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-j8jo309s/lab  # The URL of the BinderHub (e.g., https://mybinder.org)
+        colab_url                 : https://colab.research.google.com
+        thebe                     : true  # Add a thebe button to pages (requires the repository to run on Binder)
+    mathjax3_config:
+      tex:
+        macros:
+          "argmax" : "arg\\,max"
+          "argmin" : "arg\\,min"
+    mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
+    rediraffe_redirects:
+      index_toc.md: intro.md
+    tojupyter_static_file_path: ["source/_static", "_static"]
+    tojupyter_target_html: true
+    #tojupyter_urlpath: "https://www.100daysofml.com"
+    #tojupyter_image_urlpath: "https://www.100daysofml.com/_static/"
+    tojupyter_lang_synonyms: ["julia-1.9", "julia"]
+    tojupyter_kernels:
+      julia:
+        kernelspec:
+          display_name: Julia
+          language: julia
+          name: julia-1.9
+      python:
+        kernelspec:
+          display_name: Python
+          language: python
+          name: python3
+    tojupyter_images_markdown: true 
