@@ -1,5 +1,5 @@
-## Module 1: Introduction to Python and Basic Mathematics
-### Weeks 1-2
+#   Module 1: Introduction to Python and Basic Mathematics
+##  Weeks 1-2
 - Focus: Basic Python programming skills and foundational mathematics.
 - Topics include basic Python syntax, data types, control structures, linear algebra, calculus, and statistics.
 
@@ -46,8 +46,8 @@
   - Math Application: Performing basic statistical calculations and understanding distributions in Python.
 
 ----
-## Module 2: Data Preprocessing and Exploratory Data Analysis
-### Weeks 3-4
+#   Module 2: Data Preprocessing and Exploratory Data Analysis
+##  Weeks 3-4
 - Focus: Techniques for preparing and exploring data.
 - Topics include data preprocessing methods, exploratory data analysis, visualization, and descriptive statistics.
 
@@ -96,8 +96,8 @@
   - Math Focus: Information gain, Gini impurity, and feature importance metrics.
 
 ---
-## Module 3: Supervised Learning - Regression and Classification
-### Weeks 5-6
+  # Module 3: Supervised Learning - Regression and Classification
+ ## Weeks 5-6
 - Focus: Key concepts and algorithms in supervised learning.
 - Topics include regression, classification algorithms, decision trees, SVM, and ensemble methods.
 
@@ -144,8 +144,8 @@
   - Math Focus: Basics of probability and Bayes' theorem in the context of classification.
 
 ---
-## Module 4: Unsupervised Learning and Dimensionality Reduction
-### Weeks 7-9
+ # Module 4: Unsupervised Learning and Dimensionality Reduction
+ ## Weeks 7-9
 - Focus: Unsupervised learning techniques and reducing data complexity.
 - Topics include clustering, Gaussian Mixture Models, PCA, and t-SNE.
 
@@ -213,8 +213,8 @@
   - Math Focus: Mathematical principles behind these techniques and their use-cases.
 
 ---
-## Module 5: Deep Learning Foundations
-### Weeks 10-12
+ # Module 5: Deep Learning Foundations
+ ## Weeks 10-12
 - Focus: Core concepts and architectures in deep learning.
 - Topics include neural networks, CNNs, RNNs, and applications in image and sequence processing.
 
@@ -282,8 +282,8 @@
   - Math Focus: Word embeddings, vector spaces, and sequence-to-sequence models.
 
 ---
-## Module 6: Advanced Machine Learning and Current Trends
-### Weeks 13-14
+ # Module 6: Advanced Machine Learning and Current Trends
+ ## Weeks 13-14
 - Focus: Advanced topics and emerging trends in machine learning.
 - Topics include reinforcement learning, transfer learning, GANs, and attention mechanisms.
 
@@ -329,8 +329,8 @@
   - Overview of the latest research and trends in machine learning and artificial intelligence.
   - Math Focus: Exploring the mathematical concepts behind emerging algorithms and technologies.
 ---
-## Module 7: Practical Aspects of Machine Learning
-### Weeks 15-17
+ # Module 7: Practical Aspects of Machine Learning
+ ## Weeks 15-17
 - Focus: Operationalizing machine learning models and understanding transformers.
 - Topics include MLOps, ETL processes, and implementation of transformer models.
 
@@ -398,8 +398,8 @@
   - Math Focus: Adapting transformer architecture to different data types.
 
 ---
-## Module 8: Applied AI and Ethical Considerations
-### Weeks 18-19
+ # Module 8: Applied AI and Ethical Considerations
+ ## Weeks 18-19
 - Focus: Application of AI in various industries and ethical considerations.
 - Topics include AI applications in healthcare, finance, retail, manufacturing, and ethical issues
 
@@ -446,8 +446,8 @@
   - Math Focus: Customizing AI models for sector-specific challenges and data types.
 
 ---
-## Module 9: Capstone Project
-### Weeks 20-21
+ # Module 9: Capstone Project
+ ## Weeks 20-21
 - Focus: Application of learned concepts in a comprehensive project.
 - A practical project encompassing data analysis, model building, and evaluation.
 
@@ -483,5 +483,5 @@
 
 - **Lesson 105:** Finalization and Presentation of Capstone Projects
   - Finalizing projects and preparing for presentations.
-  - Math Focus: Data interpretation, presentation techniques, and results analysis.# 100 Days of ML Challenge v3
+  - Math Focus: Data interpretation, presentation techniques, and results analysis.
 
