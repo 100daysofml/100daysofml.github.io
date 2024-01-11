@@ -1,0 +1,1057 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Day 7: Linear Algebra - Matrices and Matrix Operations &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_02/Lesson_07';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_02/Lesson_07.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Day 8: Calculus - Derivatives, Concept and Applications" href="Lesson_08.html" />
+    <link rel="prev" title="Lesson 6: Linear Algebra - Vector Operations in Python" href="Lesson_06.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    <no title>
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Module 1: Introduction to Python and Basic Mathematics</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Week 1: Python Basics and Numerical Operations with Jupyter Notebooks</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-j8jo309s/lab/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_02/Lesson_07.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/blob/master/Week_02/Lesson_07.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_02/Lesson_07.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_02/Lesson_07.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Day 7: Linear Algebra - Matrices and Matrix Operations</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-matrices">Introduction to Matrices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-matrix">What is a Matrix?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mastering-matrices-in-python">Mastering Matrices in Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-matrices">Creating Matrices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-matrix-operations-addition-and-subtraction">Basic Matrix Operations: Addition and Subtraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-multiplication-the-core-of-complex-calculations">Matrix Multiplication: The Core of Complex Calculations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-multiplication">Matrix Multiplication:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-dot-product-element-wise-product">Matrix Dot Product (Element-wise Product):</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transpose-and-inverse-flipping-and-reversing">Transpose and Inverse: Flipping and Reversing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-inverse-rules-and-properties">Matrix Inverse Rules and Properties:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-matrix-operations">Activity: Matrix Operations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-instructions">Step-by-step Instructions</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="day-7-linear-algebra-matrices-and-matrix-operations">
+<h1>Day 7: Linear Algebra - Matrices and Matrix Operations<a class="headerlink" href="#day-7-linear-algebra-matrices-and-matrix-operations" title="Permalink to this heading">#</a></h1>
+<section id="introduction-to-matrices">
+<h2>Introduction to Matrices<a class="headerlink" href="#introduction-to-matrices" title="Permalink to this heading">#</a></h2>
+<section id="what-is-a-matrix">
+<h3>What is a Matrix?<a class="headerlink" href="#what-is-a-matrix" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p><strong>Definition:</strong> A matrix is a rectangular array of numbers, symbols, or expressions arranged in rows and columns, usually represented using a capital letter such as <span class="math notranslate nohighlight">\(X\)</span>. Each entry in a matrix is called an element. A matrix is often denoted as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  X = \begin{bmatrix}
+  x_{11} &amp; x_{12} &amp; \cdots &amp; x_{1n} \\
+  x_{21} &amp; x_{22} &amp; \cdots &amp; x_{2n} \\
+  \vdots &amp; \vdots &amp; \ddots &amp; \vdots \\
+  x_{m1} &amp; x_{m2} &amp; \cdots &amp; x_{mn}
+  \end{bmatrix}
+  \end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(i\)</span> is the number of rows, and <span class="math notranslate nohighlight">\(j\)</span> is the number of columns.</p>
+</li>
+<li><p><strong>Importance:</strong> Matrices have diverse applications across various fields, just like vectors. They are fundamental in mathematics, physics, engineering, computer science, and many other disciplines. Some key applications include:</p>
+<ul class="simple">
+<li><p>In mathematics: Matrices are used in linear algebra for solving systems of linear equations, eigenvalue problems, and transformations.</p></li>
+<li><p>In physics: Matrices are used to represent physical quantities, such as the moment of inertia tensor in mechanics and quantum state representations in quantum mechanics.</p></li>
+<li><p>In engineering: Matrices are employed to describe systems of equations in control theory, electrical circuits, and structural analysis.</p></li>
+<li><p>In computer science: Matrices are used for image processing, data compression, and graph algorithms, among other applications.</p></li>
+</ul>
+</li>
+</ul>
+<p>Matrices play a crucial role in various mathematical and computational operations, making them an essential concept in the study of linear algebra and related fields.</p>
+</section>
+<section id="mastering-matrices-in-python">
+<h3>Mastering Matrices in Python<a class="headerlink" href="#mastering-matrices-in-python" title="Permalink to this heading">#</a></h3>
+<p><strong>Kickoff with NumPy</strong></p>
+<ul class="simple">
+<li><p>We’ll continue using NumPy since it’s fantastic for handling matrices (just like it was for vectors).</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="creating-matrices">
+<h2>Creating Matrices<a class="headerlink" href="#creating-matrices" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Let’s start by creating a couple of matrices. Think of these as grids filled with numbers.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{split} x1 = \left[ \begin{matrix} 1 &amp; 2 &amp; 3 \\ 4 &amp; 5 &amp; 6 \end{matrix} \right]^{2\times 3}\end{split} \begin{split} y1 = \left[ \begin{matrix} 7 &amp; 8 &amp; 9 \\ 10 &amp; 11 &amp; 12 \end{matrix} \right]^{2\times 3}\end{split} \nonumber \begin{split} z1 = \left[ \begin{matrix} 1 &amp; 3 \\ 5 &amp; 7 \\ 9 &amp; 11 \end{matrix} \right]^{3\times 2}\end{split} \nonumber
+\end{split}\]</div>
+<p>The subscript at the top isn’t necessary, however it is a nice reminder of the dimensions of the matrix are i x j (i.e. rows <span class="math notranslate nohighlight">\(i\)</span> x columns <span class="math notranslate nohighlight">\(j\)</span>).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> 
+               <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+
+<span class="n">y1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]])</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> 
+               <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">]])</span>
+<span class="c1">#Notice that either way that you declare your matrices, they are created the same and output the same.</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">],</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">11</span><span class="p">,</span> <span class="mi">12</span><span class="p">]])</span>
+<span class="n">z1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">]])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x1</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1">#The *.shape after the variable, allows you to verify the shape of the matrix.</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">y1</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">z1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">z1</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[1 2 3]
+ [4 5 6]]
+(2, 3) 
+
+[[ 7  8  9]
+ [10 11 12]]
+(2, 3) 
+
+[[ 1  3]
+ [ 5  7]
+ [ 9 11]]
+(3, 2)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="basic-matrix-operations-addition-and-subtraction">
+<h2>Basic Matrix Operations: Addition and Subtraction<a class="headerlink" href="#basic-matrix-operations-addition-and-subtraction" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Two matrices that <em>have the same shape</em> can be added or subtracted.</p></li>
+</ul>
+<div class="math notranslate nohighlight">
+\[
+(x1+y1)_{ij} = x1_{ij} + y1_{ij}
+\]</div>
+<div class="math notranslate nohighlight">
+\[
+(x1-y1)_{ij} = x1_{ij} - y1_{ij}
+\]</div>
+<p>The subscript <span class="math notranslate nohighlight">\(i\)</span> &amp; <span class="math notranslate nohighlight">\(j\)</span> are just representing the row &amp; column coordinates within the matrix.
+The subscript <span class="math notranslate nohighlight">\(i\)</span> &amp; <span class="math notranslate nohighlight">\(j\)</span> are just representing the row &amp; column coordinates within the matrix.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">m_add</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span>
+<span class="n">m_sub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m_add</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span> <span class="c1">#Matrix addition</span>
+<span class="n">m_sub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span> <span class="c1">#Matrix subtraction</span>
+
+
+<span class="nb">print</span><span class="p">(</span><span class="n">m_add</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1">#OR</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x1</span><span class="o">+</span><span class="n">y1</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">m_sub</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span> <span class="c1">#OR</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">x1</span><span class="o">-</span><span class="n">y1</span><span class="p">)</span>
+<span class="c1">#The preference is to reference a variable that defines the operation rather than the operation within a print statement.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 8 10 12]
+ [14 16 18]] 
+
+[[ 8 10 12]
+ [14 16 18]] 
+
+[[-6 -6 -6]
+ [-6 -6 -6]] 
+
+[[-6 -6 -6]
+ [-6 -6 -6]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="matrix-multiplication-the-core-of-complex-calculations">
+<h2>Matrix Multiplication: The Core of Complex Calculations<a class="headerlink" href="#matrix-multiplication-the-core-of-complex-calculations" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>A matrix of any shape can be multiplied by a <strong>scalar</strong> (i.e. a number describing magnitude).</p></li>
+</ul>
+<section id="matrix-multiplication">
+<h3>Matrix Multiplication:<a class="headerlink" href="#matrix-multiplication" title="Permalink to this heading">#</a></h3>
+<p><strong>Definition:</strong> Matrix multiplication, denoted as <span class="math notranslate nohighlight">\((Z = X \cdot Y\)</span>), is an operation between two matrices <span class="math notranslate nohighlight">\((X\)</span>) (<span class="math notranslate nohighlight">\((i \times j\)</span>)) and <span class="math notranslate nohighlight">\((y\)</span>) (<span class="math notranslate nohighlight">\((k \times l\)</span>)), where the number of columns in <span class="math notranslate nohighlight">\((X\)</span>) is equal to the number of rows in <span class="math notranslate nohighlight">\((Y\)</span>). The resulting matrix <span class="math notranslate nohighlight">\((C\)</span>) has dimensions (<span class="math notranslate nohighlight">\((m \times n\)</span>)).</p>
+<p><strong>Mathematical Formula:</strong> The element <span class="math notranslate nohighlight">\((Z[i][j]\)</span>) of the resulting matrix <span class="math notranslate nohighlight">\((Z\)</span>) is obtained by taking the dot product of the <span class="math notranslate nohighlight">\((i\)</span>)th row of matrix <span class="math notranslate nohighlight">\((X\)</span>) and the <span class="math notranslate nohighlight">\((l\)</span>) column of matrix <span class="math notranslate nohighlight">\((Y\)</span>):</p>
+<p><span class="math notranslate nohighlight">\([
+Z[i][j] = \sum_{k=1}^{n} (X[i][k] \cdot Y[k][j])
+\)</span>]</p>
+<p><strong>Key Rules:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Compatibility:</strong> For matrix multiplication to be defined, the number of columns in <span class="math notranslate nohighlight">\((X\)</span>) must be equal to the number of rows in <span class="math notranslate nohighlight">\((Y\)</span>) (i.e., the inner dimensions must match).</p></li>
+<li><p><strong>Associativity:</strong> Matrix multiplication is associative, meaning that <span class="math notranslate nohighlight">\(((X \cdot Y) \cdot Z = X \cdot (Y \cdot Z)\)</span>) if the dimensions allow.</p></li>
+<li><p><strong>Distributivity:</strong> Matrix multiplication distributes over matrix addition, i.e., <span class="math notranslate nohighlight">\((X \cdot (Y + Z) = (X \cdot Y) + (X \cdot Z)\)</span>).</p></li>
+</ol>
+</section>
+<section id="matrix-dot-product-element-wise-product">
+<h3>Matrix Dot Product (Element-wise Product):<a class="headerlink" href="#matrix-dot-product-element-wise-product" title="Permalink to this heading">#</a></h3>
+<p><strong>Definition:</strong> The matrix dot product, denoted as <span class="math notranslate nohighlight">\((Z = X \cdot Y\)</span>) (or <span class="math notranslate nohighlight">\((X \circ Y\)</span>)), is an element-wise operation between two matrices <span class="math notranslate nohighlight">\((A\)</span>) and <span class="math notranslate nohighlight">\((B\)</span>) of the same dimensions. The resulting matrix <span class="math notranslate nohighlight">\((Z\)</span>) has the same dimensions as (X) and (Y).</p>
+<p><strong>Mathematical Formula:</strong> Each element <span class="math notranslate nohighlight">\((Z[i][j]\)</span>) of the resulting matrix <span class="math notranslate nohighlight">\((Z\)</span>) is obtained by multiplying the corresponding elements of matrices <span class="math notranslate nohighlight">\((X\)</span>) and <span class="math notranslate nohighlight">\((Y\)</span>):</p>
+<p><span class="math notranslate nohighlight">\(Z[i][j] = X[i][j] \cdot Y[i][j]]\)</span></p>
+<p><strong>Key Rule:</strong> Matrix dot product is applied element-wise, meaning that each element of the resulting matrix is calculated independently based on the corresponding elements of the input matrices.</p>
+<p><strong>Use Cases:</strong> Matrix dot product is often used in element-wise operations, such as calculating element-wise differences or similarities between matrices. It is commonly used in various mathematical and computational tasks, including image processing and certain types of data transformations.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">m_sca</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">*</span> <span class="n">x1</span> <span class="c1">#Scalar multiplication</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m_sca</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="n">m_mul</span> <span class="o">=</span> <span class="n">x1</span><span class="nd">@z1</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m_mul</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1">#These two lines create random 4x4 matrices with integers 0-10</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">y2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="c1">#These two lines show that the communitative property does not work with matrix multiplication</span>
+<span class="n">m_mul1</span> <span class="o">=</span> <span class="n">x2</span><span class="nd">@y2</span>
+<span class="n">m_mul2</span> <span class="o">=</span> <span class="n">y2</span><span class="nd">@x2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">m_mul1</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">m_mul2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 5 10 15]
+ [20 25 30]] 
+
+[[ 38  50]
+ [ 83 113]] 
+
+[[188 136 140 113]
+ [102  46  66  75]
+ [ 58  63  55  21]
+ [103  92  85  37]] 
+
+[[ 70  74 112 139]
+ [ 61  65  98 128]
+ [ 70  55  70  94]
+ [104  94  94 121]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="transpose-and-inverse-flipping-and-reversing">
+<h2>Transpose and Inverse: Flipping and Reversing<a class="headerlink" href="#transpose-and-inverse-flipping-and-reversing" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Transposing (flipping) and finding the inverse (kind of like a reverse) of a matrix are crucial operations in machine learning.
+$<span class="math notranslate nohighlight">\(
+\begin{equation}
+X = \left[ \begin{array}{rrr} 1 &amp; 3 &amp; 5 \\ 7 &amp; 9 &amp; 11 \\ 13 &amp; 15 &amp; 17\end{array}\right] \hspace{1cm}
+X^T = \left[ \begin{array}{rrr} 1 &amp; 7 &amp; 13 \\ 3 &amp; 9 &amp; 15 \\ 5 &amp; 11 &amp; 17\end{array}\right] \hspace{1cm}
+\end{equation}
+\)</span>$</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p><strong>Transposing a Transpose:</strong></p>
+<ul class="simple">
+<li><p>Transposing a matrix twice returns the original matrix.</p></li>
+<li><p><em>Mathematical Notation:</em> <span class="math notranslate nohighlight">\((X^T)^T = X\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>Transposition of a Sum:</strong></p>
+<ul class="simple">
+<li><p>The transpose of the sum of two matrices is equal to the sum of their transposes.</p></li>
+<li><p><em>Mathematical Notation:</em> <span class="math notranslate nohighlight">\((X + Y)^T = X^T + Y^T\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>Transposition of a Product:</strong></p>
+<ul class="simple">
+<li><p>The transpose of the product of two matrices is equal to the product of their transposes taken in reverse order.</p></li>
+<li><p><em>Mathematical Notation:</em> <span class="math notranslate nohighlight">\((XY)^T = (Y^T \cdot X^T)\)</span></p></li>
+</ul>
+</li>
+<li><p><strong>Transposition of a Scalar:</strong></p>
+<ul class="simple">
+<li><p>Transposing a scalar (a single number) has no effect.</p></li>
+<li><p><em>Mathematical Notation:</em> <span class="math notranslate nohighlight">\((k)^T = k\)</span></p></li>
+</ul>
+</li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">]])</span>
+<span class="n">X_T</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">transpose</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_T</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 1  3  5]
+ [ 7  9 11]
+ [13 15 17]] 
+
+[[ 1  7 13]
+ [ 3  9 15]
+ [ 5 11 17]]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="matrix-inverse-rules-and-properties">
+<h3>Matrix Inverse Rules and Properties:<a class="headerlink" href="#matrix-inverse-rules-and-properties" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Existence of an Inverse:</strong></p>
+<ul class="simple">
+<li><p>Not all matrices have inverses. A matrix <span class="math notranslate nohighlight">\((X\)</span>) has an inverse (<span class="math notranslate nohighlight">\((X^{-1}\)</span>)) if and only if it is square and its determinant (<span class="math notranslate nohighlight">\((det(X)\)</span>)) is nonzero.</p></li>
+</ul>
+</li>
+<li><p><strong>Product with an Inverse:</strong></p>
+<ul class="simple">
+<li><p>Multiplying a matrix by its inverse results in the identity matrix.</p></li>
+<li><p><em>Mathematical Notation:</em> <span class="math notranslate nohighlight">\((X \cdot X^{-1} = I\)</span>)</p></li>
+</ul>
+</li>
+<li><p><strong>Order Matters:</strong></p>
+<ul class="simple">
+<li><p>Matrix multiplication is not commutative. The order of multiplication matters when finding the inverse of a product.</p></li>
+<li><p>To find the inverse of <span class="math notranslate nohighlight">\(XY\)</span>, you may need to find the inverses of <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> separately and then multiply them in reverse order: <span class="math notranslate nohighlight">\(((XY)^{-1} = Y^{-1} \cdot X^{-1}\)</span>).</p></li>
+</ul>
+</li>
+<li><p><strong>Inverse of Transpose:</strong></p>
+<ul class="simple">
+<li><p>The inverse of a transpose is the transpose of the inverse.</p></li>
+<li><p><em>Mathematical Notation:</em> <span class="math notranslate nohighlight">\(((X^T)^{-1} = (X^{-1})^T\)</span>)</p></li>
+</ul>
+</li>
+<li><p><strong>Inverse of a Scalar:</strong></p>
+<ul class="simple">
+<li><p>The inverse of a nonzero scalar <span class="math notranslate nohighlight">\(k\)</span> is <span class="math notranslate nohighlight">\((1/k\)</span>).</p></li>
+</ul>
+</li>
+</ol>
+<p>These rules and properties are fundamental when working with matrices and are essential for various mathematical and computational tasks, including solving systems of linear equations, performing transformations, and more.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="p">[</span><span class="mi">7</span><span class="p">,</span> <span class="mi">9</span><span class="p">,</span> <span class="mi">11</span><span class="p">],</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">17</span><span class="p">]])</span>
+<span class="n">X_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">X_inv</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 1  3  5]
+ [ 7  9 11]
+ [13 15 17]] 
+
+[[-4.43536327e+14  8.87072654e+14 -4.43536327e+14]
+ [ 8.87072654e+14 -1.77414531e+15  8.87072654e+14]
+ [-4.43536327e+14  8.87072654e+14 -4.43536327e+14]]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="activity-matrix-operations">
+<h2>Activity: Matrix Operations<a class="headerlink" href="#activity-matrix-operations" title="Permalink to this heading">#</a></h2>
+<section id="step-by-step-instructions">
+<h3>Step-by-step Instructions<a class="headerlink" href="#step-by-step-instructions" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p>Using numpy create two 4x4 matrices, named <code class="docutils literal notranslate"><span class="pre">mat_X</span></code> and <code class="docutils literal notranslate"><span class="pre">mat_Y</span></code>.
+$<span class="math notranslate nohighlight">\(
+\begin{equation}
+mat_{X} = \left[ \begin{array}{rrr} 5 &amp; 3 &amp; 1 \\ 9 &amp; 6 &amp; 3 \\ 13 &amp; 12 &amp; 11\end{array}\right] \hspace{1cm}
+mat_{Y} = \left[ \begin{array}{rrr} 4 &amp; 7 &amp; 8 \\ 22 &amp; 45 &amp; 76 \\ 32 &amp; 24 &amp; 54\end{array}\right] \hspace{1cm}
+\end{equation}
+\)</span>$</p></li>
+<li><p>Create a variable called <code class="docutils literal notranslate"><span class="pre">mat_XY</span></code>, multiplying <code class="docutils literal notranslate"><span class="pre">mat_X</span></code> and <code class="docutils literal notranslate"><span class="pre">mat_Y</span></code> together.</p></li>
+<li><p>Create a variable called <code class="docutils literal notranslate"><span class="pre">mat_XY_T</span></code>, this new variable will be the transposition of <code class="docutils literal notranslate"><span class="pre">mat_XY</span></code>.</p></li>
+<li><p>Create a variable called <code class="docutils literal notranslate"><span class="pre">mat_XY_T2</span></code>, this new variable will be a 2nd way that you can write the transposition of <code class="docutils literal notranslate"><span class="pre">mat_XY</span></code>.</p></li>
+<li><p>Create a variable called <code class="docutils literal notranslate"><span class="pre">mat_XY_inv</span></code>, this new variable will be the inverse of the <code class="docutils literal notranslate"><span class="pre">mat_XY_T</span></code> variable</p></li>
+<li><p>Display <code class="docutils literal notranslate"><span class="pre">mat_XY</span></code> and <code class="docutils literal notranslate"><span class="pre">mat_XY_T</span></code>, <code class="docutils literal notranslate"><span class="pre">mat_XY_T2</span></code>, and <code class="docutils literal notranslate"><span class="pre">mat_XY_inv</span></code>.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">mat_X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">9</span><span class="p">,</span> <span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="mi">13</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">11</span><span class="p">]])</span>
+<span class="n">mat_Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="mi">22</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">76</span><span class="p">],</span> <span class="p">[</span><span class="mi">32</span><span class="p">,</span> <span class="mi">24</span><span class="p">,</span> <span class="mi">54</span><span class="p">]])</span>
+
+<span class="n">mat_XY</span> <span class="o">=</span> <span class="n">mat_X</span><span class="nd">@mat_Y</span>
+
+<span class="n">mat_XY_T</span> <span class="o">=</span> <span class="n">mat_XY</span><span class="o">.</span><span class="n">T</span>
+<span class="n">mat_XY_T2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">transpose</span><span class="p">(</span><span class="n">mat_XY</span><span class="p">)</span>
+
+<span class="n">mat_XY_inv</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">inv</span><span class="p">(</span><span class="n">mat_XY_T</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">mat_XY</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat_XY_T</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat_XY_T2</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mat_XY_inv</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[[ 118  194  322]
+ [ 264  405  690]
+ [ 668  895 1610]] 
+
+[[ 118  264  668]
+ [ 194  405  895]
+ [ 322  690 1610]] 
+
+[[ 118  264  668]
+ [ 194  405  895]
+ [ 322  690 1610]] 
+
+[[-2.66750357e+13 -2.77420371e+13  2.64894702e+13]
+ [ 1.86725250e+13  1.94194260e+13 -1.85426292e+13]
+ [-2.66750357e+12 -2.77420371e+12  2.64894702e+12]]
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Further Resources</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Khan Academy - Linear Algebra:</strong></p>
+<ul class="simple">
+<li><p><strong>Description:</strong> Khan Academy offers a comprehensive course on linear algebra, including matrix operations, transformations, and applications. It covers the fundamentals and provides interactive exercises for practice.</p></li>
+<li><p><strong>Link:</strong> <a class="reference external" href="https://www.khanacademy.org/math/linear-algebra">Khan Academy - Linear Algebra</a></p></li>
+</ul>
+</li>
+<li><p><strong>MIT OpenCourseWare - Introduction to Linear Algebra:</strong></p>
+<ul class="simple">
+<li><p><strong>Description:</strong> MIT’s OpenCourseWare provides free access to their course materials, including lecture notes, assignments, and video lectures for “Introduction to Linear Algebra.” This course covers matrix operations, determinants, and eigenvalues.</p></li>
+<li><p><strong>Link:</strong> <a class="reference external" href="https://ocw.mit.edu/courses/mathematics/18-06sc-linear-algebra-fall-2011/index.htm">MIT OpenCourseWare - Introduction to Linear Algebra</a></p></li>
+</ul>
+</li>
+<li><p><strong>Coursera - Mathematics for Machine Learning: Linear Algebra:</strong></p>
+<ul class="simple">
+<li><p><strong>Description:</strong> This Coursera course is part of the “Mathematics for Machine Learning” specialization and focuses on linear algebra concepts, including matrix operations. It’s suitable for those interested in the application of linear algebra in machine learning.</p></li>
+<li><p><strong>Link:</strong> <a class="reference external" href="https://www.coursera.org/learn/linear-algebra-machine-learning">Coursera - Mathematics for Machine Learning: Linear Algebra</a></p></li>
+</ul>
+</li>
+</ol>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_02"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson_06.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lesson 6: Linear Algebra - Vector Operations in Python</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lesson_08.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Day 8: Calculus - Derivatives, Concept and Applications</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-matrices">Introduction to Matrices</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-matrix">What is a Matrix?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mastering-matrices-in-python">Mastering Matrices in Python</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#creating-matrices">Creating Matrices</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-matrix-operations-addition-and-subtraction">Basic Matrix Operations: Addition and Subtraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-multiplication-the-core-of-complex-calculations">Matrix Multiplication: The Core of Complex Calculations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-multiplication">Matrix Multiplication:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-dot-product-element-wise-product">Matrix Dot Product (Element-wise Product):</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#transpose-and-inverse-flipping-and-reversing">Transpose and Inverse: Flipping and Reversing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#matrix-inverse-rules-and-properties">Matrix Inverse Rules and Properties:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-matrix-operations">Activity: Matrix Operations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-by-step-instructions">Step-by-step Instructions</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

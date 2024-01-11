@@ -1,0 +1,1522 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Module 1: Introduction to Python and Basic Mathematics &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_00/00a_DailyChallenge';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_00/00a_DailyChallenge.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Week 1: Python Basics and Numerical Operations with Jupyter Notebooks" href="00b_DailyResources.html" />
+    <link rel="prev" title="100 Days of Machine Learning Challenge" href="00_Overview.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    <no title>
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="00_Overview.html">Welcome: Overview</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Module 1: Introduction to Python and Basic Mathematics</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="00b_DailyResources.html"><strong>Week 1: Python Basics and Numerical Operations with Jupyter Notebooks</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_00/00a_DailyChallenge.md" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_00/00a_DailyChallenge.md" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.md</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Module 1: Introduction to Python and Basic Mathematics</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Module 1: Introduction to Python and Basic Mathematics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-1-2">Weeks 1-2</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-1-python-basics-and-numerical-operations">Week 1: Python Basics and Numerical Operations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-2-introduction-to-mathematical-concepts-in-python">Week 2: Introduction to Mathematical Concepts in Python</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-2-data-preprocessing-and-exploratory-data-analysis">Module 2: Data Preprocessing and Exploratory Data Analysis</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-3-4">Weeks 3-4</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-3-data-preprocessing">Week 3: Data Preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-4-exploratory-data-analysis-eda">Week 4: Exploratory Data Analysis (EDA)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-3-supervised-learning-regression-and-classification">Module 3: Supervised Learning - Regression and Classification</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-5-6">Weeks 5-6</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-5-supervised-learning-regression">Week 5: Supervised Learning - Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-6-supervised-learning-classification">Week 6: Supervised Learning - Classification</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-4-unsupervised-learning-and-dimensionality-reduction">Module 4: Unsupervised Learning and Dimensionality Reduction</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-7-9">Weeks 7-9</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-7-ensemble-methods">Week 7: Ensemble Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-8-unsupervised-learning">Week 8: Unsupervised Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-9-dimensionality-reduction">Week 9: Dimensionality Reduction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-5-deep-learning-foundations">Module 5: Deep Learning Foundations</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-10-12">Weeks 10-12</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-10-introduction-to-neural-networks">Week 10: Introduction to Neural Networks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-11-deep-learning-convolutional-neural-networks-cnns">Week 11: Deep Learning - Convolutional Neural Networks (CNNs)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-12-deep-learning-recurrent-neural-networks-rnns">Week 12: Deep Learning - Recurrent Neural Networks (RNNs)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-6-advanced-machine-learning-and-current-trends">Module 6: Advanced Machine Learning and Current Trends</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-13-14">Weeks 13-14</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-13-reinforcement-learning">Week 13: Reinforcement Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-14-advanced-topics-and-current-trends">Week 14: Advanced Topics and Current Trends</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-7-practical-aspects-of-machine-learning">Module 7: Practical Aspects of Machine Learning</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-15-17">Weeks 15-17</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-15-mlops">Week 15: MLOps</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-16-etl-processes">Week 16: ETL Processes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-17-transformers-in-deep-learning">Week 17: Transformers in Deep Learning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-8-applied-ai-and-ethical-considerations">Module 8: Applied AI and Ethical Considerations</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-18-19">Weeks 18-19</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-18-ethics-in-ai">Week 18: Ethics in AI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-19-applied-industry-sector-applications">Week 19: Applied Industry Sector Applications</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-9-capstone-project">Module 9: Capstone Project</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-20-21">Weeks 20-21</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-20-applied-cybersecurity-for-ai">Week 20: Applied Cybersecurity for AI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-21-capstone-project">Week 21: Capstone Project</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="module-1-introduction-to-python-and-basic-mathematics">
+<h1>Module 1: Introduction to Python and Basic Mathematics<a class="headerlink" href="#module-1-introduction-to-python-and-basic-mathematics" title="Permalink to this heading">#</a></h1>
+<section id="weeks-1-2">
+<h2>Weeks 1-2<a class="headerlink" href="#weeks-1-2" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Focus: Basic Python programming skills and foundational mathematics.</p></li>
+<li><p>Topics include basic Python syntax, data types, control structures, linear algebra, calculus, and statistics.</p></li>
+</ul>
+<section id="week-1-python-basics-and-numerical-operations">
+<h3>Week 1: Python Basics and Numerical Operations<a class="headerlink" href="#week-1-python-basics-and-numerical-operations" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 1:</strong> Python Basics - Syntax, Variables</p>
+<ul>
+<li><p>Explore Python syntax and variable assignment.</p></li>
+<li><p>Math Focus: Basic arithmetic operations in Python.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 2:</strong> Data Types and Operators</p>
+<ul>
+<li><p>Understanding different data types in Python.</p></li>
+<li><p>Math Focus: Using logical operators for basic calculations.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 3:</strong> Control Structures - Loops</p>
+<ul>
+<li><p>Introduction to looping constructs in Python (for, while).</p></li>
+<li><p>Math Focus: Looping through mathematical sequences.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 4:</strong> Control Structures - Conditional Statements</p>
+<ul>
+<li><p>Using if, elif, and else statements for control flow.</p></li>
+<li><p>Math Focus: Implementing mathematical conditions in Python.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 5:</strong> Functions and Modules</p>
+<ul>
+<li><p>Defining and using functions; introduction to Python modules.</p></li>
+<li><p>Math Focus: Writing functions for mathematical formulas.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="week-2-introduction-to-mathematical-concepts-in-python">
+<h3>Week 2: Introduction to Mathematical Concepts in Python<a class="headerlink" href="#week-2-introduction-to-mathematical-concepts-in-python" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 6:</strong> Linear Algebra - Introduction, Vectors</p>
+<ul>
+<li><p>Basics of linear algebra; working with vectors in Python.</p></li>
+<li><p>Math Application: Performing vector operations using Python.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 7:</strong> Linear Algebra - Matrices, Matrix Operations</p>
+<ul>
+<li><p>Introduction to matrices and matrix operations in Python.</p></li>
+<li><p>Math Application: Implementing matrix operations in Python.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 8:</strong> Calculus - Derivatives, Concept and Applications</p>
+<ul>
+<li><p>Understanding the concept of derivatives in calculus.</p></li>
+<li><p>Math Application: Implementing derivatives using Python.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 9:</strong> Calculus - Integrals, Fundamental Theorems</p>
+<ul>
+<li><p>Basics of integrals and their application in calculus.</p></li>
+<li><p>Math Application: Performing simple integrations in Python.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 10:</strong> Probability and Statistics - Basic Concepts, Relevant Distributions</p>
+<ul>
+<li><p>Exploring basic concepts in probability and statistics.</p></li>
+<li><p>Math Application: Performing basic statistical calculations and understanding distributions in Python.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="module-2-data-preprocessing-and-exploratory-data-analysis">
+<h1>Module 2: Data Preprocessing and Exploratory Data Analysis<a class="headerlink" href="#module-2-data-preprocessing-and-exploratory-data-analysis" title="Permalink to this heading">#</a></h1>
+<section id="weeks-3-4">
+<h2>Weeks 3-4<a class="headerlink" href="#weeks-3-4" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Focus: Techniques for preparing and exploring data.</p></li>
+<li><p>Topics include data preprocessing methods, exploratory data analysis, visualization, and descriptive statistics.</p></li>
+</ul>
+<section id="week-3-data-preprocessing">
+<h3>Week 3: Data Preprocessing<a class="headerlink" href="#week-3-data-preprocessing" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 11:</strong> Introduction to Data Preprocessing in Python</p>
+<ul>
+<li><p>Explore the concepts and importance of data preprocessing.</p></li>
+<li><p>Math Focus: Understanding data types, scales, and basic statistics in Python.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 12:</strong> Splitting Data into Training and Test Sets in Python</p>
+<ul>
+<li><p>Techniques for splitting data into training and test sets.</p></li>
+<li><p>Math Focus: Random sampling methods and stratified sampling principles.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 13:</strong> Handling Missing Data with Python</p>
+<ul>
+<li><p>Techniques for detecting and handling missing data.</p></li>
+<li><p>Math Focus: Imputation techniques and their mathematical rationale.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 14:</strong> Data Normalization and Scaling using Python</p>
+<ul>
+<li><p>Learn about data normalization and feature scaling.</p></li>
+<li><p>Math Focus: Z-score normalization, min-max scaling, and their mathematical foundations.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 15:</strong> Encoding Categorical Data in Python</p>
+<ul>
+<li><p>Understand and implement categorical data encoding.</p></li>
+<li><p>Math Focus: Binary and one-hot encoding, label encoding, and their mathematical implications.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="week-4-exploratory-data-analysis-eda">
+<h3>Week 4: Exploratory Data Analysis (EDA)<a class="headerlink" href="#week-4-exploratory-data-analysis-eda" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 16:</strong> Introduction to EDA and Data Visualization in Python</p>
+<ul>
+<li><p>Basics of exploratory data analysis and data visualization techniques.</p></li>
+<li><p>Math Focus: Descriptive statistics and graphical representation of data.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 17:</strong> Implementing Descriptive Statistics for EDA in Python</p>
+<ul>
+<li><p>Practical implementation of descriptive statistics in Python.</p></li>
+<li><p>Math Focus: Measures of central tendency and dispersion.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 18:</strong> Visualization Techniques for Data Distribution in Python</p>
+<ul>
+<li><p>Create various types of plots to visualize data distributions.</p></li>
+<li><p>Math Focus: Histograms, box plots, and understanding data distributions.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 19:</strong> Correlation Analysis using Python</p>
+<ul>
+<li><p>Explore correlation analysis and its implementation.</p></li>
+<li><p>Math Focus: Correlation coefficients and interpreting correlation in data.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 20:</strong> Feature Selection and Importance in Python</p>
+<ul>
+<li><p>Techniques for feature selection and understanding feature importance.</p></li>
+<li><p>Math Focus: Information gain, Gini impurity, and feature importance metrics.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="module-3-supervised-learning-regression-and-classification">
+<h1>Module 3: Supervised Learning - Regression and Classification<a class="headerlink" href="#module-3-supervised-learning-regression-and-classification" title="Permalink to this heading">#</a></h1>
+<section id="weeks-5-6">
+<h2>Weeks 5-6<a class="headerlink" href="#weeks-5-6" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Focus: Key concepts and algorithms in supervised learning.</p></li>
+<li><p>Topics include regression, classification algorithms, decision trees, SVM, and ensemble methods.</p></li>
+</ul>
+<section id="week-5-supervised-learning-regression">
+<h3>Week 5: Supervised Learning - Regression<a class="headerlink" href="#week-5-supervised-learning-regression" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 21:</strong> Introduction to Regression Analysis in Python</p>
+<ul>
+<li><p>Basics of regression analysis and simple linear regression.</p></li>
+<li><p>Math Focus: Linear equation fundamentals and fitting models to data.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 22:</strong> Implementing Multiple Linear Regression in Python</p>
+<ul>
+<li><p>Understand and implement multiple linear regression.</p></li>
+<li><p>Math Focus: Multivariate calculus and regression coefficients interpretation.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 23:</strong> Advanced Regression Techniques - Polynomial, Lasso, and Ridge Regression</p>
+<ul>
+<li><p>Explore advanced regression techniques and their applications.</p></li>
+<li><p>Math Focus: Polynomial functions, Lasso and Ridge regularization techniques.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 24:</strong> Regression Model Evaluation Metrics in Python</p>
+<ul>
+<li><p>Key metrics for evaluating regression models.</p></li>
+<li><p>Math Focus: Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and R-squared.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 25:</strong> Addressing Overfitting and Underfitting in Regression Models</p>
+<ul>
+<li><p>Strategies to combat overfitting and underfitting in regression.</p></li>
+<li><p>Math Focus: Bias-variance tradeoff and regularization methods.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="week-6-supervised-learning-classification">
+<h3>Week 6: Supervised Learning - Classification<a class="headerlink" href="#week-6-supervised-learning-classification" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 26:</strong> Introduction to Classification and Logistic Regression in Python</p>
+<ul>
+<li><p>Introduction to classification algorithms in machine learning.</p></li>
+<li><p>Math Focus: Understanding the logistic function and its application in logistic regression.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 27:</strong> K-Nearest Neighbors (K-NN) Algorithm in Python</p>
+<ul>
+<li><p>Learning and implementing the K-NN algorithm for classification.</p></li>
+<li><p>Math Focus: Distance metrics (Euclidean, Manhattan) used in K-NN.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 28:</strong> Support Vector Machines (SVM) for Linear and Nonlinear Data</p>
+<ul>
+<li><p>Implementing SVM for both linear and nonlinearly separable data.</p></li>
+<li><p>Math Focus: Concept of hyperplanes, margin maximization, and kernel tricks.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 29:</strong> Decision Trees and Rule-Based Models in Python</p>
+<ul>
+<li><p>Building and interpreting decision tree models.</p></li>
+<li><p>Math Focus: Understanding entropy and information gain calculations.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 30:</strong> Naive Bayes Classifier Implementation</p>
+<ul>
+<li><p>Implementing the Naive Bayes classification algorithm.</p></li>
+<li><p>Math Focus: Basics of probability and Bayes’ theorem in the context of classification.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="module-4-unsupervised-learning-and-dimensionality-reduction">
+<h1>Module 4: Unsupervised Learning and Dimensionality Reduction<a class="headerlink" href="#module-4-unsupervised-learning-and-dimensionality-reduction" title="Permalink to this heading">#</a></h1>
+<section id="weeks-7-9">
+<h2>Weeks 7-9<a class="headerlink" href="#weeks-7-9" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Focus: Unsupervised learning techniques and reducing data complexity.</p></li>
+<li><p>Topics include clustering, Gaussian Mixture Models, PCA, and t-SNE.</p></li>
+</ul>
+<section id="week-7-ensemble-methods">
+<h3>Week 7: Ensemble Methods<a class="headerlink" href="#week-7-ensemble-methods" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 31:</strong> Introduction to Ensemble Learning Techniques</p>
+<ul>
+<li><p>Overview of ensemble learning and its importance in machine learning.</p></li>
+<li><p>Math Focus: Concept of model combination and weighted averaging.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 32:</strong> Bagging and Random Forests</p>
+<ul>
+<li><p>Understanding and implementing bagging and random forest algorithms.</p></li>
+<li><p>Math Focus: Bootstrap sampling and its role in bagging.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 33:</strong> Boosting Algorithms - AdaBoost</p>
+<ul>
+<li><p>Learning the AdaBoost algorithm and its implementation.</p></li>
+<li><p>Math Focus: Boosting algorithms and weight updates.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 34:</strong> Gradient Boosting Machines (GBM) and XGBoost</p>
+<ul>
+<li><p>Implementing GBM and XGBoost algorithms.</p></li>
+<li><p>Math Focus: Gradient descent in boosting and regularization techniques in XGBoost.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 35:</strong> Advanced Ensemble Techniques and Their Applications</p>
+<ul>
+<li><p>Exploring advanced concepts in ensemble learning.</p></li>
+<li><p>Math Focus: Stacking, blending, and their mathematical principles.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="week-8-unsupervised-learning">
+<h3>Week 8: Unsupervised Learning<a class="headerlink" href="#week-8-unsupervised-learning" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 36:</strong> Introduction to Unsupervised Learning and Clustering Basics</p>
+<ul>
+<li><p>Basics of unsupervised learning and clustering.</p></li>
+<li><p>Math Focus: Principles of cluster analysis and k-means algorithm.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 37:</strong> Implementing K-Means Clustering for Different Data Types</p>
+<ul>
+<li><p>Practical implementation of k-means for various datasets.</p></li>
+<li><p>Math Focus: Centroid calculation and convergence criteria in k-means.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 38:</strong> Hierarchical Clustering Techniques</p>
+<ul>
+<li><p>Understanding and implementing hierarchical clustering.</p></li>
+<li><p>Math Focus: Dendrogram interpretation and linkage methods.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 39:</strong> Density-Based Clustering with DBSCAN</p>
+<ul>
+<li><p>Learning about and implementing the DBSCAN algorithm.</p></li>
+<li><p>Math Focus: Core concepts of density-based clustering.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 40:</strong> Gaussian Mixture Models (GMM) and Expectation-Maximization</p>
+<ul>
+<li><p>Introduction to GMM and its implementation.</p></li>
+<li><p>Math Focus: Probability distributions and the expectation-maximization algorithm.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="week-9-dimensionality-reduction">
+<h3>Week 9: Dimensionality Reduction<a class="headerlink" href="#week-9-dimensionality-reduction" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 41:</strong> Introduction to Dimensionality Reduction and PCA Basics</p>
+<ul>
+<li><p>Fundamentals of dimensionality reduction and principal component analysis (PCA).</p></li>
+<li><p>Math Focus: Understanding covariance matrix, eigenvalues, and eigenvectors.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 42:</strong> Implementing PCA in Python</p>
+<ul>
+<li><p>Practical application of PCA using Python.</p></li>
+<li><p>Math Focus: Steps involved in PCA computation.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 43:</strong> Singular Value Decomposition (SVD) and Its Applications</p>
+<ul>
+<li><p>Understanding and implementing SVD.</p></li>
+<li><p>Math Focus: Concepts of matrix decomposition and its applications.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 44:</strong> t-SNE Technique for Dimensionality Reduction</p>
+<ul>
+<li><p>Learning about t-SNE and its implementation for high-dimensional data.</p></li>
+<li><p>Math Focus: t-Distributed Stochastic Neighbor Embedding algorithm.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 45:</strong> Other Techniques in Dimensionality Reduction</p>
+<ul>
+<li><p>Exploring additional dimensionality reduction techniques like LDA, autoencoders.</p></li>
+<li><p>Math Focus: Mathematical principles behind these techniques and their use-cases.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="module-5-deep-learning-foundations">
+<h1>Module 5: Deep Learning Foundations<a class="headerlink" href="#module-5-deep-learning-foundations" title="Permalink to this heading">#</a></h1>
+<section id="weeks-10-12">
+<h2>Weeks 10-12<a class="headerlink" href="#weeks-10-12" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Focus: Core concepts and architectures in deep learning.</p></li>
+<li><p>Topics include neural networks, CNNs, RNNs, and applications in image and sequence processing.</p></li>
+</ul>
+<section id="week-10-introduction-to-neural-networks">
+<h3>Week 10: Introduction to Neural Networks<a class="headerlink" href="#week-10-introduction-to-neural-networks" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 46:</strong> Understanding Neural Networks and Perceptrons</p>
+<ul>
+<li><p>Basics of neural networks and the perceptron model.</p></li>
+<li><p>Math Focus: Activation functions and their role in neural networks.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 47:</strong> Feedforward Neural Networks and Activation Functions</p>
+<ul>
+<li><p>Implementing feedforward neural networks.</p></li>
+<li><p>Math Focus: Understanding network layers, neuron connections, and activation functions.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 48:</strong> Backpropagation Algorithm in Neural Networks</p>
+<ul>
+<li><p>Deep dive into the backpropagation algorithm.</p></li>
+<li><p>Math Focus: The chain rule in calculus and its application in neural network training.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 49:</strong> Training Neural Networks - Loss Functions and Optimizers</p>
+<ul>
+<li><p>Techniques for training neural networks, focusing on loss functions and optimizers.</p></li>
+<li><p>Math Focus: Different types of loss functions and optimization algorithms.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 50:</strong> Evaluating and Tuning Neural Network Performance</p>
+<ul>
+<li><p>Strategies for evaluating and improving the performance of neural networks.</p></li>
+<li><p>Math Focus: Regularization methods, hyperparameter tuning, and avoiding overfitting.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="week-11-deep-learning-convolutional-neural-networks-cnns">
+<h3>Week 11: Deep Learning - Convolutional Neural Networks (CNNs)<a class="headerlink" href="#week-11-deep-learning-convolutional-neural-networks-cnns" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 51:</strong> Introduction to CNNs and Convolutional Layers</p>
+<ul>
+<li><p>Fundamentals of Convolutional Neural Networks (CNNs) and their architecture.</p></li>
+<li><p>Math Focus: Convolution operations and feature map generation.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 52:</strong> Pooling Layers and CNN Architectures</p>
+<ul>
+<li><p>Exploring pooling layers and various CNN architectures.</p></li>
+<li><p>Math Focus: Spatial pooling concepts and their effects on feature maps.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 53:</strong> Implementing a Basic CNN for Image Classification</p>
+<ul>
+<li><p>Hands-on implementation of a basic CNN for image classification tasks.</p></li>
+<li><p>Math Focus: Understanding filter and feature map calculations in CNNs.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 54:</strong> Advanced CNN Techniques for Image Classification</p>
+<ul>
+<li><p>Advanced techniques in CNNs for enhancing image classification models.</p></li>
+<li><p>Math Focus: Dropout, batch normalization, and their mathematical basis.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 55:</strong> Transfer Learning with CNNs</p>
+<ul>
+<li><p>Introduction to the concept of transfer learning in the context of CNNs.</p></li>
+<li><p>Math Focus: Knowledge transfer, fine-tuning, and feature extraction in deep learning.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="week-12-deep-learning-recurrent-neural-networks-rnns">
+<h3>Week 12: Deep Learning - Recurrent Neural Networks (RNNs)<a class="headerlink" href="#week-12-deep-learning-recurrent-neural-networks-rnns" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 56:</strong> Introduction to RNNs and Their Architecture</p>
+<ul>
+<li><p>Basics of Recurrent Neural Networks (RNNs) and their unique architecture.</p></li>
+<li><p>Math Focus: Understanding sequences and recurrence relations in RNNs.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 57:</strong> Implementing Long Short-Term Memory (LSTM) Networks</p>
+<ul>
+<li><p>Learning about and implementing LSTM networks.</p></li>
+<li><p>Math Focus: LSTM cell calculations and handling long-term dependencies.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 58:</strong> Building a Basic RNN/LSTM for Sequence Modeling</p>
+<ul>
+<li><p>Hands-on experience in building a basic RNN/LSTM model.</p></li>
+<li><p>Math Focus: Backpropagation through time and its challenges.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 59:</strong> RNNs for Time Series Analysis</p>
+<ul>
+<li><p>Application of RNNs in time series analysis and forecasting.</p></li>
+<li><p>Math Focus: Time series forecasting methods and sequence modeling.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 60:</strong> Utilizing RNNs in Natural Language Processing (NLP)</p>
+<ul>
+<li><p>Exploring the use of RNNs in various NLP tasks.</p></li>
+<li><p>Math Focus: Word embeddings, vector spaces, and sequence-to-sequence models.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="module-6-advanced-machine-learning-and-current-trends">
+<h1>Module 6: Advanced Machine Learning and Current Trends<a class="headerlink" href="#module-6-advanced-machine-learning-and-current-trends" title="Permalink to this heading">#</a></h1>
+<section id="weeks-13-14">
+<h2>Weeks 13-14<a class="headerlink" href="#weeks-13-14" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Focus: Advanced topics and emerging trends in machine learning.</p></li>
+<li><p>Topics include reinforcement learning, transfer learning, GANs, and attention mechanisms.</p></li>
+</ul>
+<section id="week-13-reinforcement-learning">
+<h3>Week 13: Reinforcement Learning<a class="headerlink" href="#week-13-reinforcement-learning" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 61:</strong> Fundamentals of Reinforcement Learning</p>
+<ul>
+<li><p>Introduction to the concepts and frameworks of reinforcement learning.</p></li>
+<li><p>Math Focus: Understanding reward function optimization and decision-making processes.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 62:</strong> Markov Decision Processes in Reinforcement Learning</p>
+<ul>
+<li><p>Deep dive into Markov Decision Processes (MDPs) and their role in RL.</p></li>
+<li><p>Math Focus: Transition probability matrices and state-value functions.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 63:</strong> Basics of Q-Learning</p>
+<ul>
+<li><p>Understanding and implementing the Q-learning algorithm.</p></li>
+<li><p>Math Focus: The Bellman equation and its role in value estimation.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 64:</strong> Deep Q-Networks (DQN) and Their Applications</p>
+<ul>
+<li><p>Exploring Deep Q-Networks and their use in complex environments.</p></li>
+<li><p>Math Focus: Integrating neural networks with Q-learning (loss function in DQN).</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 65:</strong> Policy Gradient Methods in Reinforcement Learning</p>
+<ul>
+<li><p>Learning about policy gradient methods and their implementation.</p></li>
+<li><p>Math Focus: Policy optimization techniques and gradient ascent.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="week-14-advanced-topics-and-current-trends">
+<h3>Week 14: Advanced Topics and Current Trends<a class="headerlink" href="#week-14-advanced-topics-and-current-trends" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 66:</strong> Transfer Learning in Depth</p>
+<ul>
+<li><p>Advanced concepts in transfer learning and its practical applications.</p></li>
+<li><p>Math Focus: Techniques for knowledge transfer and model fine-tuning.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 67:</strong> Generative Adversarial Networks (GANs)</p>
+<ul>
+<li><p>Introduction to GANs and their unique architecture.</p></li>
+<li><p>Math Focus: Understanding the minimax game theory in GANs.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 68:</strong> Attention Mechanisms and Transformers</p>
+<ul>
+<li><p>Exploring attention mechanisms and transformer models.</p></li>
+<li><p>Math Focus: Self-attention calculations and transformer architecture.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 69:</strong> Autoencoders and Their Applications</p>
+<ul>
+<li><p>Understanding autoencoders and their use in dimensionality reduction and more.</p></li>
+<li><p>Math Focus: Reconstruction loss and latent space representation.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 70:</strong> Current Research and Emerging Trends in ML/AIh</p>
+<ul>
+<li><p>Overview of the latest research and trends in machine learning and artificial intelligence.</p></li>
+<li><p>Math Focus: Exploring the mathematical concepts behind emerging algorithms and technologies.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="module-7-practical-aspects-of-machine-learning">
+<h1>Module 7: Practical Aspects of Machine Learning<a class="headerlink" href="#module-7-practical-aspects-of-machine-learning" title="Permalink to this heading">#</a></h1>
+<section id="weeks-15-17">
+<h2>Weeks 15-17<a class="headerlink" href="#weeks-15-17" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Focus: Operationalizing machine learning models and understanding transformers.</p></li>
+<li><p>Topics include MLOps, ETL processes, and implementation of transformer models.</p></li>
+</ul>
+<section id="week-15-mlops">
+<h3>Week 15: MLOps<a class="headerlink" href="#week-15-mlops" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 71:</strong> Introduction to MLOps and Machine Learning Lifecycle</p>
+<ul>
+<li><p>Overview of MLOps and its role in the ML lifecycle.</p></li>
+<li><p>Math Focus: Metrics for model evaluation and performance.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 72:</strong> Model Versioning and Experiment Tracking</p>
+<ul>
+<li><p>Techniques for versioning models and tracking experiments in ML projects.</p></li>
+<li><p>Math Focus: Statistical analysis of model performance.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 73:</strong> CI/CD in Machine Learning</p>
+<ul>
+<li><p>Understanding Continuous Integration and Continuous Delivery (CI/CD) in the context of ML.</p></li>
+<li><p>Math Focus: Automated testing and validation strategies.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 74:</strong> Model Monitoring and Maintenance</p>
+<ul>
+<li><p>Strategies for monitoring and maintaining ML models in production.</p></li>
+<li><p>Math Focus: Anomaly detection and performance drift in model behavior.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 75:</strong> Overview of MLOps Tools and Platforms</p>
+<ul>
+<li><p>Introduction to various MLOps tools and platforms.</p></li>
+<li><p>Math Focus: Considerations for scalability and efficiency.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="week-16-etl-processes">
+<h3>Week 16: ETL Processes<a class="headerlink" href="#week-16-etl-processes" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 76:</strong> Introduction to ETL and Data Extraction Techniques</p>
+<ul>
+<li><p>Basics of Extract, Transform, Load (ETL) processes and data extraction.</p></li>
+<li><p>Math Focus: Query optimization and data extraction methods.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 77:</strong> Data Transformation Techniques</p>
+<ul>
+<li><p>Techniques for transforming data in ETL processes.</p></li>
+<li><p>Math Focus: Algorithmic approaches to data transformation.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 78:</strong> Data Loading and Database Management</p>
+<ul>
+<li><p>Understanding the data loading phase and database management.</p></li>
+<li><p>Math Focus: Load balancing and database theory.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 79:</strong> Building an ETL Pipeline</p>
+<ul>
+<li><p>Practical steps in building an ETL pipeline.</p></li>
+<li><p>Math Focus: Workflow optimization and pipeline efficiency.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 80:</strong> ETL Tools and Technologies</p>
+<ul>
+<li><p>Overview of tools and technologies used in ETL processes.</p></li>
+<li><p>Math Focus: Evaluating technology based on performance metrics.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="week-17-transformers-in-deep-learning">
+<h3>Week 17: Transformers in Deep Learning<a class="headerlink" href="#week-17-transformers-in-deep-learning" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 81:</strong> Understanding Transformers Architecture</p>
+<ul>
+<li><p>Deep dive into the architecture of transformer models.</p></li>
+<li><p>Math Focus: Matrix multiplication and scaling in self-attention mechanisms.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 82:</strong> Self-Attention and Positional Encoding</p>
+<ul>
+<li><p>Exploring the concepts of self-attention and positional encoding in transformers.</p></li>
+<li><p>Math Focus: Mathematical theory behind encoding mechanisms.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 83:</strong> Implementing a Transformer Model</p>
+<ul>
+<li><p>Practical implementation of a transformer model for various tasks.</p></li>
+<li><p>Math Focus: Loss functions and optimization in transformer training.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 84:</strong> Transformers in Natural Language Processing</p>
+<ul>
+<li><p>Application of transformers in NLP (e.g., BERT, GPT models).</p></li>
+<li><p>Math Focus: Embedding space geometry and contextual representation.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 85:</strong> Transformers in Other Domains</p>
+<ul>
+<li><p>Exploring the use of transformer models beyond NLP (e.g., Vision Transformers).</p></li>
+<li><p>Math Focus: Adapting transformer architecture to different data types.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="module-8-applied-ai-and-ethical-considerations">
+<h1>Module 8: Applied AI and Ethical Considerations<a class="headerlink" href="#module-8-applied-ai-and-ethical-considerations" title="Permalink to this heading">#</a></h1>
+<section id="weeks-18-19">
+<h2>Weeks 18-19<a class="headerlink" href="#weeks-18-19" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Focus: Application of AI in various industries and ethical considerations.</p></li>
+<li><p>Topics include AI applications in healthcare, finance, retail, manufacturing, and ethical issues</p></li>
+</ul>
+<section id="week-18-ethics-in-ai">
+<h3>Week 18: Ethics in AI<a class="headerlink" href="#week-18-ethics-in-ai" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 86:</strong> AI Ethics, Bias, and Fairness</p>
+<ul>
+<li><p>Introduction to ethics in AI, focusing on bias and fairness.</p></li>
+<li><p>Math Focus: Fairness metrics and quantitative measures of bias.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 87:</strong> Privacy and Security in AI Systems</p>
+<ul>
+<li><p>Understanding the importance of privacy and security in AI.</p></li>
+<li><p>Math Focus: Cryptography fundamentals and data protection techniques.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 88:</strong> Explainability and Transparency in AI</p>
+<ul>
+<li><p>The need for explainability and transparency in AI models.</p></li>
+<li><p>Math Focus: Techniques for model interpretability and explanation.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 89:</strong> AI Regulations and Compliance</p>
+<ul>
+<li><p>Overview of regulations and policies affecting AI (e.g., GDPR).</p></li>
+<li><p>Math Focus: Compliance modeling and risk assessment in AI systems.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 90:</strong> Ethical Decision Making in AI Projects</p>
+<ul>
+<li><p>Approaches to ethical decision-making in AI project management.</p></li>
+<li><p>Math Focus: Decision theory and ethical considerations in AI development.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="week-19-applied-industry-sector-applications">
+<h3>Week 19: Applied Industry Sector Applications<a class="headerlink" href="#week-19-applied-industry-sector-applications" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 91:</strong> AI in Healthcare</p>
+<ul>
+<li><p>Application of AI in healthcare diagnostics and treatment planning.</p></li>
+<li><p>Math Focus: Statistical methods and predictive modeling in health data.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 92:</strong> AI in Finance</p>
+<ul>
+<li><p>Exploring the use of AI in finance for fraud detection and risk management.</p></li>
+<li><p>Math Focus: Algorithms for risk calculation and financial modeling.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 93:</strong> AI in Retail</p>
+<ul>
+<li><p>AI applications in retail for customer insights and supply chain management.</p></li>
+<li><p>Math Focus: Predictive analysis and demand forecasting in retail.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 94:</strong> AI in Manufacturing</p>
+<ul>
+<li><p>Use of AI in manufacturing for predictive maintenance and quality control.</p></li>
+<li><p>Math Focus: Reliability theory and statistical quality control methods.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 95:</strong> AI in Other Sectors (Transportation, Education, etc.)</p>
+<ul>
+<li><p>Broad overview of AI applications in various sectors like transportation and education.</p></li>
+<li><p>Math Focus: Customizing AI models for sector-specific challenges and data types.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<hr class="docutils" />
+<section class="tex2jax_ignore mathjax_ignore" id="module-9-capstone-project">
+<h1>Module 9: Capstone Project<a class="headerlink" href="#module-9-capstone-project" title="Permalink to this heading">#</a></h1>
+<section id="weeks-20-21">
+<h2>Weeks 20-21<a class="headerlink" href="#weeks-20-21" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Focus: Application of learned concepts in a comprehensive project.</p></li>
+<li><p>A practical project encompassing data analysis, model building, and evaluation.</p></li>
+</ul>
+<section id="week-20-applied-cybersecurity-for-ai">
+<h3>Week 20: Applied Cybersecurity for AI<a class="headerlink" href="#week-20-applied-cybersecurity-for-ai" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 96:</strong> Introduction to Cybersecurity in AI</p>
+<ul>
+<li><p>Basics of cybersecurity in the context of AI systems.</p></li>
+<li><p>Math Focus: Security protocols, encryption, and algorithmic security measures.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 97:</strong> Identifying Threats and Vulnerabilities in AI Systems</p>
+<ul>
+<li><p>Understanding potential threats and vulnerabilities specific to AI systems.</p></li>
+<li><p>Math Focus: Probability theory in threat assessment and risk analysis.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 98:</strong> AI in Cybersecurity - Detection and Prevention</p>
+<ul>
+<li><p>The role of AI in enhancing cybersecurity measures.</p></li>
+<li><p>Math Focus: Pattern recognition, anomaly detection, and predictive algorithms.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 99:</strong> Implementing Cybersecurity in AI Projects</p>
+<ul>
+<li><p>Best practices for integrating cybersecurity measures in AI development.</p></li>
+<li><p>Math Focus: Data integrity algorithms and secure data processing.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 100:</strong> Case Studies: Cybersecurity Incidents in AI</p>
+<ul>
+<li><p>Analysis of real-world cybersecurity incidents involving AI systems.</p></li>
+<li><p>Math Focus: Forensic analysis techniques and post-incident evaluation.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="week-21-capstone-project">
+<h3>Week 21: Capstone Project<a class="headerlink" href="#week-21-capstone-project" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Lesson 101:</strong> Capstone Project Planning and Topic Selection</p>
+<ul>
+<li><p>Guidance on selecting and planning a capstone project in AI/ML.</p></li>
+<li><p>Math Focus: Project scope definition and feasibility analysis using mathematical methods.</p></li>
+</ul>
+</li>
+<li><p><strong>Lessons 102-104:</strong> Capstone Project Development</p>
+<ul>
+<li><p>Hands-on development of a capstone project, applying concepts learned throughout the course.</p></li>
+<li><p>Math Focus: Applied mathematical modeling and problem-solving in project context.</p></li>
+</ul>
+</li>
+<li><p><strong>Lesson 105:</strong> Finalization and Presentation of Capstone Projects</p>
+<ul>
+<li><p>Finalizing projects and preparing for presentations.</p></li>
+<li><p>Math Focus: Data interpretation, presentation techniques, and results analysis.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_00"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="00_Overview.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">100 Days of Machine Learning Challenge</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="00b_DailyResources.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title"><strong>Week 1: Python Basics and Numerical Operations with Jupyter Notebooks</strong></p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Module 1: Introduction to Python and Basic Mathematics</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-1-2">Weeks 1-2</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-1-python-basics-and-numerical-operations">Week 1: Python Basics and Numerical Operations</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-2-introduction-to-mathematical-concepts-in-python">Week 2: Introduction to Mathematical Concepts in Python</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-2-data-preprocessing-and-exploratory-data-analysis">Module 2: Data Preprocessing and Exploratory Data Analysis</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-3-4">Weeks 3-4</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-3-data-preprocessing">Week 3: Data Preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-4-exploratory-data-analysis-eda">Week 4: Exploratory Data Analysis (EDA)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-3-supervised-learning-regression-and-classification">Module 3: Supervised Learning - Regression and Classification</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-5-6">Weeks 5-6</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-5-supervised-learning-regression">Week 5: Supervised Learning - Regression</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-6-supervised-learning-classification">Week 6: Supervised Learning - Classification</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-4-unsupervised-learning-and-dimensionality-reduction">Module 4: Unsupervised Learning and Dimensionality Reduction</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-7-9">Weeks 7-9</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-7-ensemble-methods">Week 7: Ensemble Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-8-unsupervised-learning">Week 8: Unsupervised Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-9-dimensionality-reduction">Week 9: Dimensionality Reduction</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-5-deep-learning-foundations">Module 5: Deep Learning Foundations</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-10-12">Weeks 10-12</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-10-introduction-to-neural-networks">Week 10: Introduction to Neural Networks</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-11-deep-learning-convolutional-neural-networks-cnns">Week 11: Deep Learning - Convolutional Neural Networks (CNNs)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-12-deep-learning-recurrent-neural-networks-rnns">Week 12: Deep Learning - Recurrent Neural Networks (RNNs)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-6-advanced-machine-learning-and-current-trends">Module 6: Advanced Machine Learning and Current Trends</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-13-14">Weeks 13-14</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-13-reinforcement-learning">Week 13: Reinforcement Learning</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-14-advanced-topics-and-current-trends">Week 14: Advanced Topics and Current Trends</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-7-practical-aspects-of-machine-learning">Module 7: Practical Aspects of Machine Learning</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-15-17">Weeks 15-17</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-15-mlops">Week 15: MLOps</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-16-etl-processes">Week 16: ETL Processes</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-17-transformers-in-deep-learning">Week 17: Transformers in Deep Learning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-8-applied-ai-and-ethical-considerations">Module 8: Applied AI and Ethical Considerations</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-18-19">Weeks 18-19</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-18-ethics-in-ai">Week 18: Ethics in AI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-19-applied-industry-sector-applications">Week 19: Applied Industry Sector Applications</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#module-9-capstone-project">Module 9: Capstone Project</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#weeks-20-21">Weeks 20-21</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-20-applied-cybersecurity-for-ai">Week 20: Applied Cybersecurity for AI</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#week-21-capstone-project">Week 21: Capstone Project</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

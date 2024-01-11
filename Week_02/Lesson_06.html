@@ -1,0 +1,1352 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Lesson 6: Linear Algebra - Vector Operations in Python &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/sphinx_highlight.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_02/Lesson_06';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_02/Lesson_06.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Day 7: Linear Algebra - Matrices and Matrix Operations" href="Lesson_07.html" />
+    <link rel="prev" title="Day 5: Functions and Modules" href="../Week_01/Lesson_05.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    <no title>
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Module 1: Introduction to Python and Basic Mathematics</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Week 1: Python Basics and Numerical Operations with Jupyter Notebooks</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-j8jo309s/lab/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_02/Lesson_06.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/blob/master/Week_02/Lesson_06.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_02/Lesson_06.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_02/Lesson_06.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lesson 6: Linear Algebra - Vector Operations in Python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-vectors">Introduction to Vectors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-vector">What is a Vector?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-representation-in-python">Vector Representation in Python</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-1-representing-vectors-in-python"><strong>Activity 1: Representing Vectors in Python</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-vector-operations">Basic Vector Operations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-2-basic-vector-operations"><strong>Activity 2: Basic Vector Operations</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-addition-subtraction">Vector addition, subtraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scalar-or-vector-multiplication-one-vector-x-one-scalar">Scalar or Vector Multiplication (One Vector x One Scalar)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-magnitude-and-direction">Vector Magnitude and Direction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-3-vector-magnitude-and-direction"><strong>Activity 3: Vector Magnitude and Direction</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-vector-operations-dot-product-scalar-product">Advanced Vector Operations: Dot Product (Scalar Product)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-interpretation">Geometric Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#properties">Properties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-vector-operations-cross-product-vector-product">Advanced Vector Operations: Cross Product (Vector Product)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Geometric Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Properties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Applications</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-norm">Vector Norm</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-application-vector-in-computer-graphics">Real-world Application: Vector in Computer Graphics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-activity-vector-in-graphics">Coding Activity: Vector in Graphics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-2d-movement-with-vectors">Simulating 2D movement with vectors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physics-and-engineering-applications-of-vectors">Physics and Engineering Applications of Vectors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-and-data-science">Machine Learning and Data Science</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-topics-in-vector-operations">Advanced Topics in Vector Operations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-concluding-thoughts">Summary and Concluding Thoughts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-vector-field-visualization-for-beginners">Activity: Vector Field Visualization for Beginners</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution">Solution:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hands-on-project-implementing-and-visualizing-vector-operations">Hands-On Project: Implementing and Visualizing Vector Operations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#further-resources">Further Resources</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lesson-6-linear-algebra-vector-operations-in-python">
+<h1>Lesson 6: Linear Algebra - Vector Operations in Python<a class="headerlink" href="#lesson-6-linear-algebra-vector-operations-in-python" title="Permalink to this heading">#</a></h1>
+<section id="introduction-to-vectors">
+<h2>Introduction to Vectors<a class="headerlink" href="#introduction-to-vectors" title="Permalink to this heading">#</a></h2>
+<section id="what-is-a-vector">
+<h3>What is a Vector?<a class="headerlink" href="#what-is-a-vector" title="Permalink to this heading">#</a></h3>
+<ul>
+<li><p><strong>Definition:</strong> A vector is an ordered collection of values, often represented as an array or a list. In mathematics and programming, vectors are used to represent quantities that have both magnitude and direction. They are essential for various tasks in linear algebra, machine learning, and data analysis. A vector may be represented as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+  \mathbf{v} = \begin{bmatrix}
+  v_1 \\
+  v_2 \\
+  \vdots \\
+  v_n
+  \end{bmatrix}
+  \end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(n\)</span> represents the number of components or elements in the vector.</p>
+</li>
+</ul>
+<p>Vectors in mathematics and physics possess both magnitude and direction:</p>
+<ol class="arabic simple">
+<li><p><strong>Magnitude:</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>Magnitude represents the size or length of a vector.</p></li>
+<li><p>It is denoted as <span class="math notranslate nohighlight">\(||v||\)</span> or <span class="math notranslate nohighlight">\(|v|\)</span> for a vector <span class="math notranslate nohighlight">\((v)\)</span>.</p></li>
+<li><p>Magnitude is a non-negative scalar value.</p></li>
+</ul>
+<ol class="arabic simple" start="2">
+<li><p><strong>Direction:</strong></p></li>
+</ol>
+<ul class="simple">
+<li><p>Direction indicates where the vector points in space.</p></li>
+<li><p>It specifies the orientation of the vector relative to a reference frame.</p></li>
+<li><p>Direction can be represented using angles, unit vectors, or specific directions in a coordinate system.</p></li>
+</ul>
+<p><strong>To fully describe a vector, both its magnitude and direction are essential.</strong>
+While vectors have <strong>BOTH</strong> magnitude and direction. (i.e. A car traveling 60kph, NE), a scalar represents <strong>ONLY</strong> magnitude (i.e. distance, speed, measurement)</p>
+<ul class="simple">
+<li><p><strong>Importance:</strong> Vectors are of paramount importance in various scientific and engineering disciplines due to their versatility in representing both magnitude and direction. Just like matrices, vectors find wide-ranging applications:</p></li>
+<li><p>In physics: Vectors are fundamental for describing physical quantities such as force, velocity, acceleration, and displacement. They help analyze the motion and interactions of objects.</p></li>
+<li><p>In engineering: Vectors are used to represent the direction of loads, forces, and other structural elements in civil engineering, mechanical engineering, and electrical engineering.</p></li>
+<li><p>In computer science: Vectors are indispensable in data structures and algorithms, particularly in machine learning and artificial intelligence, where they are used to represent and process data, such as feature vectors for classification tasks.</p></li>
+</ul>
+<p>Vectors are a fundamental concept in mathematics and science, providing a concise and powerful means to represent a wide range of real-world phenomena and mathematical relationships. Understanding vectors is essential for tackling complex problems across various fields.</p>
+</section>
+</section>
+<section id="vector-representation-in-python">
+<h2>Vector Representation in Python<a class="headerlink" href="#vector-representation-in-python" title="Permalink to this heading">#</a></h2>
+<section id="activity-1-representing-vectors-in-python">
+<h3><strong>Activity 1: Representing Vectors in Python</strong><a class="headerlink" href="#activity-1-representing-vectors-in-python" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Objective:</strong> Learn to create vectors using NumPy arrays.</p></li>
+<li><p><strong>Why Python and NumPy?:</strong> Python, with NumPy, is efficient and straightforward for handling mathematical operations, including vector manipulations.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="c1"># Creating a vector</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">7</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector v:&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vector v: [1 3 5 7]
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>Indexing - Python is 0-indexed. When you are calling things from a ‘list’, vector, etc. The first number is actually at the 0 place.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector x at index 0:&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector x at index 1:&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vector x at index 0: 1
+Vector x at index 1: 3
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="basic-vector-operations">
+<h2>Basic Vector Operations<a class="headerlink" href="#basic-vector-operations" title="Permalink to this heading">#</a></h2>
+<section id="activity-2-basic-vector-operations">
+<h3><strong>Activity 2: Basic Vector Operations</strong><a class="headerlink" href="#activity-2-basic-vector-operations" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Objective:</strong> Understand and perform vector addition, subtraction, and scalar multiplication.</p></li>
+<li><p><strong>Why This Matters:</strong> These operations are foundational for complex computations and are widely used in fields like physics.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Creating two vectors to represent data points</span>
+<span class="n">x1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">y1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+
+<span class="c1"># Display the vectors</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector 1:&quot;</span><span class="p">,</span> <span class="n">x1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Vector 2:&quot;</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Vector 1: [3 4]
+Vector 2: [1 2]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="vector-addition-subtraction">
+<h2>Vector addition, subtraction<a class="headerlink" href="#vector-addition-subtraction" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Why This Matters</strong> : Feature Engineering</p></li>
+</ul>
+<p>Machine learning models often benefit from well-designed features. Vector addition and subtraction are crucial for feature engineering. For example, in image processing, subtracting background color vectors from images can enhance object recognition, making it easier to identify handwritten digits in optical character recognition (OCR).</p>
+<p>For any vectors, whether it is x, y, z (of the same size/shape)</p>
+<ul class="simple">
+<li><p>The following properties are true:</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>Vector addition is commutative <span class="math notranslate nohighlight">\(x+y = y+x\)</span></p></li>
+<li><p>Vector addition is associative: <span class="math notranslate nohighlight">\((x+y)+z = x+(y+z)\)</span>. Therefore <span class="math notranslate nohighlight">\(x+y+z\)</span> is true.</p></li>
+<li><p>Adding a zero vector to a vector has no effect: <span class="math notranslate nohighlight">\(x+0 = 0+x = x\)</span>.</p></li>
+<li><p>Subtracting a vector from itself as long as the size and shape are the same yields a zero vector <span class="math notranslate nohighlight">\((x-x=0)\)</span></p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Adding the vectors</span>
+<span class="nb">sum</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">y1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Sum:&quot;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">)</span>
+
+<span class="c1">#OR</span>
+
+<span class="n">x_add</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Added Vectors:&quot;</span><span class="p">,</span> <span class="n">x_add</span><span class="p">)</span>
+
+<span class="c1"># Subtracting the vectors</span>
+<span class="n">difference</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">-</span> <span class="n">y1</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Difference:&quot;</span><span class="p">,</span> <span class="n">difference</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Sum: [4 6]
+Added Vectors: [4 6]
+Difference: [2 2]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="scalar-or-vector-multiplication-one-vector-x-one-scalar">
+<h2>Scalar or Vector Multiplication (One Vector x One Scalar)<a class="headerlink" href="#scalar-or-vector-multiplication-one-vector-x-one-scalar" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p><strong>Why This Matters:</strong> Learning Rate Adjustment</p>
+<p>In machine learning, gradient-based optimization algorithms, like stochastic gradient descent (SGD), require a learning rate. Scalar multiplication plays a pivotal role in adjusting the learning rate. For instance, when training a neural network, scaling the learning rate dynamically based on the progress of training helps avoid overshooting or slow convergence, ensuring effective model training.</p>
+</li>
+</ul>
+<p>For any vectors <span class="math notranslate nohighlight">\(x, y\)</span> and scalars <span class="math notranslate nohighlight">\(a, b\)</span></p>
+<ul class="simple">
+<li><p>The following properties are true:</p></li>
+</ul>
+<ol class="arabic simple">
+<li><p>Scalar-vector multiplication is commutative: <span class="math notranslate nohighlight">\(ax = x * a\)</span></p></li>
+<li><p>Scalar-vector multiplication is associative: <span class="math notranslate nohighlight">\((ab)x = a(bx)\)</span></p></li>
+<li><p>Scalar-vector mulitplication is distributive: <span class="math notranslate nohighlight">\(a(x+y) = ax+ay, (x+y)a = xa+ya, (a+b)x=ax+bx\)</span></p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Scalar multiplication</span>
+<span class="n">scaled</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">*</span> <span class="mi">2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Scaled:&quot;</span><span class="p">,</span> <span class="n">scaled</span><span class="p">)</span> 
+
+<span class="c1">#OR</span>
+      
+<span class="n">scalar</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">x_scalar_mult</span> <span class="o">=</span> <span class="n">x1</span> <span class="o">*</span> <span class="n">scalar</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Scalar Multiplication:&quot;</span><span class="p">,</span> <span class="n">x_scalar_mult</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Scaled: [6 8]
+Scalar Multiplication: [6 8]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="vector-magnitude-and-direction">
+<h2>Vector Magnitude and Direction<a class="headerlink" href="#vector-magnitude-and-direction" title="Permalink to this heading">#</a></h2>
+<section id="activity-3-vector-magnitude-and-direction">
+<h3><strong>Activity 3: Vector Magnitude and Direction</strong><a class="headerlink" href="#activity-3-vector-magnitude-and-direction" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Objective:</strong> Calculate the magnitude and direction of a vector.</p></li>
+<li><p><strong>Real-world Relevance:</strong> Crucial in navigation, robotics, and physics for understanding vector length and orientation.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculating magnitude and direction</span>
+<span class="n">magnitude</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">x1</span><span class="p">)</span>
+<span class="n">direction</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arctan2</span><span class="p">(</span><span class="n">x1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">x1</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Magnitude of x1:&quot;</span><span class="p">,</span> <span class="n">magnitude</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Direction of x1:&quot;</span><span class="p">,</span> <span class="n">direction</span><span class="p">,</span> <span class="s2">&quot;radians&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Magnitude of x1: 5.0
+Direction of x1: 0.9272952180016122 radians
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="advanced-vector-operations-dot-product-scalar-product">
+<h2>Advanced Vector Operations: Dot Product (Scalar Product)<a class="headerlink" href="#advanced-vector-operations-dot-product-scalar-product" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p><strong>Why This Matters:</strong> Text Classification</p>
+<p>Dot products are fundamental for text classification in natural language processing (NLP). By calculating dot products between word vectors and predefined sentiment vectors, you can determine the sentiment of a text. This enables automated sentiment analysis for large volumes of text data.</p>
+</li>
+</ul>
+<p>The dot product (also known as scalar product) is a way to multiply vectors that results in a scalar (a single number, not a vector).</p>
+<section id="definition">
+<h3>Definition<a class="headerlink" href="#definition" title="Permalink to this heading">#</a></h3>
+<p>Given two vectors <span class="math notranslate nohighlight">\(( \mathbf{x} \)</span>) and <span class="math notranslate nohighlight">\(( \mathbf{y} \)</span>) in <span class="math notranslate nohighlight">\(( \mathbb{R}^n \)</span>) (n-dimensional real number space), the dot product is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+[\mathbf{x} \cdot \mathbf{y} = \sum_{i=1}^{n} x_i y_i]
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(( x_i \)</span>) and <span class="math notranslate nohighlight">\(( y_i \)</span>) are components of vectors <span class="math notranslate nohighlight">\(( \mathbf{x} \)</span>) and <span class="math notranslate nohighlight">\(( \mathbf{y} \)</span>), respectively.</p>
+</section>
+<section id="geometric-interpretation">
+<h3>Geometric Interpretation<a class="headerlink" href="#geometric-interpretation" title="Permalink to this heading">#</a></h3>
+<p>The dot product can also be expressed as:</p>
+<div class="math notranslate nohighlight">
+\[
+[\mathbf{x} \cdot \mathbf{y} = |\mathbf{x}| |\mathbf{y}| \cos(\theta)]
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(( |\mathbf{x}\)</span>| ) is the magnitude of vector <span class="math notranslate nohighlight">\(( \mathbf{x} \)</span>)</p></li>
+<li><p><span class="math notranslate nohighlight">\(( |\mathbf{y}\)</span>| ) is the magnitude of vector <span class="math notranslate nohighlight">\(( \mathbf{y} \)</span>)</p></li>
+<li><p><span class="math notranslate nohighlight">\(( \theta \)</span>) is the angle between <span class="math notranslate nohighlight">\(( \mathbf{x} \)</span>) and <span class="math notranslate nohighlight">\(( \mathbf{y} \)</span>)</p></li>
+</ul>
+</section>
+<section id="properties">
+<h3>Properties<a class="headerlink" href="#properties" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Commutative</strong>: <span class="math notranslate nohighlight">\(( \mathbf{x} \cdot \mathbf{y} = \mathbf{y} \cdot \mathbf{x} \)</span>)</p></li>
+<li><p><strong>Distributive over vector addition</strong>: <span class="math notranslate nohighlight">\(( \mathbf{x} \cdot (\mathbf{y} + \mathbf{a}) = \mathbf{x} \cdot \mathbf{y} + \mathbf{x} \cdot \mathbf{a} \)</span>)</p></li>
+<li><p><strong>Bilinear</strong>:<span class="math notranslate nohighlight">\(( a(\mathbf{x} \cdot \mathbf{y}) = (a\mathbf{x}) \cdot \mathbf{y} = \mathbf{x} \cdot (a\mathbf{y}) \)</span>), where <span class="math notranslate nohighlight">\(( a \)</span>) is a scalar.</p></li>
+</ol>
+</section>
+<section id="applications">
+<h3>Applications<a class="headerlink" href="#applications" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Determining Orthogonality</strong>: Two vectors are orthogonal (perpendicular) if their dot product is zero.</p></li>
+<li><p><strong>Projection</strong>: Projecting one vector onto another.</p></li>
+<li><p><strong>Finding Angles</strong>: The angle between two vectors can be determined using the dot product formula.</p></li>
+</ul>
+</section>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h2>
+<p>Let’s calculate the dot product of two vectors in <span class="math notranslate nohighlight">\(( \mathbb{R}^3 \)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{x} = \begin{bmatrix} 1 \\ 3 \\ -5 \end{bmatrix}, \quad \mathbf{y} = \begin{bmatrix} 4 \\ -2 \\ -1 \end{bmatrix}
+\end{split}\]</div>
+<p>The dot product is:</p>
+<div class="math notranslate nohighlight">
+\[
+[\mathbf{x} \cdot \mathbf{y} = (1)(4) + (3)(-2) + (-5)(-1) = 4 - 6 + 5 = 3]
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Dot and cross product</span>
+<span class="n">dot_product</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">y1</span><span class="p">)</span>
+<span class="n">x1_3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="n">y1_3D</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">y1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dot Product:&quot;</span><span class="p">,</span> <span class="n">dot_product</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Dot Product: 11
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="advanced-vector-operations-cross-product-vector-product">
+<h2>Advanced Vector Operations: Cross Product (Vector Product)<a class="headerlink" href="#advanced-vector-operations-cross-product-vector-product" title="Permalink to this heading">#</a></h2>
+<p><strong>Objective:</strong> Learn the dot and cross product of vectors.</p>
+<ul>
+<li><p><strong>Why This Matters:</strong> 3D Graphics and Physics</p>
+<p>Cross products are crucial in 3D graphics and physics, particularly for calculating normals to surfaces, which are essential for lighting and rendering. They are also used in physics for finding torques and rotational vectors, helping to understand the dynamics of rotating bodies.</p>
+</li>
+</ul>
+<p>The cross product (also known as vector product) is an operation on two vectors in three-dimensional space, resulting in a vector that is perpendicular to both of the original vectors.</p>
+<section id="id1">
+<h3>Definition<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>Given two vectors <span class="math notranslate nohighlight">\(( \mathbf{x} \)</span>) and <span class="math notranslate nohighlight">\(( \mathbf{y} \)</span>) in <span class="math notranslate nohighlight">\(( \mathby{R}^3 \)</span>) (three-dimensional real number space), the cross product is defined as:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{x} \cdot \mathbf{y} = \begin{vmatrix}
+\mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \\
+x_1 &amp; x_2 &amp; x_3 \\
+y_1 &amp; y_2 &amp; y_3 
+\end{vmatrix}
+\end{split}\]</div>
+<p>where <span class="math notranslate nohighlight">\(( \mathbf{i}, \mathbf{j}, \mathbf{k} \)</span>) are the unit vectors along the x, y, and z axes, and <span class="math notranslate nohighlight">\(( a_1, a_2, a_3 \)</span>) and <span class="math notranslate nohighlight">\(( b_1, b_2, b_3 \)</span>) are the components of vectors <span class="math notranslate nohighlight">\(( \mathbf{x} \)</span>) and <span class="math notranslate nohighlight">\(( \mathbf{y} \)</span>), respectively.</p>
+</section>
+<section id="id2">
+<h3>Geometric Interpretation<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>The magnitude of the cross product is given by:</p>
+<p><span class="math notranslate nohighlight">\(|\mathbf{x}| \cdot \mathbf{y}|\)</span> = <span class="math notranslate nohighlight">\(|\mathbf{x}| |\mathbf{y}| \sin(\theta)\)</span></p>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(( |\mathbf{a}| \)</span>) and <span class="math notranslate nohighlight">\(( |\mathbf{b}| \)</span>) are the magnitudes of vectors <span class="math notranslate nohighlight">\(( \mathbf{x} \)</span>) and <span class="math notranslate nohighlight">\(( \mathbf{y} \)</span>)</p></li>
+<li><p><span class="math notranslate nohighlight">\(( \theta \)</span>) is the angle between <span class="math notranslate nohighlight">\(( \mathbf{x} \)</span>) and <span class="math notranslate nohighlight">\(( \mathbf{y} \)</span>)</p></li>
+</ul>
+<p>The direction of <span class="math notranslate nohighlight">\(( \mathbf{x} \cdot \mathbf{y} \)</span>) is perpendicular to the plane formed by <span class="math notranslate nohighlight">\(( \mathbf{x} \)</span>) and <span class="math notranslate nohighlight">\(( \mathbf{y} \)</span>), determined by the right-hand rule.</p>
+</section>
+<section id="id3">
+<h3>Properties<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Non-Commutative</strong>: <span class="math notranslate nohighlight">\(( \mathbf{x} \cdot \mathbf{y} = -(\mathbf{y} \cdot \mathbf{x}) \)</span>)</p></li>
+<li><p><strong>Distributive over vector addition</strong>: <span class="math notranslate nohighlight">\(( \mathbf{x} \cdot (\mathbf{y} + \mathbf{c}) = \mathbf{x} \cdot \mathbf{y} + \mathbf{x} \cdot \mathbf{c} \)</span>)</p></li>
+<li><p><strong>Not associative</strong>: <span class="math notranslate nohighlight">\(( \mathbf{x} \cdot (\mathbf{y} \cdot \mathbf{c}) \neq (\mathbf{x} \cdot \mathbf{y}) \cdot \mathbf{c} \)</span>)</p></li>
+</ol>
+</section>
+<section id="id4">
+<h3>Applications<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Normal Vector Calculation</strong>: Computing a vector perpendicular to a plane in 3D space.</p></li>
+<li><p><strong>Torque</strong>: In physics, the cross product is used to determine the torque exerted by a force.</p></li>
+<li><p><strong>Rotational Vectors</strong>: Understanding the rotation of objects in three-dimensional space.</p></li>
+</ul>
+</section>
+</section>
+<section id="id5">
+<h2>Example<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<p>Let’s calculate the cross product of two vectors in <span class="math notranslate nohighlight">\(( \mathbb{R}^3 \)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{x} = \begin{bmatrix} 1 \\ 3 \\ -5 \end{bmatrix}, \quad \mathbf{y} = \begin{bmatrix} 4 \\ -2 \\ -1 \end{bmatrix}
+\end{split}\]</div>
+<p>The cross product is:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\mathbf{x} \cdot \mathbf{y} = \begin{vmatrix}
+\mathbf{i} &amp; \mathbf{j} &amp; \mathbf{k} \\
+1 &amp; 3 &amp; -5 \\
+4 &amp; -2 &amp; -1 
+\end{vmatrix} = \mathbf{i}(3 \cdot -1 - (-5) \cdot -2) - \mathbf{j}(1 \cdot -1 - (-5) \cdot 4) + \mathbf{k}(1 \cdot -2 - 3 \cdot 4)
+\end{split}\]</div>
+<p>Simplifying this, we get:</p>
+<div class="math notranslate nohighlight">
+\[
+\mathbf{x} \cdot \mathbf{y} = -3\mathbf{i} + 21\mathbf{j} - 14\mathbf{k}
+\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cross_product</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">cross</span><span class="p">(</span><span class="n">x1_3D</span><span class="p">,</span> <span class="n">y1_3D</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cross Product:&quot;</span><span class="p">,</span> <span class="n">cross_product</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cross Product: [0 0 2]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="vector-norm">
+<h3>Vector Norm<a class="headerlink" href="#vector-norm" title="Permalink to this heading">#</a></h3>
+<p><strong>Mathematical Formula</strong></p>
+<ul class="simple">
+<li><p>L2 Norm: <span class="math notranslate nohighlight">\((|\mathbf{v}\|_2 = \sqrt{v_1^2 + v_2^2 + \ldots + v_n^2})\)</span></p></li>
+</ul>
+<p><strong>Why This Matters:</strong></p>
+<p>Vector norms are used in machine learning for regularization and similarity calculations.</p>
+<p><strong>Practical Example in Python</strong></p>
+<p>To calculate the L2 norm of a vector in Python, you can use the <code class="docutils literal notranslate"><span class="pre">numpy</span></code> library:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">vector_v</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+<span class="n">l2_norm</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linalg</span><span class="o">.</span><span class="n">norm</span><span class="p">(</span><span class="n">vector_v</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">l2_norm</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="real-world-application-vector-in-computer-graphics">
+<h2>Real-world Application: Vector in Computer Graphics<a class="headerlink" href="#real-world-application-vector-in-computer-graphics" title="Permalink to this heading">#</a></h2>
+<section id="coding-activity-vector-in-graphics">
+<h3>Coding Activity: Vector in Graphics<a class="headerlink" href="#coding-activity-vector-in-graphics" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Objective:</strong> Use vectors to simulate 2D graphical movement.</p></li>
+<li><p><strong>Why It’s Important:</strong> Understanding vector representation and manipulation in digital space is fundamental in computer graphics and game development.</p></li>
+</ul>
+</section>
+</section>
+<section id="simulating-2d-movement-with-vectors">
+<h2>Simulating 2D movement with vectors<a class="headerlink" href="#simulating-2d-movement-with-vectors" title="Permalink to this heading">#</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">position</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">])</span>
+<span class="n">movement</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">new_position</span> <span class="o">=</span> <span class="n">position</span> <span class="o">+</span> <span class="n">movement</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New Position:&quot;</span><span class="p">,</span> <span class="n">new_position</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New Position: [1 1]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="physics-and-engineering-applications-of-vectors">
+<h2>Physics and Engineering Applications of Vectors<a class="headerlink" href="#physics-and-engineering-applications-of-vectors" title="Permalink to this heading">#</a></h2>
+<p><strong>Understanding Forces and Movements:</strong></p>
+<ul class="simple">
+<li><p>Application in Physics: Vectors represent forces and movements.</p></li>
+<li><p>Why It’s Important: Predicting object movements under various conditions is crucial in mechanical and aerospace engineering.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Representing a force vector</span>
+<span class="n">force</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>  <span class="c1"># Force vector with 2 units in the x-direction and 5 units in the y-direction</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Force Vector:&quot;</span><span class="p">,</span> <span class="n">force</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Force Vector: [2 5]
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Structural Analysis:</strong></p>
+<ul class="simple">
+<li><p>Engineering Application: Vectors in civil engineering analyze forces on structures.</p></li>
+<li><p>Significance: Ensures safety and stability of structures like bridges and buildings.</p></li>
+</ul>
+</section>
+<section id="machine-learning-and-data-science">
+<h2>Machine Learning and Data Science<a class="headerlink" href="#machine-learning-and-data-science" title="Permalink to this heading">#</a></h2>
+<p><strong>Vectors in Data Representation:</strong></p>
+<ul class="simple">
+<li><p>Application: Vectors represent data points in algorithms, with the dot product measuring similarity, important in clustering and classification.</p></li>
+<li><p>Why It Matters: Crucial for developing accurate models in machine learning.</p></li>
+</ul>
+<p><strong>Optimizing Performance:</strong></p>
+<ul class="simple">
+<li><p>Data Science Utilization: Efficient vector manipulation optimizes complex data analyses.</p></li>
+<li><p>Importance: In big data, efficiency enables quicker and more precise data processing.</p></li>
+</ul>
+</section>
+<section id="advanced-topics-in-vector-operations">
+<h2>Advanced Topics in Vector Operations<a class="headerlink" href="#advanced-topics-in-vector-operations" title="Permalink to this heading">#</a></h2>
+<p><strong>Eigenvalues and Eigenvectors:</strong></p>
+<ul class="simple">
+<li><p>Concept: Eigenvectors scale without changing direction under a linear transformation, while eigenvalues are the scalars of this scaling.</p></li>
+<li><p>Application: Crucial in systems of linear equations and machine learning algorithms.</p></li>
+</ul>
+<section id="summary-and-concluding-thoughts">
+<h3>Summary and Concluding Thoughts<a class="headerlink" href="#summary-and-concluding-thoughts" title="Permalink to this heading">#</a></h3>
+<p>Vectors are more than abstract mathematical concepts; they are practical tools across disciplines.
+Understanding vectors enables us to model and solve complex problems, from infrastructure design
+to advancements in machine learning and quantum computing. Their simplicity and versatility make
+them indispensable in STEM fields.</p>
+</section>
+</section>
+<section id="activity-vector-field-visualization-for-beginners">
+<h2>Activity: Vector Field Visualization for Beginners<a class="headerlink" href="#activity-vector-field-visualization-for-beginners" title="Permalink to this heading">#</a></h2>
+<p><strong>Objective:</strong> Create a simple 2D vector field visualization using Python.
+<strong>Duration:</strong> Approximately 20 minutes
+<strong>Tools Required:</strong> Python, basic Python syntax knowledge.</p>
+<p><strong>Steps</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Install Libraries (for local environment):</strong></p>
+<ul class="simple">
+<li><p>Command: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">numpy</span> <span class="pre">matplotlib</span></code></p></li>
+</ul>
+</li>
+</ol>
+<ol class="arabic simple" start="2">
+<li><p><strong>Start Python Environment (jupyter-lab / colab):</strong></p>
+<ul class="simple">
+<li><p>Import libraries: <code class="docutils literal notranslate"><span class="pre">numpy</span></code> and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code></p></li>
+</ul>
+</li>
+</ol>
+<ol class="arabic simple" start="3">
+<li><p><strong>Create a Grid:</strong></p>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">np.linspace</span></code> and <code class="docutils literal notranslate"><span class="pre">np.meshgrid</span></code></p></li>
+</ul>
+</li>
+</ol>
+<ol class="arabic simple" start="4">
+<li><p><strong>Define the Vector Field:</strong></p>
+<ul class="simple">
+<li><p>Create a circular pattern with <code class="docutils literal notranslate"><span class="pre">-Y</span></code> and <code class="docutils literal notranslate"><span class="pre">X</span></code></p></li>
+</ul>
+</li>
+</ol>
+<ol class="arabic simple" start="5">
+<li><p><strong>Plot the Vector Field:</strong></p>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">plt.quiver</span></code>, <code class="docutils literal notranslate"><span class="pre">plt.xlim</span></code>, <code class="docutils literal notranslate"><span class="pre">plt.ylim</span></code>, <code class="docutils literal notranslate"><span class="pre">plt.title</span></code>, <code class="docutils literal notranslate"><span class="pre">plt.xlabel</span></code>, <code class="docutils literal notranslate"><span class="pre">plt.ylabel</span></code>, and <code class="docutils literal notranslate"><span class="pre">plt.show</span></code></p></li>
+</ul>
+</li>
+</ol>
+<ol class="arabic simple" start="6">
+<li><p><strong>Analyze Your Plot:</strong></p>
+<ul class="simple">
+<li><p>Observe the circular pattern and vector lengths.</p></li>
+</ul>
+</li>
+</ol>
+<section id="solution">
+<h3>Solution:<a class="headerlink" href="#solution" title="Permalink to this heading">#</a></h3>
+<p>Use matplotlib to visualize the vectors and their operations.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Plotting the original vectors</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">y1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">y1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plotting the result of adding the vectors</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">x_add</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">x_add</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="hands-on-project-implementing-and-visualizing-vector-operations">
+<h2>Hands-On Project: Implementing and Visualizing Vector Operations<a class="headerlink" href="#hands-on-project-implementing-and-visualizing-vector-operations" title="Permalink to this heading">#</a></h2>
+<p><strong>Project Objective</strong>:</p>
+<ul class="simple">
+<li><p>To apply the concept of vector operations in a practical scenario and visualize the results using Python.</p></li>
+</ul>
+<p><strong>Project Steps</strong>:</p>
+<ol class="arabic simple">
+<li><p><strong>Create Multiple Vectors</strong>:</p>
+<ul class="simple">
+<li><p>Represent different data points as vectors.</p></li>
+<li><p>Perform addition, subtraction, and scalar multiplication.</p></li>
+</ul>
+</li>
+<li><p><strong>Calculate and Visualize the Dot Product</strong>:</p>
+<ul class="simple">
+<li><p>Calculate the dot product of vectors to understand their similarity.</p></li>
+<li><p>Plot these vectors to visualize how the dot product represents the angle between them.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>Project Code - Solution</strong></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Hands-On Project: Vector Operations and Visualization</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Step 1: Create vectors</span>
+<span class="n">v1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">])</span>
+
+<span class="c1"># Perform operations</span>
+<span class="n">v_add</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
+<span class="n">v_sub</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">subtract</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
+<span class="n">scalar</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">v_scalar_mult</span> <span class="o">=</span> <span class="n">v1</span> <span class="o">*</span> <span class="n">scalar</span>
+
+<span class="c1"># Step 2: Dot product</span>
+<span class="n">dot_product</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">dot</span><span class="p">(</span><span class="n">v1</span><span class="p">,</span> <span class="n">v2</span><span class="p">)</span>
+
+<span class="c1"># Visualization</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">v1</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v1</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">v2</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v2</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">quiver</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">v_add</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">v_add</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">angles</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale_units</span><span class="o">=</span><span class="s1">&#39;xy&#39;</span><span class="p">,</span> <span class="n">scale</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;g&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Vector Operations: Addition (Green), V1 (Red), V2 (Blue)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Print results</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Added Vectors:&quot;</span><span class="p">,</span> <span class="n">v_add</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Subtracted Vectors:&quot;</span><span class="p">,</span> <span class="n">v_sub</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Scalar Multiplication:&quot;</span><span class="p">,</span> <span class="n">v_scalar_mult</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Dot Product:&quot;</span><span class="p">,</span> <span class="n">dot_product</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="further-resources">
+<h3>Further Resources<a class="headerlink" href="#further-resources" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Khan Academy’s Linear Algebra Course</strong>: <a class="reference external" href="https://www.khanacademy.org/math/linear-algebra/vectors-and-spaces">Vectors and spaces</a></p></li>
+<li><p><strong>NumPy Documentation</strong>: <a class="reference external" href="https://numpy.org/doc/stable/user/quickstart.html">NumPy for Vector Operations</a></p></li>
+<li><p><strong>Matplotlib Documentation</strong>: <a class="reference external" href="https://matplotlib.org/stable/contents.html">Matplotlib for Plotting</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_02"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Week_01/Lesson_05.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Day 5: Functions and Modules</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lesson_07.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Day 7: Linear Algebra - Matrices and Matrix Operations</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-vectors">Introduction to Vectors</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-vector">What is a Vector?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-representation-in-python">Vector Representation in Python</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-1-representing-vectors-in-python"><strong>Activity 1: Representing Vectors in Python</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-vector-operations">Basic Vector Operations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-2-basic-vector-operations"><strong>Activity 2: Basic Vector Operations</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-addition-subtraction">Vector addition, subtraction</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scalar-or-vector-multiplication-one-vector-x-one-scalar">Scalar or Vector Multiplication (One Vector x One Scalar)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-magnitude-and-direction">Vector Magnitude and Direction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-3-vector-magnitude-and-direction"><strong>Activity 3: Vector Magnitude and Direction</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-vector-operations-dot-product-scalar-product">Advanced Vector Operations: Dot Product (Scalar Product)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#geometric-interpretation">Geometric Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#properties">Properties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-vector-operations-cross-product-vector-product">Advanced Vector Operations: Cross Product (Vector Product)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Geometric Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Properties</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Applications</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Example</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vector-norm">Vector Norm</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#real-world-application-vector-in-computer-graphics">Real-world Application: Vector in Computer Graphics</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#coding-activity-vector-in-graphics">Coding Activity: Vector in Graphics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#simulating-2d-movement-with-vectors">Simulating 2D movement with vectors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#physics-and-engineering-applications-of-vectors">Physics and Engineering Applications of Vectors</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#machine-learning-and-data-science">Machine Learning and Data Science</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-topics-in-vector-operations">Advanced Topics in Vector Operations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#summary-and-concluding-thoughts">Summary and Concluding Thoughts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-vector-field-visualization-for-beginners">Activity: Vector Field Visualization for Beginners</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#solution">Solution:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hands-on-project-implementing-and-visualizing-vector-operations">Hands-On Project: Implementing and Visualizing Vector Operations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#further-resources">Further Resources</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
