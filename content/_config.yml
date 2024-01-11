@@ -1,67 +1,92 @@
-title: 100 Days of Machine Learning
-subtitle: Python Code
-author: Aaron S. & John M.
-logo: _static/100days_circle.jpg
-#description: This website presents a set of lectures on dynamic programming for economics, designed and written by Thomas J. Sargent and John Stachurski.
+#######################################################################################
+# A default configuration that will be loaded for all jupyter books
+# Users are expected to override these values in their own `_config.yml` file.
+# This is also the "master list" of all allowed keys and values.
 
+#######################################################################################
+# Book settings
+title                       : 100 Days of Machine Learning  # The title of the book. Will be placed in the left navbar.
+author                      : Aaron S. & John M.  # The author of the book
+copyright                   : "2023"  # Copyright year to be placed in the footer
+logo                        : "_images/100days_circle.jpg"  # A path to the book logo"
+# Patterns to skip when building the book. Can be glob-style (e.g. "*skip.ipynb")
+exclude_patterns            : [_build, Thumbs.db, .DS_Store, "**.ipynb_checkpoints"]
+# Auto-exclude files not in the toc
+only_build_toc_files        : true
+
+#######################################################################################
+# Execution settings
 execute:
-  execute_notebooks: "cache"
-  timeout: 600 # 10 minutes
-  allow_errors: true
+  execute_notebooks         : auto  # Whether to execute notebooks at build time. Must be one of ("auto", "force", "cache", "off")
+  cache                     : ""    # A path to the jupyter cache that will be used to store execution artifacts. Defaults to `_build/.jupyter_cache/`
+  exclude_patterns          : []    # A list of patterns to *skip* in execution (e.g. a notebook that takes a really long time)
+  timeout                   : 60    # The maximum time (in seconds) each notebook cell is allowed to run.
+  run_in_temp               : false # If `True`, then a temporary directory will be created and used as the command working directory (cwd),
+                                    # otherwise the notebook's parent directory will be the cwd.
+  allow_errors              : true # If `False`, when a code cell raises an error the execution is stopped, otherwise all cells are always run.
+  stderr_output             : show  # One of 'show', 'remove', 'remove-warn', 'warn', 'error', 'severe'
 
-only_build_toc_files: true
+#######################################################################################
+# Parse and render settings
+parse:
+  myst_enable_extensions:  # default extensions to enable in the myst parser. See https://myst-parser.readthedocs.io/en/latest/using/syntax-optional.html
+    # - amsmath
+    - colon_fence
+    # - deflist
+    - dollarmath
+    # - html_admonition
+    # - html_image
+    - linkify
+    # - replacements
+    # - smartquotes
+    - substitution
+    - tasklist
+  myst_url_schemes: [mailto, http, https] # URI schemes that will be recognised as external URLs in Markdown links
+  myst_dmath_double_inline: true  # Allow display math ($$) within an inline context
 
+#######################################################################################
+# HTML-specific settings
+html:
+  favicon                   : "_images/100days.ico"  # A path to a favicon image
+  use_edit_page_button      : true  # Whether to add an "edit this page" button to pages. If `true`, repository information in repository: must be filled in
+  use_repository_button     : true  # Whether to add a link to your repository button
+  use_issues_button         : false  # Whether to add an "open an issue" button
+  use_multitoc_numbering    : true   # Continuous numbering across parts/chapters
+  extra_footer              : ""  # Will be displayed underneath the footer.
+  google_analytics_id       : ""  # A GA id that can be used to track book views.
+  home_page_in_navbar       : true  # Whether to include your home page in the left Navigation Bar
+  baseurl                   : https://100daysofml.com  # The base URL where your book will be hosted. Used for creating image previews and social links. e.g.: https://mypage.com/mybook/
+  analytics:
 
+  comments:
+    hypothesis              : false
+    utterances              : false
+  announcement              : "" # A banner announcement at the top of the site.
 
-#html:
-  #baseurl: https://www.100daysofml.com
+#######################################################################################
+# LaTeX-specific settings
+latex:
+  latex_engine              : pdflatex  # one of 'pdflatex', 'xelatex' (recommended for unicode), 'luatex', 'platex', 'uplatex'
+  use_jupyterbook_latex     : true # use sphinx-jupyterbook-latex for pdf builds as default
 
+#######################################################################################
+# Launch button settings
+launch_buttons:
+  notebook_interface        : classic  # The interface interactive links will activate ["classic", "jupyterlab"]
+  binderhub_url             : https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-j8jo309s/lab  # The URL of the BinderHub (e.g., https://mybinder.org)
+  jupyterhub_url            : ""  # The URL of the JupyterHub (e.g., https://datahub.berkeley.edu)
+  thebe                     : false  # Add a thebe button to pages (requires the repository to run on Binder)
+  colab_url                 : https://colab.research.google.com # The URL of Google Colab (https://colab.research.google.com)
 
+repository:
+  url                       : https://github.com/100daysofml/100daysofml.github.io  # The URL to your book's repository
+  path_to_book              : ""  # A path to your book's folder, relative to the repository root.
+  branch                    : master  # Which branch of the repository should be used when creating links
+
+#######################################################################################
+# Advanced and power-user settings
 sphinx:
-  extra_extensions: [sphinx_multitoc_numbering, sphinxext.rediraffe, sphinx_tojupyter]
-  config:
-    html_favicon: _static/100days.ico
-    html_theme: groundwork
-    html_static_path: ['_static']
-    html_theme_options:
-      header_organisation_url: https://www.100daysofml.com
-      header_organisation: 100 Days of ML
-      repository_url: https://github.com/100daysofml/100daysofml.github.io/tree/gh-pages
-      #nb_repository_url: https://github.com/100daysofml/100daysofml.github.io
-      twitter: 100daysml
-      #twitter_logo_url: 
-      #og_logo_url: 
-      #description: This website presents 100 days of content focused on Machine Learning and Artificial Intelligence, written by Aaron S. and John M.
-      #keywords: Python, Machine Learning, Artificial Intelligence, Linear Algebra, Statistics, Calculus, Deep Learning, NLP, Computer Vision
-      #analytics:
-        #google_analytics_id: G-X7DH1M2DPY
-      launch_buttons:
-        notebook_interface        : classic  # The interface interactive links will activate ["classic", "jupyterlab"]
-        binderhub_url             : https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-j8jo309s/lab  # The URL of the BinderHub (e.g., https://mybinder.org)
-        colab_url                 : https://colab.research.google.com
-        thebe                     : true  # Add a thebe button to pages (requires the repository to run on Binder)
-    mathjax3_config:
-      tex:
-        macros:
-          "argmax" : "arg\\,max"
-          "argmin" : "arg\\,min"
-    mathjax_path: https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js
-    rediraffe_redirects:
-      index_toc.md: intro.md
-    tojupyter_static_file_path: ["source/_static", "_static"]
-    tojupyter_target_html: true
-    #tojupyter_urlpath: "https://www.100daysofml.com"
-    #tojupyter_image_urlpath: "https://www.100daysofml.com/_static/"
-    tojupyter_lang_synonyms: ["julia-1.9", "julia"]
-    tojupyter_kernels:
-      julia:
-        kernelspec:
-          display_name: Julia
-          language: julia
-          name: julia-1.9
-      python:
-        kernelspec:
-          display_name: Python
-          language: python
-          name: python3
-    tojupyter_images_markdown: true 
+  extra_extensions          :   # A list of extra extensions to load by Sphinx (added to those already used by JB).
+  local_extensions          :   # A list of local extensions to load by sphinx specified by "name: path" items
+  recursive_update          : false # A boolean indicating whether to overwrite the Sphinx config (true) or recursively update (false)
+  config                    :   # key-value pairs to directly over-ride the Sphinx configuration

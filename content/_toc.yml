@@ -1,41 +1,41 @@
 format: jb-book
-root: 00_Opening_page
+root: index
 parts:
   - caption: Preface
     chapters:
-    - file: Week_0/00_Overview.md
+    - file: Week_00/00_Overview.md
       title: "Welcome: Overview"
       sections:
-      - file: Week_0/00a_DailyChallenge.md
+      - file: Week_00/00a_DailyChallenge.md
         title: "Daily Challenges"
-      - file: Week_0/00b_DailyResources.md
+      - file: Week_00/00b_DailyResources.md
         title: "Daily Extra Resources"
-      - file: Week_0/01_Errata.md
+      - file: Week_00/01_Errata.md
         title: "Errata: Corrections History"
 
   - caption: "Week 1 - Introduction to Python"
     chapters:
-    - file: Week_1/Lesson_01.ipynb
+    - file: Week_01/Lesson_01.ipynb
       title: "Day 1 - Python Basics"
-    - file: Week_1/Lesson_02.ipynb
+    - file: Week_01/Lesson_02.ipynb
       title: "Day 2 - Python Data"
-    - file: Week_1/Lesson_03.ipynb
+    - file: Week_01/Lesson_03.ipynb
       title: "Day 3 - Control Structures in Python: Loops"
-    - file: Week_1/Lesson_04.ipynb
+    - file: Week_01/Lesson_04.ipynb
       title: "Day 4 - Control Structures in Python: Conditional Statements"
-    - file: Week_1/Lesson_05.ipynb
+    - file: Week_01/Lesson_05.ipynb
       title: "Day 5 - Functions and Modules"
 
   - caption: "Week 2 - Introduction to Machine Learning Mathematics"
     chapters:
-    - file: Week_2/Lesson_06.ipynb
+    - file: Week_02/Lesson_06.ipynb
       title: "Day 6 - Linear Algebra - Vectors"
-    - file: Week_2/Lesson_07.ipynb
+    - file: Week_02/Lesson_07.ipynb
       title: "Day 7 - Linear Algebra - Matrices and Matrix Operations"
-#   - file: Week_2/Lesson_08.ipynb
-#     title: "Day 8 - Calculus - Derivatives, Concept and Application"
-#   - file: Week_2/Lesson_09.ipynb
+    - file: Week_02/Lesson_08.ipynb
+      title: "Day 8 - Calculus - Derivatives, Concept and Application"
+#   - file: Week_02/Lesson_09.ipynb
 #     title: "Day 9 - Calculus - Integrals, Fundamental Theorems"
-#   - file: Week_2/Lesson_10.ipynb
+#   - file: Week_02/Lesson_10.ipynb
 #     title: "Day 10 - Statistics and Probability - Concepts and Relevant Distributions"
 
