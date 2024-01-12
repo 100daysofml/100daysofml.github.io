@@ -73,10 +73,10 @@ latex:
 # Launch button settings
 launch_buttons:
   notebook_interface        : classic  # The interface interactive links will activate ["classic", "jupyterlab"]
-  binderhub_url             : https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-j8jo309s/lab  # The URL of the BinderHub (e.g., https://mybinder.org)
+  binderhub_url             : https://mybinder.org/v2/git/https%3A%2F%2Fgithub.com%2F100daysofml%2F100daysofml.github.io/HEAD  # The URL of the BinderHub (e.g., https://mybinder.org)
   jupyterhub_url            : ""  # The URL of the JupyterHub (e.g., https://datahub.berkeley.edu)
   thebe                     : false  # Add a thebe button to pages (requires the repository to run on Binder)
-  colab_url                 : https://colab.research.google.com # The URL of Google Colab (https://colab.research.google.com)
+  colab_url                 : https://colab.research.google.com/github/100daysofml/100daysofml.github.io/ # The URL of Google Colab (https://colab.research.google.com)
 
 repository:
   url                       : https://github.com/100daysofml/100daysofml.github.io  # The URL to your book's repository
