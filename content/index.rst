@@ -67,3 +67,4 @@ Course Structure
 	* Reddit: [r/100daysml](https://www.reddit.com/r/100daysml/)
 	* Discord: [Join us on Discord](https://discord.com/invite/v4DsSSC5)
 	* Website: [100 Days of ML](https://www.100daysofml.com)
+	

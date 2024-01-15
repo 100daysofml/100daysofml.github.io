@@ -1,4 +1,5 @@
 # **Daily Curriculum Resources**
+
 # **Week 1: Python Basics and Numerical Operations with Jupyter Notebooks**
 ## **Lesson 1: Python Basics - Syntax, Variables**
 
