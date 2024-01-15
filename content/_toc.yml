@@ -38,4 +38,15 @@ parts:
 #     title: "Day 9 - Calculus - Integrals, Fundamental Theorems"
 #   - file: Week_02/Lesson_10.ipynb
 #     title: "Day 10 - Statistics and Probability - Concepts and Relevant Distributions"
-
+  - caption: "Week 3 - Data Preprocessing"
+    chapters:
+    - file: Week_03/Lesson_11.ipynb
+      title: "Day 11 - Introduction to Data Preprocessing"
+#   - file: Week_03/Lesson_12.ipynb
+#     title: "Day 12 - Splitting Data into Training and Test Sets "
+#   - file: Week_03/Lesson_13.ipynb
+#     title: "Day 13 - Handling Missing Data in Python"
+#   - file: Week_03/Lesson_14.ipynb
+#     title: "Day 14 - Data Normalization and Scaling using Python"
+#   - file: Week_03/Lesson_15.ipynb
+#     title: "Day 15 - ncoding Categorical Data in Python"
