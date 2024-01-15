@@ -1,0 +1,1501 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Lesson 11: Introduction to Data Preprocessing in Python &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_03/Lesson_11';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_03/Lesson_11.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Day 8: Calculus - Derivatives, Concept and Applications" href="../Week_02/Lesson_08.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    100 Days of Machine Learning Challenge
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Module 1: Introduction to Python and Basic Mathematics</a></li>
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Week 1: Python Basics and Numerical Operations with Jupyter Notebooks</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 - Data Preprocessing</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Day 11 - Introduction to Data Preprocessing</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://mybinder.org/v2/git/https%3A%2F%2Fgithub.com%2F100daysofml%2F100daysofml.github.io/HEAD/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_03/Lesson_11.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/github/100daysofml/100daysofml.github.io/blob/master/Week_03/Lesson_11.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_03/Lesson_11.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_03/Lesson_11.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lesson 11: Introduction to Data Preprocessing in Python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-data-preprocessing">1. Overview of Data Preprocessing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-and-goals">Importance and Goals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing-workflow">Data Preprocessing Workflow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-data-types-and-scales">2. Understanding Data Types and Scales</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">Data Types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scales">Scales</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-summary-statistics-in-python">3. Basic (Summary) Statistics in Python</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-for-activities">Setup for Activities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#in-the-above-example-we-used-a-numeric-column-in-order-to-display-the-mode-could-you-use-a-non-numeric-column">In the above example we used a numeric column in order to display the mode? <strong>Could you use a non-numeric column?</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-would-there-be-a-difference-in-the-variance-and-standard-deviation-between-the-two-different-methods"><strong>Why would there be a difference in the variance and standard deviation between the two different methods?</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-are-quartiles-and-interquartile-range-important">Why are Quartiles and Interquartile Range Important?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-hands-on"><strong>Activity - Hands-On</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources"><strong>Additional Resources</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lesson-11-introduction-to-data-preprocessing-in-python">
+<h1>Lesson 11: Introduction to Data Preprocessing in Python<a class="headerlink" href="#lesson-11-introduction-to-data-preprocessing-in-python" title="Permalink to this heading">#</a></h1>
+<section id="overview-of-data-preprocessing">
+<h2>1. Overview of Data Preprocessing<a class="headerlink" href="#overview-of-data-preprocessing" title="Permalink to this heading">#</a></h2>
+<section id="importance-and-goals">
+<h3>Importance and Goals<a class="headerlink" href="#importance-and-goals" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Importance</strong>: Essential for converting raw data into a format suitable for analysis.</p></li>
+<li><p><strong>Goals</strong>: Enhance data quality, improve analysis efficiency, and prepare data for machine learning.</p></li>
+</ul>
+</section>
+<section id="data-preprocessing-workflow">
+<h3>Data Preprocessing Workflow<a class="headerlink" href="#data-preprocessing-workflow" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Cleaning Data</strong>: Remove duplicates, correct errors.</p></li>
+<li><p><strong>Handling Missing Values</strong>: Impute missing values or remove them.</p></li>
+<li><p><strong>Normalization</strong>: Scale data using methods like Min-Max scaling or Z-score normalization.</p></li>
+<li><p><strong>Feature Engineering</strong>: Create new features from existing data.</p></li>
+</ul>
+</section>
+</section>
+<section id="understanding-data-types-and-scales">
+<h2>2. Understanding Data Types and Scales<a class="headerlink" href="#understanding-data-types-and-scales" title="Permalink to this heading">#</a></h2>
+<section id="data-types">
+<h3>Data Types<a class="headerlink" href="#data-types" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Numeric (Quantitative)</strong>: Numbers representing continuous or discrete data.</p></li>
+<li><p><strong>Categorical (Qualitative)</strong>: Data grouped into categories.</p></li>
+</ul>
+</section>
+<section id="scales">
+<h3>Scales<a class="headerlink" href="#scales" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Nominal</strong>: Categories without order (e.g., blood types).</p></li>
+<li><p><strong>Ordinal</strong>: Ordered categories (e.g., class levels).</p></li>
+<li><p><strong>Interval</strong>: Numeric scales without true zero (e.g., temperature in Celsius).</p></li>
+<li><p><strong>Ratio</strong>: Numeric scales with true zero (e.g., height).</p></li>
+</ul>
+</section>
+</section>
+<section id="basic-summary-statistics-in-python">
+<h2>3. Basic (Summary) Statistics in Python<a class="headerlink" href="#basic-summary-statistics-in-python" title="Permalink to this heading">#</a></h2>
+<section id="setup-for-activities">
+<h3>Setup for Activities<a class="headerlink" href="#setup-for-activities" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Dataset</strong>: Covid Data.</p></li>
+<li><p><strong>Tools</strong>: Python with Pandas library.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#import relevant libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#load data into dataframe</span>
+<span class="n">covid_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;covid_data.csv&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#inspect the first five and last five lines of the dataframe</span>
+<span class="n">covid_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>iso_code</th>
+      <th>continent</th>
+      <th>location</th>
+      <th>date</th>
+      <th>total_cases</th>
+      <th>new_cases</th>
+      <th>new_cases_smoothed</th>
+      <th>total_deaths</th>
+      <th>new_deaths</th>
+      <th>new_deaths_smoothed</th>
+      <th>...</th>
+      <th>female_smokers</th>
+      <th>male_smokers</th>
+      <th>handwashing_facilities</th>
+      <th>hospital_beds_per_thousand</th>
+      <th>life_expectancy</th>
+      <th>human_development_index</th>
+      <th>excess_mortality_cumulative_absolute</th>
+      <th>excess_mortality_cumulative</th>
+      <th>excess_mortality</th>
+      <th>excess_mortality_cumulative_per_million</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AFG</td>
+      <td>Asia</td>
+      <td>Afghanistan</td>
+      <td>24/02/2020</td>
+      <td>5</td>
+      <td>5</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>37.746</td>
+      <td>0.5</td>
+      <td>64.83</td>
+      <td>0.511</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>AFG</td>
+      <td>Asia</td>
+      <td>Afghanistan</td>
+      <td>25/02/2020</td>
+      <td>5</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>37.746</td>
+      <td>0.5</td>
+      <td>64.83</td>
+      <td>0.511</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>AFG</td>
+      <td>Asia</td>
+      <td>Afghanistan</td>
+      <td>26/02/2020</td>
+      <td>5</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>37.746</td>
+      <td>0.5</td>
+      <td>64.83</td>
+      <td>0.511</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>AFG</td>
+      <td>Asia</td>
+      <td>Afghanistan</td>
+      <td>27/02/2020</td>
+      <td>5</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>37.746</td>
+      <td>0.5</td>
+      <td>64.83</td>
+      <td>0.511</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>AFG</td>
+      <td>Asia</td>
+      <td>Afghanistan</td>
+      <td>28/02/2020</td>
+      <td>5</td>
+      <td>0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>...</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>37.746</td>
+      <td>0.5</td>
+      <td>64.83</td>
+      <td>0.511</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 67 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">covid_data</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>iso_code</th>
+      <th>continent</th>
+      <th>location</th>
+      <th>date</th>
+      <th>total_cases</th>
+      <th>new_cases</th>
+      <th>new_cases_smoothed</th>
+      <th>total_deaths</th>
+      <th>new_deaths</th>
+      <th>new_deaths_smoothed</th>
+      <th>...</th>
+      <th>female_smokers</th>
+      <th>male_smokers</th>
+      <th>handwashing_facilities</th>
+      <th>hospital_beds_per_thousand</th>
+      <th>life_expectancy</th>
+      <th>human_development_index</th>
+      <th>excess_mortality_cumulative_absolute</th>
+      <th>excess_mortality_cumulative</th>
+      <th>excess_mortality</th>
+      <th>excess_mortality_cumulative_per_million</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>5813</th>
+      <td>NGA</td>
+      <td>Africa</td>
+      <td>Nigeria</td>
+      <td>06/10/2022</td>
+      <td>265741</td>
+      <td>236</td>
+      <td>51.286</td>
+      <td>3155.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.6</td>
+      <td>10.8</td>
+      <td>41.949</td>
+      <td>NaN</td>
+      <td>54.69</td>
+      <td>0.539</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5814</th>
+      <td>NGA</td>
+      <td>Africa</td>
+      <td>Nigeria</td>
+      <td>07/10/2022</td>
+      <td>265741</td>
+      <td>0</td>
+      <td>51.286</td>
+      <td>3155.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.6</td>
+      <td>10.8</td>
+      <td>41.949</td>
+      <td>NaN</td>
+      <td>54.69</td>
+      <td>0.539</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5815</th>
+      <td>NGA</td>
+      <td>Africa</td>
+      <td>Nigeria</td>
+      <td>08/10/2022</td>
+      <td>265816</td>
+      <td>75</td>
+      <td>55.000</td>
+      <td>3155.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.6</td>
+      <td>10.8</td>
+      <td>41.949</td>
+      <td>NaN</td>
+      <td>54.69</td>
+      <td>0.539</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5816</th>
+      <td>NGA</td>
+      <td>Africa</td>
+      <td>Nigeria</td>
+      <td>09/10/2022</td>
+      <td>265816</td>
+      <td>0</td>
+      <td>55.000</td>
+      <td>3155.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.6</td>
+      <td>10.8</td>
+      <td>41.949</td>
+      <td>NaN</td>
+      <td>54.69</td>
+      <td>0.539</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>5817</th>
+      <td>NGA</td>
+      <td>Africa</td>
+      <td>Nigeria</td>
+      <td>10/10/2022</td>
+      <td>265816</td>
+      <td>0</td>
+      <td>55.000</td>
+      <td>3155.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>...</td>
+      <td>0.6</td>
+      <td>10.8</td>
+      <td>41.949</td>
+      <td>NaN</td>
+      <td>54.69</td>
+      <td>0.539</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+<p>5 rows × 67 columns</p>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#show all columns in pandas</span>
+<span class="n">covid_data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 5818 entries, 0 to 5817
+Data columns (total 67 columns):
+ #   Column                                      Non-Null Count  Dtype  
+---  ------                                      --------------  -----  
+ 0   iso_code                                    5818 non-null   object 
+ 1   continent                                   5818 non-null   object 
+ 2   location                                    5818 non-null   object 
+ 3   date                                        5818 non-null   object 
+ 4   total_cases                                 5818 non-null   int64  
+ 5   new_cases                                   5818 non-null   int64  
+ 6   new_cases_smoothed                          5788 non-null   float64
+ 7   total_deaths                                5638 non-null   float64
+ 8   new_deaths                                  5627 non-null   float64
+ 9   new_deaths_smoothed                         5596 non-null   float64
+ 10  total_cases_per_million                     5818 non-null   float64
+ 11  new_cases_per_million                       5818 non-null   float64
+ 12  new_cases_smoothed_per_million              5788 non-null   float64
+ 13  total_deaths_per_million                    5638 non-null   float64
+ 14  new_deaths_per_million                      5627 non-null   float64
+ 15  new_deaths_smoothed_per_million             5596 non-null   float64
+ 16  reproduction_rate                           5566 non-null   float64
+ 17  icu_patients                                2610 non-null   float64
+ 18  icu_patients_per_million                    2610 non-null   float64
+ 19  hosp_patients                               2610 non-null   float64
+ 20  hosp_patients_per_million                   2610 non-null   float64
+ 21  weekly_icu_admissions                       0 non-null      float64
+ 22  weekly_icu_admissions_per_million           0 non-null      float64
+ 23  weekly_hosp_admissions                      934 non-null    float64
+ 24  weekly_hosp_admissions_per_million          934 non-null    float64
+ 25  total_tests                                 3174 non-null   float64
+ 26  new_tests                                   2948 non-null   float64
+ 27  total_tests_per_thousand                    3174 non-null   float64
+ 28  new_tests_per_thousand                      2948 non-null   float64
+ 29  new_tests_smoothed                          4114 non-null   float64
+ 30  new_tests_smoothed_per_thousand             4114 non-null   float64
+ 31  positive_rate                               3440 non-null   float64
+ 32  tests_per_case                              3440 non-null   float64
+ 33  tests_units                                 4156 non-null   object 
+ 34  total_vaccinations                          2104 non-null   float64
+ 35  people_vaccinated                           2051 non-null   float64
+ 36  people_fully_vaccinated                     2004 non-null   float64
+ 37  total_boosters                              1170 non-null   float64
+ 38  new_vaccinations                            1827 non-null   float64
+ 39  new_vaccinations_smoothed                   3658 non-null   float64
+ 40  total_vaccinations_per_hundred              2104 non-null   float64
+ 41  people_vaccinated_per_hundred               2051 non-null   float64
+ 42  people_fully_vaccinated_per_hundred         2004 non-null   float64
+ 43  total_boosters_per_hundred                  1170 non-null   float64
+ 44  new_vaccinations_smoothed_per_million       3658 non-null   float64
+ 45  new_people_vaccinated_smoothed              3658 non-null   float64
+ 46  new_people_vaccinated_smoothed_per_hundred  3658 non-null   float64
+ 47  stringency_index                            5699 non-null   float64
+ 48  population                                  5818 non-null   int64  
+ 49  population_density                          5818 non-null   float64
+ 50  median_age                                  5818 non-null   float64
+ 51  aged_65_older                               5818 non-null   float64
+ 52  aged_70_older                               5818 non-null   float64
+ 53  gdp_per_capita                              5818 non-null   float64
+ 54  extreme_poverty                             2922 non-null   float64
+ 55  cardiovasc_death_rate                       5818 non-null   float64
+ 56  diabetes_prevalence                         5818 non-null   float64
+ 57  female_smokers                              4860 non-null   float64
+ 58  male_smokers                                4860 non-null   float64
+ 59  handwashing_facilities                      1913 non-null   float64
+ 60  hospital_beds_per_thousand                  4863 non-null   float64
+ 61  life_expectancy                             5818 non-null   float64
+ 62  human_development_index                     5818 non-null   float64
+ 63  excess_mortality_cumulative_absolute        421 non-null    float64
+ 64  excess_mortality_cumulative                 421 non-null    float64
+ 65  excess_mortality                            421 non-null    float64
+ 66  excess_mortality_cumulative_per_million     421 non-null    float64
+dtypes: float64(59), int64(3), object(5)
+memory usage: 3.0+ MB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#create a dataframe that loads relevant columns</span>
+<span class="n">covid_datanew</span> <span class="o">=</span> <span class="n">covid_data</span><span class="p">[[</span><span class="s1">&#39;iso_code&#39;</span><span class="p">,</span><span class="s1">&#39;continent&#39;</span><span class="p">,</span><span class="s1">&#39;location&#39;</span><span class="p">,</span><span class="s1">&#39;date&#39;</span><span class="p">,</span><span class="s1">&#39;total_cases&#39;</span><span class="p">,</span><span class="s1">&#39;new_cases&#39;</span><span class="p">]]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#displaying the new dataframe</span>
+<span class="n">covid_datanew</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>iso_code</th>
+      <th>continent</th>
+      <th>location</th>
+      <th>date</th>
+      <th>total_cases</th>
+      <th>new_cases</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>AFG</td>
+      <td>Asia</td>
+      <td>Afghanistan</td>
+      <td>24/02/2020</td>
+      <td>5</td>
+      <td>5</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>AFG</td>
+      <td>Asia</td>
+      <td>Afghanistan</td>
+      <td>25/02/2020</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>AFG</td>
+      <td>Asia</td>
+      <td>Afghanistan</td>
+      <td>26/02/2020</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>AFG</td>
+      <td>Asia</td>
+      <td>Afghanistan</td>
+      <td>27/02/2020</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>AFG</td>
+      <td>Asia</td>
+      <td>Afghanistan</td>
+      <td>28/02/2020</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#investigating the data type of the dataframe</span>
+<span class="n">covid_datanew</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>iso_code       object
+continent      object
+location       object
+date           object
+total_cases     int64
+new_cases       int64
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#displaying the shape of the dataframe (rows x columns)</span>
+<span class="n">covid_data</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(5818, 67)
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Mean (Arithmetic Average)</strong></p>
+<ul class="simple">
+<li><p>Formula: <span class="math notranslate nohighlight">\((\bar{x} = \frac{1}{n}\sum_{i=1}^{n}x_i\)</span>)</p></li>
+<li><p>Activity: Calculate the mean of ‘new_cases’ in the dataset.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#analyze the mean of the new_cases column using the np.mean() in numpy</span>
+<span class="n">newcase_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">covid_datanew</span><span class="p">[</span><span class="s2">&quot;new_cases&quot;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New case (mean):&quot;</span><span class="p">,</span> <span class="n">newcase_mean</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New case (mean): 8814.365761430045
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Median (Middle Value in Sorted Data)</strong></p>
+<ul class="simple">
+<li><p>Activity: Find the median of ‘alcohol’ in the dataset</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">newcase_median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">covid_datanew</span><span class="p">[</span><span class="s2">&quot;new_cases&quot;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New case (median):&quot;</span><span class="p">,</span> <span class="n">newcase_median</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New case (median): 261.0
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Mode (Most Frequent Value)</strong></p>
+<ul class="simple">
+<li><p>Activity: Determine the mode for ‘wine type’.</p></li>
+</ul>
+<p>The stats.mode function from the SciPy library returns a ModeResult object, which contains two arrays:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>The first array (mode): This contains the mode value(s), i.e., the most frequently occurring value(s) in the dataset.
+The second array (count): This contains the number of times the mode value(s) appears in the dataset.
+</pre></div>
+</div>
+<p>Both of these are returned as arrays, even if there’s only one mode. When you access the mode using stats.mode(covid_datanew[‘new_cases’])[0], it returns an array with the mode value. The [0] at the end is used to access the first (and in most cases, the only) element of this array.</p>
+<p>So, in the context of the code:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>stats.mode(covid_datanew[&#39;new_cases&#39;]): Returns a ModeResult object with the mode and its count.
+stats.mode(covid_datanew[&#39;new_cases&#39;])[0]: Accesses the array containing the mode value(s).
+stats.mode(covid_datanew[&#39;new_cases&#39;])[0][0]: Accesses the first element of the array, providing the actual mode value.
+</pre></div>
+</div>
+<p>This is necessary because the mode function is designed to handle multi-modal datasets (datasets with more than one mode) and thus returns an array instead of a single value. In most single-mode cases, you’ll need the [0][0] to access the actual mode value.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">newcase_mode</span> <span class="o">=</span> <span class="n">stats</span><span class="o">.</span><span class="n">mode</span><span class="p">(</span><span class="n">covid_datanew</span><span class="p">[</span><span class="s2">&quot;new_cases&quot;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New case (mode):&quot;</span><span class="p">,</span> <span class="n">newcase_mode</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New case (mode): ModeResult(mode=0, count=805)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="in-the-above-example-we-used-a-numeric-column-in-order-to-display-the-mode-could-you-use-a-non-numeric-column">
+<h3>In the above example we used a numeric column in order to display the mode? <strong>Could you use a non-numeric column?</strong><a class="headerlink" href="#in-the-above-example-we-used-a-numeric-column-in-order-to-display-the-mode-could-you-use-a-non-numeric-column" title="Permalink to this heading">#</a></h3>
+<p><strong>Variance (σ²)</strong></p>
+<ul class="simple">
+<li><p>Formula: <span class="math notranslate nohighlight">\((\sigma^2 = \frac{\sum_{i=1}^{n}(x_i - \bar{x})^2}{n}\)</span>)</p></li>
+<li><p>Activity: Compute the variance of ‘quality’.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#using numpy check the variance of the new_cases column</span>
+<span class="n">newcase_variance</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">covid_datanew</span><span class="p">[</span><span class="s2">&quot;new_cases&quot;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New cases (variance:numpy):&quot;</span><span class="p">,</span> <span class="n">newcase_variance</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New cases (variance:numpy): 451321915.92810047
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#using numpy check the variance of the new_cases column</span>
+<span class="n">covid_datanew</span><span class="p">[</span><span class="s2">&quot;new_cases&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>451399502.6422019
+</pre></div>
+</div>
+</div>
+</div>
+<p><strong>Standard Deviation (σ)</strong></p>
+<ul class="simple">
+<li><p>Formula: <span class="math notranslate nohighlight">\((\sigma = \sqrt{\sigma^2}\)</span>)</p></li>
+<li><p>Activity: Calculate the standard deviation for ‘quality’.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate the standard deviation using NumPy</span>
+<span class="c1"># &#39;ddof=0&#39; for population standard deviation; &#39;ddof=1&#39; for sample standard deviation</span>
+<span class="n">newcase_stdev</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">covid_datanew</span><span class="p">[</span><span class="s2">&quot;new_cases&quot;</span><span class="p">],</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;New cases (stdev: numpy):&quot;</span><span class="p">,</span> <span class="n">newcase_stdev</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>New cases (stdev: numpy): 21246.16442189512
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">covid_datanew</span><span class="p">[</span><span class="s2">&quot;new_cases&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>21246.16442189512
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="why-would-there-be-a-difference-in-the-variance-and-standard-deviation-between-the-two-different-methods">
+<h3><strong>Why would there be a difference in the variance and standard deviation between the two different methods?</strong><a class="headerlink" href="#why-would-there-be-a-difference-in-the-variance-and-standard-deviation-between-the-two-different-methods" title="Permalink to this heading">#</a></h3>
+<p><strong>Max and Min Range</strong></p>
+<p>The range has a significant role in describing the variability of a data set, as long as there are no outliers. An outlier is an extreme high or low value that stands alone from the other values. If an outlier exist, the value of the range by itself can be misleading.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Calculate the range of the dataset using NumPy</span>
+<span class="n">covid_newcases_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">covid_datanew</span><span class="p">[</span><span class="s2">&quot;new_cases&quot;</span><span class="p">])</span>
+<span class="n">covid_newcases_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">covid_datanew</span><span class="p">[</span><span class="s2">&quot;new_cases&quot;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">covid_newcases_max</span><span class="p">,</span> <span class="n">covid_newcases_min</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>287149 0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="why-are-quartiles-and-interquartile-range-important">
+<h3>Why are Quartiles and Interquartile Range Important?<a class="headerlink" href="#why-are-quartiles-and-interquartile-range-important" title="Permalink to this heading">#</a></h3>
+<p>Quartiles and the Interquartile Range (IQR) are essential in data analysis for several key reasons:</p>
+<ol class="arabic simple">
+<li><p><strong>Measure of Spread</strong></p>
+<ul class="simple">
+<li><p>Quartiles divide a dataset into four equal parts, providing insight into the distribution and variability of the data.</p></li>
+</ul>
+</li>
+<li><p><strong>Outlier Detection</strong></p>
+<ul class="simple">
+<li><p>The IQR is a robust measure of statistical dispersion and is commonly used for identifying outliers. Values that fall below <code class="docutils literal notranslate"><span class="pre">Q1</span> <span class="pre">-</span> <span class="pre">1.5*IQR</span></code> or above <code class="docutils literal notranslate"><span class="pre">Q3</span> <span class="pre">+</span> <span class="pre">1.5*IQR</span></code> are often considered outliers.</p></li>
+</ul>
+</li>
+<li><p><strong>Non-parametric</strong></p>
+<ul class="simple">
+<li><p>Quartiles do not assume a normal distribution of data, making them non-parametric and robust measures for skewed distributions or data with outliers.</p></li>
+</ul>
+</li>
+<li><p><strong>Data Segmentation and Comparison</strong></p>
+<ul class="simple">
+<li><p>Quartiles allow for easy segmentation of data into groups, which is useful in various applications like finance and sales.</p></li>
+</ul>
+</li>
+<li><p><strong>Informative for Further Statistical Analysis</strong></p>
+<ul class="simple">
+<li><p>Understanding quartile positions helps in making informed decisions for further statistical analyses, especially with skewed data.</p></li>
+</ul>
+</li>
+<li><p><strong>Basis for Other Statistical Measures</strong></p>
+<ul class="simple">
+<li><p>Quartiles are foundational for other statistical visualizations like box plots, which depict quartiles and outliers graphically.</p></li>
+</ul>
+</li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate quartiles</span>
+<span class="n">Q1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">covid_data</span><span class="p">[</span><span class="s2">&quot;new_cases&quot;</span><span class="p">],</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">Q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">covid_data</span><span class="p">[</span><span class="s2">&quot;new_cases&quot;</span><span class="p">],</span><span class="mf">0.75</span><span class="p">)</span>
+
+<span class="c1"># Calculate the Interquartile Range</span>
+<span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Q1 (25th percentile):&quot;</span><span class="p">,</span> <span class="n">Q1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Q3 (75th percentile):&quot;</span><span class="p">,</span> <span class="n">Q3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Interquartile Range:&quot;</span><span class="p">,</span> <span class="n">IQR</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Q1 (25th percentile): 24.0
+Q3 (75th percentile): 3666.0
+Interquartile Range: 3642.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="activity-hands-on">
+<h3><strong>Activity - Hands-On</strong><a class="headerlink" href="#activity-hands-on" title="Permalink to this heading">#</a></h3>
+<p>Use the data set located at <a class="reference external" href="https://www.kaggle.com/datasets/nehalbirla/vehicle-dataset-from-cardekho">https://www.kaggle.com/datasets/nehalbirla/vehicle-dataset-from-cardekho</a> and do a summary statistical analysis using either Pandas of NumPy.</p>
+<p>Calculate basic (summary) statistics for this data set</p>
+<section id="additional-resources">
+<h4><strong>Additional Resources</strong><a class="headerlink" href="#additional-resources" title="Permalink to this heading">#</a></h4>
+<p><a class="reference external" href="https://www.geeksforgeeks.org/data-preprocessing-machine-learning-python/">https://www.geeksforgeeks.org/data-preprocessing-machine-learning-python/</a>
+<a class="reference external" href="https://blog.quantinsti.com/data-preprocessing/">https://blog.quantinsti.com/data-preprocessing/</a>
+<a class="reference external" href="https://training.experfy.com/courses/data-pre-processing">https://training.experfy.com/courses/data-pre-processing</a></p>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_03"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../Week_02/Lesson_08.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Day 8: Calculus - Derivatives, Concept and Applications</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-data-preprocessing">1. Overview of Data Preprocessing</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importance-and-goals">Importance and Goals</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-preprocessing-workflow">Data Preprocessing Workflow</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-data-types-and-scales">2. Understanding Data Types and Scales</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-types">Data Types</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#scales">Scales</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-summary-statistics-in-python">3. Basic (Summary) Statistics in Python</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-for-activities">Setup for Activities</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#in-the-above-example-we-used-a-numeric-column-in-order-to-display-the-mode-could-you-use-a-non-numeric-column">In the above example we used a numeric column in order to display the mode? <strong>Could you use a non-numeric column?</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-would-there-be-a-difference-in-the-variance-and-standard-deviation-between-the-two-different-methods"><strong>Why would there be a difference in the variance and standard deviation between the two different methods?</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-are-quartiles-and-interquartile-range-important">Why are Quartiles and Interquartile Range Important?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-hands-on"><strong>Activity - Hands-On</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources"><strong>Additional Resources</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
