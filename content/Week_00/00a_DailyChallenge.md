@@ -1,4 +1,5 @@
 #   Daily Challenge Curriculum
+
 ##  Module 1: Introduction to Python and Basic Mathematics
 ##  Weeks 1-2
 - Focus: Basic Python programming skills and foundational mathematics.
