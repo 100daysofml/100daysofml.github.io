@@ -1,0 +1,975 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Lesson 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_03/Lesson_12';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_03/Lesson_12.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Lesson 11: Introduction to Data Preprocessing in Python" href="Lesson_11.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    100 Days of Machine Learning Challenge
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Daily Challenge Curriculum</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Daily Curriculum Resources</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 - Data Preprocessing</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lesson_11.html">Day 11 - Introduction to Data Preprocessing</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lesson 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-4iw5ztbi/lab/workspaces/auto-e/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_03/Lesson_12.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/github/100daysofml/100daysofml.github.io/blob/master/Week_03/Lesson_12.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_03/Lesson_12.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_03/Lesson_12.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lesson 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lesson 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theoretical-background-and-mathematical-principles">1. Theoretical Background and Mathematical Principles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-splitting-techniques">2. Data Splitting Techniques</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-splitting-techniques">3. Advanced Splitting Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stratified-cross-validation">Stratified Cross-Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#blocked-cross-validation">Blocked Cross-Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rolling-cross-validation">Rolling Cross-Validation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#homework-assignment-1">Homework Assignment #1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Objective</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-access-and-load-the-dataset">Step 1: Access and Load the Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-data-preprocessing">Step 2: Data Preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-splitting-the-dataset">Step 3: Splitting the Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-training-a-model">Step 4: Training a Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-model-evaluation-techniques">Step 5: Model Evaluation Techniques</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-notes"><strong>Final Notes</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-considerations-for-best-practices"><strong>Additional Considerations for Best Practices</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources-train-test-splitting-data-leakage"><strong>Additional Resources (Train/Test Splitting | Data Leakage)</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lesson-12-in-depth-exploration-of-data-splitting-techniques-in-python-with-cross-validation">
+<h1>Lesson 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation<a class="headerlink" href="#lesson-12-in-depth-exploration-of-data-splitting-techniques-in-python-with-cross-validation" title="Permalink to this heading">#</a></h1>
+<section id="objective">
+<h2>Objective<a class="headerlink" href="#objective" title="Permalink to this heading">#</a></h2>
+<p>Enhance understanding of data splitting in machine learning, focusing on mathematical principles, advanced methods like cross-validation, and Python programming activities.</p>
+</section>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Advanced knowledge in Python, Pandas, NumPy, and Scikit-Learn.</p></li>
+<li><p>Familiarity with statistical concepts and machine learning principles.</p></li>
+<li><p>Configured Python environment with necessary data science libraries.</p></li>
+</ul>
+</section>
+<section id="theoretical-background-and-mathematical-principles">
+<h2>1. Theoretical Background and Mathematical Principles<a class="headerlink" href="#theoretical-background-and-mathematical-principles" title="Permalink to this heading">#</a></h2>
+<p><strong>Understanding Data Distribution</strong></p>
+<ul class="simple">
+<li><p><strong>Statistical Sampling</strong>: Importance in understanding how well samples represent populations.</p></li>
+<li><p><strong>Central Limit Theorem (CLT)</strong>:</p>
+<ul>
+<li><p><strong>Formula</strong>: <span class="math notranslate nohighlight">\((\bar{X} \approx N(\mu, \frac{\sigma^2}{n})\)</span>) for large <span class="math notranslate nohighlight">\((n\)</span>).</p></li>
+<li><p><strong>Explanation</strong>: <span class="math notranslate nohighlight">\((\bar{X}\)</span>) is the sample mean; <span class="math notranslate nohighlight">\((N\)</span>) indicates a normal distribution; <span class="math notranslate nohighlight">\((\mu\)</span>) is the population mean; <span class="math notranslate nohighlight">\((\sigma^2\)</span>) is the population variance; <span class="math notranslate nohighlight">\((n\)</span>) is the sample size.</p></li>
+<li><p><strong>Importance</strong>: Foundation for statistical methods, applicable even with unknown population distribution.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Importance of Random Sampling</strong></p>
+<ul class="simple">
+<li><p><strong>Probability Sampling</strong>: Ensures unbiased population representation.</p></li>
+<li><p><strong>Math Behind Random Sampling</strong>: Probability of selection = <span class="math notranslate nohighlight">\((\frac{1}{N}\)</span>), where <span class="math notranslate nohighlight">\((N\)</span>) is the total number of observations.</p></li>
+</ul>
+<p><strong>Stratified Sampling Theory</strong></p>
+<ul class="simple">
+<li><p><strong>Principle</strong>: Divides the population into homogeneous subgroups to reduce sampling error.</p></li>
+<li><p><strong>Calculation</strong>: Proportion in strata = <span class="math notranslate nohighlight">\((\frac{\text{Number in Stratum}}{\text{Total Number}}\)</span>).</p></li>
+</ul>
+</section>
+<section id="data-splitting-techniques">
+<h2>2. Data Splitting Techniques<a class="headerlink" href="#data-splitting-techniques" title="Permalink to this heading">#</a></h2>
+<p><strong>Simple Random Split</strong></p>
+<ul class="simple">
+<li><p><strong>Usage</strong>: Ideal for large, representative datasets.</p></li>
+<li><p><strong>Python Activity</strong>:</p>
+<ul>
+<li><p><strong>Task</strong>: Load a dataset, apply a simple random split.</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="c1"># Assuming df is your DataFrame</span>
+<span class="n">train_set</span><span class="p">,</span> <span class="n">test_set</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Analysis</strong>: Assess how the split represents the dataset’s characteristics.</p></li>
+</ul>
+<p><strong>Note:</strong> The random_state is a pseudo-random number parameter that allows you to reproduce the same train test split each time you run the code. There are a number of reasons why people use random_state , including software testing, tutorials like this one and talks</p>
+<p><strong>Stratified Random Split</strong></p>
+<ul class="simple">
+<li><p><strong>Usage</strong>: Crucial for datasets with significant internal variance or imbalanced classes.</p></li>
+<li><p><strong>Python Activity</strong>:</p>
+<ul>
+<li><p><strong>Task</strong>: Perform a stratified split based on a key categorical variable.</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">StratifiedShuffleSplit</span>
+
+<span class="n">split</span> <span class="o">=</span> <span class="n">StratifiedShuffleSplit</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">split</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">df</span><span class="p">[</span><span class="s2">&quot;stratum_column&quot;</span><span class="p">]):</span>
+        <span class="n">strat_train_set</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">train_index</span><span class="p">]</span>
+        <span class="n">strat_test_set</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Analysis</strong>: Evaluate the variance within each stratum compared to the overall dataset.</p></li>
+</ul>
+</section>
+<section id="advanced-splitting-techniques">
+<h2>3. Advanced Splitting Techniques<a class="headerlink" href="#advanced-splitting-techniques" title="Permalink to this heading">#</a></h2>
+<p><strong>K-Fold Cross-Validation</strong></p>
+<ul class="simple">
+<li><p><strong>Principle</strong>: Each data point is used for both training and validation.</p></li>
+<li><p><strong>Formula</strong>: Divide dataset into (K) subsets; use (K-1) for training, 1 for testing; repeat (K) times.</p></li>
+<li><p><strong>Best Practices</strong>:</p>
+<ul>
+<li><p>Choose an appropriate (K) to balance bias and variance.</p></li>
+<li><p>Shuffle data when splitting to avoid biased splits.</p></li>
+</ul>
+</li>
+<li><p><strong>Python Activity</strong>:</p>
+<ul>
+<li><p><strong>Task</strong>: Implement K-Fold Cross-Validation.</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">KFold</span><span class="p">,</span> <span class="n">cross_val_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">kf</span> <span class="o">=</span> <span class="n">KFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">df_features</span><span class="p">,</span> <span class="n">df_target</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="n">kf</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cross-validation scores:&quot;</span><span class="p">,</span> <span class="n">scores</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Analysis</strong>: Explore how varying the number of splits ((K)) impacts model performance. The objective is to find a balance between bias and variance.</p></li>
+</ul>
+<section id="stratified-cross-validation">
+<h3>Stratified Cross-Validation<a class="headerlink" href="#stratified-cross-validation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Usage</strong>: Essential for datasets with imbalanced classes.</p></li>
+<li><p><strong>Python Activity</strong>:</p>
+<ul>
+<li><p><strong>Task</strong>: Implement Stratified K-Fold Cross-Validation.</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span> <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">StratifiedKFold</span>
+
+    <span class="n">skf</span> <span class="o">=</span> <span class="n">StratifiedKFold</span><span class="p">(</span><span class="n">n_splits</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">shuffle</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">train_index</span><span class="p">,</span> <span class="n">test_index</span> <span class="ow">in</span> <span class="n">skf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">df_features</span><span class="p">,</span> <span class="n">df_target</span><span class="p">):</span>
+        <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span> <span class="o">=</span> <span class="n">df_features</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">df_features</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span>
+        <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">df_target</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">df_target</span><span class="p">[</span><span class="n">test_index</span><span class="p">]</span>
+</pre></div>
+</div>
+</section>
+<section id="blocked-cross-validation">
+<h3>Blocked Cross-Validation<a class="headerlink" href="#blocked-cross-validation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Usage</strong>: Ideal for grouped data, such as repeated measurements from the same subject.</p></li>
+<li><p><strong>Python Activity</strong>:</p>
+<ul>
+<li><p><strong>Task</strong>: Use Blocked Cross-Validation for grouped data.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="rolling-cross-validation">
+<h3>Rolling Cross-Validation<a class="headerlink" href="#rolling-cross-validation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Usage</strong>: Best suited for time series data.</p></li>
+<li><p><strong>Python Activity</strong>:</p>
+<ul>
+<li><p><strong>Task</strong>: Apply Rolling Cross-Validation on time series data.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="homework-assignment-1">
+<h1>Homework Assignment #1<a class="headerlink" href="#homework-assignment-1" title="Permalink to this heading">#</a></h1>
+<section id="id1">
+<h2>Objective<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>Enhance understanding of practical data preprocessing, test set splitting, and model evaluation, focusing on Python implementation using a Kaggle dataset.
+<a class="reference external" href="https://www.kaggle.com/datasets/yasserh/wine-quality-dataset">https://www.kaggle.com/datasets/yasserh/wine-quality-dataset</a></p>
+<p><a class="github reference external" href="https://github.com/100daysofml/100daysofml.github.io/blob/main/content/Week_03/wine_quality.csv">100daysofml/100daysofml.github.io</a></p>
+<section id="step-1-access-and-load-the-dataset">
+<h3>Step 1: Access and Load the Dataset<a class="headerlink" href="#step-1-access-and-load-the-dataset" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Task</strong>: Download the “Wine Quality” dataset from Kaggle.</p></li>
+</ul>
+<p><a class="reference external" href="https://www.kaggle.com/datasets/yasserh/wine-quality-dataset">https://www.kaggle.com/datasets/yasserh/wine-quality-dataset</a></p>
+<p><a class="github reference external" href="https://github.com/100daysofml/100daysofml.github.io/blob/main/content/Week_03/wine_quality.csv">100daysofml/100daysofml.github.io</a></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>  <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+  <span class="c1"># Load the dataset (update the path according to your download)</span>
+  <span class="n">wine_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;winequality.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="step-2-data-preprocessing">
+<h3>Step 2: Data Preprocessing<a class="headerlink" href="#step-2-data-preprocessing" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Tasks:</strong> Handle missing values, encode categorical variables, and normalize features</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">LabelEncoder</span>
+
+<span class="c1"># Handling missing values</span>
+<span class="n">wine_data</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">wine_data</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Encoding categorical variables if any</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">wine_data</span><span class="p">[</span><span class="s1">&#39;categorical_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">wine_data</span><span class="p">[</span><span class="s1">&#39;categorical_column&#39;</span><span class="p">])</span>
+
+<span class="c1"># Normalizing features</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">wine_data_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">wine_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;quality&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</section>
+<section id="step-3-splitting-the-dataset">
+<h3>Step 3: Splitting the Dataset<a class="headerlink" href="#step-3-splitting-the-dataset" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Task:</strong> Split the dataset into training and test sets.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">wine_data_scaled</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">wine_data</span><span class="p">[</span><span class="s1">&#39;quality&#39;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="step-4-training-a-model">
+<h3>Step 4: Training a Model<a class="headerlink" href="#step-4-training-a-model" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Task:</strong>  Train a model using the training set.</p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="step-5-model-evaluation-techniques">
+<h3>Step 5: Model Evaluation Techniques<a class="headerlink" href="#step-5-model-evaluation-techniques" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Tasks:</strong> Evaluate the model using a variety of techniques.</p></li>
+<li><p><strong>Accuracy Score:</strong></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Confusion Matrix:</strong></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Confusion Matrix:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Precision, Recall, and F1-Score:</strong></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>ROC Curve:</strong></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">roc_curve</span><span class="p">,</span> <span class="n">auc</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># For binary classification</span>
+<span class="n">probabilities</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">X_test</span><span class="p">)[:,</span> <span class="mi">1</span><span class="p">]</span>
+<span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">thresholds</span> <span class="o">=</span> <span class="n">roc_curve</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">probabilities</span><span class="p">)</span>
+<span class="n">roc_auc</span> <span class="o">=</span> <span class="n">auc</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">fpr</span><span class="p">,</span> <span class="n">tpr</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;darkorange&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;ROC curve (area = </span><span class="si">%0.2f</span><span class="s1">)&#39;</span> <span class="o">%</span> <span class="n">roc_auc</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;navy&#39;</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;False Positive Rate&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;True Positive Rate&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Receiver Operating Characteristic&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">&quot;lower right&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Cross-Validation:</strong></p></li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+
+<span class="n">cross_val_scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cross-Validation Scores:&quot;</span><span class="p">,</span> <span class="n">cross_val_scores</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="final-notes">
+<h3><strong>Final Notes</strong><a class="headerlink" href="#final-notes" title="Permalink to this heading">#</a></h3>
+<p>The five steps outlined in the lesson plan are generally aligned with best practices in machine learning for data preprocessing, splitting, and model evaluation. However, there are a few additional considerations and potential modifications to ensure efficiency and prevent data leakage:</p>
+<ul class="simple">
+<li><p><strong>Access and Load the Dataset:</strong> This step is straightforward and essential. Ensure data confidentiality and compliance with data usage policies.</p></li>
+<li><p><strong>Data Preprocessing:</strong>
+Best Practice: It’s crucial to conduct preprocessing on the training set independently from the test set to prevent data leakage. This means normalizing or standardizing the training data and then applying the same transformation to the test data using parameters from the training set.
+Modification: Split the data into training and test sets before applying any normalization or encoding to avoid data leakage.</p></li>
+<li><p><strong>Splitting the Dataset:</strong>
+This step is well-placed after initial data loading and handling missing values but should ideally be done before applying more complex preprocessing steps like normalization and encoding.</p></li>
+<li><p><strong>Training a Model:</strong>
+Best Practice: This step is well-positioned after preprocessing and splitting. Ensure that the model is trained only on the training set.</p></li>
+<li><p><strong>Model Evaluation Techniques:</strong>
+Best Practice: Evaluating the model on the test set is crucial to assess its performance on unseen data. Using a variety of metrics provides a comprehensive view of the model’s performance.
+Consideration: When dealing with imbalanced datasets, metrics like ROC-AUC and F1-score are particularly informative.</p></li>
+</ul>
+</section>
+<section id="additional-considerations-for-best-practices">
+<h3><strong>Additional Considerations for Best Practices</strong><a class="headerlink" href="#additional-considerations-for-best-practices" title="Permalink to this heading">#</a></h3>
+<p><strong>Cross-Validation:</strong>
+Should ideally be performed before finalizing the model to understand its generalizability. Cross-validation should be conducted on the training dataset only.
+For time-series data, use time-series specific cross-validation methods to prevent data leakage.</p>
+<p><strong>Feature Selection and Engineering:</strong>
+Should be done after splitting the data to prevent information from the test set leaking into the model training process.
+Any feature engineering should also be consistent across training and test sets.</p>
+<p><strong>Data Leakage Prevention:</strong>
+Be vigilant about not allowing information from the test set to influence the training process.
+This includes careful handling of any preprocessing steps like scaling, normalization, or data augmentation.</p>
+<section id="additional-resources-train-test-splitting-data-leakage">
+<h4><strong>Additional Resources (Train/Test Splitting | Data Leakage)</strong><a class="headerlink" href="#additional-resources-train-test-splitting-data-leakage" title="Permalink to this heading">#</a></h4>
+<p><a class="reference external" href="https://medium.com/&#64;datasciencewizards/a-guide-to-data-splitting-in-machine-learning-49a959c95fa1">https://medium.com/&#64;datasciencewizards/a-guide-to-data-splitting-in-machine-learning-49a959c95fa1</a></p>
+<p><a class="reference external" href="https://machinelearningmastery.com/train-test-split-for-evaluating-machine-learning-algorithms/">https://machinelearningmastery.com/train-test-split-for-evaluating-machine-learning-algorithms/</a></p>
+<p><a class="reference external" href="https://towardsdatascience.com/data-leakage-in-machine-learning-how-it-can-be-detected-and-minimize-the-risk-8ef4e3a97562">https://towardsdatascience.com/data-leakage-in-machine-learning-how-it-can-be-detected-and-minimize-the-risk-8ef4e3a97562</a></p>
+<p><a class="reference external" href="https://www.analyticsvidhya.com/blog/2021/07/data-leakage-and-its-effect-on-the-performance-of-an-ml-model/">https://www.analyticsvidhya.com/blog/2021/07/data-leakage-and-its-effect-on-the-performance-of-an-ml-model/</a></p>
+<p><a class="reference external" href="https://jfrog.com/community/data-science/be-careful-from-data-leakage-2/">https://jfrog.com/community/data-science/be-careful-from-data-leakage-2/</a></p>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_03"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson_11.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Lesson 11: Introduction to Data Preprocessing in Python</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lesson 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theoretical-background-and-mathematical-principles">1. Theoretical Background and Mathematical Principles</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#data-splitting-techniques">2. Data Splitting Techniques</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#advanced-splitting-techniques">3. Advanced Splitting Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stratified-cross-validation">Stratified Cross-Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#blocked-cross-validation">Blocked Cross-Validation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rolling-cross-validation">Rolling Cross-Validation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#homework-assignment-1">Homework Assignment #1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Objective</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-access-and-load-the-dataset">Step 1: Access and Load the Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-data-preprocessing">Step 2: Data Preprocessing</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-splitting-the-dataset">Step 3: Splitting the Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-training-a-model">Step 4: Training a Model</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-model-evaluation-techniques">Step 5: Model Evaluation Techniques</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#final-notes"><strong>Final Notes</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-considerations-for-best-practices"><strong>Additional Considerations for Best Practices</strong></a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources-train-test-splitting-data-leakage"><strong>Additional Resources (Train/Test Splitting | Data Leakage)</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
