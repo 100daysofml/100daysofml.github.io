@@ -1,0 +1,1106 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Day 13: Advanced Techniques for Handling Missing Data in Python &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_03/Lesson_13';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_03/Lesson_13.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Day 12: In-Depth Exploration of Data Splitting Techniques - Solution" href="Lesson_12solution.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    100 Days of Machine Learning Challenge
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Daily Challenge Curriculum</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Daily Curriculum Resources</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 - Data Preprocessing</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lesson_11.html">Day 11 - Introduction to Data Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson_12.html">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson_12solution.html">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Day 13 - Handling Missing Data in Python</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-4iw5ztbi/lab/workspaces/auto-e/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_03/Lesson_13.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/github/100daysofml/100daysofml.github.io/blob/master/Week_03/Lesson_13.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_03/Lesson_13.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_03/Lesson_13.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Day 13: Advanced Techniques for Handling Missing Data in Python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-missing-data">Understanding Missing Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-missing-data">Types of Missing Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-and-explore-the-dataset">Step 1: Load and Explore the Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-basic-imputation-techniques">Step 2: Basic Imputation Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filling-age-with-median">Filling Age with Median</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-best-practices">General Best Practices</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-advanced-imputation-techniques">Step 3: Advanced Imputation Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-and-why-to-use-knn-imputation">How and Why to Use KNN Imputation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-for-knn-imputation">Best Practices for KNN Imputation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-imputation">Regression Imputation:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-implement-regression-imputation">How to Implement Regression Imputation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-for-regression-imputation">Best Practices for Regression Imputation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-handling-mnar-data-missing-not-at-random">Step 4: Handling MNAR Data (Missing Not at Random)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approach">Approach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-augmentation-methods">Data Augmentation Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-based-methods">Model-Based Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-code-handling-mnar-data-using-model-based-approach">Example Code: Handling MNAR Data Using Model-Based Approach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-for-handling-mnar-data">Best Practices for Handling MNAR Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formulas-and-statistical-models">Formulas and Statistical Models</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-evaluating-the-impact-of-imputation">Step 5: Evaluating the Impact of Imputation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Objective</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-visualization-techniques">Python Visualization Techniques</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-histograms">Using Histograms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-scatter-plots">Using Scatter Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-code-for-visualization">Example Code for Visualization</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-for-age">Histogram for ‘Age’</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-plot-for-two-variables">Scatter Plot for Two Variables</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-for-evaluating-imputation">Best Practices for Evaluating Imputation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-homework-assignment">Step 6: Homework Assignment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-and-considerations">Best Practices and Considerations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-data">Testing Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrating-little-s-mcar-test-using-rpy2">Integrating Little’s MCAR Test Using rpy2</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-rpy2">Setting Up rpy2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-r-packages">Installing R Packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-little-s-mcar-test">Performing Little’s MCAR Test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-tips-for-discerning-missing-data-types">Practical Tips for Discerning Missing Data Types</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources-train-test-splitting-data-leakage"><strong>Additional Resources (Train/Test Splitting | Data Leakage)</strong></a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="day-13-advanced-techniques-for-handling-missing-data-in-python">
+<h1>Day 13: Advanced Techniques for Handling Missing Data in Python<a class="headerlink" href="#day-13-advanced-techniques-for-handling-missing-data-in-python" title="Permalink to this heading">#</a></h1>
+<section id="objective">
+<h2>Objective<a class="headerlink" href="#objective" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Deepen understanding of handling missing data using Python, focusing on various imputation techniques, best practices, and integrating statistical tests from R for data analysis.</p></li>
+</ul>
+</section>
+<section id="prerequisites">
+<h2>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Intermediate skills in Python, Pandas, NumPy, and Scikit-Learn.</p></li>
+<li><p>Basic understanding of statistical methods.</p></li>
+<li><p>Python environment with necessary libraries and R integration using <code class="docutils literal notranslate"><span class="pre">rpy2</span></code>.</p></li>
+</ul>
+</section>
+<section id="understanding-missing-data">
+<h2>Understanding Missing Data<a class="headerlink" href="#understanding-missing-data" title="Permalink to this heading">#</a></h2>
+<section id="types-of-missing-data">
+<h3>Types of Missing Data<a class="headerlink" href="#types-of-missing-data" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Missing Completely at Random (MCAR)</strong>: No relationship with any other data.</p></li>
+<li><p><strong>Missing at Random (MAR)</strong>: Missingness related to observed data.</p></li>
+<li><p><strong>Missing Not at Random (MNAR)</strong>: Missingness related to unobserved data.</p></li>
+</ol>
+</section>
+</section>
+<section id="step-1-load-and-explore-the-dataset">
+<h2>Step 1: Load and Explore the Dataset<a class="headerlink" href="#step-1-load-and-explore-the-dataset" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">titanic_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;titanic.csv&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_data</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">titanic_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;titanic.csv&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_data</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   PassengerId  Pclass                                          Name     Sex  \
+0          892       3                              Kelly, Mr. James    male   
+1          893       3              Wilkes, Mrs. James (Ellen Needs)  female   
+2          894       2                     Myles, Mr. Thomas Francis    male   
+3          895       3                              Wirz, Mr. Albert    male   
+4          896       3  Hirvonen, Mrs. Alexander (Helga E Lindqvist)  female   
+
+    Age  SibSp  Parch   Ticket     Fare Cabin Embarked  Survived  
+0  34.5      0      0   330911   7.8292   NaN        Q         0  
+1  47.0      1      0   363272   7.0000   NaN        S         1  
+2  62.0      0      0   240276   9.6875   NaN        Q         0  
+3  27.0      0      0   315154   8.6625   NaN        S         0  
+4  22.0      1      1  3101298  12.2875   NaN        S         1  
+PassengerId      0
+Pclass           0
+Name             0
+Sex              0
+Age             86
+SibSp            0
+Parch            0
+Ticket           0
+Fare             1
+Cabin          327
+Embarked         0
+Survived         0
+dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-basic-imputation-techniques">
+<h2>Step 2: Basic Imputation Techniques<a class="headerlink" href="#step-2-basic-imputation-techniques" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Mean/Median Imputation</strong>:</p>
+<ul>
+<li><p><strong>Use when</strong>: Data is MCAR and normally distributed.</p></li>
+<li><p><strong>Best Practice</strong>: Use median for skewed data.</p></li>
+<li><p><strong>Python Code</strong>:</p></li>
+</ul>
+</li>
+</ul>
+<section id="filling-age-with-median">
+<h3>Filling Age with Median<a class="headerlink" href="#filling-age-with-median" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Filling missing data is an important step in preparing a dataset for analysis or model training. The choice of imputation technique depends on the nature of the data and the specific column with missing values. Let’s break down the rationale behind the provided code:
+Filling Age with Median</p>
+<ul class="simple">
+<li><p><strong>Why Use Median for Age</strong>:</p>
+<ul>
+<li><p><strong>Robust to Outliers</strong>: The median is less sensitive to outliers compared to the mean. In datasets where age might have extreme values or a skewed distribution, using the median ensures that the imputed values are not unduly influenced by these extremes.</p></li>
+<li><p><strong>Dealing with MCAR or MAR</strong>: If the missingness in the ‘Age’ column is MCAR (Missing Completely at Random) or MAR (Missing at Random), median imputation provides a reasonable estimate that preserves the central tendency of the data.</p></li>
+</ul>
+</li>
+<li><p><strong>Mode Imputation</strong>:</p>
+<ul>
+<li><p><strong>Use when</strong>: Best for categorical data..</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">embarked_mode</span> <span class="o">=</span> <span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Embarked&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mode</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Embarked&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">embarked_mode</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Why Use Mode for Embarked</strong>:</p>
+<ul>
+<li><p><strong>Categorical Data</strong>: ‘Embarked’ is a categorical variable (representing different embarkation points). For categorical data, mean and median are not applicable. The mode, which is the most frequently occurring category, is a natural choice for imputation.</p></li>
+<li><p><strong>Preserving the Most Common Category</strong>: By using the mode, you maintain the original distribution of the data as closely as possible. It ensures that the statistical and structural integrity of the ‘Embarked’ column is maintained post-imputation.</p></li>
+<li><p><strong>Handling MCAR/MAR</strong>: If the data is MCAR or MAR, replacing missing values with the most common category (mode) helps to retain the representativeness of the dataset.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="general-best-practices">
+<h3>General Best Practices<a class="headerlink" href="#general-best-practices" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>No Distortion of Original Distribution</strong>: The goal is to impute missing values in a way that the overall distribution and relationships in the data remain as unaffected as possible.</p></li>
+<li><p><strong>Contextual Decision Making</strong>: The choice of imputation method should also consider the context and importance of the variable in the dataset. For instance, if a variable like ‘Embarked’ is crucial for the analysis or model, careful consideration is needed to choose the most appropriate imputation method that reflects the real-world scenario.</p></li>
+</ul>
+<p>In conclusion, the choice of median for ‘Age’ and mode for ‘Embarked’ is driven by the nature of these variables (continuous vs. categorical) and the goal of preserving the original data distribution while responsibly handling missing values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">median</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">embarked_mode</span> <span class="o">=</span> <span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Embarked&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mode</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Embarked&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">embarked_mode</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="step-3-advanced-imputation-techniques">
+<h2>Step 3: Advanced Imputation Techniques<a class="headerlink" href="#step-3-advanced-imputation-techniques" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>KNN Imputation</strong>:</p>
+<ul>
+<li><p><strong>Use when</strong>: Data has identifiable patterns.</p></li>
+</ul>
+</li>
+</ul>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">KNNImputer</span>
+
+<span class="n">imputer</span> <span class="o">=</span> <span class="n">KNNImputer</span><span class="p">(</span><span class="n">n_neighbors</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">numeric_columns</span> <span class="o">=</span> <span class="n">titanic_data</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;float64&#39;</span><span class="p">,</span> <span class="s1">&#39;int64&#39;</span><span class="p">])</span>
+<span class="n">titanic_data</span><span class="p">[</span><span class="n">numeric_columns</span><span class="o">.</span><span class="n">columns</span><span class="p">]</span> <span class="o">=</span> <span class="n">imputer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">numeric_columns</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="how-and-why-to-use-knn-imputation">
+<h3>How and Why to Use KNN Imputation<a class="headerlink" href="#how-and-why-to-use-knn-imputation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Mechanism</strong>: K-Nearest Neighbors (KNN) Imputation works by finding the ‘k’ closest neighbors to a data point with missing values and then imputes those values based on the non-missing values of these neighbors.</p></li>
+<li><p><strong>Applicability</strong>: This method is particularly useful when the data exhibits a pattern or relationship, such as in cases where similar observations have similar types of values.</p></li>
+<li><p><strong>Choosing ‘k’</strong>: The choice of ‘k’ (number of neighbors) is crucial. A smaller ‘k’ might capture more variance in the data, while a larger ‘k’ can smooth out the noise but might lead to bias.</p></li>
+<li><p><strong>Distance Metric</strong>: KNN uses a distance metric (like Euclidean distance) to find the closest neighbors. The choice of the distance metric can significantly impact the imputation.</p></li>
+</ul>
+</section>
+<section id="best-practices-for-knn-imputation">
+<h3>Best Practices for KNN Imputation<a class="headerlink" href="#best-practices-for-knn-imputation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Standardize Data</strong>: KNN is sensitive to the scale of data, so it’s often recommended to standardize data before using KNN imputation.</p></li>
+<li><p><strong>Handle Outliers</strong>: Outliers can skew the distance metric, leading to inaccurate imputation. Handling outliers before imputation can be beneficial.</p></li>
+<li><p><strong>Consider Computational Cost</strong>: KNN can be computationally expensive, especially for large datasets with many missing values.</p></li>
+</ul>
+</section>
+<section id="regression-imputation">
+<h3>Regression Imputation:<a class="headerlink" href="#regression-imputation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Use when</strong>: The missingness is MAR (Missing at Random) and can be predicted using other variables in the dataset.</p></li>
+</ul>
+</section>
+<section id="how-to-implement-regression-imputation">
+<h3>How to Implement Regression Imputation<a class="headerlink" href="#how-to-implement-regression-imputation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Principle</strong>: This technique involves using regression models to predict the missing values based on other, related variables.</p></li>
+<li><p><strong>Steps</strong>:</p>
+<ol class="arabic simple">
+<li><p>Develop a regression model using variables that do not have missing values as predictors.</p></li>
+<li><p>Use this model to predict the missing values in the target variable.</p></li>
+</ol>
+</li>
+<li><p><strong>Python Code</strong>: Specific implementation depends on the dataset and choice of regression model (e.g., Linear Regression, Logistic Regression).</p></li>
+</ul>
+</section>
+<section id="best-practices-for-regression-imputation">
+<h3>Best Practices for Regression Imputation<a class="headerlink" href="#best-practices-for-regression-imputation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Avoid Using Imputed Variable as a Predictor</strong>: Do not use the variable for which values are imputed as a predictor in the same model to avoid introducing bias.</p></li>
+<li><p><strong>Model Selection</strong>: The choice of regression model should be based on the nature of the data and the relationship between variables.</p></li>
+<li><p><strong>Evaluate Model Fit</strong>: Ensure the regression model adequately fits the data. Poorly fitted models can lead to inaccurate imputations.</p></li>
+<li><p><strong>Multiple Imputation Consideration</strong>: For more robust results, consider multiple imputation, where the process is repeated multiple times, and the results are averaged.</p></li>
+</ul>
+</section>
+</section>
+<section id="step-4-handling-mnar-data-missing-not-at-random">
+<h2>Step 4: Handling MNAR Data (Missing Not at Random)<a class="headerlink" href="#step-4-handling-mnar-data-missing-not-at-random" title="Permalink to this heading">#</a></h2>
+<section id="approach">
+<h3>Approach<a class="headerlink" href="#approach" title="Permalink to this heading">#</a></h3>
+<p>When dealing with Missing Not at Random (MNAR) data, the missingness is related to the unobserved data itself. This type of missing data requires more sophisticated approaches, such as data augmentation or model-based methods.</p>
+</section>
+<section id="data-augmentation-methods">
+<h3>Data Augmentation Methods<a class="headerlink" href="#data-augmentation-methods" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Principle</strong>: Data augmentation involves artificially creating data points based on the characteristics of the existing dataset.</p></li>
+<li><p><strong>Usage</strong>: It can be used when the pattern of missingness provides information that can be modeled.</p></li>
+</ul>
+</section>
+<section id="model-based-methods">
+<h3>Model-Based Methods<a class="headerlink" href="#model-based-methods" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Principle</strong>: These methods involve building statistical models that directly account for the mechanism of missingness.</p></li>
+<li><p><strong>Usage</strong>: Commonly used in scenarios where the reasons for missingness are complex and intertwined with the unobserved values.</p></li>
+</ul>
+</section>
+<section id="example-code-handling-mnar-data-using-model-based-approach">
+<h3>Example Code: Handling MNAR Data Using Model-Based Approach<a class="headerlink" href="#example-code-handling-mnar-data-using-model-based-approach" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.experimental</span> <span class="kn">import</span> <span class="n">enable_iterative_imputer</span>
+<span class="kn">from</span> <span class="nn">sklearn.impute</span> <span class="kn">import</span> <span class="n">IterativeImputer</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">BayesianRidge</span>
+
+<span class="c1">#Using Iterative Imputer with BayesianRidge estimator</span>
+<span class="n">iterative_imputer</span> <span class="o">=</span> <span class="n">IterativeImputer</span><span class="p">(</span><span class="n">estimator</span><span class="o">=</span><span class="n">BayesianRidge</span><span class="p">(),</span> <span class="n">missing_values</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">nan</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="c1">#Assuming &#39;titanic_data&#39; has some MNAR data</span>
+<span class="n">titanic_data_imputed</span> <span class="o">=</span> <span class="n">iterative_imputer</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">)</span>
+
+<span class="c1">#Replace original data with imputed data</span>
+<span class="n">titanic_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">titanic_data_imputed</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">titanic_data</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="best-practices-for-handling-mnar-data">
+<h3>Best Practices for Handling MNAR Data<a class="headerlink" href="#best-practices-for-handling-mnar-data" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Model Selection</strong>: The choice of the model should align with the assumed mechanism of missingness. For instance, Bayesian models can incorporate prior beliefs about the missingness.</p></li>
+<li><p><strong>Multiple Imputation</strong>: It’s often recommended to use multiple imputation techniques, which involve creating several imputed datasets and combining the results, to account for the uncertainty in the imputation process.</p></li>
+<li><p><strong>Domain Knowledge</strong>: Integrating domain knowledge is crucial to understand and model the reasons behind the missingness effectively.</p></li>
+<li><p><strong>Sensitivity Analysis</strong>: After imputation, performing a sensitivity analysis to understand how different assumptions about the missing data mechanism affect the results can provide insights into the robustness of the conclusions.</p></li>
+</ul>
+</section>
+<section id="formulas-and-statistical-models">
+<h3>Formulas and Statistical Models<a class="headerlink" href="#formulas-and-statistical-models" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Bayesian Models</strong>: Bayesian models, like Bayesian Ridge Regression used in the example, combine prior distributions (beliefs about the data before observing it) with the likelihood of the observed data to estimate the posterior distribution of the model parameters.</p></li>
+<li><p><strong>Iterative Imputer Formula</strong>: The Iterative Imputer, in its essence, uses a round-robin approach, modeling each feature with missing values as a function of other features in a round-robin or chained fashion.</p></li>
+</ul>
+</section>
+</section>
+<section id="step-5-evaluating-the-impact-of-imputation">
+<h2>Step 5: Evaluating the Impact of Imputation<a class="headerlink" href="#step-5-evaluating-the-impact-of-imputation" title="Permalink to this heading">#</a></h2>
+<section id="id1">
+<h3>Objective<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>To assess how different imputation methods affect the distribution and overall quality of the dataset. Visualization plays a key role in this evaluation.</p>
+</section>
+<section id="python-visualization-techniques">
+<h3>Python Visualization Techniques<a class="headerlink" href="#python-visualization-techniques" title="Permalink to this heading">#</a></h3>
+<p>The primary goal of visualization in this context is to compare the distribution of data before and after imputation to gauge the impact of the imputation technique.</p>
+</section>
+<section id="using-histograms">
+<h3>Using Histograms<a class="headerlink" href="#using-histograms" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Purpose</strong>: To visualize the frequency distribution of continuous variables.</p></li>
+<li><p><strong>When to Use</strong>: Ideal for assessing the impact on variables like ‘Age’ where you’re interested in understanding the spread and central tendency.</p></li>
+</ul>
+</section>
+<section id="using-scatter-plots">
+<h3>Using Scatter Plots<a class="headerlink" href="#using-scatter-plots" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Purpose</strong>: To observe the relationship between two continuous variables.</p></li>
+<li><p><strong>When to Use</strong>: Useful to examine if relationships between variables are preserved post-imputation.</p></li>
+</ul>
+</section>
+<section id="example-code-for-visualization">
+<h3>Example Code for Visualization<a class="headerlink" href="#example-code-for-visualization" title="Permalink to this heading">#</a></h3>
+<section id="histogram-for-age">
+<h4>Histogram for ‘Age’<a class="headerlink" href="#histogram-for-age" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1">#Histogram of &#39;Age&#39; before imputation</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">titanic_data_original</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">dropna</span><span class="p">(),</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+<span class="c1">#Histogram of &#39;Age&#39; after imputation</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">titanic_data_imputed</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Imputed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Age&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Comparison of Age Distribution: Original vs. Imputed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="scatter-plot-for-two-variables">
+<h4>Scatter Plot for Two Variables<a class="headerlink" href="#scatter-plot-for-two-variables" title="Permalink to this heading">#</a></h4>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1">#Scatter plot to compare relationships - Example with &#39;Age&#39; and &#39;Fare&#39;</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">titanic_data_original</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">titanic_data_original</span><span class="p">[</span><span class="s1">&#39;Fare&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Original&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">titanic_data_imputed</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">],</span> <span class="n">titanic_data_imputed</span><span class="p">[</span><span class="s1">&#39;Fare&#39;</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Imputed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Age&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Fare&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Age vs. Fare: Original vs. Imputed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="best-practices-for-evaluating-imputation">
+<h3>Best Practices for Evaluating Imputation<a class="headerlink" href="#best-practices-for-evaluating-imputation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Compare Distributions</strong>: Always compare the distributions before and after imputation to ensure that the imputation method hasn’t significantly altered the data’s structure.</p></li>
+<li><p><strong>Look for Anomalies</strong>: After imputation, be on the lookout for any unusual patterns such as spikes in the data which weren’t there originally.</p></li>
+<li><p><strong>Consistency in Relationships</strong>: Ensure that the relationships between variables remain consistent post-imputation.</p></li>
+</ul>
+</section>
+</section>
+<section id="step-6-homework-assignment">
+<h2>Step 6: Homework Assignment<a class="headerlink" href="#step-6-homework-assignment" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Task: Apply techniques to “Titanic” dataset from Kaggle.</p></li>
+<li><p>Report: Analyze the effectiveness and impact of each technique on the dataset and model performance.</p></li>
+</ul>
+</section>
+<section id="best-practices-and-considerations">
+<h2>Best Practices and Considerations<a class="headerlink" href="#best-practices-and-considerations" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Preventing Data Leakage</strong>: Split dataset before imputation.</p></li>
+<li><p><strong>Choosing the Right Method</strong>: Analyze missingness type.</p></li>
+<li><p><strong>Avoid Overfitting</strong>: Be cautious with complex methods.</p></li>
+<li><p><strong>Documenting Changes</strong>: Keep track of changes for transparency.</p></li>
+<li><p><strong>Impact Assessment</strong>: Evaluate how</p></li>
+</ul>
+</section>
+<section id="testing-data">
+<h2>Testing Data<a class="headerlink" href="#testing-data" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="integrating-little-s-mcar-test-using-rpy2">
+<h2>Integrating Little’s MCAR Test Using rpy2<a class="headerlink" href="#integrating-little-s-mcar-test-using-rpy2" title="Permalink to this heading">#</a></h2>
+<section id="setting-up-rpy2">
+<h3>Setting Up rpy2<a class="headerlink" href="#setting-up-rpy2" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">rpy2.robjects</span> <span class="k">as</span> <span class="nn">robjects</span>
+<span class="kn">from</span> <span class="nn">rpy2.robjects.packages</span> <span class="kn">import</span> <span class="n">importr</span>
+<span class="kn">from</span> <span class="nn">rpy2.robjects</span> <span class="kn">import</span> <span class="n">pandas2ri</span><span class="p">,</span> <span class="n">globalenv</span>
+
+<span class="n">base</span> <span class="o">=</span> <span class="n">importr</span><span class="p">(</span><span class="s2">&quot;base&quot;</span><span class="p">)</span>
+<span class="n">utils</span> <span class="o">=</span> <span class="n">importr</span><span class="p">(</span><span class="s2">&quot;utils&quot;</span><span class="p">)</span>
+
+<span class="n">utils</span><span class="o">.</span><span class="n">chooseCRANmirror</span><span class="p">(</span><span class="n">ind</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">pandas2ri</span><span class="o">.</span><span class="n">activate</span><span class="p">()</span>
+
+<span class="c1"># Enable R magic in Jupyter</span>
+<span class="o">%</span><span class="n">load_ext</span> <span class="n">rpy2</span><span class="o">.</span><span class="n">ipython</span>
+</pre></div>
+</div>
+</section>
+</section>
+<section id="installing-r-packages">
+<h2>Installing R Packages<a class="headerlink" href="#installing-r-packages" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">utils</span><span class="o">.</span><span class="n">install_packages</span><span class="p">(</span><span class="s2">&quot;remotes&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="n">R</span> <span class="n">remotes</span><span class="p">::</span><span class="n">install_github</span><span class="p">(</span><span class="s2">&quot;njtierney/naniar&quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="n">R</span> <span class="n">library</span><span class="p">(</span><span class="n">naniar</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="performing-little-s-mcar-test">
+<h2>Performing Little’s MCAR Test<a class="headerlink" href="#performing-little-s-mcar-test" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">globalenv</span><span class="p">[</span><span class="s2">&quot;r_df&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">titanic_data</span>
+<span class="o">%</span><span class="n">R</span> <span class="n">mcar_test</span><span class="p">(</span><span class="n">r_df</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="practical-tips-for-discerning-missing-data-types">
+<h2>Practical Tips for Discerning Missing Data Types<a class="headerlink" href="#practical-tips-for-discerning-missing-data-types" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>MCAR</strong>: Use statistical tests and consistency checks across variables.</p></li>
+<li><p><strong>MAR vs. MNAR</strong>: Requires domain knowledge and statistical analyses (e.g., using classifiers to predict missingness).</p></li>
+<li><p><strong>Consult Experts</strong>: Especially for MNAR, expert insights are invaluable.</p></li>
+</ul>
+<section id="additional-resources-train-test-splitting-data-leakage">
+<h3><strong>Additional Resources (Train/Test Splitting | Data Leakage)</strong><a class="headerlink" href="#additional-resources-train-test-splitting-data-leakage" title="Permalink to this heading">#</a></h3>
+<p><a class="reference external" href="https://www.simplilearn.com/data-imputation-article">https://www.simplilearn.com/data-imputation-article</a></p>
+<p><a class="reference external" href="https://www.analyticsvidhya.com/blog/2021/06/defining-analysing-and-implementing-imputation-techniques/">https://www.analyticsvidhya.com/blog/2021/06/defining-analysing-and-implementing-imputation-techniques/</a></p>
+<p><a class="reference external" href="https://machinelearningmastery.com/statistical-imputation-for-missing-values-in-machine-learning/">https://machinelearningmastery.com/statistical-imputation-for-missing-values-in-machine-learning/</a></p>
+<p><a class="reference external" href="https://www.theanalysisfactor.com/seven-ways-to-make-up-data-common-methods-to-imputing-missing-data/">https://www.theanalysisfactor.com/seven-ways-to-make-up-data-common-methods-to-imputing-missing-data/</a></p>
+<p><a class="reference external" href="https://dataaspirant.com/data-imputation-techniques/">https://dataaspirant.com/data-imputation-techniques/</a></p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_03"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson_12solution.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-missing-data">Understanding Missing Data</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-missing-data">Types of Missing Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-and-explore-the-dataset">Step 1: Load and Explore the Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-basic-imputation-techniques">Step 2: Basic Imputation Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filling-age-with-median">Filling Age with Median</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#general-best-practices">General Best Practices</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-advanced-imputation-techniques">Step 3: Advanced Imputation Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-and-why-to-use-knn-imputation">How and Why to Use KNN Imputation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-for-knn-imputation">Best Practices for KNN Imputation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#regression-imputation">Regression Imputation:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#how-to-implement-regression-imputation">How to Implement Regression Imputation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-for-regression-imputation">Best Practices for Regression Imputation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-handling-mnar-data-missing-not-at-random">Step 4: Handling MNAR Data (Missing Not at Random)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#approach">Approach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#data-augmentation-methods">Data Augmentation Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#model-based-methods">Model-Based Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-code-handling-mnar-data-using-model-based-approach">Example Code: Handling MNAR Data Using Model-Based Approach</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-for-handling-mnar-data">Best Practices for Handling MNAR Data</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formulas-and-statistical-models">Formulas and Statistical Models</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-evaluating-the-impact-of-imputation">Step 5: Evaluating the Impact of Imputation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Objective</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-visualization-techniques">Python Visualization Techniques</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-histograms">Using Histograms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#using-scatter-plots">Using Scatter Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-code-for-visualization">Example Code for Visualization</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#histogram-for-age">Histogram for ‘Age’</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#scatter-plot-for-two-variables">Scatter Plot for Two Variables</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-for-evaluating-imputation">Best Practices for Evaluating Imputation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-6-homework-assignment">Step 6: Homework Assignment</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-and-considerations">Best Practices and Considerations</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#testing-data">Testing Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrating-little-s-mcar-test-using-rpy2">Integrating Little’s MCAR Test Using rpy2</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setting-up-rpy2">Setting Up rpy2</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#installing-r-packages">Installing R Packages</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#performing-little-s-mcar-test">Performing Little’s MCAR Test</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#practical-tips-for-discerning-missing-data-types">Practical Tips for Discerning Missing Data Types</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources-train-test-splitting-data-leakage"><strong>Additional Resources (Train/Test Splitting | Data Leakage)</strong></a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

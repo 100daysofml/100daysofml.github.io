@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Lesson 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation &#8212; 100 Days of Machine Learning</title>
+    <title>Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation &#8212; 100 Days of Machine Learning</title>
   
   
   
@@ -69,7 +69,8 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/100days.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Lesson 11: Introduction to Data Preprocessing in Python" href="Lesson_11.html" />
+    <link rel="next" title="Day 12: In-Depth Exploration of Data Splitting Techniques - Solution" href="Lesson_12solution.html" />
+    <link rel="prev" title="Day 11: Introduction to Data Preprocessing in Python" href="Lesson_11.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -228,8 +229,11 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 - Data Preprocessing</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1"><a class="reference internal" href="Lesson_11.html">Day 11 - Introduction to Data Preprocessing</a></li>
-<li class="toctree-l1 current active"><a class="current reference internal" href="#">Lesson 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a></li>
 
+<li class="toctree-l1"><a class="reference internal" href="Lesson_12solution.html">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson_13.html">Day 13 - Handling Missing Data in Python</a></li>
 </ul>
 
     </div>
@@ -464,7 +468,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Lesson 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</h1>
+    <h1>Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -474,7 +478,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lesson 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theoretical-background-and-mathematical-principles">1. Theoretical Background and Mathematical Principles</a></li>
@@ -515,8 +519,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="lesson-12-in-depth-exploration-of-data-splitting-techniques-in-python-with-cross-validation">
-<h1>Lesson 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation<a class="headerlink" href="#lesson-12-in-depth-exploration-of-data-splitting-techniques-in-python-with-cross-validation" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="day-12-in-depth-exploration-of-data-splitting-techniques-in-python-with-cross-validation">
+<h1>Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation<a class="headerlink" href="#day-12-in-depth-exploration-of-data-splitting-techniques-in-python-with-cross-validation" title="Permalink to this heading">#</a></h1>
 <section id="objective">
 <h2>Objective<a class="headerlink" href="#objective" title="Permalink to this heading">#</a></h2>
 <p>Enhance understanding of data splitting in machine learning, focusing on mathematical principles, advanced methods like cross-validation, and Python programming activities.</p>
@@ -866,8 +870,17 @@ This includes careful handling of any preprocessing steps like scaling, normaliz
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Lesson 11: Introduction to Data Preprocessing in Python</p>
+        <p class="prev-next-title">Day 11: Introduction to Data Preprocessing in Python</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="Lesson_12solution.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -885,7 +898,7 @@ This includes careful handling of any preprocessing steps like scaling, normaliz
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Lesson 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#theoretical-background-and-mathematical-principles">1. Theoretical Background and Mathematical Principles</a></li>

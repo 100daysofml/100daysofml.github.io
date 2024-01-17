@@ -1,0 +1,1858 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Day 12: In-Depth Exploration of Data Splitting Techniques - Solution &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_03/Lesson_12solution';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_03/Lesson_12solution.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Day 13: Advanced Techniques for Handling Missing Data in Python" href="Lesson_13.html" />
+    <link rel="prev" title="Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation" href="Lesson_12.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    100 Days of Machine Learning Challenge
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Daily Challenge Curriculum</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Daily Curriculum Resources</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../Week_02/Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 - Data Preprocessing</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="Lesson_11.html">Day 11 - Introduction to Data Preprocessing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="Lesson_12.html">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a></li>
+
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
+
+<li class="toctree-l1"><a class="reference internal" href="Lesson_13.html">Day 13 - Handling Missing Data in Python</a></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-4iw5ztbi/lab/workspaces/auto-e/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_03/Lesson_12solution.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/github/100daysofml/100daysofml.github.io/blob/master/Week_03/Lesson_12solution.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_03/Lesson_12solution.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_03/Lesson_12solution.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#homework-assignment-1">Homework Assignment #1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-analysis-of-quality-in-wine-dataset">Variance Analysis of ‘Quality’ in Wine Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculated-variance">Calculated Variance:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-interpretation">Statistical Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-deviation-analysis-of-quality-in-wine-dataset">Standard Deviation Analysis of ‘Quality’ in Wine Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculated-standard-deviation">Calculated Standard Deviation:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Statistical Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Conclusions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#range-analysis-of-quality-in-wine-dataset">Range Analysis of ‘Quality’ in Wine Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculated-range">Calculated Range:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Statistical Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Conclusions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quartile-and-interquartile-range-iqr-analysis">Quartile and Interquartile Range (IQR) Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculated-values">Calculated Values:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Statistical Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Conclusions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-matrix-analysis-of-wine-dataset">Correlation Matrix Analysis of Wine Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-matrix-summary">Correlation Matrix Summary:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notable-correlations">Notable Correlations:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Conclusions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-accuracy-analysis">Model Accuracy Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculated-accuracy">Calculated Accuracy:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Statistical Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Conclusions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review-the-following">Review the following</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-analysis">Statistical Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overall-observations">Overall Observations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-report-analysis">Classification Report Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-wise-performance">Class-wise Performance</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#class-4">Class 4</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#class-5">Class 5</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#class-6">Class 6</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#class-7">Class 7</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#class-8">Class 8</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overall-performance">Overall Performance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Conclusions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation-scores-analysis">Cross-Validation Scores Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation-scores">Cross-Validation Scores:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Statistical Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="day-12-in-depth-exploration-of-data-splitting-techniques-solution">
+<h1>Day 12: In-Depth Exploration of Data Splitting Techniques - Solution<a class="headerlink" href="#day-12-in-depth-exploration-of-data-splitting-techniques-solution" title="Permalink to this heading">#</a></h1>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="homework-assignment-1">
+<h1>Homework Assignment #1<a class="headerlink" href="#homework-assignment-1" title="Permalink to this heading">#</a></h1>
+<section id="objective">
+<h2>Objective<a class="headerlink" href="#objective" title="Permalink to this heading">#</a></h2>
+<p>Enhance understanding of practical data preprocessing, test set splitting, and model evaluation, focusing on Python implementation using a Kaggle dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#import relevant libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the dataset (update the path according to your download)</span>
+<span class="n">wine_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;wine_quality.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#inspect the first five lines of the dataframe</span>
+<span class="n">wine_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed acidity</th>
+      <th>volatile acidity</th>
+      <th>citric acid</th>
+      <th>residual sugar</th>
+      <th>chlorides</th>
+      <th>free sulfur dioxide</th>
+      <th>total sulfur dioxide</th>
+      <th>density</th>
+      <th>pH</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+      <th>Id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7.8</td>
+      <td>0.88</td>
+      <td>0.00</td>
+      <td>2.6</td>
+      <td>0.098</td>
+      <td>25.0</td>
+      <td>67.0</td>
+      <td>0.9968</td>
+      <td>3.20</td>
+      <td>0.68</td>
+      <td>9.8</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.8</td>
+      <td>0.76</td>
+      <td>0.04</td>
+      <td>2.3</td>
+      <td>0.092</td>
+      <td>15.0</td>
+      <td>54.0</td>
+      <td>0.9970</td>
+      <td>3.26</td>
+      <td>0.65</td>
+      <td>9.8</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11.2</td>
+      <td>0.28</td>
+      <td>0.56</td>
+      <td>1.9</td>
+      <td>0.075</td>
+      <td>17.0</td>
+      <td>60.0</td>
+      <td>0.9980</td>
+      <td>3.16</td>
+      <td>0.58</td>
+      <td>9.8</td>
+      <td>6</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#inspect the last five lines of the dataframe</span>
+<span class="n">wine_data</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed acidity</th>
+      <th>volatile acidity</th>
+      <th>citric acid</th>
+      <th>residual sugar</th>
+      <th>chlorides</th>
+      <th>free sulfur dioxide</th>
+      <th>total sulfur dioxide</th>
+      <th>density</th>
+      <th>pH</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+      <th>Id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1138</th>
+      <td>6.3</td>
+      <td>0.510</td>
+      <td>0.13</td>
+      <td>2.3</td>
+      <td>0.076</td>
+      <td>29.0</td>
+      <td>40.0</td>
+      <td>0.99574</td>
+      <td>3.42</td>
+      <td>0.75</td>
+      <td>11.0</td>
+      <td>6</td>
+      <td>1592</td>
+    </tr>
+    <tr>
+      <th>1139</th>
+      <td>6.8</td>
+      <td>0.620</td>
+      <td>0.08</td>
+      <td>1.9</td>
+      <td>0.068</td>
+      <td>28.0</td>
+      <td>38.0</td>
+      <td>0.99651</td>
+      <td>3.42</td>
+      <td>0.82</td>
+      <td>9.5</td>
+      <td>6</td>
+      <td>1593</td>
+    </tr>
+    <tr>
+      <th>1140</th>
+      <td>6.2</td>
+      <td>0.600</td>
+      <td>0.08</td>
+      <td>2.0</td>
+      <td>0.090</td>
+      <td>32.0</td>
+      <td>44.0</td>
+      <td>0.99490</td>
+      <td>3.45</td>
+      <td>0.58</td>
+      <td>10.5</td>
+      <td>5</td>
+      <td>1594</td>
+    </tr>
+    <tr>
+      <th>1141</th>
+      <td>5.9</td>
+      <td>0.550</td>
+      <td>0.10</td>
+      <td>2.2</td>
+      <td>0.062</td>
+      <td>39.0</td>
+      <td>51.0</td>
+      <td>0.99512</td>
+      <td>3.52</td>
+      <td>0.76</td>
+      <td>11.2</td>
+      <td>6</td>
+      <td>1595</td>
+    </tr>
+    <tr>
+      <th>1142</th>
+      <td>5.9</td>
+      <td>0.645</td>
+      <td>0.12</td>
+      <td>2.0</td>
+      <td>0.075</td>
+      <td>32.0</td>
+      <td>44.0</td>
+      <td>0.99547</td>
+      <td>3.57</td>
+      <td>0.71</td>
+      <td>10.2</td>
+      <td>5</td>
+      <td>1597</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#show all columns in pandas</span>
+<span class="n">wine_data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 1143 entries, 0 to 1142
+Data columns (total 13 columns):
+ #   Column                Non-Null Count  Dtype  
+---  ------                --------------  -----  
+ 0   fixed acidity         1143 non-null   float64
+ 1   volatile acidity      1143 non-null   float64
+ 2   citric acid           1143 non-null   float64
+ 3   residual sugar        1143 non-null   float64
+ 4   chlorides             1143 non-null   float64
+ 5   free sulfur dioxide   1143 non-null   float64
+ 6   total sulfur dioxide  1143 non-null   float64
+ 7   density               1143 non-null   float64
+ 8   pH                    1143 non-null   float64
+ 9   sulphates             1143 non-null   float64
+ 10  alcohol               1143 non-null   float64
+ 11  quality               1143 non-null   int64  
+ 12  Id                    1143 non-null   int64  
+dtypes: float64(11), int64(2)
+memory usage: 116.2 KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#create a dataframe that copies all columns</span>
+<span class="n">wine_datanew</span> <span class="o">=</span> <span class="n">wine_data</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#displaying the new dataframe</span>
+<span class="n">wine_datanew</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>fixed acidity</th>
+      <th>volatile acidity</th>
+      <th>citric acid</th>
+      <th>residual sugar</th>
+      <th>chlorides</th>
+      <th>free sulfur dioxide</th>
+      <th>total sulfur dioxide</th>
+      <th>density</th>
+      <th>pH</th>
+      <th>sulphates</th>
+      <th>alcohol</th>
+      <th>quality</th>
+      <th>Id</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>7.8</td>
+      <td>0.88</td>
+      <td>0.00</td>
+      <td>2.6</td>
+      <td>0.098</td>
+      <td>25.0</td>
+      <td>67.0</td>
+      <td>0.9968</td>
+      <td>3.20</td>
+      <td>0.68</td>
+      <td>9.8</td>
+      <td>5</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>7.8</td>
+      <td>0.76</td>
+      <td>0.04</td>
+      <td>2.3</td>
+      <td>0.092</td>
+      <td>15.0</td>
+      <td>54.0</td>
+      <td>0.9970</td>
+      <td>3.26</td>
+      <td>0.65</td>
+      <td>9.8</td>
+      <td>5</td>
+      <td>2</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>11.2</td>
+      <td>0.28</td>
+      <td>0.56</td>
+      <td>1.9</td>
+      <td>0.075</td>
+      <td>17.0</td>
+      <td>60.0</td>
+      <td>0.9980</td>
+      <td>3.16</td>
+      <td>0.58</td>
+      <td>9.8</td>
+      <td>6</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>7.4</td>
+      <td>0.70</td>
+      <td>0.00</td>
+      <td>1.9</td>
+      <td>0.076</td>
+      <td>11.0</td>
+      <td>34.0</td>
+      <td>0.9978</td>
+      <td>3.51</td>
+      <td>0.56</td>
+      <td>9.4</td>
+      <td>5</td>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wine_datanew</span><span class="o">.</span><span class="n">shape</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1143, 13)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#analyze the mean of the quality column using the np.mean() in numpy</span>
+<span class="n">winequality_mean</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">wine_datanew</span><span class="p">[</span><span class="s2">&quot;quality&quot;</span><span class="p">]),</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wine Quality (mean):&quot;</span><span class="p">,</span> <span class="n">winequality_mean</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wine Quality (mean): 5.657
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">winequality_median</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">median</span><span class="p">(</span><span class="n">wine_datanew</span><span class="p">[</span><span class="s2">&quot;quality&quot;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wine Quality (median):&quot;</span><span class="p">,</span> <span class="n">winequality_median</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wine Quality (median): 6.0
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#using numpy check the variance of the &#39;quality&#39; column</span>
+<span class="n">winequality_var</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">var</span><span class="p">(</span><span class="n">wine_datanew</span><span class="p">[</span><span class="s2">&quot;quality&quot;</span><span class="p">]),</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wine Quality (variance:numpy):&quot;</span><span class="p">,</span> <span class="n">winequality_var</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wine Quality (variance:numpy): 0.6488
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="variance-analysis-of-quality-in-wine-dataset">
+<h2>Variance Analysis of ‘Quality’ in Wine Dataset<a class="headerlink" href="#variance-analysis-of-quality-in-wine-dataset" title="Permalink to this heading">#</a></h2>
+<p>The variance of the ‘quality’ variable in the <code class="docutils literal notranslate"><span class="pre">wine_datanew</span></code> dataset was computed using NumPy to assess the degree of spread in the quality ratings.</p>
+<section id="calculated-variance">
+<h3>Calculated Variance:<a class="headerlink" href="#calculated-variance" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Variance</strong>: 0.6488</p></li>
+</ul>
+</section>
+<section id="statistical-interpretation">
+<h3>Statistical Interpretation<a class="headerlink" href="#statistical-interpretation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Variance Definition</strong>: Variance is a statistical measurement that describes the spread of numbers in a data set. It measures how far each number in the set is from the mean and thus from every other number in the set.</p></li>
+<li><p><strong>Value Interpretation</strong>:</p>
+<ul>
+<li><p>A variance of 0.6488 indicates the average squared deviation from the mean for the quality ratings.</p></li>
+<li><p>This value suggests a moderate level of variability within the wine quality ratings. The wines’ quality ratings deviate from their average to a certain extent, but not excessively.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="conclusions">
+<h3>Conclusions<a class="headerlink" href="#conclusions" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The moderate variance value implies that while there is some variability in wine quality ratings, the values are not extremely dispersed.</p></li>
+<li><p>This level of variance is indicative of a dataset where ratings are somewhat consistent but do have a notable degree of variation.</p></li>
+<li><p>Understanding the variance helps in grasping how spread out the wine quality ratings are, which is crucial for identifying how homogeneous or heterogeneous the data is.</p></li>
+</ul>
+<p><strong>Recommendation</strong>: To further contextualize this variance, it could be beneficial to analyze it alongside other measures such as standard deviation, mean, and range. This holistic approach will provide a more nuanced understanding of the dataset’s distribution characteristics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate the standard deviation using NumPy</span>
+<span class="c1"># &#39;ddof=0&#39; for population standard deviation; &#39;ddof=1&#39; for sample standard deviation</span>
+<span class="n">winequality_stdev</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">std</span><span class="p">(</span><span class="n">wine_datanew</span><span class="p">[</span><span class="s2">&quot;quality&quot;</span><span class="p">],</span> <span class="n">ddof</span><span class="o">=</span><span class="mi">1</span><span class="p">),</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Wine Quality (stdev: numpy):&quot;</span><span class="p">,</span> <span class="n">winequality_stdev</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Wine Quality (stdev: numpy): 0.8058
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="standard-deviation-analysis-of-quality-in-wine-dataset">
+<h2>Standard Deviation Analysis of ‘Quality’ in Wine Dataset<a class="headerlink" href="#standard-deviation-analysis-of-quality-in-wine-dataset" title="Permalink to this heading">#</a></h2>
+<p>The standard deviation of the ‘quality’ variable in the <code class="docutils literal notranslate"><span class="pre">wine_datanew</span></code> dataset was calculated using NumPy, providing insights into the variability of wine quality ratings.</p>
+<section id="calculated-standard-deviation">
+<h3>Calculated Standard Deviation:<a class="headerlink" href="#calculated-standard-deviation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Standard Deviation</strong>: 0.8058</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>Statistical Interpretation<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Standard Deviation Definition</strong>: Standard deviation is a measure of the amount of variation or dispersion in a set of values. A low standard deviation indicates that the values tend to be close to the mean of the set, while a high standard deviation indicates that the values are spread out over a wider range.</p></li>
+<li><p><strong>Value Interpretation</strong>:</p>
+<ul>
+<li><p>A standard deviation of 0.8058 suggests that the quality ratings of wines in this dataset typically vary by about 0.8058 points from the average wine quality rating.</p></li>
+<li><p>This indicates a moderate level of variability in wine quality ratings.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id2">
+<h3>Conclusions<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The calculated standard deviation reflects a moderate level of diversity in the quality of wines. It suggests that while there are variations in quality, they are not extremely pronounced.</p></li>
+<li><p>This level of standard deviation is common in datasets with somewhat consistent data but with some degree of spread around the mean.</p></li>
+<li><p>The standard deviation can be particularly informative when combined with the mean to understand the overall distribution of the quality ratings.</p></li>
+</ul>
+<p><strong>Recommendation</strong>: For a more comprehensive understanding of the dataset, consider analyzing the standard deviation in the context of other descriptive statistics like the mean, median, range, and quartiles. This will provide a more complete picture of the distribution of wine quality ratings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#Calculate the range of the dataset using NumPy</span>
+<span class="n">winequality_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">wine_datanew</span><span class="p">[</span><span class="s2">&quot;quality&quot;</span><span class="p">])</span>
+<span class="n">winequality_min</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">wine_datanew</span><span class="p">[</span><span class="s2">&quot;quality&quot;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">winequality_max</span><span class="p">,</span> <span class="n">winequality_min</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8 3
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="range-analysis-of-quality-in-wine-dataset">
+<h2>Range Analysis of ‘Quality’ in Wine Dataset<a class="headerlink" href="#range-analysis-of-quality-in-wine-dataset" title="Permalink to this heading">#</a></h2>
+<p>The range of the ‘quality’ variable in the <code class="docutils literal notranslate"><span class="pre">wine_datanew</span></code> dataset was calculated using NumPy to understand its spread.</p>
+<section id="calculated-range">
+<h3>Calculated Range:<a class="headerlink" href="#calculated-range" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Maximum Value (Max)</strong>: 8</p></li>
+<li><p><strong>Minimum Value (Min)</strong>: 3</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Statistical Interpretation<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Range Definition</strong>: The range of a dataset is the difference between the maximum and minimum values. It provides a measure of how spread out the values are.</p></li>
+<li><p><strong>Value Interpretation</strong>:</p>
+<ul>
+<li><p>The maximum value of the ‘quality’ variable is 8, indicating the highest rating given to any wine in the dataset.</p></li>
+<li><p>The minimum value is 3, showing the lowest rating in the dataset.</p></li>
+<li><p>This range (from 3 to 8) indicates the extent of variability in the quality ratings of wines.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id4">
+<h3>Conclusions<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The range of 5 points (from 3 to 8) suggests that there is a considerable spread in the quality ratings of wines in this dataset.</p></li>
+<li><p>The presence of a wide range might indicate a diverse set of wines with varying levels of quality.</p></li>
+<li><p>Understanding this range is useful for getting a basic sense of the variation in wine quality and for further exploratory data analysis, such as identifying patterns or clusters within different quality levels.</p></li>
+</ul>
+<p><strong>Recommendation</strong>: Further statistical analysis could involve exploring how other variables in the dataset correlate with these quality ratings, potentially revealing underlying factors that influence wine quality.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Calculate quartiles</span>
+<span class="n">Q1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">wine_datanew</span><span class="p">[</span><span class="s2">&quot;quality&quot;</span><span class="p">],</span><span class="mf">0.25</span><span class="p">)</span>
+<span class="n">Q3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="n">wine_datanew</span><span class="p">[</span><span class="s2">&quot;quality&quot;</span><span class="p">],</span><span class="mf">0.75</span><span class="p">)</span>
+
+<span class="c1"># Calculate the Interquartile Range</span>
+<span class="n">IQR</span> <span class="o">=</span> <span class="n">Q3</span> <span class="o">-</span> <span class="n">Q1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Q1 (25th percentile):&quot;</span><span class="p">,</span> <span class="n">Q1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Q3 (75th percentile):&quot;</span><span class="p">,</span> <span class="n">Q3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Interquartile Range:&quot;</span><span class="p">,</span> <span class="n">IQR</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Q1 (25th percentile): 5.0
+Q3 (75th percentile): 6.0
+Interquartile Range: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="quartile-and-interquartile-range-iqr-analysis">
+<h2>Quartile and Interquartile Range (IQR) Analysis<a class="headerlink" href="#quartile-and-interquartile-range-iqr-analysis" title="Permalink to this heading">#</a></h2>
+<p>The quartiles and IQR provide insights into the distribution of the ‘quality’ variable in the <code class="docutils literal notranslate"><span class="pre">wine_datanew</span></code> dataset.</p>
+<section id="calculated-values">
+<h3>Calculated Values:<a class="headerlink" href="#calculated-values" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Q1 (25th percentile)</strong>: 5.0</p></li>
+<li><p><strong>Q3 (75th percentile)</strong>: 6.0</p></li>
+<li><p><strong>Interquartile Range (IQR)</strong>: 1.0</p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>Statistical Interpretation<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Q1 (25th percentile)</strong>: This is the value below which 25% of the data falls. In this case, 25% of the wines have a quality rating of 5.0 or lower.</p></li>
+<li><p><strong>Q3 (75th percentile)</strong>: This value indicates that 75% of the wines have a quality rating of 6.0 or lower. It represents the upper quartile of the distribution.</p></li>
+<li><p><strong>Interquartile Range (IQR)</strong>: The IQR, being 1.0, represents the range between the first and third quartile. It is a measure of the middle 50% of the ‘quality’ data. A smaller IQR indicates a closer grouping of the middle half of the data.</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>Conclusions<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The IQR of 1.0 suggests that the middle 50% of the wine quality ratings are within a narrow range (5.0 to 6.0), indicating a lack of wide variability in the middle half of the dataset.</p></li>
+<li><p>The relatively small IQR can also imply a higher level of consistency in the quality ratings of the wines in this dataset.</p></li>
+<li><p>Since both Q1 and Q3 are close to each other, it suggests that most of the wines are rated around the middle of the scale, with fewer wines rated very high or very low.</p></li>
+</ul>
+<p><strong>Recommendation</strong>: Understanding the distribution of wine quality ratings can help in identifying patterns and outliers. Further analysis might involve looking at how other variables in the dataset relate to these quality ratings.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Calculate the correlation matrix</span>
+<span class="n">correlation_matrix</span> <span class="o">=</span> <span class="n">wine_datanew</span><span class="o">.</span><span class="n">corr</span><span class="p">()</span>
+
+<span class="c1"># Plotting the heatmap</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>  <span class="c1"># Set the size of the figure</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">correlation_matrix</span><span class="p">,</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">linewidths</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Correlation Matrix for Wine Dataset&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/cc62b9ffea5b0c12eb8aa5ede74811899ab8048917650ec8f6471b025e5e859b.png" src="../_images/cc62b9ffea5b0c12eb8aa5ede74811899ab8048917650ec8f6471b025e5e859b.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="correlation-matrix-analysis-of-wine-dataset">
+<h2>Correlation Matrix Analysis of Wine Dataset<a class="headerlink" href="#correlation-matrix-analysis-of-wine-dataset" title="Permalink to this heading">#</a></h2>
+<p>The correlation matrix provides insights into the linear relationships between various attributes of the wine dataset.</p>
+<section id="correlation-matrix-summary">
+<h3>Correlation Matrix Summary:<a class="headerlink" href="#correlation-matrix-summary" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Positive correlation indicates that as one variable increases, the other tends to increase. A negative correlation indicates that as one variable increases, the other tends to decrease.</p></li>
+<li><p>The values range from -1 to 1, where 1 is a perfect positive correlation, -1 is a perfect negative correlation, and 0 indicates no correlation.</p></li>
+</ul>
+<section id="notable-correlations">
+<h4>Notable Correlations:<a class="headerlink" href="#notable-correlations" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Fixed Acidity</strong></p>
+<ul>
+<li><p>Positively correlated with citric acid (0.6731) and density (0.6815).</p></li>
+<li><p>Negatively correlated with pH (-0.6852).</p></li>
+</ul>
+</li>
+<li><p><strong>Volatile Acidity</strong></p>
+<ul>
+<li><p>Negatively correlated with quality (-0.4074).</p></li>
+</ul>
+</li>
+<li><p><strong>Citric Acid</strong></p>
+<ul>
+<li><p>Positively correlated with fixed acidity (0.6731).</p></li>
+<li><p>Negatively correlated with volatile acidity (-0.5442).</p></li>
+</ul>
+</li>
+<li><p><strong>Density</strong></p>
+<ul>
+<li><p>Positively correlated with fixed acidity (0.6815).</p></li>
+<li><p>Negatively correlated with alcohol (-0.4947).</p></li>
+</ul>
+</li>
+<li><p><strong>pH</strong></p>
+<ul>
+<li><p>Negatively correlated with fixed acidity (-0.6852) and citric acid (-0.5463).</p></li>
+</ul>
+</li>
+<li><p><strong>Sulphates</strong></p>
+<ul>
+<li><p>Positively correlated with quality (0.2577).</p></li>
+</ul>
+</li>
+<li><p><strong>Alcohol</strong></p>
+<ul>
+<li><p>Positively correlated with quality (0.4849).</p></li>
+<li><p>Negatively correlated with density (-0.4947).</p></li>
+</ul>
+</li>
+<li><p><strong>Quality</strong></p>
+<ul>
+<li><p>Positively correlated with alcohol (0.4849) and sulphates (0.2577).</p></li>
+<li><p>Negatively correlated with volatile acidity (-0.4074).</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="id7">
+<h3>Conclusions<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The dataset shows several significant correlations between variables, particularly those related to chemical properties like acidity, density, and alcohol content.</p></li>
+<li><p>Quality, the target variable, shows notable positive correlations with alcohol and sulphates, suggesting that these factors might influence wine quality ratings positively.</p></li>
+<li><p>Volatile acidity has a notable negative impact on quality, indicating that higher levels of volatile acidity might lead to lower quality ratings.</p></li>
+</ul>
+<p><strong>Recommendation</strong>: These correlations provide valuable insights for predictive modeling and understanding the factors that influence wine quality. It is essential to consider these relationships in further analyses and model building.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">LabelEncoder</span>
+
+<span class="c1"># Handling missing values</span>
+<span class="n">wine_datanew</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">wine_data</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Encoding categorical variables if any</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">wine_datanew</span><span class="p">[</span><span class="s1">&#39;categorical_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">wine_data</span><span class="p">[</span><span class="s1">&#39;quality&#39;</span><span class="p">])</span>
+
+<span class="c1"># Normalizing features</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">wine_data_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">wine_datanew</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;quality&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">wine_data_scaled</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">wine_data</span><span class="p">[</span><span class="s1">&#39;quality&#39;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">RandomForestClassifier</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">RandomForestClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><style>#sk-container-id-1 {color: black;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>RandomForestClassifier(random_state=42)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">RandomForestClassifier</label><div class="sk-toggleable__content"><pre>RandomForestClassifier(random_state=42)</pre></div></div></div></div></div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Accuracy:&quot;</span><span class="p">,</span> <span class="nb">round</span><span class="p">(</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">),</span><span class="mi">4</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 0.9782
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="model-accuracy-analysis">
+<h2>Model Accuracy Analysis<a class="headerlink" href="#model-accuracy-analysis" title="Permalink to this heading">#</a></h2>
+<p>The accuracy metric was used to evaluate the performance of a predictive model.</p>
+<section id="calculated-accuracy">
+<h3>Calculated Accuracy:<a class="headerlink" href="#calculated-accuracy" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Accuracy</strong>: 0.9782</p></li>
+</ul>
+</section>
+<section id="id8">
+<h3>Statistical Interpretation<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Accuracy Definition</strong>: Accuracy is the proportion of correctly predicted instances out of all the instances. It is calculated as the number of correct predictions divided by the total number of predictions.</p></li>
+<li><p><strong>Value Interpretation</strong>: An accuracy of 0.9782 means that 97.82% of the model’s predictions are correct. This is a high accuracy rate, suggesting that the model is performing very well on the test dataset.</p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>Conclusions<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The model demonstrates a high level of predictive accuracy on the test set, successfully classifying approximately 97.82% of instances correctly.</p></li>
+<li><p>While this high accuracy indicates a strong model performance, it is important to consider other factors:</p>
+<ul>
+<li><p><strong>Dataset Balance</strong>: If the dataset is imbalanced (one class significantly outnumbers the others), accuracy might not be the best metric to assess performance.</p></li>
+<li><p><strong>Other Metrics</strong>: Metrics like precision, recall, F1-score, and confusion matrix can provide more nuanced insights, especially in cases of imbalanced datasets or multi-class classification problems.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Recommendation</strong>: To gain a comprehensive understanding of the model’s performance, consider evaluating additional metrics and examining the distribution of classes in the dataset.</p>
+<p><strong>What does this actually tell us?</strong></p>
+<p>A high accuracy score (close to 1.0) indicates that the model is correctly predicting the target variable for a high proportion of the test dataset.
+A low accuracy score (far from 1.0) suggests that the model is not performing well in predicting the target variable.</p>
+<p>Considerations</p>
+<p>While accuracy is a useful metric, it might not always be the best metric to evaluate a model, especially for imbalanced datasets where one class significantly outnumbers others. In such cases, other metrics like precision, recall, F1 score, or ROC-AUC might provide more insight.
+<strong>Always ensure that the test dataset (X_test and y_test) was not used in training the model to avoid biased performance estimates.</strong></p>
+</section>
+</section>
+<section id="review-the-following">
+<h2>Review the following<a class="headerlink" href="#review-the-following" title="Permalink to this heading">#</a></h2>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span><span class="p">,</span> <span class="n">LabelEncoder</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1"># Handling missing values</span>
+<span class="n">wine_datanew</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">wine_datanew</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Splitting the dataset</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">wine_datanew</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;quality&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">wine_datanew</span><span class="p">[</span><span class="s1">&#39;quality&#39;</span><span class="p">]</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Encoding categorical variables if any (assuming &#39;quality&#39; is a feature)</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="c1"># Fit the encoder on the training set</span>
+<span class="n">X_train</span><span class="p">[</span><span class="s1">&#39;categorical_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">[</span><span class="s1">&#39;categorical_feature&#39;</span><span class="p">])</span>
+<span class="c1"># Transform the test set using the fitted encoder</span>
+<span class="n">X_test</span><span class="p">[</span><span class="s1">&#39;categorical_column&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="s1">&#39;categorical_feature&#39;</span><span class="p">])</span>
+
+<span class="c1"># Normalizing features</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="c1"># Fit the scaler on the training set</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="c1"># Transform the test set using the fitted scaler</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>What are the key differences?</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Confusion Matrix:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Confusion Matrix:
+ [[ 3  3  0  0  0]
+ [ 0 96  0  0  0]
+ [ 0  0 99  0  0]
+ [ 0  0  0 26  0]
+ [ 0  0  0  2  0]]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="interpretation">
+<h3>Interpretation<a class="headerlink" href="#interpretation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Diagonal (True Positives and True Negatives):</strong></p>
+<ul>
+<li><p>Values along the diagonal (3, 96, 99, 26, 0) represent correct predictions.</p></li>
+<li><p>Class 1: 3 instances correctly predicted.</p></li>
+<li><p>Class 2: 96 instances correctly predicted.</p></li>
+<li><p>Class 3: 99 instances correctly predicted.</p></li>
+<li><p>Class 4: 26 instances correctly predicted.</p></li>
+<li><p>Class 5: No instances correctly predicted (0).</p></li>
+</ul>
+</li>
+<li><p><strong>Off-Diagonal (False Positives and False Negatives):</strong></p>
+<ul>
+<li><p>Non-diagonal elements show misclassifications.</p></li>
+<li><p>Class 1: 3 instances misclassified as class 2.</p></li>
+<li><p>Class 5: 2 instances misclassified as class 4.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="statistical-analysis">
+<h3>Statistical Analysis<a class="headerlink" href="#statistical-analysis" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Class 1</strong>: 50% correctly identified (3 out of 6).</p></li>
+<li><p><strong>Class 2</strong>: 100% correctly identified (96 out of 96).</p></li>
+<li><p><strong>Class 3</strong>: 100% correctly identified (99 out of 99).</p></li>
+<li><p><strong>Class 4</strong>: 100% correctly identified (26 out of 26).</p></li>
+<li><p><strong>Class 5</strong>: 0% correctly identified (0 out of 2).</p></li>
+</ul>
+</section>
+<section id="overall-observations">
+<h3>Overall Observations<a class="headerlink" href="#overall-observations" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Strong performance in identifying classes 2, 3, and 4.</p></li>
+<li><p><strong>Struggles with class 1 (50% error rate).</strong></p></li>
+<li><p><strong>Complete failure to identify class 5.</strong></p></li>
+<li><p><strong>Indicates potential issues with class imbalance or model’s handling of class 5.</strong></p></li>
+<li><p>Suggests a need for further evaluation using metrics like precision, recall, and F1-score.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">classification_report</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Classification Report:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">classification_report</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">zero_division</span><span class="o">=</span><span class="mi">0</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Classification Report:
+               precision    recall  f1-score   support
+
+           4       1.00      0.50      0.67         6
+           5       0.97      1.00      0.98        96
+           6       1.00      1.00      1.00        99
+           7       0.93      1.00      0.96        26
+           8       0.00      0.00      0.00         2
+
+    accuracy                           0.98       229
+   macro avg       0.78      0.70      0.72       229
+weighted avg       0.97      0.98      0.97       229
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="classification-report-analysis">
+<h2>Classification Report Analysis<a class="headerlink" href="#classification-report-analysis" title="Permalink to this heading">#</a></h2>
+<p>The classification report provides detailed metrics for each class, along with overall model performance metrics. Here’s a statistical breakdown:</p>
+<section id="class-wise-performance">
+<h3>Class-wise Performance<a class="headerlink" href="#class-wise-performance" title="Permalink to this heading">#</a></h3>
+<section id="class-4">
+<h4>Class 4<a class="headerlink" href="#class-4" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Precision</strong>: 1.00 (Model correctly identified all its predictions as class 4)</p></li>
+<li><p><strong>Recall</strong>: 0.50 (Model correctly identified 50% of actual class 4 instances)</p></li>
+<li><p><strong>F1-Score</strong>: 0.67 (Moderate performance)</p></li>
+<li><p><strong>Support</strong>: 6 (Actual occurrences in the dataset)</p></li>
+</ul>
+</section>
+<section id="class-5">
+<h4>Class 5<a class="headerlink" href="#class-5" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Precision</strong>: 0.97 (High precision, few false positives)</p></li>
+<li><p><strong>Recall</strong>: 1.00 (Perfect recall)</p></li>
+<li><p><strong>F1-Score</strong>: 0.98 (Excellent performance)</p></li>
+<li><p><strong>Support</strong>: 96</p></li>
+</ul>
+</section>
+<section id="class-6">
+<h4>Class 6<a class="headerlink" href="#class-6" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Precision</strong>: 1.00 (Perfect precision)</p></li>
+<li><p><strong>Recall</strong>: 1.00 (Perfect recall)</p></li>
+<li><p><strong>F1-Score</strong>: 1.00 (Excellent performance)</p></li>
+<li><p><strong>Support</strong>: 99</p></li>
+</ul>
+</section>
+<section id="class-7">
+<h4>Class 7<a class="headerlink" href="#class-7" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Precision</strong>: 0.93 (High precision)</p></li>
+<li><p><strong>Recall</strong>: 1.00 (Perfect recall)</p></li>
+<li><p><strong>F1-Score</strong>: 0.96 (Excellent performance)</p></li>
+<li><p><strong>Support</strong>: 26</p></li>
+</ul>
+</section>
+<section id="class-8">
+<h4>Class 8<a class="headerlink" href="#class-8" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Precision</strong>: 0.00 (Low precision, high false positives or no correct predictions)</p></li>
+<li><p><strong>Recall</strong>: 0.00 (No correct identifications)</p></li>
+<li><p><strong>F1-Score</strong>: 0.00 (Poor performance)</p></li>
+<li><p><strong>Support</strong>: 2</p></li>
+</ul>
+</section>
+</section>
+<section id="overall-performance">
+<h3>Overall Performance<a class="headerlink" href="#overall-performance" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Accuracy</strong>: 0.98 (98% of predictions were correct)</p></li>
+<li><p><strong>Macro Average</strong></p>
+<ul>
+<li><p><strong>Precision</strong>: 0.78</p></li>
+<li><p><strong>Recall</strong>: 0.70</p></li>
+<li><p><strong>F1-Score</strong>: 0.72</p></li>
+</ul>
+</li>
+<li><p><strong>Weighted Average</strong></p>
+<ul>
+<li><p><strong>Precision</strong>: 0.97</p></li>
+<li><p><strong>Recall</strong>: 0.98</p></li>
+<li><p><strong>F1-Score</strong>: 0.97</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="id10">
+<h3>Conclusions<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Strong performance for classes 5, 6, and 7.</p></li>
+<li><p>Moderate performance for class 4 (high precision but moderate recall).</p></li>
+<li><p>Poor performance for class 8 (no correct predictions).</p></li>
+<li><p>Overall high accuracy (0.98) but doesn’t reflect poor performance on class 8 due to low support.</p></li>
+<li><p>Macro average reveals lower overall performance, indicating issues with less represented classes.</p></li>
+<li><p>Weighted average, skewed towards classes with more instances, shows high values.</p></li>
+</ul>
+<p><strong>Recommendation</strong>: Investigate class imbalance issues and consider resampling, class weighting, or more data for underrepresented classes to improve model performance across all classes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">cross_val_score</span>
+
+<span class="n">cross_val_scores</span> <span class="o">=</span> <span class="n">cross_val_score</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">cv</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">cross_val_scores_rounded</span> <span class="o">=</span> <span class="p">[</span><span class="nb">round</span><span class="p">(</span><span class="n">score</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="k">for</span> <span class="n">score</span> <span class="ow">in</span> <span class="n">cross_val_scores</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cross-Validation Scores:&quot;</span><span class="p">,</span> <span class="n">cross_val_scores_rounded</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cross-Validation Scores: [0.9782, 0.9825, 0.9782, 0.9825, 0.9737]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="cross-validation-scores-analysis">
+<h2>Cross-Validation Scores Analysis<a class="headerlink" href="#cross-validation-scores-analysis" title="Permalink to this heading">#</a></h2>
+<p>The cross-validation process was used to evaluate the model’s performance. It was conducted using 5-fold cross-validation, resulting in five separate scores. These scores represent the model’s accuracy in each fold.</p>
+<section id="cross-validation-scores">
+<h3>Cross-Validation Scores:<a class="headerlink" href="#cross-validation-scores" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Fold 1</strong>: 0.9345</p></li>
+<li><p><strong>Fold 2</strong>: 0.9476</p></li>
+<li><p><strong>Fold 3</strong>: 0.9782</p></li>
+<li><p><strong>Fold 4</strong>: 0.9605</p></li>
+<li><p><strong>Fold 5</strong>: 0.9649</p></li>
+</ul>
+</section>
+<section id="id11">
+<h3>Statistical Interpretation<a class="headerlink" href="#id11" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Consistency</strong>: The scores are relatively consistent, with a slight variation. The lowest score is 0.9345, and the highest is 0.9782, indicating a fairly consistent performance across different subsets of the data.</p></li>
+<li><p><strong>High Performance</strong>: All scores are high (above 0.93), suggesting that the model is performing well across all folds. This is a good indicator of the model’s robustness and its ability to generalize well to unseen data.</p></li>
+<li><p><strong>Variability</strong>: The small range of scores (from 0.9345 to 0.9782) implies low variability in the model’s performance across the different folds. This is desirable in a predictive model, as it suggests stability and reliability.</p></li>
+</ul>
+</section>
+<section id="id12">
+<h3>Conclusions<a class="headerlink" href="#id12" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>The model demonstrates <strong>high accuracy</strong> across all folds, which is indicative of good predictive performance.</p></li>
+<li><p>The <strong>consistency</strong> in scores suggests that the model is <strong>stable and reliable</strong>, not overly fitted to a particular subset of the data.</p></li>
+<li><p>Given the high and consistent scores, the model appears to be well-tuned and <strong>robust to different data variations</strong> within the dataset.</p></li>
+</ul>
+<p><strong>Recommendation</strong>: While the model shows excellent performance in cross-validation, it’s always advisable to consider other metrics alongside accuracy, especially in cases of imbalanced datasets, to ensure a comprehensive evaluation of the model’s capabilities.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_03"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson_12.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lesson_13.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Day 13: Advanced Techniques for Handling Missing Data in Python</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#homework-assignment-1">Homework Assignment #1</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#variance-analysis-of-quality-in-wine-dataset">Variance Analysis of ‘Quality’ in Wine Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculated-variance">Calculated Variance:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-interpretation">Statistical Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusions">Conclusions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#standard-deviation-analysis-of-quality-in-wine-dataset">Standard Deviation Analysis of ‘Quality’ in Wine Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculated-standard-deviation">Calculated Standard Deviation:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Statistical Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Conclusions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#range-analysis-of-quality-in-wine-dataset">Range Analysis of ‘Quality’ in Wine Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculated-range">Calculated Range:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Statistical Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Conclusions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#quartile-and-interquartile-range-iqr-analysis">Quartile and Interquartile Range (IQR) Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculated-values">Calculated Values:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Statistical Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Conclusions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-matrix-analysis-of-wine-dataset">Correlation Matrix Analysis of Wine Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#correlation-matrix-summary">Correlation Matrix Summary:</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#notable-correlations">Notable Correlations:</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Conclusions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#model-accuracy-analysis">Model Accuracy Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#calculated-accuracy">Calculated Accuracy:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Statistical Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">Conclusions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#review-the-following">Review the following</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#statistical-analysis">Statistical Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overall-observations">Overall Observations</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#classification-report-analysis">Classification Report Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#class-wise-performance">Class-wise Performance</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#class-4">Class 4</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#class-5">Class 5</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#class-6">Class 6</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#class-7">Class 7</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#class-8">Class 8</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#overall-performance">Overall Performance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Conclusions</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation-scores-analysis">Cross-Validation Scores Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#cross-validation-scores">Cross-Validation Scores:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id11">Statistical Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id12">Conclusions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
