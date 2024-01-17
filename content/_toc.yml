@@ -41,9 +41,8 @@ parts:
       title: "Day 11 - Introduction to Data Preprocessing"
     - file: Week_03/Lesson_12.ipynb
       title: "Day 12 - Splitting Data into Training and Test Sets"
-      sections:
-      - file: Week_03/Lesson_12solution.ipynb
-      - title: "Day 12 - Solution"
+    - file: Week_03/Lesson_12solution.ipynb
+      title: "Day 12 - Solution"
     - file: Week_03/Lesson_13.ipynb
       title: "Day 13 - Handling Missing Data in Python"
 #   - file: Week_03/Lesson_14.ipynb
