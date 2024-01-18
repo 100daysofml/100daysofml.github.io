@@ -1,0 +1,1231 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_03/Lesson_15';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_03/Lesson_15.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Day 13: Advanced Techniques for Handling Missing Data in Python" href="Lesson_13.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    100 Days of Machine Learning Challenge
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Daily Challenge Curriculum</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Daily Curriculum Resources</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_01/001_Overview.html">Week_01: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_02/002_Overview.html">Week_02: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 - Data Preprocessing</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="003_Overview.html">Week_03: Overview</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Lesson_11.html">Day 11 - Introduction to Data Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lesson_12.html">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="Lesson_12solution.html">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="Lesson_13.html">Day 13 - Handling Missing Data in Python</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications</a></li>
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-4iw5ztbi/lab/workspaces/auto-e/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_03/Lesson_15.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/github/100daysofml/100daysofml.github.io/blob/master/Week_03/Lesson_15.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_03/Lesson_15.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_03/Lesson_15.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-types-of-categorical-data">Introduction to Types of Categorical Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-encoding-techniques">Implementing Encoding Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-dataset">Loading the Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-data">Understanding the Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-implications-of-encoding-techniques">Mathematical Implications of Encoding Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-encoding-for-high-cardinality-features">Binary Encoding (for High Cardinality Features)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-hot-encoding-for-nominal-data">One-Hot Encoding (for Nominal Data)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#label-encoding-for-ordinal-data">Label Encoding (for Ordinal Data)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-encoding-techniques-with-mathematical-context">Implementing Encoding Techniques with Mathematical Context</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-encoding-example-high-cardinality-feature-cabin">Binary Encoding Example (High Cardinality Feature: ‘Cabin’)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-hot-encoding-example-nominal-data-embarked">One-Hot Encoding Example (Nominal Data: ‘Embarked’)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#label-encoding-example-ordinal-data-pclass">Label Encoding Example (Ordinal Data: ‘Pclass’)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-and-mathematical-considerations">Best Practices and Mathematical Considerations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-dive-into-visualization-and-analysis-post-data-encoding">Deep Dive into Visualization and Analysis Post-Data Encoding</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-deep-dive-with-titanic-dataset">Activity: Deep Dive with Titanic Dataset</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Objective</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-overview">Dataset Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-the-necessary-libraries">Step 1: Load the necessary libraries</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-load-the-titanic-dataset">Step 2: Load the Titanic dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-categorical-data-identification">Step 3: Categorical Data Identification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-encoding-techniques-and-visualization">Step 4: Encoding Techniques and Visualization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-binary-encoding-for-cabin-high-cardinality-feature">A. Binary Encoding for ‘Cabin’ (High Cardinality Feature)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-one-hot-encoding-for-embarked-nominal-data">B. One-Hot Encoding for ‘Embarked’ (Nominal Data)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-label-encoding-for-pclass-ordinal-data">C. Label Encoding for ‘Pclass’ (Ordinal Data)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-statistical-summary-post-encoding">Step 5: Statistical Summary Post-Encoding</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="day-15-encoding-categorical-data-in-python-expanded-with-mathematical-implications">
+<h1>Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications<a class="headerlink" href="#day-15-encoding-categorical-data-in-python-expanded-with-mathematical-implications" title="Permalink to this heading">#</a></h1>
+<section id="objective">
+<h2>Objective<a class="headerlink" href="#objective" title="Permalink to this heading">#</a></h2>
+<p>Deepen the understanding of encoding categorical data in Python by delving into the mathematical implications of each encoding technique, focusing on how they transform data and the influence this transformation has on analysis and model performance.</p>
+<section id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Intermediate Python, Pandas, NumPy, and Scikit-Learn skills.</p></li>
+<li><p>Basic understanding of statistical concepts and data preprocessing.</p></li>
+<li></li>
+<li><p>Example Dataset:  <a class="github reference external" href="https://github.com/100daysofml/100daysofml_notebooks/blob/main/content/Week_03/titanic.csv">100daysofml/100daysofml_notebooks</a></p></li>
+<li><p>Activity Dataset: <a class="github reference external" href="https://github.com/100daysofml/100daysofml_notebooks/blob/main/content/Week_03/adult_data.csv">100daysofml/100daysofml_notebooks</a></p></li>
+</ul>
+</section>
+</section>
+<section id="introduction-to-types-of-categorical-data">
+<h2>Introduction to Types of Categorical Data<a class="headerlink" href="#introduction-to-types-of-categorical-data" title="Permalink to this heading">#</a></h2>
+<p>Categorical data, essential in many datasets, can be classified primarily into two types:</p>
+<ol class="arabic simple">
+<li><p><strong>Nominal Data (Unordered)</strong>: Categories have no intrinsic order. E.g., Colors (Red, Blue), Gender (Male, Female).</p></li>
+<li><p><strong>Ordinal Data (Ordered)</strong>: Categories have a logical order or ranking. E.g., Education level (High School, Bachelor’s, Master’s), Satisfaction rating (Unsatisfied, Neutral, Satisfied).</p></li>
+</ol>
+<p><strong>Cardinality</strong>, the number of unique categories in a feature, is crucial. High cardinality features can pose challenges for encoding due to increased dimensionality.</p>
+</section>
+<section id="implementing-encoding-techniques">
+<h2>Implementing Encoding Techniques<a class="headerlink" href="#implementing-encoding-techniques" title="Permalink to this heading">#</a></h2>
+<section id="loading-the-dataset">
+<h3>Loading the Dataset<a class="headerlink" href="#loading-the-dataset" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">titanic_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;titanic.csv&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</section>
+<section id="understanding-the-data">
+<h3>Understanding the Data<a class="headerlink" href="#understanding-the-data" title="Permalink to this heading">#</a></h3>
+<p>Identify nominal, ordinal, and cardinal features in the Titanic dataset:</p>
+<ul class="simple">
+<li><p><strong>Nominal</strong>: ‘Embarked’ (C = Cherbourg, Q = Queenstown, S = Southampton)</p></li>
+<li><p><strong>Ordinal</strong>: ‘Pclass’ (1 = 1st, 2 = 2nd, 3 = 3rd)</p></li>
+<li><p><strong>Cardinal</strong>: ‘Cabin’ (C85, C123, E46, …)</p></li>
+</ul>
+</section>
+</section>
+<section id="mathematical-implications-of-encoding-techniques">
+<h2>Mathematical Implications of Encoding Techniques<a class="headerlink" href="#mathematical-implications-of-encoding-techniques" title="Permalink to this heading">#</a></h2>
+<section id="binary-encoding-for-high-cardinality-features">
+<h3>Binary Encoding (for High Cardinality Features)<a class="headerlink" href="#binary-encoding-for-high-cardinality-features" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Concept</strong>: Converts categories into binary code, resulting in fewer features compared to one-hot encoding.</p></li>
+<li><p><strong>Mathematical Rationale</strong>: Each binary digit represents a power of 2, efficiently encapsulating information even when the number of categories is large. This reduces the feature space dimensionality, preventing the “curse of dimensionality” in model training.</p></li>
+</ul>
+</section>
+<section id="one-hot-encoding-for-nominal-data">
+<h3>One-Hot Encoding (for Nominal Data)<a class="headerlink" href="#one-hot-encoding-for-nominal-data" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Concept</strong>: Creates a binary column for each category, with only one active state.</p></li>
+<li><p><strong>Formula</strong>: For a feature with <code class="docutils literal notranslate"><span class="pre">n</span></code> categories, it creates <code class="docutils literal notranslate"><span class="pre">n</span></code> binary columns.</p></li>
+<li><p><strong>Mathematical Rationale</strong>: Eliminates ordinal relationships between categories by treating each category as independent. However, it increases the feature space linearly with the number of categories, which can lead to sparse matrices and potentially overfitting in models.</p></li>
+</ul>
+</section>
+<section id="label-encoding-for-ordinal-data">
+<h3>Label Encoding (for Ordinal Data)<a class="headerlink" href="#label-encoding-for-ordinal-data" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Concept</strong>: Converts each category into a unique integer.</p></li>
+<li><p><strong>Mathematical Rationale</strong>: Preserves the ordinal nature of the data, ensuring that the model interprets the inherent order. However, it can be misleading if applied to nominal data, as it might introduce an artificial order that doesn’t exist.</p></li>
+</ul>
+</section>
+</section>
+<section id="implementing-encoding-techniques-with-mathematical-context">
+<h2>Implementing Encoding Techniques with Mathematical Context<a class="headerlink" href="#implementing-encoding-techniques-with-mathematical-context" title="Permalink to this heading">#</a></h2>
+<section id="binary-encoding-example-high-cardinality-feature-cabin">
+<h3>Binary Encoding Example (High Cardinality Feature: ‘Cabin’)<a class="headerlink" href="#binary-encoding-example-high-cardinality-feature-cabin" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">category_encoders</span> <span class="k">as</span> <span class="nn">ce</span>
+
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">BinaryEncoder</span><span class="p">(</span><span class="n">cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Cabin&#39;</span><span class="p">])</span>
+<span class="n">titanic_binary_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Cabin&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Binary Encoding for &#39;Cabin&#39;:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_binary_encoded</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Mathematical Insight</strong>: Observe how each unique cabin is represented by a combination of binary digits, significantly reducing the feature space compared to one-hot encoding.</p></li>
+</ul>
+</section>
+<section id="one-hot-encoding-example-nominal-data-embarked">
+<h3>One-Hot Encoding Example (Nominal Data: ‘Embarked’)<a class="headerlink" href="#one-hot-encoding-example-nominal-data-embarked" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span>
+
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">()</span>
+<span class="n">titanic_one_hot_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">[[</span><span class="s1">&#39;Embarked&#39;</span><span class="p">]])</span>
+<span class="n">titanic_one_hot_encoded_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">titanic_one_hot_encoded</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">encoder</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">([</span><span class="s1">&#39;Embarked&#39;</span><span class="p">]))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;One-Hot Encoding for &#39;Embarked&#39;:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_one_hot_encoded_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Mathematical Insight</strong>: Each row has only one ‘1’ and the rest ‘0’s, ensuring that the categories are mutually exclusive and equally weighted.</p></li>
+</ul>
+</section>
+<section id="label-encoding-example-ordinal-data-pclass">
+<h3>Label Encoding Example (Ordinal Data: ‘Pclass’)<a class="headerlink" href="#label-encoding-example-ordinal-data-pclass" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Pclass_encoded&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Label Encoding for &#39;Pclass&#39;:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">[[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">,</span> <span class="s1">&#39;Pclass_encoded&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><strong>Mathematical Insight</strong>: The encoding reflects the natural order of classes (1st &gt; 2nd &gt; 3rd), allowing models to interpret this hierarchy correctly.</p></li>
+</ul>
+</section>
+</section>
+<section id="best-practices-and-mathematical-considerations">
+<h2>Best Practices and Mathematical Considerations<a class="headerlink" href="#best-practices-and-mathematical-considerations" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Avoid Data Leakage</strong>: Ensure that the encoding is fit only on the training set to avoid leakage of information from the test set.</p></li>
+<li><p><strong>Prevent Dummy Variable Trap</strong>: In one-hot encoding, drop one encoded column to avoid multicollinearity, a situation where variables are highly correlated.</p></li>
+<li><p><strong>Mind the Ordinality</strong>: Apply label encoding for ordinal data to preserve the order. Use one-hot or binary encoding for nominal data to avoid introducing fictitious ordinality.</p></li>
+<li><p><strong>Manage Cardinality</strong>: High cardinality in one-hot encoding can lead to a large number of features. Binary encoding can be a more efficient alternative in such cases.</p></li>
+</ul>
+<section id="deep-dive-into-visualization-and-analysis-post-data-encoding">
+<h3>Deep Dive into Visualization and Analysis Post-Data Encoding<a class="headerlink" href="#deep-dive-into-visualization-and-analysis-post-data-encoding" title="Permalink to this heading">#</a></h3>
+<p>After encoding categorical data, visualize and analyze the transformed data to understand the impact of encoding on the dataset’s structure and the potential implications for model performance.</p>
+<ol class="arabic simple">
+<li><p><strong>Visualization Techniques:</strong></p>
+<ul class="simple">
+<li><p><strong>Histograms:</strong> Use histograms to visualize the frequency distribution of encoded features.</p></li>
+<li><p><strong>Bar Plots:</strong> Use bar plots to compare the frequency of categories before and after encoding.</p></li>
+<li><p><strong>Pair Plots:</strong> Use pair plots to visualize pairwise relationships between features.</p></li>
+</ul>
+</li>
+<li><p><strong>Analytical Assessment:</strong></p>
+<ul class="simple">
+<li><p><strong>Compare statistical summaries before and after encoding.</strong></p></li>
+<li><p><strong>Observe changes in correlation between features.</strong></p></li>
+<li><p><strong>Evaluate the impact of encoding on model performance using metrics like accuracy, precision, and recall.</strong></p></li>
+</ul>
+</li>
+</ol>
+<p>In these statistical summaries, for the encoded data, you’ll be mostly looking at counts, means, and standard deviations for the binary variables created through the encoding process. The mean can give you a sense of the prevalence of each category in binary terms, and the standard deviation provides insights into the variance of these binary representations.</p>
+<p>Remember, after encoding, the interpretability of the statistical summary changes. While means and standard deviations have clear interpretations for continuous data, their meaning is different for binary-encoded data. Here, the mean represents the proportion of 1s (or ‘presence’ of a feature), and the standard deviation represents the binary distribution’s spread.</p>
+<p>Analyzing the visualizations and statistical summaries can give you insights into how encoding has transformed your data and what implications it may have for your analysis or model training.</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="activity-deep-dive-with-titanic-dataset">
+<h1>Activity: Deep Dive with Titanic Dataset<a class="headerlink" href="#activity-deep-dive-with-titanic-dataset" title="Permalink to this heading">#</a></h1>
+<section id="id1">
+<h2>Objective<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>Explore the nuances of encoding categorical data in Python, focusing on different techniques and their implications on data structure and model performance, using the Titanic dataset as an example.</p>
+</section>
+<section id="id2">
+<h2>Prerequisites<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p>Intermediate knowledge of Python, Pandas, NumPy, and Scikit-Learn.</p></li>
+<li><p>Familiarity with data visualization libraries like Matplotlib and Seaborn.</p></li>
+<li><p>Understanding of basic statistical concepts.</p></li>
+<li><p>Dataset: <a class="github reference external" href="https://github.com/100daysofml/100daysofml_notebooks/blob/main/content/Week_03/adult_data.csv">100daysofml/100daysofml_notebooks</a></p></li>
+</ul>
+</section>
+<section id="dataset-overview">
+<h2>Dataset Overview<a class="headerlink" href="#dataset-overview" title="Permalink to this heading">#</a></h2>
+<p>The Titanic dataset provides a mix of categorical and numerical features, making it ideal for demonstrating various encoding techniques. The dataset includes details of passengers such as Class, Sex, Age, and whether they survived the sinking.</p>
+<section id="step-1-load-the-necessary-libraries">
+<h3>Step 1: Load the necessary libraries<a class="headerlink" href="#step-1-load-the-necessary-libraries" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">OneHotEncoder</span><span class="p">,</span> <span class="n">LabelEncoder</span>
+<span class="kn">import</span> <span class="nn">category_encoders</span> <span class="k">as</span> <span class="nn">ce</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-2-load-the-titanic-dataset">
+<h3>Step 2: Load the Titanic dataset<a class="headerlink" href="#step-2-load-the-titanic-dataset" title="Permalink to this heading">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Load the Titanic dataset</span>
+<span class="n">titanic_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;titanic.csv&#39;</span><span class="p">)</span>  <span class="c1"># Replace with the correct path</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Output:</span>
+<span class="c1">#   PassengerId  Pclass  Name  Sex  Age  SibSp  Parch  Ticket  Fare  Cabin  Embarked  Survived</span>
+<span class="c1"># 0          892       3  Kelly, Mr. James  male  34.5      0      0  330911  7.8292   NaN        Q         0</span>
+<span class="c1"># 1          893       3  Wilkes, Mrs. James (Ellen Needs)  female  47.0      1      0  363272  7.0000   NaN        S         1</span>
+<span class="c1"># ... (additional rows)` </span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   PassengerId  Pclass                                          Name     Sex  \
+0          892       3                              Kelly, Mr. James    male   
+1          893       3              Wilkes, Mrs. James (Ellen Needs)  female   
+2          894       2                     Myles, Mr. Thomas Francis    male   
+3          895       3                              Wirz, Mr. Albert    male   
+4          896       3  Hirvonen, Mrs. Alexander (Helga E Lindqvist)  female   
+
+    Age  SibSp  Parch   Ticket     Fare Cabin Embarked  Survived  
+0  34.5      0      0   330911   7.8292   NaN        Q         0  
+1  47.0      1      0   363272   7.0000   NaN        S         1  
+2  62.0      0      0   240276   9.6875   NaN        Q         0  
+3  27.0      0      0   315154   8.6625   NaN        S         0  
+4  22.0      1      1  3101298  12.2875   NaN        S         1  
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-3-categorical-data-identification">
+<h3>Step 3: Categorical Data Identification<a class="headerlink" href="#step-3-categorical-data-identification" title="Permalink to this heading">#</a></h3>
+<p>Before encoding, it’s crucial to understand the types of categorical data present in the dataset.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Identify the types of categorical data in the Titanic dataset</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Data types and unique values in each categorical column:&quot;</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">col</span> <span class="ow">in</span> <span class="n">titanic_data</span><span class="o">.</span><span class="n">select_dtypes</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">&#39;object&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">columns</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">col</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">titanic_data</span><span class="p">[</span><span class="n">col</span><span class="p">]</span><span class="o">.</span><span class="n">nunique</span><span class="p">()</span><span class="si">}</span><span class="s2"> unique values&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Data types and unique values in each categorical column:
+Name: 418 unique values
+Sex: 2 unique values
+Ticket: 363 unique values
+Cabin: 76 unique values
+Embarked: 3 unique values
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="step-4-encoding-techniques-and-visualization">
+<h3>Step 4: Encoding Techniques and Visualization<a class="headerlink" href="#step-4-encoding-techniques-and-visualization" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="a-binary-encoding-for-cabin-high-cardinality-feature">
+<h3>A. Binary Encoding for ‘Cabin’ (High Cardinality Feature)<a class="headerlink" href="#a-binary-encoding-for-cabin-high-cardinality-feature" title="Permalink to this heading">#</a></h3>
+<p>Binary encoding is efficient for high cardinality features as it significantly reduces the feature space compared to one-hot encoding.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Binary Encoding for &#39;Cabin&#39;</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">ce</span><span class="o">.</span><span class="n">BinaryEncoder</span><span class="p">(</span><span class="n">cols</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Cabin&#39;</span><span class="p">])</span>
+<span class="n">titanic_binary_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Cabin&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Binary Encoding for &#39;Cabin&#39;:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_binary_encoded</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Visualization for &#39;Cabin&#39; before and after Binary Encoding</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Cabin&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Cabin Before Encoding&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Cabin&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">titanic_binary_encoded</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Cabin After Binary Encoding&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Encoded Cabin&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Binary Encoding for &#39;Cabin&#39;:
+   Cabin_0  Cabin_1  Cabin_2  Cabin_3  Cabin_4  Cabin_5  Cabin_6
+0        1        0        0        1        1        0        1
+1        1        0        0        1        1        0        1
+2        1        0        0        1        1        0        1
+3        1        0        0        1        1        0        1
+4        1        0        0        1        1        0        1
+</pre></div>
+</div>
+<img alt="../_images/cd2f569fb714c1e28d2bf4d074945ae3fd2753a0a6fa6c5d4cba5096788c63ca.png" src="../_images/cd2f569fb714c1e28d2bf4d074945ae3fd2753a0a6fa6c5d4cba5096788c63ca.png" />
+</div>
+</div>
+</section>
+<section id="b-one-hot-encoding-for-embarked-nominal-data">
+<h3>B. One-Hot Encoding for ‘Embarked’ (Nominal Data)<a class="headerlink" href="#b-one-hot-encoding-for-embarked-nominal-data" title="Permalink to this heading">#</a></h3>
+<p>One-hot encoding is perfect for nominal data without an intrinsic order as it prevents introducing any ordinal relationship.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># One-Hot Encoding for &#39;Embarked&#39;</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">()</span>
+<span class="n">titanic_one_hot_encoded</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">[[</span><span class="s1">&#39;Embarked&#39;</span><span class="p">]])</span>
+<span class="n">titanic_one_hot_encoded_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">titanic_one_hot_encoded</span><span class="o">.</span><span class="n">toarray</span><span class="p">(),</span> <span class="n">columns</span><span class="o">=</span><span class="n">encoder</span><span class="o">.</span><span class="n">get_feature_names_out</span><span class="p">([</span><span class="s1">&#39;Embarked&#39;</span><span class="p">]))</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">One-Hot Encoding for &#39;Embarked&#39;:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_one_hot_encoded_df</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Visualization for &#39;Embarked&#39; before and after One-Hot Encoding</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Embarked&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Embarked Before Encoding&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Embarked&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">titanic_one_hot_encoded_df</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Embarked After One-Hot Encoding&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Encoded Embarked&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>One-Hot Encoding for &#39;Embarked&#39;:
+   Embarked_C  Embarked_Q  Embarked_S
+0         0.0         1.0         0.0
+1         0.0         0.0         1.0
+2         0.0         1.0         0.0
+3         0.0         0.0         1.0
+4         0.0         0.0         1.0
+</pre></div>
+</div>
+<img alt="../_images/09e1007d00212e7fd5ba5ec518d86e237737a0031fab48f204fab5a1f3c9745d.png" src="../_images/09e1007d00212e7fd5ba5ec518d86e237737a0031fab48f204fab5a1f3c9745d.png" />
+</div>
+</div>
+</section>
+<section id="c-label-encoding-for-pclass-ordinal-data">
+<h3>C. Label Encoding for ‘Pclass’ (Ordinal Data)<a class="headerlink" href="#c-label-encoding-for-pclass-ordinal-data" title="Permalink to this heading">#</a></h3>
+<p>Label encoding is suitable for ordinal data as it preserves the natural order within the categories.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Label Encoding for &#39;Pclass&#39;</span>
+<span class="n">encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Pclass_encoded&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Label Encoding for &#39;Pclass&#39;:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">[[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">,</span> <span class="s1">&#39;Pclass_encoded&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+
+<span class="c1"># Visualization for &#39;Pclass&#39; before and after Label Encoding</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Pclass Before Encoding&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Pclass_encoded&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">kind</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Pclass After Label Encoding&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Label Encoding for &#39;Pclass&#39;:
+   Pclass  Pclass_encoded
+0       3               2
+1       3               2
+2       2               1
+3       3               2
+4       3               2
+</pre></div>
+</div>
+<img alt="../_images/5557e64798a92020a9ff85fd3168e8b2b2c5412a64193a3ef978f5cdab359715.png" src="../_images/5557e64798a92020a9ff85fd3168e8b2b2c5412a64193a3ef978f5cdab359715.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="step-5-statistical-summary-post-encoding">
+<h2>Step 5: Statistical Summary Post-Encoding<a class="headerlink" href="#step-5-statistical-summary-post-encoding" title="Permalink to this heading">#</a></h2>
+<p>Assessing the impact of encoding techniques on the dataset’s structure and characteristics is crucial for understanding the transformation.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Statistical Summary before and after encoding</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Statistical Summary for &#39;Cabin&#39; before encoding:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Cabin&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Statistical Summary for &#39;Cabin&#39; before encoding:
+count                  91
+unique                 76
+top       B57 B59 B63 B66
+freq                    3
+Name: Cabin, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Statistical Summary for &#39;Cabin&#39; after Binary Encoding:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_binary_encoded</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Statistical Summary for &#39;Cabin&#39; after Binary Encoding:
+          Cabin_0     Cabin_1     Cabin_2     Cabin_3     Cabin_4     Cabin_5  \
+count  418.000000  418.000000  418.000000  418.000000  418.000000  418.000000   
+mean     0.813397    0.088517    0.090909    0.882775    0.885167    0.112440   
+std      0.390059    0.284385    0.287824    0.322074    0.319202    0.316286   
+min      0.000000    0.000000    0.000000    0.000000    0.000000    0.000000   
+25%      1.000000    0.000000    0.000000    1.000000    1.000000    0.000000   
+50%      1.000000    0.000000    0.000000    1.000000    1.000000    0.000000   
+75%      1.000000    0.000000    0.000000    1.000000    1.000000    0.000000   
+max      1.000000    1.000000    1.000000    1.000000    1.000000    1.000000   
+
+          Cabin_6  
+count  418.000000  
+mean     0.892344  
+std      0.310316  
+min      0.000000  
+25%      1.000000  
+50%      1.000000  
+75%      1.000000  
+max      1.000000  
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Statistical Summary for &#39;Embarked&#39; before encoding:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Embarked&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Statistical Summary for &#39;Embarked&#39; before encoding:
+count     418
+unique      3
+top         S
+freq      270
+Name: Embarked, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Statistical Summary for &#39;Embarked&#39; after One-Hot Encoding:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_one_hot_encoded_df</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Statistical Summary for &#39;Embarked&#39; after One-Hot Encoding:
+       Embarked_C  Embarked_Q  Embarked_S
+count  418.000000  418.000000  418.000000
+mean     0.244019    0.110048    0.645933
+std      0.430019    0.313324    0.478803
+min      0.000000    0.000000    0.000000
+25%      0.000000    0.000000    0.000000
+50%      0.000000    0.000000    1.000000
+75%      0.000000    0.000000    1.000000
+max      1.000000    1.000000    1.000000
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Statistical Summary for &#39;Pclass&#39; before encoding:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Pclass&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Statistical Summary for &#39;Pclass&#39; before encoding:
+count    418.000000
+mean       2.265550
+std        0.841838
+min        1.000000
+25%        1.000000
+50%        3.000000
+75%        3.000000
+max        3.000000
+Name: Pclass, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;</span><span class="se">\n</span><span class="s2">Statistical Summary for &#39;Pclass&#39; after Label Encoding:&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">titanic_data</span><span class="p">[</span><span class="s1">&#39;Pclass_encoded&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Statistical Summary for &#39;Pclass&#39; after Label Encoding:
+count    418.000000
+mean       1.265550
+std        0.841838
+min        0.000000
+25%        0.000000
+50%        2.000000
+75%        2.000000
+max        2.000000
+Name: Pclass_encoded, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p><strong>Analytical Assessment</strong>:</p>
+<ul>
+<li><p>Compare statistical summaries before and after encoding.</p></li>
+<li><p>Observe any changes in correlation between features.</p></li>
+<li><p>Evaluate the impact of encoding on model performance using metrics like accuracy, precision, and recall.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_03"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson_13.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Day 13: Advanced Techniques for Handling Missing Data in Python</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-types-of-categorical-data">Introduction to Types of Categorical Data</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-encoding-techniques">Implementing Encoding Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#loading-the-dataset">Loading the Dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-data">Understanding the Data</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-implications-of-encoding-techniques">Mathematical Implications of Encoding Techniques</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-encoding-for-high-cardinality-features">Binary Encoding (for High Cardinality Features)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-hot-encoding-for-nominal-data">One-Hot Encoding (for Nominal Data)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#label-encoding-for-ordinal-data">Label Encoding (for Ordinal Data)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-encoding-techniques-with-mathematical-context">Implementing Encoding Techniques with Mathematical Context</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-encoding-example-high-cardinality-feature-cabin">Binary Encoding Example (High Cardinality Feature: ‘Cabin’)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#one-hot-encoding-example-nominal-data-embarked">One-Hot Encoding Example (Nominal Data: ‘Embarked’)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#label-encoding-example-ordinal-data-pclass">Label Encoding Example (Ordinal Data: ‘Pclass’)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-and-mathematical-considerations">Best Practices and Mathematical Considerations</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#deep-dive-into-visualization-and-analysis-post-data-encoding">Deep Dive into Visualization and Analysis Post-Data Encoding</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-deep-dive-with-titanic-dataset">Activity: Deep Dive with Titanic Dataset</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Objective</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Prerequisites</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset-overview">Dataset Overview</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-load-the-necessary-libraries">Step 1: Load the necessary libraries</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-load-the-titanic-dataset">Step 2: Load the Titanic dataset</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-categorical-data-identification">Step 3: Categorical Data Identification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-encoding-techniques-and-visualization">Step 4: Encoding Techniques and Visualization</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#a-binary-encoding-for-cabin-high-cardinality-feature">A. Binary Encoding for ‘Cabin’ (High Cardinality Feature)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#b-one-hot-encoding-for-embarked-nominal-data">B. One-Hot Encoding for ‘Embarked’ (Nominal Data)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#c-label-encoding-for-pclass-ordinal-data">C. Label Encoding for ‘Pclass’ (Ordinal Data)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-5-statistical-summary-post-encoding">Step 5: Statistical Summary Post-Encoding</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
