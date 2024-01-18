@@ -54,12 +54,13 @@ parts:
         title: "Day 12 - Solution"
       - file: Week_03/Lesson_13.ipynb
         title: "Day 13 - Handling Missing Data in Python"
-#     - file: Week_03/Lesson_14.ipynb
-#       title: "Day 14 - Data Normalization and Scaling using Python"
-#   - file: Week_03/Lesson_15.ipynb
-#     title: "Day 15 - ncoding Categorical Data in Python"
+      - file: Week_03/Lesson_15.ipynb
+        title: "Day 15 - Encoding Categorical Data in Python"
 
 #   - file: Week_02/Lesson_09.ipynb
 #     title: "Day 9 - Calculus - Integrals, Fundamental Theorems"
 #   - file: Week_02/Lesson_10.ipynb
 #     title: "Day 10 - Statistics and Probability - Concepts and Relevant Distributions"
+
+#     - file: Week_03/Lesson_14.ipynb
+#       title: "Day 14 - Data Normalization and Scaling using Python"
