@@ -13,40 +13,49 @@ parts:
       - file: Week_00/01_Errata.md
         title: "Errata: Corrections History"
 
-  - caption: "Week 1 - Introduction to Python"
+  - caption: "Week 1 - Introduction to Python Basics"
     chapters:
-    - file: Week_01/Lesson_01.ipynb
-      title: "Day 1 - Python Basics"
-    - file: Week_01/Lesson_02.ipynb
-      title: "Day 2 - Python Data"
-    - file: Week_01/Lesson_03.ipynb
-      title: "Day 3 - Control Structures in Python: Loops"
-    - file: Week_01/Lesson_04.ipynb
-      title: "Day 4 - Control Structures in Python: Conditional Statements"
-    - file: Week_01/Lesson_05.ipynb
-      title: "Day 5 - Functions and Modules"
+    - file: Week_01/001_Overview.md
+      title: "Week_01: Overview"
+      sections:
+      - file: Week_01/Lesson_01.ipynb
+        title: "Day 1 - Python Basics"
+      - file: Week_01/Lesson_02.ipynb
+        title: "Day 2 - Python Data"
+      - file: Week_01/Lesson_03.ipynb
+        title: "Day 3 - Control Structures in Python: Loops"
+      - file: Week_01/Lesson_04.ipynb
+        title: "Day 4 - Control Structures in Python: Conditional Statements"
+      - file: Week_01/Lesson_05.ipynb
+        title: "Day 5 - Functions and Modules"
 
   - caption: "Week 2 - Introduction to Machine Learning Mathematics"
     chapters:
-    - file: Week_02/Lesson_06.ipynb
-      title: "Day 6 - Linear Algebra - Vectors"
-    - file: Week_02/Lesson_07.ipynb
-      title: "Day 7 - Linear Algebra - Matrices and Matrix Operations"
-    - file: Week_02/Lesson_08.ipynb
-      title: "Day 8 - Calculus - Derivatives, Concept and Application"
+    - file: Week_02/002_Overview.md
+      title: "Week_02: Overview"
+      sections:
+      - file: Week_02/Lesson_06.ipynb
+        title: "Day 6 - Linear Algebra - Vectors"
+      - file: Week_02/Lesson_07.ipynb
+        title: "Day 7 - Linear Algebra - Matrices and Matrix Operations"
+      - file: Week_02/Lesson_08.ipynb
+        title: "Day 8 - Calculus - Derivatives, Concept and Application"
 
   - caption: "Week 3 - Data Preprocessing"
     chapters:
-    - file: Week_03/Lesson_11.ipynb
-      title: "Day 11 - Introduction to Data Preprocessing"
-    - file: Week_03/Lesson_12.ipynb
-      title: "Day 12 - Splitting Data into Training and Test Sets"
-    - file: Week_03/Lesson_12solution.ipynb
-      title: "Day 12 - Solution"
-    - file: Week_03/Lesson_13.ipynb
-      title: "Day 13 - Handling Missing Data in Python"
-#   - file: Week_03/Lesson_14.ipynb
-#     title: "Day 14 - Data Normalization and Scaling using Python"
+    - file: Week_03/003_Overview.md
+      title: "Week_03: Overview"
+      sections:
+      - file: Week_03/Lesson_11.ipynb
+        title: "Day 11 - Introduction to Data Preprocessing"
+      - file: Week_03/Lesson_12.ipynb
+        title: "Day 12 - Splitting Data into Training and Test Sets"
+      - file: Week_03/Lesson_12solution.ipynb
+        title: "Day 12 - Solution"
+      - file: Week_03/Lesson_13.ipynb
+        title: "Day 13 - Handling Missing Data in Python"
+#     - file: Week_03/Lesson_14.ipynb
+#       title: "Day 14 - Data Normalization and Scaling using Python"
 #   - file: Week_03/Lesson_15.ipynb
 #     title: "Day 15 - ncoding Categorical Data in Python"
 
