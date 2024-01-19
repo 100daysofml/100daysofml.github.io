@@ -241,10 +241,15 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="Lesson_12solution.html">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="Lesson_13.html">Day 13 - Handling Missing Data in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lesson_14.html">Day 14 - Data Normalization and Scaling using Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Lesson_15.html">Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications</a></li>
 
 </ul>
 </li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_04/004_Overview.html">Week_04: Overview</a></li>
 </ul>
 
     </div>
@@ -502,7 +507,7 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-summary-statistics-in-python">3. Basic (Summary) Statistics in Python</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-for-activities">Setup for Activities</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#in-the-above-example-we-used-a-numeric-column-in-order-to-display-the-mode-could-you-use-a-non-numeric-column">In the above example we used a numeric column in order to display the mode? <strong>Could you use a non-numeric column?</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-would-there-be-a-difference-in-the-variance-and-standard-deviation-between-the-two-different-methods"><strong>Why would there be a difference in the variance and standard deviation between the two different methods?</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-would-there-be-a-difference-in-the-variance-and-standard-deviation-between-numpy-and-pandas"><strong>Why would there be a difference in the variance and standard deviation between NumPy and Pandas?</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-are-quartiles-and-interquartile-range-important">Why are Quartiles and Interquartile Range Important?</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-hands-on"><strong>Activity - Hands-On</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources"><strong>Additional Resources</strong></a></li>
@@ -1254,7 +1259,7 @@ stats.mode(covid_datanew[&#39;new_cases&#39;])[0][0]: Accesses the first element
 </div>
 <p><strong>Standard Deviation (σ)</strong></p>
 <ul class="simple">
-<li><p>Formula: <span class="math notranslate nohighlight">\((\sigma = \sqrt{\sigma^2}\)</span>)</p></li>
+<li><p>Formula: <span class="math notranslate nohighlight">\(\sigma = \sqrt{\frac{\sum_{i=1}^n (x_i-\bar{x})^2}{n}}\)</span></p></li>
 <li><p>Activity: Calculate the standard deviation for ‘quality’.</p></li>
 </ul>
 <div class="cell docutils container">
@@ -1286,8 +1291,10 @@ stats.mode(covid_datanew[&#39;new_cases&#39;])[0][0]: Accesses the first element
 </div>
 </div>
 </section>
-<section id="why-would-there-be-a-difference-in-the-variance-and-standard-deviation-between-the-two-different-methods">
-<h3><strong>Why would there be a difference in the variance and standard deviation between the two different methods?</strong><a class="headerlink" href="#why-would-there-be-a-difference-in-the-variance-and-standard-deviation-between-the-two-different-methods" title="Permalink to this heading">#</a></h3>
+<section id="why-would-there-be-a-difference-in-the-variance-and-standard-deviation-between-numpy-and-pandas">
+<h3><strong>Why would there be a difference in the variance and standard deviation between NumPy and Pandas?</strong><a class="headerlink" href="#why-would-there-be-a-difference-in-the-variance-and-standard-deviation-between-numpy-and-pandas" title="Permalink to this heading">#</a></h3>
+<p>The difference between the numpy var and pandas var methods are not dependent on the range of the data but on the degrees of freedom (ddof) set by package. pandas sets ddof=1 (unbiased estimator) while numpy sets ddof = 0 (mle).
+RE: <a class="reference external" href="https://stackoverflow.com/questions/62938495/difference-between-numpy-var-and-pandas-var">https://stackoverflow.com/questions/62938495/difference-between-numpy-var-and-pandas-var</a></p>
 <p><strong>Max and Min Range</strong></p>
 <p>The range has a significant role in describing the variability of a data set, as long as there are no outliers. An outlier is an extreme high or low value that stands alone from the other values. If an outlier exist, the value of the range by itself can be misleading.</p>
 <div class="cell docutils container">
@@ -1457,7 +1464,7 @@ Interquartile Range: 3642.0
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basic-summary-statistics-in-python">3. Basic (Summary) Statistics in Python</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#setup-for-activities">Setup for Activities</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#in-the-above-example-we-used-a-numeric-column-in-order-to-display-the-mode-could-you-use-a-non-numeric-column">In the above example we used a numeric column in order to display the mode? <strong>Could you use a non-numeric column?</strong></a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-would-there-be-a-difference-in-the-variance-and-standard-deviation-between-the-two-different-methods"><strong>Why would there be a difference in the variance and standard deviation between the two different methods?</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-would-there-be-a-difference-in-the-variance-and-standard-deviation-between-numpy-and-pandas"><strong>Why would there be a difference in the variance and standard deviation between NumPy and Pandas?</strong></a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#why-are-quartiles-and-interquartile-range-important">Why are Quartiles and Interquartile Range Important?</a></li>
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-hands-on"><strong>Activity - Hands-On</strong></a><ul class="nav section-nav flex-column">
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources"><strong>Additional Resources</strong></a></li>
