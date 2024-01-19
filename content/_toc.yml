@@ -54,13 +54,29 @@ parts:
         title: "Day 12 - Solution"
       - file: Week_03/Lesson_13.ipynb
         title: "Day 13 - Handling Missing Data in Python"
+      - file: Week_03/Lesson_14.ipynb
+        title: "Day 14 - Data Normalization and Scaling using Python"
       - file: Week_03/Lesson_15.ipynb
         title: "Day 15 - Encoding Categorical Data in Python"
+
+  - caption: "Week 4 - Data Preprocessing"
+    chapters:
+    - file: Week_04/004_Overview.md
+      title: "Week_04: Overview"
+#     sections:
+#     - file: Week_04/Lesson_16.ipynb
+#       title: "Day 16 - Introduction to EDA and Data Visualization in Python"
+#     - file: Week_04/Lesson_17.ipynb
+#       title: "Day 17 - Implementing Descriptive Statistics for EDA in Python"
+#     - file: Week_04/Lesson_18.ipynb
+#       title: "Day 18 - Visualization Techniques for Data Distribution in Python"
+#     - file: Week_04/Lesson_19.ipynb
+#       title: "Day 19 - Correlation Analysis using Python"
+#     - file: Week_04/Lesson_20.ipynb
+#       title: "Feature Selection and Importance in Python"
 
 #   - file: Week_02/Lesson_09.ipynb
 #     title: "Day 9 - Calculus - Integrals, Fundamental Theorems"
 #   - file: Week_02/Lesson_10.ipynb
 #     title: "Day 10 - Statistics and Probability - Concepts and Relevant Distributions"
 
-#     - file: Week_03/Lesson_14.ipynb
-#       title: "Day 14 - Data Normalization and Scaling using Python"
