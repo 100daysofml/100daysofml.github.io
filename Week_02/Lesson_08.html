@@ -69,7 +69,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/100days.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Course Structure" href="../Week_03/003_Overview.html" />
+    <link rel="next" title="Day 9: Calculus - Integrals, Fundamental Theorems, and Applications in Machine Learning" href="Lesson_09.html" />
     <link rel="prev" title="Day 7: Linear Algebra - Matrices and Matrix Operations" href="Lesson_07.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -229,6 +229,8 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lesson_09.html">Day 9 - Calculus - Integrals, Fundamental Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lesson_10.html">Day 10 - Statistics and Probability - Concepts and Relevant Distributions</a></li>
 </ul>
 </li>
 </ul>
@@ -241,10 +243,15 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12solution.html">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
 
 <li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_13.html">Day 13 - Handling Missing Data in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_14.html">Day 14 - Data Normalization and Scaling using Python</a></li>
 <li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_15.html">Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications</a></li>
 
 </ul>
 </li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_04/004_Overview.html">Week_04: Overview</a></li>
 </ul>
 
     </div>
@@ -489,6 +496,12 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-derivatives">Introduction to Derivatives</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-concept-of-derivatives">Mathematical Concept of Derivatives</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-derivatives">What are Derivatives?</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-rates-of-change">Understanding Rates of Change</a></li>
 </ul>
@@ -567,6 +580,14 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">Step 5: Display the Result</a></li>
 </ul>
 </li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-derivatives-a-graphical-view">Understanding Derivatives: A Graphical View</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-of-derivatives">Applications of Derivatives</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-derivatives-using-python">Implementing Derivatives using Python</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-formula">Understanding the Formula</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-and-implementation">Best Practices and Implementation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#further-resources"><strong>Further Resources</strong></a></li>
@@ -583,6 +604,31 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="day-8-calculus-derivatives-concept-and-applications">
 <h1>Day 8: Calculus - Derivatives, Concept and Applications<a class="headerlink" href="#day-8-calculus-derivatives-concept-and-applications" title="Permalink to this heading">#</a></h1>
+<section id="objective">
+<h2>Objective<a class="headerlink" href="#objective" title="Permalink to this heading">#</a></h2>
+<p>Enhance your understanding of derivatives in calculus, their mathematical essence, real-world significance, and practical applications in machine learning and AI. Learn how to implement and visualize derivatives using Python, and grasp their role in various ML/AI algorithms.</p>
+<section id="prerequisites">
+<h3>Prerequisites<a class="headerlink" href="#prerequisites" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Basic Python programming skills.</p></li>
+<li><p>Knowledge of algebra and pre-calculus concepts.</p></li>
+<li><p>Curiosity and willingness to explore mathematical ideas.</p></li>
+</ul>
+</section>
+<section id="introduction-to-derivatives">
+<h3>Introduction to Derivatives<a class="headerlink" href="#introduction-to-derivatives" title="Permalink to this heading">#</a></h3>
+<p>In calculus, a derivative represents how a function changes as its input changes. It’s akin to understanding not just your position while driving a car, but how your speed varies over time. In machine learning and AI, this concept of ‘rate of change’ is pivotal in optimizing models, making predictions, and understanding the relationship between variables.</p>
+</section>
+<section id="mathematical-concept-of-derivatives">
+<h3>Mathematical Concept of Derivatives<a class="headerlink" href="#mathematical-concept-of-derivatives" title="Permalink to this heading">#</a></h3>
+<p>Mathematically, the derivative of a function <span class="math notranslate nohighlight">\(f(x)\)</span> at a point <span class="math notranslate nohighlight">\(x = a\)</span> is defined as:</p>
+<div class="math notranslate nohighlight">
+\[
+f'(a) = \lim_{{h \to 0}} \frac{{f(a+h) - f(a)}}{h}
+\]</div>
+<p>This limit, if it exists, provides the instantaneous rate of change of the function at <span class="math notranslate nohighlight">\(x = a\)</span>, effectively giving the slope of the tangent line to the curve at that point.</p>
+</section>
+</section>
 <section id="what-are-derivatives">
 <h2>What are Derivatives?<a class="headerlink" href="#what-are-derivatives" title="Permalink to this heading">#</a></h2>
 <p>Derivatives are a fundamental concept in calculus that allow us to understand how a function changes as its input (independent variable) changes. They provide information about the rate of change, slope, and behavior of functions. In this lesson, we’ll explore the concept of derivatives, their importance, and how they are used in various fields, including machine learning.</p>
@@ -1044,10 +1090,144 @@ document.write(`
 </div>
 </section>
 </section>
+<section id="understanding-derivatives-a-graphical-view">
+<h3>Understanding Derivatives: A Graphical View<a class="headerlink" href="#understanding-derivatives-a-graphical-view" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Rate of Change</strong>: Derivatives denote how fast or slow a function is changing at any point, akin to a speedometer in a car.</p></li>
+<li><p><strong>Tangent Line</strong>: Graphically, the derivative at a point is the slope of the tangent line at that point on the function’s curve.</p></li>
+</ul>
+</section>
+<section id="applications-of-derivatives">
+<h3>Applications of Derivatives<a class="headerlink" href="#applications-of-derivatives" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>In Physics</strong>: Calculating velocity and acceleration from position-time graphs.</p></li>
+<li><p><strong>In Economics</strong>: Determining marginal cost and revenue, crucial for business decisions.</p></li>
+<li><p><strong>In Engineering</strong>: Designing systems that work under varying conditions and are efficient and safe.</p></li>
+<li><p><strong>In Machine Learning and AI</strong>:</p>
+<ul>
+<li><p><strong>Optimization</strong>: Derivatives are fundamental in optimizing cost functions in algorithms like Gradient Descent.</p></li>
+<li><p><strong>Training Neural Networks</strong>: The backpropagation algorithm, used in training neural networks, utilizes derivatives to compute gradients for weight updates.</p></li>
+<li><p><strong>Sensitivity Analysis</strong>: Derivatives help in understanding how changes in input affect the output, aiding in feature selection and model understanding.</p></li>
+<li><p><strong>Model Behavior Analysis</strong>: In algorithms like SVM, derivatives help formulate the optimization problem, and in decision trees, they can assist in node splitting and feature importance analysis.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="implementing-derivatives-using-python">
+<h3>Implementing Derivatives using Python<a class="headerlink" href="#implementing-derivatives-using-python" title="Permalink to this heading">#</a></h3>
+<p>Python’s sympy library allows symbolic mathematics, making it an ideal tool for working with derivatives.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 1: Import Necessary Libraries</span>
+
+<span class="kn">import</span> <span class="nn">sympy</span> <span class="k">as</span> <span class="nn">sp</span>
+<span class="kn">from</span> <span class="nn">sympy.abc</span> <span class="kn">import</span> <span class="n">x</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 2: Define the Function</span>
+
+<span class="c1"># Let&#39;s define a function, say $f(x) = x^2$.</span>
+<span class="n">function</span> <span class="o">=</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#### Step 3: Compute the Derivative</span>
+
+<span class="n">derivative</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">diff</span><span class="p">(</span><span class="n">function</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The derivative of f(x) = x^2 with respect to x is: </span><span class="si">{</span><span class="n">derivative</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The derivative of f(x) = x^2 with respect to x is: 2*x
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 4: Evaluate the Derivative at a Specific Point</span>
+
+<span class="c1"># To find the rate of change of $f(x) = x^2$ at $x = 2$:</span>
+
+<span class="n">value_at_x</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="n">rate_of_change</span> <span class="o">=</span> <span class="n">derivative</span><span class="o">.</span><span class="n">subs</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">value_at_x</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;The rate of change of f(x) = x^2 at x = </span><span class="si">{</span><span class="n">value_at_x</span><span class="si">}</span><span class="s2"> is: </span><span class="si">{</span><span class="n">rate_of_change</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The rate of change of f(x) = x^2 at x = 2 is: 4
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Step 5: Visualizing the Function and its Derivative</span>
+
+<span class="c1"># Visualize the function and its slope (derivative) at $x = 2$:</span>
+
+<span class="c1"># Define the function and derivative as lambdas</span>
+<span class="n">func_lambda</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">function</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
+<span class="n">deriv_lambda</span> <span class="o">=</span> <span class="n">sp</span><span class="o">.</span><span class="n">lambdify</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">derivative</span><span class="p">,</span> <span class="s1">&#39;numpy&#39;</span><span class="p">)</span>
+
+<span class="c1"># Generate x values</span>
+<span class="n">x_vals</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y_vals</span> <span class="o">=</span> <span class="n">func_lambda</span><span class="p">(</span><span class="n">x_vals</span><span class="p">)</span>
+<span class="n">tangent_line</span> <span class="o">=</span> <span class="n">deriv_lambda</span><span class="p">(</span><span class="n">value_at_x</span><span class="p">)</span> <span class="o">*</span> <span class="p">(</span><span class="n">x_vals</span> <span class="o">-</span> <span class="n">value_at_x</span><span class="p">)</span> <span class="o">+</span> <span class="n">func_lambda</span><span class="p">(</span><span class="n">value_at_x</span><span class="p">)</span>
+
+<span class="c1"># Plotting</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">y_vals</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;f(x) = x^2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_vals</span><span class="p">,</span> <span class="n">tangent_line</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Tangent at x = 2&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">value_at_x</span><span class="p">,</span> <span class="n">func_lambda</span><span class="p">(</span><span class="n">value_at_x</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span> <span class="c1"># point of tangency</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Function and Tangent Line&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;f(x)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8d6501e3bbf35285a84065d6d1224ffed14491ee46f317c4d402585b4be33563.png" src="../_images/8d6501e3bbf35285a84065d6d1224ffed14491ee46f317c4d402585b4be33563.png" />
+</div>
+</div>
+<section id="understanding-the-formula">
+<h4>Understanding the Formula<a class="headerlink" href="#understanding-the-formula" title="Permalink to this heading">#</a></h4>
+<p>The derivative formula encapsulates the slope of the tangent line at any point on a function’s curve. It’s a precise measurement of the function’s rate of change at that very point, distinguishing it from an average rate of change over an interval.</p>
+</section>
+<section id="best-practices-and-implementation">
+<h4>Best Practices and Implementation<a class="headerlink" href="#best-practices-and-implementation" title="Permalink to this heading">#</a></h4>
+<ul class="simple">
+<li><p><strong>Continuity Check</strong>: Ensure the function’s continuity around the point of interest.</p></li>
+<li><p><strong>Symbolic Computation</strong>: Use libraries like sympy for symbolic computation.</p></li>
+<li><p><strong>Graphical Validation</strong>: Plot your results to visualize and confirm the function and its derivative.</p></li>
+</ul>
+</section>
+<section id="conclusion">
+<h4>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this heading">#</a></h4>
+<p>Derivatives are fundamental in understanding and predicting changes across various domains. Their role in machine learning and AI is pivotal in optimizing models, understanding feature significance, and ensuring robust and interpretable models. Today’s lesson has imparted a thorough understanding of derivatives, their implementation, and visualization, marking a significant stride in your journey through calculus, machine learning, and AI.</p>
+</section>
+</section>
 </section>
 <section id="further-resources">
 <h2><strong>Further Resources</strong><a class="headerlink" href="#further-resources" title="Permalink to this heading">#</a></h2>
-<p><strong>will be updated by end of Week 2</strong></p>
+<p><a class="reference external" href="https://machinelearningmastery.com/a-gentle-introduction-to-partial-derivatives-and-gradient-vectors/">https://machinelearningmastery.com/a-gentle-introduction-to-partial-derivatives-and-gradient-vectors/</a></p>
+<p><a class="reference external" href="https://openstax.org/books/calculus-volume-1/pages/3-1-defining-the-derivative">https://openstax.org/books/calculus-volume-1/pages/3-1-defining-the-derivative</a></p>
+<p><a class="reference external" href="https://towardsai.net/p/machine-learning/mastering-derivatives-for-machine-learning">https://towardsai.net/p/machine-learning/mastering-derivatives-for-machine-learning</a></p>
+<p><a class="reference external" href="https://towardsdatascience.com/a-quick-introduction-to-derivatives-for-machine-learning-people-3cd913c5cf33">https://towardsdatascience.com/a-quick-introduction-to-derivatives-for-machine-learning-people-3cd913c5cf33</a></p>
 </section>
 </section>
 
@@ -1091,11 +1271,11 @@ document.write(`
       </div>
     </a>
     <a class="right-next"
-       href="../Week_03/003_Overview.html"
+       href="Lesson_09.html"
        title="next page">
       <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Course Structure</p>
+        <p class="prev-next-title">Day 9: Calculus - Integrals, Fundamental Theorems, and Applications in Machine Learning</p>
       </div>
       <i class="fa-solid fa-angle-right"></i>
     </a>
@@ -1115,6 +1295,12 @@ document.write(`
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#prerequisites">Prerequisites</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction-to-derivatives">Introduction to Derivatives</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-concept-of-derivatives">Mathematical Concept of Derivatives</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-are-derivatives">What are Derivatives?</a><ul class="nav section-nav flex-column">
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-rates-of-change">Understanding Rates of Change</a></li>
 </ul>
@@ -1191,6 +1377,14 @@ document.write(`
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id26">Step 3: Define Variables and Function</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id27">Step 4: Calculate the Derivative</a></li>
 <li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#id28">Step 5: Display the Result</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-derivatives-a-graphical-view">Understanding Derivatives: A Graphical View</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-of-derivatives">Applications of Derivatives</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-derivatives-using-python">Implementing Derivatives using Python</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-the-formula">Understanding the Formula</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-and-implementation">Best Practices and Implementation</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#conclusion">Conclusion</a></li>
 </ul>
 </li>
 </ul>
