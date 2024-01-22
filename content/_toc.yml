@@ -78,9 +78,3 @@ parts:
 #       title: "Day 19 - Correlation Analysis using Python"
 #     - file: Week_04/Lesson_20.ipynb
 #       title: "Feature Selection and Importance in Python"
-
-#   - file: Week_02/Lesson_09.ipynb
-#     title: "Day 9 - Calculus - Integrals, Fundamental Theorems"
-#   - file: Week_02/Lesson_10.ipynb
-#     title: "Day 10 - Statistics and Probability - Concepts and Relevant Distributions"
-
