@@ -67,9 +67,9 @@ parts:
     chapters:
     - file: Week_04/004_Overview.md
       title: "Week_04: Overview"
-#     sections:
-#     - file: Week_04/Lesson_16.ipynb
-#       title: "Day 16 - Introduction to EDA and Data Visualization in Python"
+      sections:
+      - file: Week_04/Lesson_16.ipynb
+        title: "Day 16 - Introduction to EDA and Data Visualization in Python"
 #     - file: Week_04/Lesson_17.ipynb
 #       title: "Day 17 - Implementing Descriptive Statistics for EDA in Python"
 #     - file: Week_04/Lesson_18.ipynb
