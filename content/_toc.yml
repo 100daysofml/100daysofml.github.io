@@ -72,9 +72,25 @@ parts:
         title: "Day 16 - Introduction to EDA and Data Visualization in Python"
       - file: Week_04/Lesson_17.ipynb
         title: "Day 17 - Implementing Descriptive Statistics for EDA in Python"
-#     - file: Week_04/Lesson_18.ipynb
-#       title: "Day 18 - Visualization Techniques for Data Distribution in Python"
-#     - file: Week_04/Lesson_19.ipynb
-#       title: "Day 19 - Correlation Analysis using Python"
+      - file: Week_04/Lesson_18.ipynb
+        title: "Day 18 - Visualization Techniques for Data Distribution in Python"
+      - file: Week_04/Lesson_19.ipynb
+        title: "Day 19 - Correlation Analysis using Python"
 #     - file: Week_04/Lesson_20.ipynb
-#       title: "Feature Selection and Importance in Python"
+#       title: "Day 20 -Feature Selection and Importance in Python"  
+
+# - caption: "Week 5: Supervised Learning - Regression"
+#  chapters:
+#  - file: Week_05/005_Overview.md
+#    title: "Week_05: Overview"
+#     sections:
+#     - file: Week_05/Lesson_21.ipynb
+#       title: "Day 21 - Introduction to Regression Analysis in Python"
+#     - file: Week_05/Lesson_22.ipynb
+#       title: "Day 22 - Implementing Multiple Linear Regression in Python"
+#     - file: Week_05/Lesson_23.ipynb
+#       title: "Advanced Regression Techniques - Polynomial, Lasso, and Ridge Regression"
+#     - file: Week_05/Lesson_24.ipynb
+#       title: "Day 24 - Regression Model Evaluation Metrics in Python"
+#     - file: Week_05/Lesson_25.ipynb
+#       title: "Addressing Overfitting and Underfitting in Regression Models"
