@@ -1,0 +1,995 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Day 18: In-Depth Analysis of Histograms and Box Plots in Python &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_04/Lesson_18';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_04/Lesson_18.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Day 19: Correlation Analysis using Python" href="Lesson_19.html" />
+    <link rel="prev" title="Day 17: In-Depth EDA and Central Tendency in Python" href="Lesson_17.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    100 Days of Machine Learning Challenge
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Daily Challenge Curriculum</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Daily Curriculum Resources</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_01/001_Overview.html">Week_01: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_02/002_Overview.html">Week_02: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_09.html">Day 9 - Calculus - Integrals, Fundamental Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_10.html">Day 10 - Statistics and Probability - Concepts and Relevant Distributions</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_03/003_Overview.html">Week_03: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_11.html">Day 11 - Introduction to Data Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12.html">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12solution.html">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_13.html">Day 13 - Handling Missing Data in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_14.html">Day 14 - Data Normalization and Scaling using Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_15.html">Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications</a></li>
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4 - Data Preprocessing</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="004_Overview.html">Week_04: Overview</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Lesson_16.html">Day 16 - Introduction to EDA and Data Visualization in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lesson_17.html">Day 17 - Implementing Descriptive Statistics for EDA in Python</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Day 18 - Visualization Techniques for Data Distribution in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lesson_19.html">Day 19: Correlation Analysis using Python</a></li>
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-4iw5ztbi/lab/workspaces/auto-e/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_04/Lesson_18.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/github/100daysofml/100daysofml.github.io/blob/master/Week_04/Lesson_18.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_04/Lesson_18.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_04/Lesson_18.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Day 18: In-Depth Analysis of Histograms and Box Plots in Python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mastering-histograms">1. Mastering Histograms</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#detailed-interpretation-of-histograms">1.1 Detailed Interpretation of Histograms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-implementation-creating-a-detailed-histogram">1.2 Python Implementation: Creating a Detailed Histogram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-for-creating-histograms">1.3 Best Practices for Creating Histograms</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-box-plots-in-depth">2. Understanding Box Plots in Depth</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#detailed-interpretation-of-box-plots">2.1 Detailed Interpretation of Box Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-implementation-creating-a-detailed-box-plot">2.2 Python Implementation: Creating a Detailed Box Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-for-box-plots">2.3 Best Practices for Box Plots</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hands-on-activity-advanced-analysis-of-wine-quality-dataset">3. Hands-on Activity: Advanced Analysis of Wine Quality Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-code-for-advanced-analysis">Python Code for Advanced Analysis:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework-assignment-comprehensive-distribution-analysis">4. Homework Assignment: Comprehensive Distribution Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#task">Task:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#report">Report:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-solution">Python Solution:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-calculate-descriptive-statistics">Step 1: Calculate Descriptive Statistics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-create-detailed-histograms-and-box-plots">Step 2: Create Detailed Histograms and Box Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-in-depth-interpretation">Step 3: In-depth Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-compile-report">Step 4: Compile Report</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources-in-depth-analysis-of-histograms-and-box-plots-in-python">**Additional Resources (In-Depth Analysis of Histograms and Box Plots in Python)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="day-18-in-depth-analysis-of-histograms-and-box-plots-in-python">
+<h1>Day 18: In-Depth Analysis of Histograms and Box Plots in Python<a class="headerlink" href="#day-18-in-depth-analysis-of-histograms-and-box-plots-in-python" title="Permalink to this heading">#</a></h1>
+<p>In this expanded lesson, we’ll delve deeply into histograms and box plots, two fundamental visualization tools for exploratory data analysis. We’ll explore their construction, interpretation, and application in Python, ensuring a comprehensive understanding necessary for making critical decisions from data visualizations.</p>
+<section id="mastering-histograms">
+<h2>1. Mastering Histograms<a class="headerlink" href="#mastering-histograms" title="Permalink to this heading">#</a></h2>
+<p>Histograms are a type of bar chart that represent the distribution of numerical data by dividing the data into ‘bins’ of equal width and plotting the number of data points that fall into each bin.</p>
+<section id="detailed-interpretation-of-histograms">
+<h3>1.1 Detailed Interpretation of Histograms<a class="headerlink" href="#detailed-interpretation-of-histograms" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Shape Analysis:</strong></p>
+<ul>
+<li><p><strong>Symmetry:</strong> Symmetric histograms represent data that are evenly distributed around a central value.</p></li>
+<li><p><strong>Skewness:</strong> Asymmetry in the histogram (right-skewed or left-skewed) indicates that the data are not evenly distributed. Right-skewed (positive skew) means the tail is longer on the right, left-skewed (negative skew) means the tail is longer on the left.</p></li>
+<li><p><strong>Modality:</strong> The number of peaks. Unimodal has one peak, bimodal has two, and multimodal has more than two.</p></li>
+</ul>
+</li>
+<li><p><strong>Bin Width:</strong></p>
+<ul>
+<li><p>The width of the bins can significantly affect the histogram’s shape and the insights you can draw from it.</p></li>
+<li><p><strong>Narrow Bins:</strong> Can make the histogram look more ‘spiky’ and detailed but can also introduce noise.</p></li>
+<li><p><strong>Wide Bins:</strong> Tend to smooth out the noise but can hide important details in the data distribution.</p></li>
+</ul>
+</li>
+<li><p><strong>Frequency vs Density:</strong></p>
+<ul>
+<li><p><strong>Frequency Histogram:</strong> The height of each bar shows the number of data points in each bin.</p></li>
+<li><p><strong>Density Histogram:</strong> The area of each bar represents the proportion of the data that falls into each bin, and the total area of all the bars sums to 1.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="python-implementation-creating-a-detailed-histogram">
+<h3>1.2 Python Implementation: Creating a Detailed Histogram<a class="headerlink" href="#python-implementation-creating-a-detailed-histogram" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Sample data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">valueN</span><span class="p">]</span>
+
+<span class="c1"># Creating a frequency histogram</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Frequency Histogram&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Creating a density histogram</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Density Histogram&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+</pre></div>
+</div>
+</section>
+<section id="best-practices-for-creating-histograms">
+<h3>1.3 Best Practices for Creating Histograms<a class="headerlink" href="#best-practices-for-creating-histograms" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Do:</strong></p>
+<ul>
+<li><p>Choose the number of bins wisely (use methods like the Freedman-Diaconis rule if necessary).</p></li>
+<li><p>Clearly label your axes and provide a meaningful title.</p></li>
+<li><p>Use a density histogram when comparing distributions with different numbers of observations.</p></li>
+</ul>
+</li>
+<li><p><strong>Don’t:</strong></p>
+<ul>
+<li><p>Disregard the effect of bin width on the histogram’s appearance and interpretability.</p></li>
+<li><p>Ignore the tails of the distribution, which can contain valuable information about outliers.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="understanding-box-plots-in-depth">
+<h2>2. Understanding Box Plots in Depth<a class="headerlink" href="#understanding-box-plots-in-depth" title="Permalink to this heading">#</a></h2>
+<p>Box plots, or box-and-whisker plots, concisely depict the distribution of numerical data through their quartiles, highlighting the median and outliers.</p>
+<section id="detailed-interpretation-of-box-plots">
+<h3>2.1 Detailed Interpretation of Box Plots<a class="headerlink" href="#detailed-interpretation-of-box-plots" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Central Box:</strong> The box spans from the first quartile (Q1) to the third quartile (Q3), representing the middle 50% of the data (the interquartile range, IQR).</p></li>
+<li><p><strong>Median Line:</strong> The line inside the box represents the median (second quartile, Q2) of the dataset.</p></li>
+<li><p><strong>Whiskers:</strong> Extend from the quartiles to the minimum and maximum values that are within 1.5 * IQR. They provide a visual representation of the range and variability outside the upper and lower quartiles.</p></li>
+<li><p><strong>Outliers:</strong> Data points beyond the whiskers are considered outliers and are often plotted as individual points.</p></li>
+</ul>
+</section>
+<section id="python-implementation-creating-a-detailed-box-plot">
+<h3>2.2 Python Implementation: Creating a Detailed Box Plot<a class="headerlink" href="#python-implementation-creating-a-detailed-box-plot" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Sample data</span>
+<span class="n">data</span> <span class="o">=</span> <span class="p">[</span><span class="n">value1</span><span class="p">,</span> <span class="n">value2</span><span class="p">,</span> <span class="o">...</span><span class="p">,</span> <span class="n">valueN</span><span class="p">]</span>
+
+<span class="c1"># Creating a box plot</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Detailed Box Plot&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+</pre></div>
+</div>
+</section>
+<section id="best-practices-for-box-plots">
+<h3>2.3 Best Practices for Box Plots<a class="headerlink" href="#best-practices-for-box-plots" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Do:</strong></p>
+<ul>
+<li><p>Use box plots to visually compare distributions and highlight outliers.</p></li>
+<li><p>Consider log transformation if data is highly skewed.</p></li>
+<li><p>Plot side-by-side box plots for comparative analysis of different groups.</p></li>
+</ul>
+</li>
+<li><p><strong>Don’t:</strong></p>
+<ul>
+<li><p>Ignore the outliers. They often contain valuable information or indicate data issues.</p></li>
+<li><p>Rely solely on box plots for distribution analysis. Combine them with histograms for a more comprehensive view.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+</section>
+<section id="hands-on-activity-advanced-analysis-of-wine-quality-dataset">
+<h2>3. Hands-on Activity: Advanced Analysis of Wine Quality Dataset<a class="headerlink" href="#hands-on-activity-advanced-analysis-of-wine-quality-dataset" title="Permalink to this heading">#</a></h2>
+<section id="objective">
+<h3>Objective:<a class="headerlink" href="#objective" title="Permalink to this heading">#</a></h3>
+<p>Conduct an advanced analysis of the distribution of <code class="docutils literal notranslate"><span class="pre">alcohol</span></code>, <code class="docutils literal notranslate"><span class="pre">pH</span></code>, and <code class="docutils literal notranslate"><span class="pre">residual</span> <span class="pre">sugar</span></code> in the Wine Quality Dataset, focusing on interpreting histograms and box plots in detail.</p>
+</section>
+<section id="python-code-for-advanced-analysis">
+<h3>Python Code for Advanced Analysis:<a class="headerlink" href="#python-code-for-advanced-analysis" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Load the dataset</span>
+<span class="n">wine_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;wine_quality.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># List of features to analyze</span>
+<span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;alcohol&#39;</span><span class="p">,</span> <span class="s1">&#39;pH&#39;</span><span class="p">,</span> <span class="s1">&#39;residual sugar&#39;</span><span class="p">]</span>
+
+<span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
+    <span class="c1"># Advanced histogram analysis</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">wine_data</span><span class="p">[</span><span class="n">feature</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Density Histogram of </span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Density&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+    
+    <span class="c1"># Advanced box plot analysis</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">wine_data</span><span class="p">[</span><span class="n">feature</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Detailed Box Plot of </span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="n">feature</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span> 
+</pre></div>
+</div>
+</section>
+</section>
+<section id="homework-assignment-comprehensive-distribution-analysis">
+<h2>4. Homework Assignment: Comprehensive Distribution Analysis<a class="headerlink" href="#homework-assignment-comprehensive-distribution-analysis" title="Permalink to this heading">#</a></h2>
+<section id="task">
+<h3>Task:<a class="headerlink" href="#task" title="Permalink to this heading">#</a></h3>
+<p>Perform an in-depth analysis of <code class="docutils literal notranslate"><span class="pre">total</span> <span class="pre">sulfur</span> <span class="pre">dioxide</span></code>, <code class="docutils literal notranslate"><span class="pre">fixed</span> <span class="pre">acidity</span></code>, and <code class="docutils literal notranslate"><span class="pre">quality</span></code> in the Wine Quality Dataset using advanced histograms and box plots.</p>
+</section>
+<section id="requirements">
+<h3>Requirements:<a class="headerlink" href="#requirements" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>Calculate descriptive statistics (mean, median, mode, variance, and standard deviation).</p></li>
+<li><p>Create detailed histograms and box plots for each variable.</p></li>
+<li><p>Provide an in-depth interpretation of the visualizations, focusing on the shape of the distribution, central tendency, dispersion, and outliers.</p></li>
+<li><p>Dataset: <a class="github reference external" href="https://github.com/100daysofml/100daysofml_notebooks/blob/main/content/Week_04/wine_quality.csv">100daysofml/100daysofml_notebooks</a></p></li>
+</ul>
+</section>
+<section id="report">
+<h3>Report:<a class="headerlink" href="#report" title="Permalink to this heading">#</a></h3>
+<p>Compile your calculations, visualizations, and interpretations into a structured and well-documented report. Highlight the implications of the distribution of these variables on wine quality.</p>
+<p>This expanded lesson ensures a deep understanding of histograms and box plots, enabling you to extract and communicate meaningful insights from data distributions effectively. The focus on best practices and detailed analysis enhances your data visualization skills, crucial for exploratory data analysis.</p>
+<p>For the homework assignment, let’s perform a comprehensive distribution analysis on the variables <code class="docutils literal notranslate"><span class="pre">total</span> <span class="pre">sulfur</span> <span class="pre">dioxide</span></code>, <code class="docutils literal notranslate"><span class="pre">fixed</span> <span class="pre">acidity</span></code>, and <code class="docutils literal notranslate"><span class="pre">quality</span></code> from the Wine Quality Dataset. We will calculate descriptive statistics, create histograms and box plots, and provide an in-depth interpretation of the visualizations.</p>
+</section>
+</section>
+<section id="python-solution">
+<h2>Python Solution:<a class="headerlink" href="#python-solution" title="Permalink to this heading">#</a></h2>
+<section id="step-1-calculate-descriptive-statistics">
+<h3>Step 1: Calculate Descriptive Statistics<a class="headerlink" href="#step-1-calculate-descriptive-statistics" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Load the dataset</span>
+<span class="n">wine_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;wine_quality.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># List of features to analyze</span>
+<span class="n">features</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;total sulfur dioxide&#39;</span><span class="p">,</span> <span class="s1">&#39;fixed acidity&#39;</span><span class="p">,</span> <span class="s1">&#39;quality&#39;</span><span class="p">]</span>
+
+<span class="c1"># Calculate descriptive statistics</span>
+<span class="n">descriptive_stats</span> <span class="o">=</span> <span class="n">wine_data</span><span class="p">[</span><span class="n">features</span><span class="p">]</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+
+<span class="c1"># Include variance and mode</span>
+<span class="n">descriptive_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;variance&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wine_data</span><span class="p">[</span><span class="n">features</span><span class="p">]</span><span class="o">.</span><span class="n">var</span><span class="p">()</span>
+<span class="n">descriptive_stats</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mode&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">wine_data</span><span class="p">[</span><span class="n">features</span><span class="p">]</span><span class="o">.</span><span class="n">mode</span><span class="p">()</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">descriptive_stats</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="step-2-create-detailed-histograms-and-box-plots">
+<h3>Step 2: Create Detailed Histograms and Box Plots<a class="headerlink" href="#step-2-create-detailed-histograms-and-box-plots" title="Permalink to this heading">#</a></h3>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+
+<span class="c1"># Plotting</span>
+<span class="k">for</span> <span class="n">feature</span> <span class="ow">in</span> <span class="n">features</span><span class="p">:</span>
+    <span class="c1"># Histogram</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">histplot</span><span class="p">(</span><span class="n">wine_data</span><span class="p">[</span><span class="n">feature</span><span class="p">],</span> <span class="n">kde</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Histogram of </span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Boxplot</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="n">wine_data</span><span class="p">[</span><span class="n">feature</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Boxplot of </span><span class="si">{</span><span class="n">feature</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="step-3-in-depth-interpretation">
+<h3>Step 3: In-depth Interpretation<a class="headerlink" href="#step-3-in-depth-interpretation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Total Sulfur Dioxide:</strong></p>
+<ul>
+<li><p><strong>Histogram:</strong> Look for the spread, central tendency, and skewness. Are there any potential outliers?</p></li>
+<li><p><strong>Boxplot:</strong> Observe the IQR, median, and any points that fall beyond the whiskers, which are considered outliers.</p></li>
+</ul>
+</li>
+<li><p><strong>Fixed Acidity:</strong></p>
+<ul>
+<li><p><strong>Histogram:</strong> Examine the distribution’s shape, which indicates the acidity level’s range in wines.</p></li>
+<li><p><strong>Boxplot:</strong> Assess the spread and central tendency. The presence of outliers can indicate wines with unusually high or low acidity levels.</p></li>
+</ul>
+</li>
+<li><p><strong>Quality:</strong></p>
+<ul>
+<li><p><strong>Histogram:</strong> This will show the frequency of different quality ratings in the dataset.</p></li>
+<li><p><strong>Boxplot:</strong> Useful for understanding the spread of ratings and identifying any outliers in quality scores.</p></li>
+</ul>
+</li>
+</ul>
+</section>
+<section id="step-4-compile-report">
+<h3>Step 4: Compile Report<a class="headerlink" href="#step-4-compile-report" title="Permalink to this heading">#</a></h3>
+<p>In your report, include the following sections:</p>
+<ol class="arabic simple">
+<li><p><strong>Introduction:</strong></p>
+<ul class="simple">
+<li><p>Briefly introduce the dataset and the purpose of the analysis.</p></li>
+</ul>
+</li>
+<li><p><strong>Methodology:</strong></p>
+<ul class="simple">
+<li><p>Describe how you calculated the descriptive statistics and created the visualizations.</p></li>
+</ul>
+</li>
+<li><p><strong>Results:</strong></p>
+<ul class="simple">
+<li><p>Present the descriptive statistics.</p></li>
+<li><p>Include the histograms and box plots.</p></li>
+</ul>
+</li>
+<li><p><strong>Analysis:</strong></p>
+<ul class="simple">
+<li><p>Provide your interpretation of the histograms and box plots for each variable.</p></li>
+<li><p>Discuss the shape of the distribution, central tendency, dispersion, and any outliers for each variable.</p></li>
+<li><p>Highlight any interesting findings or patterns.</p></li>
+</ul>
+</li>
+<li><p><strong>Conclusion:</strong></p>
+<ul class="simple">
+<li><p>Summarize the key insights gained from the analysis.</p></li>
+<li><p>Discuss the potential implications of the distribution of these variables on wine quality.</p></li>
+</ul>
+</li>
+<li><p><strong>Appendix:</strong></p>
+<ul class="simple">
+<li><p>Include the Python code used for the analysis.</p></li>
+</ul>
+</li>
+</ol>
+<section id="additional-resources-in-depth-analysis-of-histograms-and-box-plots-in-python">
+<h4>**Additional Resources (In-Depth Analysis of Histograms and Box Plots in Python)<a class="headerlink" href="#additional-resources-in-depth-analysis-of-histograms-and-box-plots-in-python" title="Permalink to this heading">#</a></h4>
+<p><a class="reference external" href="https://realpython.com/python-histograms/">https://realpython.com/python-histograms/</a></p>
+<p><a class="reference external" href="https://plotly.com/python/box-plots/">https://plotly.com/python/box-plots/</a></p>
+<p><a class="reference external" href="https://www.machinelearningplus.com/plots/python-boxplot/">https://www.machinelearningplus.com/plots/python-boxplot/</a></p>
+<p><a class="reference external" href="https://www.oreilly.com/library/view/python-data-science/9781491912126/ch04.html">https://www.oreilly.com/library/view/python-data-science/9781491912126/ch04.html</a></p>
+<p><a class="reference external" href="https://mode.com/python-tutorial/python-histograms-boxplots-and-distributions">https://mode.com/python-tutorial/python-histograms-boxplots-and-distributions</a></p>
+</section>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_04"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson_17.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Day 17: In-Depth EDA and Central Tendency in Python</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lesson_19.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Day 19: Correlation Analysis using Python</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mastering-histograms">1. Mastering Histograms</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#detailed-interpretation-of-histograms">1.1 Detailed Interpretation of Histograms</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-implementation-creating-a-detailed-histogram">1.2 Python Implementation: Creating a Detailed Histogram</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-for-creating-histograms">1.3 Best Practices for Creating Histograms</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-box-plots-in-depth">2. Understanding Box Plots in Depth</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#detailed-interpretation-of-box-plots">2.1 Detailed Interpretation of Box Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-implementation-creating-a-detailed-box-plot">2.2 Python Implementation: Creating a Detailed Box Plot</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-for-box-plots">2.3 Best Practices for Box Plots</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hands-on-activity-advanced-analysis-of-wine-quality-dataset">3. Hands-on Activity: Advanced Analysis of Wine Quality Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#objective">Objective:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-code-for-advanced-analysis">Python Code for Advanced Analysis:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#homework-assignment-comprehensive-distribution-analysis">4. Homework Assignment: Comprehensive Distribution Analysis</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#task">Task:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#requirements">Requirements:</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#report">Report:</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#python-solution">Python Solution:</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-calculate-descriptive-statistics">Step 1: Calculate Descriptive Statistics</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-create-detailed-histograms-and-box-plots">Step 2: Create Detailed Histograms and Box Plots</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-in-depth-interpretation">Step 3: In-depth Interpretation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-4-compile-report">Step 4: Compile Report</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources-in-depth-analysis-of-histograms-and-box-plots-in-python">**Additional Resources (In-Depth Analysis of Histograms and Box Plots in Python)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
