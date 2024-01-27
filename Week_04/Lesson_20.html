@@ -1,0 +1,1437 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Day 20: Advanced Feature Selection and Importance in Python - With Iris Dataset &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
+  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_04/Lesson_20';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_04/Lesson_20.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Course Structure" href="../Week_05/005_Overview.html" />
+    <link rel="prev" title="Day 19: Correlation Analysis using Python" href="Lesson_19.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+
+  <header>
+  
+    <div class="bd-header navbar navbar-expand-lg bd-navbar">
+    </div>
+  
+  </header>
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+        
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    100 Days of Machine Learning Challenge
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Daily Challenge Curriculum</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Daily Curriculum Resources</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_01/001_Overview.html">Week_01: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_02/002_Overview.html">Week_02: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_09.html">Day 9 - Calculus - Integrals, Fundamental Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_10.html">Day 10 - Statistics and Probability - Concepts and Relevant Distributions</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_03/003_Overview.html">Week_03: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_11.html">Day 11 - Introduction to Data Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12.html">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12solution.html">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_13.html">Day 13 - Handling Missing Data in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_14.html">Day 14 - Data Normalization and Scaling using Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_15.html">Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications</a></li>
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4 - Data Preprocessing</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="004_Overview.html">Week_04: Overview</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Lesson_16.html">Day 16 - Introduction to EDA and Data Visualization in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lesson_17.html">Day 17 - Implementing Descriptive Statistics for EDA in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lesson_18.html">Day 18 - Visualization Techniques for Data Distribution in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lesson_19.html">Day 19: Correlation Analysis using Python</a></li>
+
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Day 20: Advanced Feature Selection and Importance in Python - With Iris Dataset</a></li>
+
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5: Supervised Learning - Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../Week_05/005_Overview.html">Course Structure</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-4iw5ztbi/lab/workspaces/auto-e/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_04/Lesson_20.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/github/100daysofml/100daysofml.github.io/blob/master/Week_04/Lesson_20.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_04/Lesson_20.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_04/Lesson_20.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Day 20: Advanced Feature Selection and Importance in Python - With Iris Dataset</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 20: Advanced Feature Selection and Importance in Python - With Iris Dataset</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-advanced-introduction-to-feature-selection">Part 1: Advanced Introduction to Feature Selection</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy">Entropy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formula-entropy-s-sum-i-1-n-p-i-log-2-p-i"><strong>Formula:</strong> <span class="math notranslate nohighlight">\(Entropy(S) = -\sum_{i=1}^{n} p_i \log_2 p_i\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#information-gain">Information Gain</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formula-informationgain-s-a-entropy-s-sum-v-in-a-frac-s-v-s-entropy-s-v"><strong>Formula:</strong> <span class="math notranslate nohighlight">\(InformationGain(S, A) = Entropy(S) - \sum_{v \in A} \frac{|S_v|}{|S|} Entropy(S_v)\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Interpretation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gini-impurity-vs-entropy">Gini Impurity vs Entropy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gini-impurity">Gini Impurity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Entropy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-which">When to Use Which?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-1">Activity #1:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-conceptual-understanding">Step 1: Conceptual Understanding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-python-code-implementation">Step 2: Python Code Implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-analytical-thinking">Step 3: Analytical Thinking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-advanced-techniques-for-feature-selection-30-minutes">Part 2: Advanced Techniques for Feature Selection (30 minutes)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-methods">Filter Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mutual-information">Mutual Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">Best Practices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#do-s">Do’s</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#don-ts">Don’ts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-implementation"><strong>Python Implementation:</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#interpret-the-results-carefully-considering-the-nature-of-your-data-and-the-requirements-of-your-analysis">Interpret the results carefully, considering the nature of your data and the requirements of your analysis.`</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-f-test-in-detail">ANOVA F-test in Detail</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concept">Concept</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formula">Formula</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Best Practices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Do’s</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Don’ts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><strong>Python Implementation:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrapper-methods-stepwise-regression">Wrapper Methods: Stepwise Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Concept</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-pseudo-code-example">Python Pseudo Code Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-do-s-and-don-ts">Best Practices, Do’s, and Don’ts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embedded-methods-random-forest-feature-importance">Embedded Methods: Random Forest Feature Importance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Concept</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9"><strong>Python Implementation:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Best Practices, Do’s, and Don’ts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-analytical-thinking-with-python-implementation">Step 3: Analytical Thinking with Python Implementation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy-assessment">1. Accuracy Assessment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance-analysis">2. Feature Importance Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-making">3. Decision Making</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#further-exploration">4. Further Exploration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources-advanced-feature-selection"><strong>Additional Resources (Advanced Feature Selection):</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="day-20-advanced-feature-selection-and-importance-in-python-with-iris-dataset">
+<h1>Day 20: Advanced Feature Selection and Importance in Python - With Iris Dataset<a class="headerlink" href="#day-20-advanced-feature-selection-and-importance-in-python-with-iris-dataset" title="Permalink to this heading">#</a></h1>
+<p>In this lesson, we’ll explore advanced feature selection techniques and delve into understanding feature importance in depth. We will use the Iris dataset for practical demonstrations, ensuring that concepts are not only theoretically sound but also practically applicable.</p>
+<section id="objectives">
+<h2>Objectives:<a class="headerlink" href="#objectives" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Advanced Understanding of Feature Selection:</strong> Deepen your understanding of the significance of feature selection in enhancing model performance and interpretability.</p></li>
+<li><p><strong>Explore Advanced Techniques:</strong> Learn and apply various sophisticated techniques for feature selection and evaluate feature importance in detail.</p></li>
+<li><p><strong>Hands-on Activities:</strong> Implement advanced feature selection techniques using the Iris dataset to gain practical experience.</p></li>
+<li><p><strong>Comprehensive Homework Assignment:</strong> Test your understanding and skills on a new dataset, applying advanced feature selection techniques and documenting your findings comprehensively.</p></li>
+</ol>
+<ul class="simple">
+<li><p><strong>Dataset:</strong> <a class="github reference external" href="https://github.com/100daysofml/100daysofml.github.io/blob/main/content/Week_04/Iris.csv">100daysofml/100daysofml.github.io</a></p></li>
+</ul>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="part-1-advanced-introduction-to-feature-selection">
+<h1>Part 1: Advanced Introduction to Feature Selection<a class="headerlink" href="#part-1-advanced-introduction-to-feature-selection" title="Permalink to this heading">#</a></h1>
+<p>Feature selection stands at the heart of model building, not merely as a technique to enhance model performance but as a crucial process to deepen your understanding of the underlying data, reduce model complexity, and elevate the interpretability of the model. Let’s delve deeper into the key concepts of Entropy, Information Gain, and Gini Impurity, which are fundamental in understanding feature selection, especially in the context of decision trees and information theory.</p>
+<section id="entropy">
+<h2>Entropy<a class="headerlink" href="#entropy" title="Permalink to this heading">#</a></h2>
+<p>Entropy, in the context of information theory and machine learning, is a measure of the uncertainty or randomness in a dataset. It’s a core concept in decision trees for feature selection.</p>
+<section id="formula-entropy-s-sum-i-1-n-p-i-log-2-p-i">
+<h3><strong>Formula:</strong> <span class="math notranslate nohighlight">\(Entropy(S) = -\sum_{i=1}^{n} p_i \log_2 p_i\)</span><a class="headerlink" href="#formula-entropy-s-sum-i-1-n-p-i-log-2-p-i" title="Permalink to this heading">#</a></h3>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(Entropy(S)\)</span> is the entropy of the dataset <span class="math notranslate nohighlight">\(S\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sum_{i=1}^{n}\)</span> denotes the summation over all classes <span class="math notranslate nohighlight">\(i\)</span> in the dataset.</p></li>
+<li><p><span class="math notranslate nohighlight">\(p_i\)</span> represents the proportion (frequency or probability) of class <span class="math notranslate nohighlight">\(i\)</span> in the dataset <span class="math notranslate nohighlight">\(S\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\log_2 p_i\)</span> is the logarithm base 2 of <span class="math notranslate nohighlight">\(p_i\)</span>, indicating the contribution of class <span class="math notranslate nohighlight">\(i\)</span> to the entropy of the dataset.</p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span> is the total number of classes.</p></li>
+</ul>
+</section>
+<section id="interpretation">
+<h3>Interpretation<a class="headerlink" href="#interpretation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Higher Entropy:</strong> Indicates more randomness or unpredictability in the dataset.</p></li>
+<li><p><strong>Lower Entropy:</strong> Indicates less randomness or more order in the dataset.</p></li>
+</ul>
+</section>
+</section>
+<section id="information-gain">
+<h2>Information Gain<a class="headerlink" href="#information-gain" title="Permalink to this heading">#</a></h2>
+<p>Information Gain is the measure of the difference in entropy from before to after the set SS is split on an attribute AA. It’s used in the construction of decision trees.</p>
+<section id="formula-informationgain-s-a-entropy-s-sum-v-in-a-frac-s-v-s-entropy-s-v">
+<h3><strong>Formula:</strong> <span class="math notranslate nohighlight">\(InformationGain(S, A) = Entropy(S) - \sum_{v \in A} \frac{|S_v|}{|S|} Entropy(S_v)\)</span><a class="headerlink" href="#formula-informationgain-s-a-entropy-s-sum-v-in-a-frac-s-v-s-entropy-s-v" title="Permalink to this heading">#</a></h3>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(InformationGain(S, A)\)</span> is the information gain from splitting set <span class="math notranslate nohighlight">\(S\)</span> based on attribute <span class="math notranslate nohighlight">\(A\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Entropy(S)\)</span> is the entropy of the entire set <span class="math notranslate nohighlight">\(S\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sum\)</span> denotes the summation over all unique values <span class="math notranslate nohighlight">\(v\)</span> of attribute <span class="math notranslate nohighlight">\(A\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(|S_v|\)</span> is the size of the subset <span class="math notranslate nohighlight">\(S_v\)</span> which contains all elements in <span class="math notranslate nohighlight">\(S\)</span> for which attribute <span class="math notranslate nohighlight">\(A\)</span> has value <span class="math notranslate nohighlight">\(v\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(|S|\)</span> is the size of the entire set <span class="math notranslate nohighlight">\(S\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Entropy(S_v)\)</span> is the entropy of the subset <span class="math notranslate nohighlight">\(S_v\)</span>.</p></li>
+</ul>
+</section>
+<section id="id1">
+<h3>Interpretation<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Higher Information Gain:</strong> Indicates that splitting the dataset on attribute <span class="math notranslate nohighlight">\(AA\)</span> provides a more defined, ordered subset.</p></li>
+<li><p><strong>Lower Information Gain:</strong> Indicates that the attribute AA does not bring much order or distinction if the dataset is split based on it.</p></li>
+</ul>
+</section>
+</section>
+<section id="gini-impurity-vs-entropy">
+<h2>Gini Impurity vs Entropy<a class="headerlink" href="#gini-impurity-vs-entropy" title="Permalink to this heading">#</a></h2>
+<p>Both Gini Impurity and Entropy are measures used to choose the best split in decision trees. However, they have different computational properties.</p>
+<section id="gini-impurity">
+<h3>Gini Impurity<a class="headerlink" href="#gini-impurity" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Formula:</strong> <span class="math notranslate nohighlight">\(Gini(S) = 1 - \sum_{i=1}^{n} p_i^2\)</span>
+where:</p></li>
+<li><p><span class="math notranslate nohighlight">\(Gini(S)\)</span> represents the Gini impurity of the dataset <span class="math notranslate nohighlight">\(S\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\sum_{i=1}^{n}\)</span> denotes the summation over all classes <span class="math notranslate nohighlight">\(i\)</span> in the dataset.</p></li>
+<li><p><span class="math notranslate nohighlight">\(p_i\)</span> represents the proportion (frequency or probability) of class <span class="math notranslate nohighlight">\(i\)</span> in the dataset <span class="math notranslate nohighlight">\(S\)</span>.</p></li>
+<li><p><span class="math notranslate nohighlight">\(p_i^2\)</span> is the squared proportion of class <span class="math notranslate nohighlight">\(i\)</span>, indicating the contribution of class <span class="math notranslate nohighlight">\(i\)</span> to the Gini impurity of the dataset.</p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span> is the total number of classes.</p></li>
+<li><p><strong>Interpretation:</strong> A measure of how often a randomly chosen element from the set would be incorrectly labeled if it was randomly labeled according to the distribution of labels in the subset.</p></li>
+<li><p><strong>Computational Aspect:</strong> Generally faster to compute than entropy, as it doesn’t involve logarithms.</p></li>
+</ul>
+</section>
+<section id="id2">
+<h3>Entropy<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p>As defined previously, entropy is a measure of randomness or uncertainty.</p></li>
+<li><p><strong>Computational Aspect:</strong> Involves the use of logarithms, making it computationally more intensive than Gini Impurity.</p></li>
+</ul>
+</section>
+<section id="when-to-use-which">
+<h3>When to Use Which?<a class="headerlink" href="#when-to-use-which" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Gini Impurity:</strong></p>
+<ul>
+<li><p>Preferred when computational cost is a concern and when dealing with a large number of classes.</p></li>
+<li><p>Used by default in many algorithms due to its computational efficiency.</p></li>
+</ul>
+</li>
+<li><p><strong>Entropy:</strong></p>
+<ul>
+<li><p>Might lead to more balanced trees.</p></li>
+<li><p>Preferred when the goal is to reduce randomness or uncertainty in the dataset as much as possible.</p></li>
+</ul>
+</li>
+</ul>
+<p>In practice, the choice between Gini Impurity and Entropy might not significantly affect the performance of the decision tree, and often, the choice is based on computational considerations. However, it’s essential to understand the conceptual differences and the impact they might have on the model’s performance and the interpretability of the results.</p>
+<p>In applying the concepts of Entropy, Information Gain, and Gini Impurity to the Iris dataset, we’ll embark on a journey of understanding these measures in a practical context and using them for feature selection and decision tree construction. Let’s break down the process into conceptual understanding, Python code implementation, and analytical thinking.</p>
+</section>
+</section>
+<section id="activity-1">
+<h2>Activity #1:<a class="headerlink" href="#activity-1" title="Permalink to this heading">#</a></h2>
+</section>
+<section id="step-1-conceptual-understanding">
+<h2>Step 1: Conceptual Understanding<a class="headerlink" href="#step-1-conceptual-understanding" title="Permalink to this heading">#</a></h2>
+<p>Before jumping into the code, let’s understand what these measures imply in the context of the Iris dataset:</p>
+<ul class="simple">
+<li><p>The <strong>Iris dataset</strong> consists of 150 samples from three species of Iris (Iris setosa, Iris virginica, and Iris versicolor). Four features are measured from each sample: the lengths and the widths of the sepals and petals.</p></li>
+<li><p><strong>Entropy</strong> will help us understand the disorder or unpredictability in the species classification based on the features.</p></li>
+<li><p><strong>Information Gain</strong> will be used to decide which feature (sepal length, sepal width, petal length, petal width) effectively splits the data into homogeneous sets of species.</p></li>
+<li><p><strong>Gini Impurity</strong> will be a criterion to measure the impurity or purity of the species classification when we split the dataset based on a specific feature.</p></li>
+</ul>
+</section>
+<section id="step-2-python-code-implementation">
+<h2>Step 2: Python Code Implementation<a class="headerlink" href="#step-2-python-code-implementation" title="Permalink to this heading">#</a></h2>
+<p>Let’s implement these concepts using Python. We’ll use the <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code> from <code class="docutils literal notranslate"><span class="pre">sklearn.tree</span></code> which allows us to visualize the importance of each feature according to entropy and Gini impurity.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span> 
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">tree</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Load the Iris dataset</span>
+<span class="n">iris_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Iris.csv&#39;</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris_data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Id&#39;</span><span class="p">,</span> <span class="s1">&#39;Species&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># independent variables</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;Species&#39;</span><span class="p">]</span>  <span class="c1"># dependent variable</span>
+
+<span class="c1"># Split the dataset into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Decision Tree Classifier using Entropy</span>
+<span class="n">clf_entropy</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">clf_entropy</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_entropy</span> <span class="o">=</span> <span class="n">clf_entropy</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy using Entropy: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_entropy</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Decision Tree Classifier using Gini Impurity</span>
+<span class="n">clf_gini</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">clf_gini</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_gini</span> <span class="o">=</span> <span class="n">clf_gini</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy using Gini Impurity: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_gini</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Feature importance</span>
+<span class="n">importances_entropy</span> <span class="o">=</span> <span class="n">clf_entropy</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="n">importances_gini</span> <span class="o">=</span> <span class="n">clf_gini</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="n">features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span>
+
+<span class="c1"># Plotting feature importances</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">importances_entropy</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Entropy&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">features</span><span class="p">,</span> <span class="n">importances_gini</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Gini Impurity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Feature Importance using Entropy and Gini Impurity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Features&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Importance&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy using Entropy: 0.9777777777777777
+Accuracy using Gini Impurity: 1.0
+</pre></div>
+</div>
+<img alt="../_images/9f13b9f36eb94e06f2e33b6b861ac0776dd33b7f844f45b9abb1fa40376e5087.png" src="../_images/9f13b9f36eb94e06f2e33b6b861ac0776dd33b7f844f45b9abb1fa40376e5087.png" />
+</div>
+</div>
+</section>
+<section id="step-3-analytical-thinking">
+<h2>Step 3: Analytical Thinking<a class="headerlink" href="#step-3-analytical-thinking" title="Permalink to this heading">#</a></h2>
+<p>When analyzing the output:</p>
+<ol class="arabic simple">
+<li><p><strong>Accuracy Assessment:</strong> Compare the model accuracy using entropy and Gini impurity. Does one criterion lead to better performance?</p></li>
+<li><p><strong>Feature Importance Analysis:</strong> Observe which features are considered most important by each criterion. Do entropy and Gini impurity agree on the importance of the features?</p></li>
+<li><p><strong>Decision Making:</strong> Based on the feature importance, decide which features might be worth keeping and which might be redundant. This is where you use feature selection to potentially reduce the dimensionality of your problem.</p></li>
+<li><p><strong>Further Exploration:</strong> Can you tweak the model or its parameters to improve performance? Consider pruning the tree or trying different parameters for <code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code>.</p></li>
+</ol>
+</section>
+<section id="part-2-advanced-techniques-for-feature-selection-30-minutes">
+<h2>Part 2: Advanced Techniques for Feature Selection (30 minutes)<a class="headerlink" href="#part-2-advanced-techniques-for-feature-selection-30-minutes" title="Permalink to this heading">#</a></h2>
+<section id="filter-methods">
+<h3>Filter Methods<a class="headerlink" href="#filter-methods" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="mutual-information">
+<h3>Mutual Information<a class="headerlink" href="#mutual-information" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Concept:</strong> Mutual Information quantifies the amount of information obtained about one random variable by observing another random variable. It can detect both linear and non-linear relationships.</p></li>
+<li><p><strong>Formula:</strong> <span class="math notranslate nohighlight">\(I(X; Y) = \sum_{x \in X, y \in Y} p(x, y) \log \left( \frac{p(x, y)}{p(x) p(y)} \right)\)</span></p></li>
+</ul>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(I(X;Y)I(X;Y)\)</span> is the mutual information for variables <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(p(x,y)p(x,y)\)</span> is the joint probability distribution function of <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(p(x)p(x)\)</span> and <span class="math notranslate nohighlight">\(p(y)p(y)\)</span> are the marginal probability distribution functions of <span class="math notranslate nohighlight">\(X\)</span> and <span class="math notranslate nohighlight">\(Y\)</span> respectively.</p></li>
+</ul>
+</section>
+<section id="best-practices">
+<h3>Best Practices<a class="headerlink" href="#best-practices" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Understand Your Data:</strong> Ensure you understand the data types (continuous or discrete) because Mutual Information can be applied to both, but the method of estimation might differ.</p></li>
+<li><p><strong>Data Preprocessing:</strong> Properly preprocess your data (e.g., handling missing values, scaling/normalizing) as Mutual Information can be sensitive to the way data is presented.</p></li>
+<li><p><strong>Variable Discretization (if needed):</strong> If dealing with continuous variables, discretize them properly. The choice of bins (or the method of discretization) can significantly affect the results.</p></li>
+<li><p><strong>Use Reliable Estimators:</strong> Mutual Information estimation can be tricky, especially for continuous variables. Use reliable estimators or packages that are well-documented and widely used.</p></li>
+</ol>
+</section>
+<section id="do-s">
+<h3>Do’s<a class="headerlink" href="#do-s" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Do Normalize the Data:</strong> If your dataset features vary in scales or units, consider normalizing the data as Mutual Information is not scale-invariant.</p></li>
+<li><p><strong>Do Use for Non-linear Relationships:</strong> Leverage Mutual Information to capture non-linear relationships between variables where traditional linear methods like Pearson correlation might fail.</p></li>
+<li><p><strong>Do Consider Dimensionality:</strong> Mutual Information is particularly useful in high-dimensional settings where other methods might suffer from the curse of dimensionality.</p></li>
+<li><p><strong>Do Cross-Validation:</strong> When selecting features based on Mutual Information, use cross-validation to ensure that the feature selection process generalizes well to unseen data.</p></li>
+</ol>
+</section>
+<section id="don-ts">
+<h3>Don’ts<a class="headerlink" href="#don-ts" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Don’t Ignore the Context:</strong> Mutual Information does not indicate the nature of the relationship (whether it’s causal or just associative). Be cautious when interpreting the results.</p></li>
+<li><p><strong>Don’t Rely Solely on It for Feature Selection:</strong> While Mutual Information is powerful, it should be part of a broader feature selection strategy, especially in complex or high-dimensional datasets.</p></li>
+<li><p><strong>Don’t Ignore Computational Cost:</strong> Especially with large datasets and many features, the computation of Mutual Information can be intensive. Consider the computational cost in your analysis pipeline.</p></li>
+<li><p><strong>Don’t Misinterpret the Values:</strong> Mutual Information values are not bounded to a specific range like some other statistics (e.g., correlation coefficients). Understand the scale of Mutual Information values in the context of your data.</p></li>
+</ol>
+</section>
+<section id="python-implementation">
+<h3><strong>Python Implementation:</strong><a class="headerlink" href="#python-implementation" title="Permalink to this heading">#</a></h3>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="interpret-the-results-carefully-considering-the-nature-of-your-data-and-the-requirements-of-your-analysis">
+<h1>Interpret the results carefully, considering the nature of your data and the requirements of your analysis.`<a class="headerlink" href="#interpret-the-results-carefully-considering-the-nature-of-your-data-and-the-requirements-of-your-analysis" title="Permalink to this heading">#</a></h1>
+<p>In this code snippet, we standardize the features using <code class="docutils literal notranslate"><span class="pre">StandardScaler</span></code> before computing Mutual Information. This is especially important if the features are on different scales. The results of Mutual Information are then printed, but it’s crucial to interpret these results within the context of your specific dataset and problem.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">mutual_info_classif</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="c1"># Load your data</span>
+<span class="n">iris_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Iris.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Preprocess the data: Separate features and target, standardize the features</span>
+<span class="c1"># Corrected drop method usage</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Species&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># independent columns</span>
+<span class="n">X_normalized</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>  <span class="c1"># Normalize the features</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;Species&#39;</span><span class="p">]</span>    <span class="c1"># target column</span>
+
+<span class="c1"># Compute mutual information</span>
+<span class="n">mi</span> <span class="o">=</span> <span class="n">mutual_info_classif</span><span class="p">(</span><span class="n">X_normalized</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mi</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[1.08486414 0.49537028 0.24562179 0.9858617  0.99351315]
+</pre></div>
+</div>
+</div>
+</div>
+<section id="anova-f-test-in-detail">
+<h2>ANOVA F-test in Detail<a class="headerlink" href="#anova-f-test-in-detail" title="Permalink to this heading">#</a></h2>
+<section id="concept">
+<h3>Concept<a class="headerlink" href="#concept" title="Permalink to this heading">#</a></h3>
+<p>The ANOVA (Analysis of Variance) F-test is used to assess the differences between the means of three or more groups based on sample data. It’s a way to check if the means of different groups are significantly different and is commonly used in feature selection when dealing with numerical input and categorical output.</p>
+</section>
+<section id="formula">
+<h3>Formula<a class="headerlink" href="#formula" title="Permalink to this heading">#</a></h3>
+<p>The F-statistic is calculated as:</p>
+<div class="math notranslate nohighlight">
+\[
+F = \frac{\text{Between-Group Variability}}{\text{Within-Group Variability}}
+\]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><strong>Between-Group Variability</strong> (Mean Square Between) measures how much the group means deviate from the overall mean.</p></li>
+<li><p><strong>Within-Group Variability</strong> (Mean Square Error) measures the variance within each of the groups.</p></li>
+</ul>
+<p>The F-statistic follows an F-distribution with degrees of freedom <span class="math notranslate nohighlight">\(df1=k−1\)</span> and <span class="math notranslate nohighlight">\(df2=N−k\)</span>, where <span class="math notranslate nohighlight">\(k\)</span> is the number of groups and <span class="math notranslate nohighlight">\(N\)</span> is the total number of observations.</p>
+</section>
+<section id="id3">
+<h3>Best Practices<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Normality:</strong> Each group should be approximately normally distributed. You can use a normality test like the Shapiro-Wilk test.</p></li>
+<li><p><strong>Homogeneity of variances:</strong> The variances among the groups should be approximately equal. This can be checked using tests like Levene’s test or Bartlett’s test.</p></li>
+<li><p><strong>Independence:</strong> The observations should be independent of each other.</p></li>
+</ol>
+</section>
+<section id="id4">
+<h3>Do’s<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Do use ANOVA when comparing three or more groups:</strong> ANOVA is specifically designed for this and is more reliable than using multiple t-tests.</p></li>
+<li><p><strong>Do check assumptions:</strong> Ensure that the data meets the normality, homogeneity of variances, and independence assumptions.</p></li>
+<li><p><strong>Do perform post-hoc testing if ANOVA is significant:</strong> This helps to determine which specific groups have significant differences.</p></li>
+</ol>
+</section>
+<section id="id5">
+<h3>Don’ts<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Don’t use ANOVA for non-normal data without transformation:</strong> Consider transforming the data or using non-parametric methods if the data is not normal.</p></li>
+<li><p><strong>Don’t ignore significant interactions:</strong> If you’re conducting a factorial ANOVA, be aware of interaction effects between factors.</p></li>
+</ol>
+</section>
+<section id="id6">
+<h3><strong>Python Implementation:</strong><a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h3>
+<p>In this code, <code class="docutils literal notranslate"><span class="pre">SelectKBest</span></code> with <code class="docutils literal notranslate"><span class="pre">f_classif</span></code> is used to select features based on the ANOVA F-test. This provides not just the F-score but also the p-value for each feature, giving you a sense of how confident you can be in the statistical significance of the results.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.feature_selection</span> <span class="kn">import</span> <span class="n">f_classif</span><span class="p">,</span> <span class="n">SelectKBest</span>
+
+<span class="c1"># Load your data</span>
+<span class="n">iris_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Iris.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Corrected drop method usage</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Species&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>  <span class="c1"># independent columns</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;Species&#39;</span><span class="p">]</span>    <span class="c1"># target column</span>
+
+<span class="c1"># Selecting the top k features</span>
+<span class="n">k_best_features</span> <span class="o">=</span> <span class="n">SelectKBest</span><span class="p">(</span><span class="n">score_func</span><span class="o">=</span><span class="n">f_classif</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+<span class="n">fit</span> <span class="o">=</span> <span class="n">k_best_features</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Get the p-values for the feature scores</span>
+<span class="n">p_values</span> <span class="o">=</span> <span class="n">fit</span><span class="o">.</span><span class="n">pvalues_</span>
+
+<span class="c1"># Print the feature scores and p-values</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">fit</span><span class="o">.</span><span class="n">scores_</span><span class="p">)):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Feature </span><span class="si">{</span><span class="n">i</span><span class="si">}</span><span class="s1">: </span><span class="si">{</span><span class="n">fit</span><span class="o">.</span><span class="n">scores_</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s1">.6f</span><span class="si">}</span><span class="s1">, p-value: </span><span class="si">{</span><span class="n">p_values</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">:</span><span class="s1">.6f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Feature 0: 588.235294, p-value: 0.000000
+Feature 1: 119.264502, p-value: 0.000000
+Feature 2: 47.364461, p-value: 0.000000
+Feature 3: 1179.034328, p-value: 0.000000
+Feature 4: 959.324406, p-value: 0.000000
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="wrapper-methods-stepwise-regression">
+<h2>Wrapper Methods: Stepwise Regression<a class="headerlink" href="#wrapper-methods-stepwise-regression" title="Permalink to this heading">#</a></h2>
+<section id="id7">
+<h3>Concept<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h3>
+<p>Stepwise regression is a systematic method of adding and removing variables based on their statistical significance in a regression model. It’s an iterative method that combines both forward selection and backward elimination techniques.</p>
+</section>
+<section id="python-pseudo-code-example">
+<h3>Python Pseudo Code Example<a class="headerlink" href="#python-pseudo-code-example" title="Permalink to this heading">#</a></h3>
+<p>(Note: This is a simplified implementation and may require adjustments based on the specific dataset or problem.)</p>
+</section>
+<section id="best-practices-do-s-and-don-ts">
+<h3>Best Practices, Do’s, and Don’ts<a class="headerlink" href="#best-practices-do-s-and-don-ts" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Do</strong>:</p>
+<ul>
+<li><p>Do use cross-validation to validate the model performance with the selected features.</p></li>
+<li><p>Do consider the computational cost, as stepwise regression can be computationally intensive with large datasets.</p></li>
+</ul>
+</li>
+<li><p><strong>Don’t</strong>:</p>
+<ul>
+<li><p>Don’t overfit the model by including too many variables.</p></li>
+<li><p>Don’t rely solely on p-values to justify the inclusion or exclusion of a variable; consider the model’s predictive power and practical significance.</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+
+<span class="c1"># Load and prepare the Iris dataset</span>
+<span class="n">iris_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Iris.csv&#39;</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Species&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Convert categorical variable &#39;Species&#39; into numerical values</span>
+<span class="n">label_encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;Species&#39;</span><span class="p">])</span>
+
+<span class="c1"># Forward Selection Function</span>
+<span class="k">def</span> <span class="nf">forward_selection</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">significance_level</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+    <span class="n">initial_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">best_features</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">initial_features</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">remaining_features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">initial_features</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">best_features</span><span class="p">))</span>
+        <span class="n">new_pval</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">remaining_features</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">new_column</span> <span class="ow">in</span> <span class="n">remaining_features</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">best_features</span> <span class="o">+</span> <span class="p">[</span><span class="n">new_column</span><span class="p">]])))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+            <span class="n">new_pval</span><span class="p">[</span><span class="n">new_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">pvalues</span><span class="p">[</span><span class="n">new_column</span><span class="p">]</span>
+        <span class="n">min_p_value</span> <span class="o">=</span> <span class="n">new_pval</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">min_p_value</span> <span class="o">&lt;</span> <span class="n">significance_level</span><span class="p">:</span>
+            <span class="n">best_features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_pval</span><span class="o">.</span><span class="n">idxmin</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">best_features</span>
+
+<span class="c1"># Apply Forward Selection</span>
+<span class="n">selected_features</span> <span class="o">=</span> <span class="n">forward_selection</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Selected features:&quot;</span><span class="p">,</span> <span class="n">selected_features</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Selected features: [&#39;PetalWidthCm&#39;, &#39;Id&#39;, &#39;PetalLengthCm&#39;, &#39;SepalLengthCm&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="embedded-methods-random-forest-feature-importance">
+<h3>Embedded Methods: Random Forest Feature Importance<a class="headerlink" href="#embedded-methods-random-forest-feature-importance" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="id8">
+<h3>Concept<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h3>
+<p>Random forests measure feature importance by looking at how much the tree nodes that use that feature reduce impurity across all trees in the forest. It’s a built-in method that provides a score for each feature, indicating how useful they are at predicting the target variable.</p>
+</section>
+<section id="id9">
+<h3><strong>Python Implementation:</strong><a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h3>
+</section>
+<section id="id10">
+<h3>Best Practices, Do’s, and Don’ts<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Do</strong>:</p>
+<ul>
+<li><p>Do use feature importance as a part of exploratory data analysis to understand your data better.</p></li>
+<li><p>Do visualize the feature importances to communicate the results effectively.</p></li>
+</ul>
+</li>
+<li><p><strong>Don’t</strong>:</p>
+<ul>
+<li><p>Don’t interpret the feature importance values as causal effects.</p></li>
+<li><p>Don’t rely on default settings for the Random Forest; fine-tuning the hyperparameters can significantly affect the model’s performance and the computed importance scores.</p></li>
+</ul>
+</li>
+</ul>
+<p>In applying these methods, it’s crucial to interpret the results correctly and in the context of your specific problem. Always remember that feature selection is not just a purely statistical exercise; it involves domain knowledge, understanding the context of the data, and iterative experimentation to find the best set of features for your model.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">LabelEncoder</span>
+
+<span class="c1"># Load and prepare the Iris dataset</span>
+<span class="n">iris_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Iris.csv&#39;</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris_data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Species&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># Convert categorical variable &#39;Species&#39; into numerical values</span>
+<span class="n">label_encoder</span> <span class="o">=</span> <span class="n">LabelEncoder</span><span class="p">()</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">label_encoder</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;Species&#39;</span><span class="p">])</span>
+
+<span class="c1"># Forward Selection Function</span>
+<span class="k">def</span> <span class="nf">forward_selection</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">significance_level</span><span class="o">=</span><span class="mf">0.05</span><span class="p">):</span>
+    <span class="n">initial_features</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">tolist</span><span class="p">()</span>
+    <span class="n">best_features</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">while</span> <span class="nb">len</span><span class="p">(</span><span class="n">initial_features</span><span class="p">)</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">remaining_features</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">set</span><span class="p">(</span><span class="n">initial_features</span><span class="p">)</span> <span class="o">-</span> <span class="nb">set</span><span class="p">(</span><span class="n">best_features</span><span class="p">))</span>
+        <span class="n">new_pval</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">index</span><span class="o">=</span><span class="n">remaining_features</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">new_column</span> <span class="ow">in</span> <span class="n">remaining_features</span><span class="p">:</span>
+            <span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">sm</span><span class="o">.</span><span class="n">add_constant</span><span class="p">(</span><span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">best_features</span> <span class="o">+</span> <span class="p">[</span><span class="n">new_column</span><span class="p">]])))</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+            <span class="n">new_pval</span><span class="p">[</span><span class="n">new_column</span><span class="p">]</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">pvalues</span><span class="p">[</span><span class="n">new_column</span><span class="p">]</span>
+        <span class="n">min_p_value</span> <span class="o">=</span> <span class="n">new_pval</span><span class="o">.</span><span class="n">min</span><span class="p">()</span>
+        <span class="k">if</span> <span class="n">min_p_value</span> <span class="o">&lt;</span> <span class="n">significance_level</span><span class="p">:</span>
+            <span class="n">best_features</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">new_pval</span><span class="o">.</span><span class="n">idxmin</span><span class="p">())</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">break</span>
+    <span class="k">return</span> <span class="n">best_features</span>
+
+<span class="c1"># Apply Forward Selection</span>
+<span class="n">selected_features</span> <span class="o">=</span> <span class="n">forward_selection</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Selected features:&quot;</span><span class="p">,</span> <span class="n">selected_features</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Selected features: [&#39;PetalWidthCm&#39;, &#39;Id&#39;, &#39;PetalLengthCm&#39;, &#39;SepalLengthCm&#39;]
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="step-3-analytical-thinking-with-python-implementation">
+<h2>Step 3: Analytical Thinking with Python Implementation<a class="headerlink" href="#step-3-analytical-thinking-with-python-implementation" title="Permalink to this heading">#</a></h2>
+<section id="accuracy-assessment">
+<h3>1. Accuracy Assessment<a class="headerlink" href="#accuracy-assessment" title="Permalink to this heading">#</a></h3>
+<p>We’ll compare the accuracy of models built using Entropy and Gini Impurity as criteria for splitting in the decision tree.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># Load and prepare the Iris dataset</span>
+<span class="n">iris_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Iris.csv&#39;</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris_data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Id&#39;</span><span class="p">,</span> <span class="s1">&#39;Species&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;Species&#39;</span><span class="p">]</span>
+
+<span class="c1"># Splitting the dataset into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Model with Entropy</span>
+<span class="n">clf_entropy</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">clf_entropy</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_entropy</span> <span class="o">=</span> <span class="n">clf_entropy</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">accuracy_entropy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_entropy</span><span class="p">)</span>
+
+<span class="c1"># Model with Gini Impurity</span>
+<span class="n">clf_gini</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">clf_gini</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_gini</span> <span class="o">=</span> <span class="n">clf_gini</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">accuracy_gini</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred_gini</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy using Entropy: </span><span class="si">{</span><span class="n">accuracy_entropy</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy using Gini Impurity: </span><span class="si">{</span><span class="n">accuracy_gini</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy using Entropy: 0.9777777777777777
+Accuracy using Gini Impurity: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="feature-importance-analysis">
+<h3>2. Feature Importance Analysis<a class="headerlink" href="#feature-importance-analysis" title="Permalink to this heading">#</a></h3>
+<p>We’ll compare which features are deemed most important by the decision trees using Entropy and Gini Impurity criteria.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Feature importance from the model using Entropy</span>
+<span class="n">importances_entropy</span> <span class="o">=</span> <span class="n">clf_entropy</span><span class="o">.</span><span class="n">feature_importances_</span>
+
+<span class="c1"># Feature importance from the model using Gini Impurity</span>
+<span class="n">importances_gini</span> <span class="o">=</span> <span class="n">clf_gini</span><span class="o">.</span><span class="n">feature_importances_</span>
+
+<span class="c1"># Plotting feature importances</span>
+<span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">importances_entropy</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Feature Importances with Entropy&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)),</span> <span class="n">importances_entropy</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)),</span> <span class="p">[</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Relative Importance&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">indices</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">argsort</span><span class="p">(</span><span class="n">importances_gini</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Feature Importances with Gini Impurity&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)),</span> <span class="n">importances_gini</span><span class="p">[</span><span class="n">indices</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;r&#39;</span><span class="p">,</span> <span class="n">align</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">indices</span><span class="p">)),</span> <span class="p">[</span><span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">indices</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Relative Importance&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b6ab32cdbe22495ae5610aa9ead05be8dbff88094f47b91a10225cf5c18778c7.png" src="../_images/b6ab32cdbe22495ae5610aa9ead05be8dbff88094f47b91a10225cf5c18778c7.png" />
+<img alt="../_images/016643e99941373255a348674abdee81e365fff800634df4fbf01817bb78220a.png" src="../_images/016643e99941373255a348674abdee81e365fff800634df4fbf01817bb78220a.png" />
+</div>
+</div>
+</section>
+<section id="decision-making">
+<h3>3. Decision Making<a class="headerlink" href="#decision-making" title="Permalink to this heading">#</a></h3>
+<p>Based on the feature importance analysis, decide which features to keep.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Threshold for selecting features, e.g., mean importance</span>
+<span class="n">threshold</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">importances_entropy</span><span class="p">)</span>
+
+<span class="c1"># Features to keep based on Entropy</span>
+<span class="n">features_to_keep_entropy</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">importances_entropy</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Features to keep based on Entropy:&#39;</span><span class="p">,</span> <span class="n">features_to_keep_entropy</span><span class="p">)</span>
+
+<span class="c1"># Features to keep based on Gini Impurity</span>
+<span class="n">features_to_keep_gini</span> <span class="o">=</span> <span class="n">X</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="n">importances_gini</span> <span class="o">&gt;</span> <span class="n">threshold</span><span class="p">]</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Features to keep based on Gini Impurity:&#39;</span><span class="p">,</span> <span class="n">features_to_keep_gini</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Features to keep based on Entropy: Index([&#39;PetalLengthCm&#39;], dtype=&#39;object&#39;)
+Features to keep based on Gini Impurity: Index([&#39;PetalLengthCm&#39;], dtype=&#39;object&#39;)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="further-exploration">
+<h3>4. Further Exploration<a class="headerlink" href="#further-exploration" title="Permalink to this heading">#</a></h3>
+<p>Experiment with different parameters or pruning the tree to see if it improves model performance.</p>
+<p>This analytical process involves not just running code but interpreting the results, making informed decisions, and continually iterating to refine your approach. By combining technical skills with critical thinking, you’re moving beyond coding into the realm of data science and analytics.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Assuming iris_data is your DataFrame</span>
+<span class="n">iris_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Iris.csv&#39;</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris_data</span><span class="o">.</span><span class="n">drop</span><span class="p">([</span><span class="s1">&#39;Species&#39;</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris_data</span><span class="p">[</span><span class="s1">&#39;Species&#39;</span><span class="p">]</span>
+
+<span class="c1"># Split the data</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Decision Tree with Entropy</span>
+<span class="n">clf_entropy_deep</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;entropy&#39;</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">clf_entropy_deep</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_entropy_deep</span> <span class="o">=</span> <span class="n">clf_entropy_deep</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy with deeper tree using Entropy: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_entropy_deep</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+
+<span class="c1"># Decision Tree with Gini Impurity</span>
+<span class="n">clf_gini_deep</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s1">&#39;gini&#39;</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">clf_gini_deep</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+<span class="n">y_pred_gini_deep</span> <span class="o">=</span> <span class="n">clf_gini_deep</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Accuracy with deeper tree using Gini Impurity: </span><span class="si">{</span><span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span><span class="w"> </span><span class="n">y_pred_gini_deep</span><span class="p">)</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy with deeper tree using Entropy: 1.0
+Accuracy with deeper tree using Gini Impurity: 1.0
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="additional-resources-advanced-feature-selection">
+<h3><strong>Additional Resources (Advanced Feature Selection):</strong><a class="headerlink" href="#additional-resources-advanced-feature-selection" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><a class="reference external" href="https://victorzhou.com/blog/information-gain/">https://victorzhou.com/blog/information-gain/</a></p></li>
+<li><p><a class="reference external" href="https://www.analyticsvidhya.com/blog/2020/10/feature-selection-techniques-in-machine-learning/">https://www.analyticsvidhya.com/blog/2020/10/feature-selection-techniques-in-machine-learning/</a></p></li>
+<li><p><a class="reference external" href="https://medium.com/mlearning-ai/feature-selection-techniques-in-machine-learning-82c2123bd548">https://medium.com/mlearning-ai/feature-selection-techniques-in-machine-learning-82c2123bd548</a></p></li>
+<li><p><a class="reference external" href="https://medium.com/codex/decision-tree-for-classification-entropy-and-information-gain-cd9f99a26e0d">https://medium.com/codex/decision-tree-for-classification-entropy-and-information-gain-cd9f99a26e0d</a></p></li>
+<li><p><a class="reference external" href="https://machinelearningmastery.com/feature-selection-with-real-and-categorical-data/">https://machinelearningmastery.com/feature-selection-with-real-and-categorical-data/</a></p></li>
+<li><p><a class="reference external" href="https://neptune.ai/blog/feature-selection-methods">https://neptune.ai/blog/feature-selection-methods</a></p></li>
+<li><p><a class="reference external" href="https://www.geeksforgeeks.org/feature-selection-techniques-in-machine-learning/">https://www.geeksforgeeks.org/feature-selection-techniques-in-machine-learning/</a></p></li>
+<li><p><a class="reference external" href="https://www.kdnuggets.com/2023/06/advanced-feature-selection-techniques-machine-learning-models.html">https://www.kdnuggets.com/2023/06/advanced-feature-selection-techniques-machine-learning-models.html</a></p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_04"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson_19.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Day 19: Correlation Analysis using Python</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../Week_05/005_Overview.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Course Structure</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 20: Advanced Feature Selection and Importance in Python - With Iris Dataset</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#objectives">Objectives:</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#part-1-advanced-introduction-to-feature-selection">Part 1: Advanced Introduction to Feature Selection</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy">Entropy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formula-entropy-s-sum-i-1-n-p-i-log-2-p-i"><strong>Formula:</strong> <span class="math notranslate nohighlight">\(Entropy(S) = -\sum_{i=1}^{n} p_i \log_2 p_i\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#information-gain">Information Gain</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formula-informationgain-s-a-entropy-s-sum-v-in-a-frac-s-v-s-entropy-s-v"><strong>Formula:</strong> <span class="math notranslate nohighlight">\(InformationGain(S, A) = Entropy(S) - \sum_{v \in A} \frac{|S_v|}{|S|} Entropy(S_v)\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Interpretation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gini-impurity-vs-entropy">Gini Impurity vs Entropy</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gini-impurity">Gini Impurity</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Entropy</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#when-to-use-which">When to Use Which?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#activity-1">Activity #1:</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-conceptual-understanding">Step 1: Conceptual Understanding</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-python-code-implementation">Step 2: Python Code Implementation</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-analytical-thinking">Step 3: Analytical Thinking</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#part-2-advanced-techniques-for-feature-selection-30-minutes">Part 2: Advanced Techniques for Feature Selection (30 minutes)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#filter-methods">Filter Methods</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mutual-information">Mutual Information</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices">Best Practices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#do-s">Do’s</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#don-ts">Don’ts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-implementation"><strong>Python Implementation:</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#interpret-the-results-carefully-considering-the-nature-of-your-data-and-the-requirements-of-your-analysis">Interpret the results carefully, considering the nature of your data and the requirements of your analysis.`</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#anova-f-test-in-detail">ANOVA F-test in Detail</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#concept">Concept</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#formula">Formula</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Best Practices</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Do’s</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Don’ts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id6"><strong>Python Implementation:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#wrapper-methods-stepwise-regression">Wrapper Methods: Stepwise Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">Concept</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-pseudo-code-example">Python Pseudo Code Example</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#best-practices-do-s-and-don-ts">Best Practices, Do’s, and Don’ts</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#embedded-methods-random-forest-feature-importance">Embedded Methods: Random Forest Feature Importance</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Concept</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id9"><strong>Python Implementation:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Best Practices, Do’s, and Don’ts</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-analytical-thinking-with-python-implementation">Step 3: Analytical Thinking with Python Implementation</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#accuracy-assessment">1. Accuracy Assessment</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#feature-importance-analysis">2. Feature Importance Analysis</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#decision-making">3. Decision Making</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#further-exploration">4. Further Exploration</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources-advanced-feature-selection"><strong>Additional Resources (Advanced Feature Selection):</strong></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
