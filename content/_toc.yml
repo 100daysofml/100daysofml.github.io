@@ -76,13 +76,13 @@ parts:
         title: "Day 18 - Visualization Techniques for Data Distribution in Python"
       - file: Week_04/Lesson_19.ipynb
         title: "Day 19 - Correlation Analysis using Python"
-#     - file: Week_04/Lesson_20.ipynb
-#       title: "Day 20 -Feature Selection and Importance in Python"  
+      - file: Week_04/Lesson_20.ipynb
+        title: "Day 20 -Feature Selection and Importance in Python"  
 
-# - caption: "Week 5: Supervised Learning - Regression"
-#  chapters:
-#  - file: Week_05/005_Overview.md
-#    title: "Week_05: Overview"
+  - caption: "Week 5: Supervised Learning - Regression"
+    chapters:
+    - file: Week_05/005_Overview.md
+      title: "Week_05: Overview"
 #     sections:
 #     - file: Week_05/Lesson_21.ipynb
 #       title: "Day 21 - Introduction to Regression Analysis in Python"
