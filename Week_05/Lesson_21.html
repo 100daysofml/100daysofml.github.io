@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Lesson 21: Introduction to Regression Analysis in Python &#8212; 100 Days of Machine Learning</title>
+    <title>Day 21 - Introduction to Regression Analysis in Python &#8212; 100 Days of Machine Learning</title>
   
   
   
@@ -256,8 +256,10 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5: Supervised Learning - Regression</span></p>
 <ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="005_Overview.html">Course Structure</a></li>
-
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="005_Overview.html">Week_05: Overview</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Day 21 - Introduction to Regression Analysis in Python</a></li>
+</ul>
+</li>
 </ul>
 
     </div>
@@ -492,7 +494,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Lesson 21: Introduction to Regression Analysis in Python</h1>
+    <h1>Day 21 - Introduction to Regression Analysis in Python</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -542,18 +544,19 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="lesson-21-introduction-to-regression-analysis-in-python">
-<h1>Lesson 21: Introduction to Regression Analysis in Python<a class="headerlink" href="#lesson-21-introduction-to-regression-analysis-in-python" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="day-21-introduction-to-regression-analysis-in-python">
+<h1>Day 21 - Introduction to Regression Analysis in Python<a class="headerlink" href="#day-21-introduction-to-regression-analysis-in-python" title="Permalink to this heading">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Packages required for this lesson</span>
-<span class="c1">#!pip install scikit-learn matplotlib seaborn pandas</span>
+<span class="c1">#!pip install scikit-learn matplotlib pandas</span>
 </pre></div>
 </div>
 </div>
 </div>
 <section id="basics-of-regression-analysis-and-simple-linear-regression">
 <h2>Basics of Regression Analysis and Simple Linear Regression<a class="headerlink" href="#basics-of-regression-analysis-and-simple-linear-regression" title="Permalink to this heading">#</a></h2>
+<p>To summarize: <strong>given some example X values with known Y values, can we use a line to predict the Y values of new, unlabeled X values?</strong></p>
 <p>Regression analysis is a cornerstone of data science, particularly in the field of supervised learning. It allows us to predict the value of a continuous variable based on one or more other variables. For example, we might use regression to predict the price of a house based on its size, location, and age. Importantly, regression is not suitable for predicting categorical variables; such tasks are better handled by classification methods like logistic regression, which we will explore in a later lesson.</p>
 <p>Understanding the difference between supervised and unsupervised learning is crucial. In supervised learning, our model learns from a labeled dataset, which means each example in the dataset is paired with the correct output. Regression is a form of supervised learning because it requires a dataset with known outputs to learn the relationship between variables. In contrast, unsupervised learning involves finding patterns in data where the outcomes are not known in advance.</p>
 <p>Regression Analysis is a form of predictive modelling technique which investigates the relationship between a dependent (target) and independent variable (s) (predictor). This method is used for forecasting, time series modelling, and finding the causal effect relationship between the variables. Among its various types, Simple Linear Regression is the most basic and widely used one, especially when data exhibits a linear relationship.</p>
@@ -562,11 +565,36 @@ document.write(`
 <section id="definition-and-purpose-of-regression-analysis">
 <h4>Definition and Purpose of Regression Analysis<a class="headerlink" href="#definition-and-purpose-of-regression-analysis" title="Permalink to this heading">#</a></h4>
 <p>Regression analysis is a powerful statistical method that enables you to examine the relationship between two or more variables of interest. While it is often utilized to predict the value of a dependent variable based on the values of at least one independent variable, it’s essential to note that it is best suited for continuous variables. Logistic regression is its counterpart for categorical outcomes and will be discussed in upcoming lessons.</p>
+<p>Given the data (red points in the plot below), linear regression is the process to find the best line through them (in blue).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cell reserved for python intro example</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Original data</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+
+<span class="c1"># example line parameters</span>
+<span class="n">m</span> <span class="o">=</span> <span class="mf">0.6</span>
+<span class="n">y_intercept</span> <span class="o">=</span> <span class="mf">2.2</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data points&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="n">y_intercept</span><span class="p">,</span> <span class="n">m</span> <span class="o">*</span> <span class="mi">6</span> <span class="o">+</span> <span class="n">y_intercept</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Regression Line&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linear Regression&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">)</span>
 </pre></div>
 </div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(0.0, 6.0)
+</pre></div>
+</div>
+<img alt="../_images/b6a1e6a3eb246e4fb2221417536bb1729ab72d05cab566e7c1c8a2e608610b1d.png" src="../_images/b6a1e6a3eb246e4fb2221417536bb1729ab72d05cab566e7c1c8a2e608610b1d.png" />
 </div>
 </div>
 </section>
@@ -817,7 +845,7 @@ document.write(`
 4        1100  220000         3        2.0     Urban   25
 </pre></div>
 </div>
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_142608/737031205.py:1: DeprecationWarning: 
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_150564/737031205.py:1: DeprecationWarning: 
 Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
 (to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
 but was not found to be installed on your system.
