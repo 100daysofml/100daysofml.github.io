@@ -83,9 +83,9 @@ parts:
     chapters:
     - file: Week_05/005_Overview.md
       title: "Week_05: Overview"
-#     sections:
-#     - file: Week_05/Lesson_21.ipynb
-#       title: "Day 21 - Introduction to Regression Analysis in Python"
+      sections:
+      - file: Week_05/Lesson_21.ipynb
+        title: "Day 21 - Introduction to Regression Analysis in Python"
 #     - file: Week_05/Lesson_22.ipynb
 #       title: "Day 22 - Implementing Multiple Linear Regression in Python"
 #     - file: Week_05/Lesson_23.ipynb
