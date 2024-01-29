@@ -1,7 +1,6 @@
   # Course Structure
 
-  # Module 3: Supervised Learning - Regression and Classification
- ## Weeks 5-6
+ ## Module 3: Supervised Learning - Regression and Classification (Weeks 5-6)
 - Focus: Key concepts and algorithms in supervised learning.
 - Topics include regression, classification algorithms, decision trees, SVM, and ensemble methods.
 
