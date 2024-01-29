@@ -19,15 +19,15 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
-  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -78,7 +78,7 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
 
@@ -121,20 +121,12 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <header>
   
-    <div class="bd-header navbar navbar-expand-lg bd-navbar">
-    </div>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-  </header>
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
-      
-      
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -551,7 +543,7 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="day-16-comprehensive-eda-and-data-visualization-in-python">
 <h1>Day 16: Comprehensive EDA and Data Visualization in Python<a class="headerlink" href="#day-16-comprehensive-eda-and-data-visualization-in-python" title="Permalink to this heading">#</a></h1>
@@ -581,6 +573,18 @@ document.write(`
 <span class="kn">from</span> <span class="nn">scipy</span> <span class="kn">import</span> <span class="n">stats</span>
 <span class="c1"># Load the dataset</span>
 <span class="n">wine_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;wine_quality.csv&#39;</span><span class="p">)</span>    
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_105691/955872667.py:2: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
 </pre></div>
 </div>
 </div>
@@ -621,8 +625,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/05dbc2b3ac659ef00973ae1e2341abb61b37b57da18139b8b7bdd6afedeb7cbc.png" src="../_images/05dbc2b3ac659ef00973ae1e2341abb61b37b57da18139b8b7bdd6afedeb7cbc.png" />
-<img alt="../_images/ece371c29410b896a7208a2f0734793205d5298c044250bacd4d0eb8440c8930.png" src="../_images/ece371c29410b896a7208a2f0734793205d5298c044250bacd4d0eb8440c8930.png" />
+<img alt="../_images/5c9406687410d6d0788db477f0c668e40e042e86a715e7d607c88bbc48d05662.png" src="../_images/5c9406687410d6d0788db477f0c668e40e042e86a715e7d607c88bbc48d05662.png" />
+<img alt="../_images/fb03cbc325397d6703f9c83f76eea715a16a3d7904656e3edd901a2b0d51ac92.png" src="../_images/fb03cbc325397d6703f9c83f76eea715a16a3d7904656e3edd901a2b0d51ac92.png" />
 </div>
 </div>
 </section>
@@ -650,12 +654,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/8bfb8d10e84cc7a94aba17a2780f39d4cb75932f80655a787c0d7b292b5f4078.png" src="../_images/8bfb8d10e84cc7a94aba17a2780f39d4cb75932f80655a787c0d7b292b5f4078.png" />
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/home/aaron/anaconda3/lib/python3.11/site-packages/seaborn/axisgrid.py:118: UserWarning: The figure layout has changed to tight
-  self._figure.tight_layout(*args, **kwargs)
-</pre></div>
-</div>
-<img alt="../_images/e5f8fb3eb382feb843bb959bd2c6a89517bddc26a8e97f7723ab8325413089fa.png" src="../_images/e5f8fb3eb382feb843bb959bd2c6a89517bddc26a8e97f7723ab8325413089fa.png" />
+<img alt="../_images/159e371cb00bfec89becd64d409fe2651e21bda03f353e71d0b4aa6057f27f91.png" src="../_images/159e371cb00bfec89becd64d409fe2651e21bda03f353e71d0b4aa6057f27f91.png" />
+<img alt="../_images/978ea1af2294615b324a0728e16907c9906d9992a165247319f07ceee59e05b2.png" src="../_images/978ea1af2294615b324a0728e16907c9906d9992a165247319f07ceee59e05b2.png" />
 </div>
 </div>
 </section>
@@ -689,7 +689,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/d3cb64c406d0952bae9e6831d2c89e838d5801dac61dc446c2a770eed96c9e6e.png" src="../_images/d3cb64c406d0952bae9e6831d2c89e838d5801dac61dc446c2a770eed96c9e6e.png" />
+<img alt="../_images/d016d42b686188666a8d4d2319a12020df3c5f980b386b5d06f890cae1b01141.png" src="../_images/d016d42b686188666a8d4d2319a12020df3c5f980b386b5d06f890cae1b01141.png" />
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
 <span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">4</span><span class="p">],</span> <span class="n">line</span> <span class="mi">5</span>
@@ -706,7 +706,7 @@ document.write(`
 <span class="g g-Whitespace">     </span><span class="mi">13</span>     <span class="n">ax</span><span class="o">.</span><span class="n">get_xticklabels</span><span class="p">(),</span>
 <span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="n">rotation</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span>
 <span class="g g-Whitespace">     </span><span class="mi">15</span>     <span class="n">horizontalalignment</span><span class="o">=</span><span class="s1">&#39;right&#39;</span>
-<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">16</span> <span class="p">);</span>
 
 <span class="ne">NameError</span>: name &#39;data&#39; is not defined
 </pre></div>
@@ -739,8 +739,8 @@ document.write(`
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean: 5.657042869641295
 Median: 6.0
 Mode: 5
-Variance: 0.6493527188260811
-Standard Deviation: 0.8058242481000936
+Variance: 0.6493527188260838
+Standard Deviation: 0.8058242481000952
 </pre></div>
 </div>
 </div>
@@ -954,7 +954,6 @@ Kurtosis: 0.3146639385893346
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
@@ -1042,8 +1041,8 @@ By Aaron S. & John M.
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>

@@ -1,0 +1,1027 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Lesson 21: Introduction to Regression Analysis in Python &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_05/Lesson_21';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_05/Lesson_21.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Course Structure" href="005_Overview.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    100 Days of Machine Learning Challenge
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Daily Challenge Curriculum</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Daily Curriculum Resources</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_01/001_Overview.html">Week_01: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_02/002_Overview.html">Week_02: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_09.html">Day 9 - Calculus - Integrals, Fundamental Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_10.html">Day 10 - Statistics and Probability - Concepts and Relevant Distributions</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_03/003_Overview.html">Week_03: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_11.html">Day 11 - Introduction to Data Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12.html">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12solution.html">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_13.html">Day 13 - Handling Missing Data in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_14.html">Day 14 - Data Normalization and Scaling using Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_15.html">Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications</a></li>
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_04/004_Overview.html">Week_04: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_16.html">Day 16 - Introduction to EDA and Data Visualization in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_17.html">Day 17 - Implementing Descriptive Statistics for EDA in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_18.html">Day 18 - Visualization Techniques for Data Distribution in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_19.html">Day 19: Correlation Analysis using Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_20.html">Day 20: Advanced Feature Selection and Importance in Python - With Iris Dataset</a></li>
+
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5: Supervised Learning - Regression</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="005_Overview.html">Course Structure</a></li>
+
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-4iw5ztbi/lab/workspaces/auto-e/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_05/Lesson_21.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/github/100daysofml/100daysofml.github.io/blob/master/Week_05/Lesson_21.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_05/Lesson_21.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_05/Lesson_21.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Lesson 21: Introduction to Regression Analysis in Python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-of-regression-analysis-and-simple-linear-regression">Basics of Regression Analysis and Simple Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#theoretical-concepts">Theoretical Concepts</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-and-purpose-of-regression-analysis">Definition and Purpose of Regression Analysis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#difference-between-supervised-and-unsupervised-learning">Difference Between Supervised and Unsupervised Learning</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-simple-linear-regression">Overview of Simple Linear Regression</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-foundation">Mathematical Foundation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation-of-linear-equations-y-mx-c">Explanation of Linear Equations: <span class="math notranslate nohighlight">\(y=mx+c\)</span></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation-of-hyperplanes-and-linear-relations-above-two-dimensions">Explanation of Hyperplanes and “Linear” Relations Above Two Dimensions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#concept-of-best-fit-line-and-least-squares-method">Concept of Best-Fit Line and Least Squares Method</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-implementation">Python Implementation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-simple-linear-regression-with-scikit-learn">Implementing Simple Linear Regression with scikit-learn</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-data-and-regression-line-using-matplotlib">Visualizing Data and Regression Line Using matplotlib</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-dataset">Example Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#import-and-analyze-a-housing-dataset">Import and Analyze a Housing Dataset</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#build-a-simple-linear-regression-model-to-predict-housing-prices">Build a Simple Linear Regression Model to Predict Housing Prices</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#test-train-split">Test Train Split</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#excercise-for-the-reader">Excercise for the Reader</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="lesson-21-introduction-to-regression-analysis-in-python">
+<h1>Lesson 21: Introduction to Regression Analysis in Python<a class="headerlink" href="#lesson-21-introduction-to-regression-analysis-in-python" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Packages required for this lesson</span>
+<span class="c1">#!pip install scikit-learn matplotlib seaborn pandas</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="basics-of-regression-analysis-and-simple-linear-regression">
+<h2>Basics of Regression Analysis and Simple Linear Regression<a class="headerlink" href="#basics-of-regression-analysis-and-simple-linear-regression" title="Permalink to this heading">#</a></h2>
+<p>Regression analysis is a cornerstone of data science, particularly in the field of supervised learning. It allows us to predict the value of a continuous variable based on one or more other variables. For example, we might use regression to predict the price of a house based on its size, location, and age. Importantly, regression is not suitable for predicting categorical variables; such tasks are better handled by classification methods like logistic regression, which we will explore in a later lesson.</p>
+<p>Understanding the difference between supervised and unsupervised learning is crucial. In supervised learning, our model learns from a labeled dataset, which means each example in the dataset is paired with the correct output. Regression is a form of supervised learning because it requires a dataset with known outputs to learn the relationship between variables. In contrast, unsupervised learning involves finding patterns in data where the outcomes are not known in advance.</p>
+<p>Regression Analysis is a form of predictive modelling technique which investigates the relationship between a dependent (target) and independent variable (s) (predictor). This method is used for forecasting, time series modelling, and finding the causal effect relationship between the variables. Among its various types, Simple Linear Regression is the most basic and widely used one, especially when data exhibits a linear relationship.</p>
+<section id="theoretical-concepts">
+<h3>Theoretical Concepts<a class="headerlink" href="#theoretical-concepts" title="Permalink to this heading">#</a></h3>
+<section id="definition-and-purpose-of-regression-analysis">
+<h4>Definition and Purpose of Regression Analysis<a class="headerlink" href="#definition-and-purpose-of-regression-analysis" title="Permalink to this heading">#</a></h4>
+<p>Regression analysis is a powerful statistical method that enables you to examine the relationship between two or more variables of interest. While it is often utilized to predict the value of a dependent variable based on the values of at least one independent variable, it’s essential to note that it is best suited for continuous variables. Logistic regression is its counterpart for categorical outcomes and will be discussed in upcoming lessons.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Cell reserved for python intro example</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="difference-between-supervised-and-unsupervised-learning">
+<h4>Difference Between Supervised and Unsupervised Learning<a class="headerlink" href="#difference-between-supervised-and-unsupervised-learning" title="Permalink to this heading">#</a></h4>
+<p>In the realm of machine learning, supervised learning entails training a model on a dataset that includes both the inputs and the expected outputs. Regression, being a part of supervised learning, relies on labeled data to learn the relationship between input features and the target variable.</p>
+<p>Understanding the distinction between supervised and unsupervised learning establishes the groundwork on which type of algorithms, including regression, are selected based on the data’s nature and the learning task.</p>
+</section>
+<section id="overview-of-simple-linear-regression">
+<h4>Overview of Simple Linear Regression<a class="headerlink" href="#overview-of-simple-linear-regression" title="Permalink to this heading">#</a></h4>
+<p>Simple Linear Regression models the relationship between a single independent variable and a dependent variable by fitting a best-fit straight line. This line is known as the regression line and represented by a linear equation <code class="docutils literal notranslate"><span class="pre">Y</span> <span class="pre">=</span> <span class="pre">a</span> <span class="pre">*</span> <span class="pre">X</span> <span class="pre">+</span> <span class="pre">b</span></code>.</p>
+<p>This introduction sets the stage for understanding how a simple linear regression model is constructed, predicting the dependent variable using a single independent variable.</p>
+</section>
+</section>
+<section id="mathematical-foundation">
+<h3>Mathematical Foundation<a class="headerlink" href="#mathematical-foundation" title="Permalink to this heading">#</a></h3>
+<section id="explanation-of-linear-equations-y-mx-c">
+<h4>Explanation of Linear Equations: <span class="math notranslate nohighlight">\(y=mx+c\)</span><a class="headerlink" href="#explanation-of-linear-equations-y-mx-c" title="Permalink to this heading">#</a></h4>
+<p>The simplest form of regression is simple linear regression, where we predict the outcome as a linear function of the input. The equation for a line in two dimensions is (y = mx + c), where:</p>
+<ul class="simple">
+<li><p>(y) is the value we want to predict (dependent variable).</p></li>
+<li><p>(m) is the slope of the line.</p></li>
+<li><p>(x) is our input variable (independent variable).</p></li>
+<li><p>(c) is the y-intercept, which tells us the value of (y) when (x) is 0.</p></li>
+</ul>
+<p>If you got all of that, then this summary of <code class="docutils literal notranslate"><span class="pre">y</span> <span class="pre">=</span> <span class="pre">mx</span> <span class="pre">+</span> <span class="pre">c</span></code> should make sense: <code class="docutils literal notranslate"><span class="pre">y</span></code> is the dependent variable, <code class="docutils literal notranslate"><span class="pre">x</span></code> is the independent variable, <code class="docutils literal notranslate"><span class="pre">m</span></code> is the slope of the line, and <code class="docutils literal notranslate"><span class="pre">c</span></code> is the y-intercept.</p>
+<p>This equation is the mathematical foundation of simple linear regression, describing how the dependent variable <code class="docutils literal notranslate"><span class="pre">y</span></code> changes with the independent variable <code class="docutils literal notranslate"><span class="pre">x</span></code>.</p>
+<p>Let’s discuss a few equations:</p>
+<ol class="arabic simple">
+<li><p><strong>Sample Mean</strong> <span class="math notranslate nohighlight">\(\bar{y} = \frac{1}{n}\sum_{i=1}^n y_i\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\bar{y}\)</span>: Sample mean of the dependent variable.</p></li>
+<li><p><span class="math notranslate nohighlight">\(y_i\)</span>: Value of the dependent variable for the (i)-th observation.</p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span>: Number of observations in the sample.</p></li>
+</ul>
+</li>
+</ol>
+<p>This equation calculates the average value of the dependent variable <span class="math notranslate nohighlight">\(y\)</span>, which is fundamental in many statistical analyses, including regression.</p>
+<p>All that to say: the average of the data points. Sum all indpendent / input values, then divide by the number of data points.</p>
+<ol class="arabic simple" start="2">
+<li><p><strong>Sample Slope</strong> <span class="math notranslate nohighlight">\(\hat{\beta}_1 = \frac{\sum(X_i – \bar{X}) (Y_i – \bar{Y})} {\sum(X_i – \bar{X})^2}\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>: Estimated slope of the regression line.</p></li>
+<li><p><span class="math notranslate nohighlight">\(X_i\)</span>: Value of the independent variable for the <span class="math notranslate nohighlight">\(i\)</span>-th observation.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\bar{X}\)</span>: Mean of the independent variable.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Y_i\)</span>: Value of the dependent variable for the <span class="math notranslate nohighlight">\(i\)</span>-th observation.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\bar{Y}\)</span>: Mean of the dependent variable.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>slope</strong> indicates how much the dependent variable is expected to increase when the independent variable increases by one unit.</p>
+<ol class="arabic simple" start="3">
+<li><p><strong>Sample Intercept</strong> <span class="math notranslate nohighlight">\(\hat{\beta}_0 = \bar{Y} – \hat{\beta}_1 \bar{X}\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>: Estimated intercept of the regression line.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\bar{Y}\)</span>: Mean of the dependent variable.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>: Estimated slope of the regression line.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\bar{X}\)</span>: Mean of the independent variable.</p></li>
+</ul>
+</li>
+</ol>
+<p>the <strong>y-intercept</strong> of our predicted line gives the expected value of the dependent variable when the independent variable is zero. If your data isn’t meaningful at an X-value of zero, then your y-intercept may not be a meaningful value in isolation, but it’s still a necessary mathematical consequence of interpreting your data as being along some theoretical line. For an example, consider: what is the value of a 0 square foot home?</p>
+<ol class="arabic simple" start="4">
+<li><p><strong>Sample Regression Line</strong> <span class="math notranslate nohighlight">\(\hat{Y}_i = \hat{\beta}_0 + \hat{\beta}_1 X_i + \hat{\epsilon}_i\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{Y}_i\)</span>: Predicted value of the dependent variable for the <span class="math notranslate nohighlight">\(i\)</span>-th observation.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\beta}_0\)</span>: Estimated intercept of the regression line.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\beta}_1\)</span>: Estimated slope of the regression line.</p></li>
+<li><p><span class="math notranslate nohighlight">\(X_i\)</span>: Value of the independent variable for the <span class="math notranslate nohighlight">\(i\)</span>-th observation.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\epsilon}_i\)</span>: Residual (error) for the <span class="math notranslate nohighlight">\(i\)</span>-th observation, the difference between the observed and predicted values.</p></li>
+</ul>
+</li>
+</ol>
+<p>This is the formula for the estimated regression line, showing how the dependent variable is predicted from the independent variable in the sample.</p>
+<ol class="arabic simple" start="5">
+<li><p><strong>Conditional Variance</strong> <span class="math notranslate nohighlight">\(\hat{\sigma}^2 = \frac{\sum{\hat{\epsilon}}^2_i} {n – 2} = \frac{\sum(Y_i – \hat{Y}_i)^2} {n – 2}\)</span>:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\hat{\sigma}^2\)</span>: Estimated variance of the residuals.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{\epsilon}_i\)</span>: Residual (error) for the <span class="math notranslate nohighlight">\(i\)</span>-th observation.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Y_i\)</span>: Observed value of the dependent variable for the <span class="math notranslate nohighlight">\(i\)</span>-th observation.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\hat{Y}_i\)</span>: Predicted value of the dependent variable for the <span class="math notranslate nohighlight">\(i\)</span>-th observation.</p></li>
+<li><p><span class="math notranslate nohighlight">\(n\)</span>: Number of observations in the sample.</p></li>
+</ul>
+</li>
+</ol>
+<p><strong>variance of residuals</strong> measures how well the regression line fits the data. Lower values indicate a better fit. See least squares below for more discussion on residuals.</p>
+<p>Try to identify the different elements described in these equations on these plots. The plot on the left is an optimal linear regression, which minimizes the distance from the line to each data point. On the right, we’ve selected a slope and y-intercept that have worse performance.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+
+<span class="c1"># Original data</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+
+<span class="c1"># Model fitting</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Sum of Squared Errors</span>
+<span class="n">sse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">predictions</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Plot with regression line, intercept, residuals</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># First subplot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data points&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="mi">6</span> <span class="o">+</span> <span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Regression line&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># Intercept point</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ymin</span><span class="o">=</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ymax</span><span class="o">=</span><span class="n">predictions</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>  <span class="c1"># Residuals</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Simple Linear Regression with Optimal Line&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Intercept: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="se">\n</span><span class="s1">SSE: </span><span class="si">{</span><span class="n">sse</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">)</span>
+
+<span class="c1"># Deliberately inferior line</span>
+<span class="c1"># Assuming a different slope and intercept</span>
+<span class="n">inferior_slope</span> <span class="o">=</span> <span class="mf">0.3</span>
+<span class="n">inferior_intercept</span> <span class="o">=</span> <span class="mi">3</span>
+<span class="n">inferior_predictions</span> <span class="o">=</span> <span class="n">inferior_slope</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">inferior_intercept</span>
+<span class="n">inferior_sse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">((</span><span class="n">y</span> <span class="o">-</span> <span class="n">inferior_predictions</span><span class="p">)</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Second subplot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data points&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="p">[</span><span class="n">inferior_intercept</span><span class="p">,</span> <span class="n">inferior_slope</span> <span class="o">*</span> <span class="mi">6</span> <span class="o">+</span> <span class="n">inferior_intercept</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Inferior line&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">inferior_intercept</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">)</span>  <span class="c1"># Intercept point</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ymin</span><span class="o">=</span><span class="n">y</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">ymax</span><span class="o">=</span><span class="n">inferior_predictions</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">linestyles</span><span class="o">=</span><span class="s1">&#39;dashed&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">)</span>  <span class="c1"># Residuals</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Simple Linear Regression with Inferior Line&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="mf">4.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">,</span> <span class="sa">f</span><span class="s1">&#39;Intercept: </span><span class="si">{</span><span class="n">inferior_intercept</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="se">\n</span><span class="s1">SSE: </span><span class="si">{</span><span class="n">inferior_sse</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">bbox</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;yellow&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">6.0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/25152dc4856b59fc7e9ac8ba4370665abc89323732688d1d21aa547a27d01fac.png" src="../_images/25152dc4856b59fc7e9ac8ba4370665abc89323732688d1d21aa547a27d01fac.png" />
+</div>
+</div>
+</section>
+<section id="explanation-of-hyperplanes-and-linear-relations-above-two-dimensions">
+<h4>Explanation of Hyperplanes and “Linear” Relations Above Two Dimensions<a class="headerlink" href="#explanation-of-hyperplanes-and-linear-relations-above-two-dimensions" title="Permalink to this heading">#</a></h4>
+<p>The vast majority of examples you will see focus on data shown on a scatterplot - the two dimensions shown are X and Y. Yet the relation we try to draw through the data is often a line - it has an angle or slope to it, but it’s a straight line, just like the X axis. The solution we have has one less dimenion than our data. The “one dimension” of this solution is the slope.</p>
+<p>When dealing with more than one input variable, the concept of a line extends to a plane. In three dimensions, a scatterplot looks like a cloud of points in space. (You may see the axes labeled as X, Y, and Z, as in computer graphics, but data scientists may label them <span class="math notranslate nohighlight">\(x_1\)</span>, <span class="math notranslate nohighlight">\(x_2\)</span>, and <span class="math notranslate nohighlight">\(y\)</span>.) The linear relation we draw through these points has two dimensions, and can be visualized as a plane angled within 3D space. The “two dimensions” here are the two independent angles a plane can be rotated by.</p>
+<p>Above 3 dimensions, just as the line and plane examples, your linear regression will have one less dimension than your input space. We simply refer to those solutions above 2 dimensions as hyperplanes. To be clinical about it: <code class="docutils literal notranslate"><span class="pre">In</span> <span class="pre">mathematics,</span> <span class="pre">a</span> <span class="pre">hyperplane</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">subspace</span> <span class="pre">whose</span> <span class="pre">dimension</span> <span class="pre">is</span> <span class="pre">one</span> <span class="pre">less</span> <span class="pre">than</span> <span class="pre">that</span> <span class="pre">of</span> <span class="pre">its</span> <span class="pre">ambient</span> <span class="pre">space</span></code>. Since most humans cannot meaningfully visualize 4-dimensional data and a 3-dimensional solution, we generally teach towards examples with low dimensionality, and leave the mind-bending visualization of hyperplane solutions often required for real-world problem solving as an exercise for the reader.</p>
+</section>
+<section id="concept-of-best-fit-line-and-least-squares-method">
+<h4>Concept of Best-Fit Line and Least Squares Method<a class="headerlink" href="#concept-of-best-fit-line-and-least-squares-method" title="Permalink to this heading">#</a></h4>
+<p>The least squares method is a statistical technique to determine the best fit line by minimizing the sum of squares of the residuals—the differences between observed and estimated values.</p>
+<p><em>Why square it?</em> There’s at least two reasons to use the square of residuals rather than just using them directly:</p>
+<ul class="simple">
+<li><p>To prevent positive and negative values from cancelling out. Squared error is always positive, and residuals above and below the line have equal weight.</p></li>
+<li><p>To penalize larger residuals. The lowest squared error gets equally close to all points. Consider a line that goes straight between two data points: a squared error of <span class="math notranslate nohighlight">\(2r^2\)</span>. Getting equally closer to one point and farther from the other changes that to <span class="math notranslate nohighlight">\((r-a)^2 + (r+a)^2\)</span>. (The y-intercept was changed by <span class="math notranslate nohighlight">\(\pm a\)</span>.) Thanks to the exponent, this is always larger, while strictly adding or subtracting residuals might cause these lines to be completely equivalent.</p></li>
+</ul>
+</section>
+</section>
+<section id="python-implementation">
+<h3>Python Implementation<a class="headerlink" href="#python-implementation" title="Permalink to this heading">#</a></h3>
+<p>It’s possible to implement regression yourself, without libraries - if you are so inclined, that is left as <strong>an exercise for the reader</strong>. You might start with a line from your lowest X value through your highest X value, then adjust slope and y-intercept to reduce error. For now, let’s get more acquainted with a library that will do a fast and accurate job.</p>
+<section id="implementing-simple-linear-regression-with-scikit-learn">
+<h4>Implementing Simple Linear Regression with scikit-learn<a class="headerlink" href="#implementing-simple-linear-regression-with-scikit-learn" title="Permalink to this heading">#</a></h4>
+<p>Scikit-learn is a popular machine learning library that provides various tools for data mining and analysis. Implementing simple linear regression with scikit-learn is straightforward.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Coefficient: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="si">}</span><span class="s2">, Intercept: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coefficient: [0.6], Intercept: 2.2
+</pre></div>
+</div>
+</div>
+</div>
+<p>This code snippet demonstrates how to implement a simple linear regression model using scikit-learn. The reshape method is used to format the data appropriately for the model.</p>
+<p>The output shows the model’s slope (coefficient) and intercept, key components of the linear equation that predicts the dependent variable’s value.</p>
+</section>
+<section id="visualizing-data-and-regression-line-using-matplotlib">
+<h4>Visualizing Data and Regression Line Using matplotlib<a class="headerlink" href="#visualizing-data-and-regression-line-using-matplotlib" title="Permalink to this heading">#</a></h4>
+<p>Matplotlib is a comprehensive library for creating static, animated, and interactive visualizations in Python. It is highly useful for visualizing relationships between variables.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">prediction</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Simple Linear Regression&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2ec9c7aea5a60663ff646ad5436587367b016149b6b18637a5e4edba8792c058.png" src="../_images/2ec9c7aea5a60663ff646ad5436587367b016149b6b18637a5e4edba8792c058.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="example-dataset">
+<h3>Example Dataset<a class="headerlink" href="#example-dataset" title="Permalink to this heading">#</a></h3>
+<section id="import-and-analyze-a-housing-dataset">
+<h4>Import and Analyze a Housing Dataset<a class="headerlink" href="#import-and-analyze-a-housing-dataset" title="Permalink to this heading">#</a></h4>
+<p><strong>This is confabulated data.</strong> There’s no basis in reality for the CSV file included here. Consider trying your new skills against publicly available real data, or with <a class="reference external" href="https://scikit-learn.org/stable/datasets/toy_dataset.html">toy datasets included with sklearn</a>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># Assuming housing_data.csv is available</span>
+<span class="n">housing_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;housing_data.csv&#39;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">housing_data</span><span class="o">.</span><span class="n">head</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   SquareFeet   Price  Bedrooms  Bathrooms  Location  Age
+0         850  200000         2        1.0  Suburban    5
+1         900  205000         2        1.5     Urban   10
+2        1200  210000         3        2.0     Rural   15
+3         950  215000         2        1.5  Suburban    8
+4        1100  220000         3        2.0     Urban   25
+</pre></div>
+</div>
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>/tmp/ipykernel_106210/737031205.py:1: DeprecationWarning: 
+Pyarrow will become a required dependency of pandas in the next major release of pandas (pandas 3.0),
+(to allow more performant data types, such as the Arrow string type, and better interoperability with other libraries)
+but was not found to be installed on your system.
+If this would cause problems for you,
+please provide us feedback at https://github.com/pandas-dev/pandas/issues/54466
+        
+  import pandas as pd
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="build-a-simple-linear-regression-model-to-predict-housing-prices">
+<h4>Build a Simple Linear Regression Model to Predict Housing Prices<a class="headerlink" href="#build-a-simple-linear-regression-model-to-predict-housing-prices" title="Permalink to this heading">#</a></h4>
+<p>Using the previously introduced concepts and tools, we now aim to build a simple linear regression model to predict housing prices based on a single predictor variable from our dataset.</p>
+<section id="test-train-split">
+<h5>Test Train Split<a class="headerlink" href="#test-train-split" title="Permalink to this heading">#</a></h5>
+<p>This is an important element for future models: you should reserve some data so that you can test your model’s performance against data that wasn’t used to train it. Linear regression is not overly prone to memorization, but it’s a good practice and can highlight issues in how your data was stratified.</p>
+<p>In the case of linear regression on 2D data, “model” just means “the y-intercept and slope”.</p>
+<p>In this example, the <strong>train</strong> data is used to build the model, and the <strong>test</strong> data is predicted with the model. Going beyond this, if you like your model’s output, you can use it in <strong>inference</strong>: predicting Y values that you don’t actually know yet. The test data’s performance will be an indicator of your model’s usefulness, if your training data was sufficiently representative.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">housing_data</span><span class="p">[[</span><span class="s1">&#39;SquareFeet&#39;</span><span class="p">]]</span> <span class="c1"># Predictor</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">housing_data</span><span class="p">[</span><span class="s1">&#39;Price&#39;</span><span class="p">]</span> <span class="c1"># Target</span>
+
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Model Coefficient: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="si">}</span><span class="s2">, Intercept: </span><span class="si">{</span><span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">prediction</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">prediction</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Relationship between Square Footage and Home Price&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;House size in Sq Ft&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Price&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model Coefficient: [107.6641786], Intercept: 103044.81439951799
+</pre></div>
+</div>
+<img alt="../_images/da5b43460bad6625b25639d6555ea4a71ae6dfe3bee250789c3ba01c04b23921.png" src="../_images/da5b43460bad6625b25639d6555ea4a71ae6dfe3bee250789c3ba01c04b23921.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="excercise-for-the-reader">
+<h3>Excercise for the Reader<a class="headerlink" href="#excercise-for-the-reader" title="Permalink to this heading">#</a></h3>
+<p>Implementing and understanding linear regression. Look through the code in this lesson’s various plots. Repeat this procedure until you’re satisfied with your understanding:</p>
+<ul class="simple">
+<li><p>Find some data to plot. Use an online dataset, an sklearn toy dataset, a different column from the housing file above, or a mathematical function (even <span class="math notranslate nohighlight">\(x^2\)</span> and <span class="math notranslate nohighlight">\(x^-3\)</span> are interesting picks).</p></li>
+<li><p>Plot the data with matplotlib or similar.</p></li>
+<li><p>Select a slope and y-intercept. Random, through two datapoints, a fixed starting value, etc.</p></li>
+<li><p>Calculate residuals (distance from each Y value to the prediction).</p></li>
+<li><p>Adjust slope and y-intercept of your selected line to reduce error. Adjust by hand, or do it with a loop.</p></li>
+<li><p>Compare your solution to the <code class="docutils literal notranslate"><span class="pre">sklearn</span></code> model outputs.</p></li>
+</ul>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_05"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="005_Overview.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Course Structure</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#basics-of-regression-analysis-and-simple-linear-regression">Basics of Regression Analysis and Simple Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#theoretical-concepts">Theoretical Concepts</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-and-purpose-of-regression-analysis">Definition and Purpose of Regression Analysis</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#difference-between-supervised-and-unsupervised-learning">Difference Between Supervised and Unsupervised Learning</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#overview-of-simple-linear-regression">Overview of Simple Linear Regression</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mathematical-foundation">Mathematical Foundation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation-of-linear-equations-y-mx-c">Explanation of Linear Equations: <span class="math notranslate nohighlight">\(y=mx+c\)</span></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#explanation-of-hyperplanes-and-linear-relations-above-two-dimensions">Explanation of Hyperplanes and “Linear” Relations Above Two Dimensions</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#concept-of-best-fit-line-and-least-squares-method">Concept of Best-Fit Line and Least Squares Method</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#python-implementation">Python Implementation</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-simple-linear-regression-with-scikit-learn">Implementing Simple Linear Regression with scikit-learn</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#visualizing-data-and-regression-line-using-matplotlib">Visualizing Data and Regression Line Using matplotlib</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-dataset">Example Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#import-and-analyze-a-housing-dataset">Import and Analyze a Housing Dataset</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#build-a-simple-linear-regression-model-to-predict-housing-prices">Build a Simple Linear Regression Model to Predict Housing Prices</a><ul class="nav section-nav flex-column">
+<li class="toc-h5 nav-item toc-entry"><a class="reference internal nav-link" href="#test-train-split">Test Train Split</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#excercise-for-the-reader">Excercise for the Reader</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

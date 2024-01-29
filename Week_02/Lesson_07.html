@@ -19,15 +19,15 @@
   </script>
   
   <!-- Loaded before other Sphinx assets -->
-  <link href="../_static/styles/theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-<link href="../_static/styles/bootstrap.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-<link href="../_static/styles/pydata-sphinx-theme.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
 
   
-  <link href="../_static/vendor/fontawesome/6.5.1/css/all.min.css?digest=bd9e20870c6007c4c509" rel="stylesheet" />
-  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-solid-900.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-brands-400.woff2" />
-<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.5.1/webfonts/fa-regular-400.woff2" />
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
 
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
     <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
@@ -38,9 +38,9 @@
     <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
   
   <!-- Pre-loaded scripts that we'll load fully later -->
-  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509" />
-<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509" />
-  <script src="../_static/vendor/fontawesome/6.5.1/js/all.min.js?digest=bd9e20870c6007c4c509"></script>
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
@@ -80,7 +80,7 @@ const thebe_selector_output = ".output, .cell_output"
 
   
   
-  <a id="pst-skip-link" class="skip-link" href="#main-content">Skip to main content</a>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
   
   <div id="pst-scroll-pixel-helper"></div>
 
@@ -123,20 +123,12 @@ const thebe_selector_output = ".output, .cell_output"
   <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
 </form></div>
   </div>
-
-  <header>
   
-    <div class="bd-header navbar navbar-expand-lg bd-navbar">
-    </div>
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
   
-  </header>
-
   <div class="bd-container">
     <div class="bd-container__inner bd-page-width">
-      
-      
-      
-        
       
       <div class="bd-sidebar-primary bd-sidebar">
         
@@ -540,7 +532,7 @@ document.write(`
               
                 
 <div id="searchbox"></div>
-                <article class="bd-article">
+                <article class="bd-article" role="main">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="day-7-linear-algebra-matrices-and-matrix-operations">
 <h1>Day 7: Linear Algebra - Matrices and Matrix Operations<a class="headerlink" href="#day-7-linear-algebra-matrices-and-matrix-operations" title="Permalink to this heading">#</a></h1>
@@ -745,15 +737,15 @@ Z[i][j] = \sum_{k=1}^{n} (X[i][k] \cdot Y[k][j])
 [[ 38  50]
  [ 83 113]] 
 
-[[ 78 148 170 140]
- [ 28 117 134 102]
- [ 71 120 128 121]
- [ 30  61  75  87]] 
+[[ 68 112  63  80]
+ [ 98 132 100 106]
+ [ 63  84  66  93]
+ [ 76 149 107 126]] 
 
-[[143 128  90  88]
- [134 117 111  71]
- [ 93  99  87  45]
- [ 74  73  58  63]]
+[[ 48  55  38  87]
+ [ 80 120  47 139]
+ [ 44 105  25 131]
+ [120 123  71 199]]
 </pre></div>
 </div>
 </div>
@@ -867,9 +859,9 @@ X^T = \left[ \begin{array}{rrr} 1 &amp; 7 &amp; 13 \\ 3 &amp; 9 &amp; 15 \\ 5 &a
  [ 7  9 11]
  [13 15 17]] 
 
-[[-4.43536327e+14  8.87072654e+14 -4.43536327e+14]
- [ 8.87072654e+14 -1.77414531e+15  8.87072654e+14]
- [-4.43536327e+14  8.87072654e+14 -4.43536327e+14]]
+[[-2.81474977e+14  5.62949953e+14 -2.81474977e+14]
+ [ 5.62949953e+14 -1.12589991e+15  5.62949953e+14]
+ [-2.81474977e+14  5.62949953e+14 -2.81474977e+14]]
 </pre></div>
 </div>
 </div>
@@ -928,9 +920,9 @@ mat_{Y} = \left[ \begin{array}{rrr} 4 &amp; 7 &amp; 8 \\ 22 &amp; 45 &amp; 76 \\
  [ 194  405  895]
  [ 322  690 1610]] 
 
-[[-2.66750357e+13 -2.77420371e+13  2.64894702e+13]
- [ 1.86725250e+13  1.94194260e+13 -1.85426292e+13]
- [-2.66750357e+12 -2.77420371e+12  2.64894702e+12]]
+[[-2.81926058e+13 -2.93203101e+13  2.79964834e+13]
+ [ 1.97348241e+13  2.05242171e+13 -1.95975384e+13]
+ [-2.81926058e+12 -2.93203101e+12  2.79964834e+12]]
 </pre></div>
 </div>
 </div>
@@ -1017,7 +1009,6 @@ mat_{Y} = \left[ \begin{array}{rrr} 4 &amp; 7 &amp; 8 \\ 22 &amp; 45 &amp; 76 \\
               
                 <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
 
-
   <div class="sidebar-secondary-item">
   <div class="page-toc tocsection onthispage">
     <i class="fa-solid fa-list"></i> Contents
@@ -1092,8 +1083,8 @@ By Aaron S. & John M.
   </div>
   
   <!-- Scripts loaded after <body> so the DOM is not blocked -->
-  <script src="../_static/scripts/bootstrap.js?digest=bd9e20870c6007c4c509"></script>
-<script src="../_static/scripts/pydata-sphinx-theme.js?digest=bd9e20870c6007c4c509"></script>
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
 
   <footer class="bd-footer">
   </footer>
