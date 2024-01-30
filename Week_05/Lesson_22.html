@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Outline Only - Lesson 22: Implementing Multiple Linear Regression in Python &#8212; 100 Days of Machine Learning</title>
+    <title>Day 22: Implementing Multiple Linear Regression in Python &#8212; 100 Days of Machine Learning</title>
   
   
   
@@ -62,12 +62,13 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script>DOCUMENTATION_OPTIONS.pagename = 'Week_05/Lesson_22';</script>
     <link rel="canonical" href="https://100daysofml.com/Week_05/Lesson_22.html" />
     <link rel="shortcut icon" href="../_static/100days.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Outline Only - Lesson 23: Advanced Regression Techniques" href="Lesson_23.html" />
     <link rel="prev" title="Day 21 - Introduction to Regression Analysis in Python" href="Lesson_21.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -239,11 +240,6 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5 - Data Preprocessing</span></p>
-<ul class="current nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="005_Overview.html">Course Structure</a></li>
-
-</ul>
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4 - Data Preprocessing</span></p>
 <ul class="nav bd-sidenav">
 <li class="toctree-l1 has-children"><a class="reference internal" href="../Week_04/004_Overview.html">Week_04: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
@@ -258,10 +254,14 @@ const thebe_selector_output = ".output, .cell_output"
 </ul>
 </li>
 </ul>
-<p aria-level="2" class="caption" role="heading"><span class="caption-text">Course Overview</span></p>
-<ul class="nav bd-sidenav">
-<li class="toctree-l1"><a class="reference internal" href="005_Overview_.html">Course Structure</a></li>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5: Supervised Learning - Regression</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="005_Overview.html">Week_05: Overview</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Lesson_21.html">Day 21 - Introduction to Regression Analysis in Python</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Day 22: Implementing Multiple Linear Regression in Python</a></li>
 
+</ul>
+</li>
 </ul>
 
     </div>
@@ -483,7 +483,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
 </div></div>
       
     </div>
@@ -494,11 +496,33 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Outline Only - Lesson 22: Implementing Multiple Linear Regression in Python</h1>
+    <h1>Day 22: Implementing Multiple Linear Regression in Python</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 22: Implementing Multiple Linear Regression in Python</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-multiple-linear-regression-equation">The Multiple Linear Regression Equation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts-for-implementation">Key Concepts for Implementation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#on-preprocessing-for-multiple-linear-regression">On Preprocessing for Multiple Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-model-evaluation-metrics">Understanding Model Evaluation Metrics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader">Exercise For The Reader</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional Resources</a></li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -508,35 +532,366 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="outline-only-lesson-22-implementing-multiple-linear-regression-in-python">
-<h1>Outline Only - <strong>Lesson 22:</strong> Implementing Multiple Linear Regression in Python<a class="headerlink" href="#outline-only-lesson-22-implementing-multiple-linear-regression-in-python" title="Permalink to this heading">#</a></h1>
-<p>Understand and implement multiple linear regression. - Math Focus: Multivariate calculus and regression coefficients interpretation.</p>
+  <section class="tex2jax_ignore mathjax_ignore" id="day-22-implementing-multiple-linear-regression-in-python">
+<h1>Day 22: Implementing Multiple Linear Regression in Python<a class="headerlink" href="#day-22-implementing-multiple-linear-regression-in-python" title="Permalink to this heading">#</a></h1>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="ch">#!pip install seaborn matplotlib pandas</span>
+</pre></div>
+</div>
+</div>
+</div>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
+<p>Multiple linear regression is an extension of simple linear regression that is used for predicting an outcome variable (<span class="math notranslate nohighlight">\(Y\)</span>) based on multiple predictor variables (<span class="math notranslate nohighlight">\(X_1, X_2, ... X_n\)</span>). The “multiple” aspect refers to the utilization of more than one independent variable to make predictions about a dependent variable. This approach provides a more comprehensive model of the data, allowing for the interaction and combined effects of multiple predictors to be considered.</p>
+<p>Multiple linear regression is particularly useful over simple linear regression when dealing with complex data sets where the outcome variable is likely influenced by more than a single factor. It enables the exploration and modeling of relationships between a dependent variable and several independent variables, making it a powerful tool for predictive analytics in fields such as economics, finance, healthcare, and environmental studies.</p>
+<p>A Machine Learning practitioner should be aware of the following key equations and concepts to utilize multiple linear regression correctly:</p>
+<section id="the-multiple-linear-regression-equation">
+<h3>The Multiple Linear Regression Equation<a class="headerlink" href="#the-multiple-linear-regression-equation" title="Permalink to this heading">#</a></h3>
+<p>The equation for a multiple linear regression model is expressed as:
+<span class="math notranslate nohighlight">\( Y = \beta_0 + \beta_1X_1 + \beta_2X_2 + ... + \beta_nX_n + \epsilon \)</span></p>
+<p>where:</p>
 <ul class="simple">
-<li><p><strong>Theoretical Concepts:</strong></p>
-<ul>
-<li><p>Introduction to multiple linear regression.</p></li>
-<li><p>Understanding independent and dependent variables in a multivariate context.</p></li>
+<li><p><span class="math notranslate nohighlight">\(Y\)</span> is the dependent variable (target outcome),</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_0\)</span> is the y-intercept (constant term),</p></li>
+<li><p><span class="math notranslate nohighlight">\(\beta_1, \beta_2, ..., \beta_n\)</span> are the coefficients of the independent variables which represent the change in the dependent variable for a one unit change in the respective independent variable, holding all other variables constant,</p></li>
+<li><p><span class="math notranslate nohighlight">\(X_1, X_2, ..., X_n\)</span> are the independent variables (predictors),</p></li>
+<li><p><span class="math notranslate nohighlight">\(\epsilon\)</span> is the error term, representing the difference between the observed and predicted values.</p></li>
 </ul>
-</li>
-<li><p><strong>Mathematical Foundation:</strong></p>
-<ul>
-<li><p>Multivariate linear equation: Y=β0+β1X1+β2X2+…+βnXnY=β0​+β1​X1​+β2​X2​+…+βn​Xn​.</p></li>
-<li><p>Concept of regression coefficients and their interpretation.</p></li>
+</section>
+<section id="key-concepts-for-implementation">
+<h3>Key Concepts for Implementation<a class="headerlink" href="#key-concepts-for-implementation" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Assumptions of Multiple Linear Regression</strong>: It’s crucial to ensure that the data satisfies the assumptions of linearity, independence, homoscedasticity, equal errors on both sides of the line for the model to be valid.</p></li>
+<li><p><strong>Coefficient Interpretation</strong>: Understanding how to interpret the regression coefficients is essential for deriving meaningful insights about the relationships between independent and dependent variables.</p></li>
+<li><p><strong>Model Evaluation Metrics</strong>: Familiarity with metrics like R-squared, Adjusted R-squared, Mean Squared Error (MSE), and Root Mean Squared Error (RMSE) is important for assessing model performance and ensuring the best fit to the data.</p></li>
+<li><p><strong>Multicollinearity</strong>: Awareness of the potential for multicollinearity, which occurs when independent variables are highly correlated with each other. This can distort the model estimates and make the interpretation of coefficients challenging. Techniques such as variance inflation factor (VIF) analysis can be used to detect and address multicollinearity.</p></li>
 </ul>
-</li>
-<li><p><strong>Python Implementation:</strong></p>
-<ul>
-<li><p>Using pandas for data manipulation.</p></li>
-<li><p>Implementing multiple linear regression with scikit-learn.</p></li>
-<li><p>Visualizations to interpret multiple regression outcomes using seaborn.</p></li>
+<p>Let’s take a quick peek at what we’re hoping to achieve with a plot of today’s confabulated data. We have two X variables, <code class="docutils literal notranslate"><span class="pre">Age</span></code> and <code class="docutils literal notranslate"><span class="pre">Income</span></code>, and they both have some relationship with the Y variable, <code class="docutils literal notranslate"><span class="pre">Spending_Score</span></code>. <strong>Can we get a more accurate answer by simultaneously doing regression on both X variables?</strong> Hopefully you guessed “yes”, as that’s what today’s notebook is all about.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;customer_data2.csv&quot;</span><span class="p">)</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="s1">&#39;Income&#39;</span><span class="p">],</span> <span class="n">y_vars</span><span class="o">=</span><span class="s1">&#39;Spending_Score&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">)</span>
+<span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Regression Lines: Age and Income versus Spending Score&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.02</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/92ac3250e6513c3b8472e0b18e967da18927d77722af5d165c07f194e84d7801.png" src="../_images/92ac3250e6513c3b8472e0b18e967da18927d77722af5d165c07f194e84d7801.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="on-preprocessing-for-multiple-linear-regression">
+<h2>On Preprocessing for Multiple Linear Regression<a class="headerlink" href="#on-preprocessing-for-multiple-linear-regression" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Handling Missing Values</strong>: Missing data can distort the analysis as it might not represent the underlying distribution of the data. It’s crucial to handle them appropriately. Common strategies include filling them with the mean, median, or mode (for continuous variables), or by predicting the missing values using other data, or simply removing rows/columns with missing values.</p></li>
+<li><p><strong>Feature Scaling</strong>: Many machine learning algorithms, including those used in linear regression, perform better or converge faster when features are on a similar scale. Feature scaling (like standardization or normalization) is essential when the features have different scales. This is not strictly necessary for linear regression models, but it can be beneficial in models that use regularization.</p></li>
+<li><p><strong>Encoding Categorical Variables</strong>: If the dataset contains categorical variables, these should be converted to a numerical format. This can be done using methods like one-hot encoding or label encoding. (We will get to those eventually.) In the “customer_data.csv” example data, there are no categorical variables, so this step is not required.</p></li>
+</ol>
+<p>Different preprocessing strategies are applied based on the nature of the data and the chosen model. For instance, tree-based models don’t require feature scaling, but models like linear regression, neural networks, and support vector machines usually benefit from it. Handling missing values and encoding categorical variables are generally necessary steps regardless of the model being used.</p>
+<p>Note that even when scaling values, we train a scaling model on separate training data, then apply it to the test data. Don’t let test data leak in to <strong>any</strong> of your model configuration.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="c1"># Load dataset</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;customer_data.csv&#39;</span><span class="p">)</span>
+
+<span class="c1"># Check for missing values and handle them if necessary</span>
+<span class="k">if</span> <span class="n">df</span><span class="o">.</span><span class="n">isnull</span><span class="p">()</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">any</span><span class="p">():</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">fillna</span><span class="p">(</span><span class="n">df</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>  <span class="c1"># Filling missing values with the mean - rarely a wise idea, but this is class.</span>
+
+<span class="c1"># Assuming &#39;Spending_Score&#39; is the target variable and the rest are features</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;Spending_Score&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;Spending_Score&#39;</span><span class="p">]</span>
+
+<span class="c1"># Splitting dataset</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">,</span> <span class="n">Y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Feature scaling</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_train_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s take a peek at the data after scaling. The histogram should look very familiar, but take note of the X axis:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert scaled data back to DataFrame for easier plotting</span>
+<span class="n">X_test_scaled_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">,</span> <span class="n">columns</span><span class="o">=</span><span class="n">X_test</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+
+<span class="c1"># Plotting</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Original Data Plots</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Original Age Distribution&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">X_test</span><span class="p">[</span><span class="s1">&#39;Income&#39;</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Original Income Distribution&#39;</span><span class="p">)</span>
+
+<span class="c1"># Scaled Data Plots</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">X_test_scaled_df</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Scaled Age Distribution&#39;</span><span class="p">)</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">X_test_scaled_df</span><span class="p">[</span><span class="s1">&#39;Income&#39;</span><span class="p">])</span>
+<span class="n">axes</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Scaled Income Distribution&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/ac03f7a876399da5280319863d2adc823c5027a24f50752b9f09cdf8713cbbb9.png" src="../_images/ac03f7a876399da5280319863d2adc823c5027a24f50752b9f09cdf8713cbbb9.png" />
+</div>
+</div>
+<section id="understanding-model-evaluation-metrics">
+<h3>Understanding Model Evaluation Metrics<a class="headerlink" href="#understanding-model-evaluation-metrics" title="Permalink to this heading">#</a></h3>
+<p>In the context of linear regression, understanding and applying the right model evaluation metrics is crucial for assessing the model’s performance and its suitability for the given data.</p>
+<ol class="arabic simple">
+<li><p><strong>R-squared (<span class="math notranslate nohighlight">\(R^2\)</span>)</strong>: This metric measures the proportion of the variance in the dependent variable that is predictable from the independent variables. It’s a statistical measure between 0 and 1, where a higher value generally indicates a better fit of the model to the data. R-squared is particularly useful for comparing the explanatory power of regression models with the same dependent variable but different independent variables.</p></li>
+<li><p><strong>MSE (Mean Squared Error)</strong>: MSE measures the average squared difference between the observed actual outcomes and the outcomes predicted by the model. It’s always non-negative, and values closer to zero are better. MSE is sensitive to outliers and can give a disproportionately high penalty to large errors, making it particularly useful when large errors are undesirable in the model.</p></li>
+<li><p><strong>RMSE (Root Mean Squared Error)</strong>: RMSE is the square root of MSE. It has the same units as the dependent variable, making it easier to interpret than MSE. This takes some of the benefits of MSE but makes it less punishing to a few larger errors from outliers.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Model evaluation with scikit-learn</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
+
+<span class="c1"># Model initialization and training</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_scaled</span><span class="p">,</span> <span class="n">Y_train</span><span class="p">)</span>
+
+<span class="c1"># Making predictions</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">)</span>
+
+<span class="c1"># Evaluation</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">Y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">Y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;MSE: </span><span class="si">{</span><span class="n">mse</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;R-squared: </span><span class="si">{</span><span class="n">r2</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MSE: 732.3551245668029
+R-squared: -0.027105564211052702
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">Y_test</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Actual&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_test_scaled</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">predictions</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Predicted&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Actual vs Predicted Spending Scores&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Scaled Age&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Spending Score&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Displaying coefficients</span>
+<span class="n">coefficients</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coef_</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coefficients for each independent variable:&quot;</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/1d0563321f6a2b86ded4cb8e6c1035aab0234f07e9db2f827b7c6ea403da2913.png" src="../_images/1d0563321f6a2b86ded4cb8e6c1035aab0234f07e9db2f827b7c6ea403da2913.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coefficients for each independent variable: [-0.24544393  0.72516579]
+</pre></div>
+</div>
+</div>
+</div>
+<p>If you’re satisfied with the results of the model, you can put the model into inference, and predict new Y values from unseen X values.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">predict_original_scale_dataframe</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">scaler</span><span class="p">,</span> <span class="n">input_df</span><span class="p">):</span>
+    <span class="n">input_scaled</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">input_df</span><span class="p">)</span>
+
+    <span class="c1"># Making predictions</span>
+    <span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">input_scaled</span><span class="p">)</span>
+
+    <span class="c1"># Returning predictions as a pandas Series</span>
+    <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">Series</span><span class="p">(</span><span class="n">predictions</span><span class="p">)</span>
+
+<span class="c1"># Example usage</span>
+<span class="n">input_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Age&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">25</span><span class="p">],</span> <span class="s1">&#39;Income&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">50000</span><span class="p">]})</span>  <span class="c1"># Values to put into inference</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">predict_original_scale_dataframe</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">scaler</span><span class="p">,</span> <span class="n">input_df</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">predictions</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="c1"># there&#39;s only one prediction, but predict_original_scale_dataframe would crunch an entire df at once.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>48.57488877753046
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="exercise-for-the-reader">
+<h2>Exercise For The Reader<a class="headerlink" href="#exercise-for-the-reader" title="Permalink to this heading">#</a></h2>
+<p>Let’s have a look at the <strong>diabetes</strong> dataset from sklearn. Read more about the columns it contains in the sklearn docs: <a class="reference external" href="https://scikit-learn.org/stable/datasets/toy_dataset.html#diabetes-dataset">https://scikit-learn.org/stable/datasets/toy_dataset.html#diabetes-dataset</a></p>
+<p>Some stuff you should be able to do now:</p>
+<ul class="simple">
+<li><p>Conduct necessary data preprocessing.</p></li>
+<li><p>Implement a multiple linear regression model to predict the target variable.</p></li>
+<li><p>Evaluate the model using R-squared and MSE metrics.</p></li>
+<li><p>Interpret the significance of each feature’s coefficient in the context of predicting the target variable.</p></li>
 </ul>
-</li>
-<li><p><strong>Example Dataset:</strong></p>
-<ul>
-<li><p>A more complex dataset (e.g., real estate data with multiple features).</p></li>
-</ul>
-</li>
-</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sklearn.datasets</span>
+
+<span class="n">diabetes</span> <span class="o">=</span> <span class="n">sklearn</span><span class="o">.</span><span class="n">datasets</span><span class="o">.</span><span class="n">load_diabetes</span><span class="p">(</span><span class="n">as_frame</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diabetes</span><span class="p">[</span><span class="s1">&#39;data&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>age</th>
+      <th>sex</th>
+      <th>bmi</th>
+      <th>bp</th>
+      <th>s1</th>
+      <th>s2</th>
+      <th>s3</th>
+      <th>s4</th>
+      <th>s5</th>
+      <th>s6</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.038076</td>
+      <td>0.050680</td>
+      <td>0.061696</td>
+      <td>0.021872</td>
+      <td>-0.044223</td>
+      <td>-0.034821</td>
+      <td>-0.043401</td>
+      <td>-0.002592</td>
+      <td>0.019907</td>
+      <td>-0.017646</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>-0.001882</td>
+      <td>-0.044642</td>
+      <td>-0.051474</td>
+      <td>-0.026328</td>
+      <td>-0.008449</td>
+      <td>-0.019163</td>
+      <td>0.074412</td>
+      <td>-0.039493</td>
+      <td>-0.068332</td>
+      <td>-0.092204</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.085299</td>
+      <td>0.050680</td>
+      <td>0.044451</td>
+      <td>-0.005670</td>
+      <td>-0.045599</td>
+      <td>-0.034194</td>
+      <td>-0.032356</td>
+      <td>-0.002592</td>
+      <td>0.002861</td>
+      <td>-0.025930</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>-0.089063</td>
+      <td>-0.044642</td>
+      <td>-0.011595</td>
+      <td>-0.036656</td>
+      <td>0.012191</td>
+      <td>0.024991</td>
+      <td>-0.036038</td>
+      <td>0.034309</td>
+      <td>0.022688</td>
+      <td>-0.009362</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.005383</td>
+      <td>-0.044642</td>
+      <td>-0.036385</td>
+      <td>0.021872</td>
+      <td>0.003935</td>
+      <td>0.015596</td>
+      <td>0.008142</td>
+      <td>-0.002592</td>
+      <td>-0.031988</td>
+      <td>-0.046641</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">diabetes</span><span class="p">[</span><span class="s1">&#39;target&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0    151.0
+1     75.0
+2    141.0
+3    206.0
+4    135.0
+Name: target, dtype: float64
+</pre></div>
+</div>
+</div>
+</div>
+<p>Have fun!</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="additional-resources">
+<h1>Additional Resources<a class="headerlink" href="#additional-resources" title="Permalink to this heading">#</a></h1>
+<p><a class="reference external" href="https://www.statology.org/multiple-linear-regression-assumptions/">https://www.statology.org/multiple-linear-regression-assumptions/</a></p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -578,21 +933,40 @@ document.write(`
         <p class="prev-next-title">Day 21 - Introduction to Regression Analysis in Python</p>
       </div>
     </a>
-    <a class="right-next"
-       href="Lesson_23.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Outline Only - <strong>Lesson 23:</strong> Advanced Regression Techniques</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
-    </a>
 </div>
                 </footer>
               
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 22: Implementing Multiple Linear Regression in Python</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#the-multiple-linear-regression-equation">The Multiple Linear Regression Equation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#key-concepts-for-implementation">Key Concepts for Implementation</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#on-preprocessing-for-multiple-linear-regression">On Preprocessing for Multiple Linear Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-model-evaluation-metrics">Understanding Model Evaluation Metrics</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader">Exercise For The Reader</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional Resources</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
               
             
           </div>
