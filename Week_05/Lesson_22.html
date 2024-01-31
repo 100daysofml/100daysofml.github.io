@@ -69,6 +69,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/100days.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Day 23: Advanced Regression Techniques" href="Lesson_23.html" />
     <link rel="prev" title="Day 21 - Introduction to Regression Analysis in Python" href="Lesson_21.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
@@ -260,6 +261,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="Lesson_21.html">Day 21 - Introduction to Regression Analysis in Python</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Day 22: Implementing Multiple Linear Regression in Python</a></li>
 
+<li class="toctree-l2"><a class="reference internal" href="Lesson_23.html">Day 23 - Advanced Regression Techniques - Polynomial, Lasso, and Ridge Regression</a></li>
 </ul>
 </li>
 </ul>
@@ -574,7 +576,7 @@ document.write(`
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 
-<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;customer_data2.csv&quot;</span><span class="p">)</span>
+<span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;customer_data.csv&quot;</span><span class="p">)</span>
 <span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">x_vars</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;Age&#39;</span><span class="p">,</span><span class="s1">&#39;Income&#39;</span><span class="p">],</span> <span class="n">y_vars</span><span class="o">=</span><span class="s1">&#39;Spending_Score&#39;</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">7</span><span class="p">,</span> <span class="n">aspect</span><span class="o">=</span><span class="mf">0.7</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s1">&#39;reg&#39;</span><span class="p">)</span>
 <span class="n">g</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;Regression Lines: Age and Income versus Spending Score&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mf">1.02</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
@@ -582,7 +584,7 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/92ac3250e6513c3b8472e0b18e967da18927d77722af5d165c07f194e84d7801.png" src="../_images/92ac3250e6513c3b8472e0b18e967da18927d77722af5d165c07f194e84d7801.png" />
+<img alt="../_images/bb0d0c6c15e5ffac9ec2fbb8b1013187538a784f2b9216a086c4291db4962b35.png" src="../_images/bb0d0c6c15e5ffac9ec2fbb8b1013187538a784f2b9216a086c4291db4962b35.png" />
 </div>
 </div>
 </section>
@@ -685,8 +687,8 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MSE: 732.3551245668029
-R-squared: -0.027105564211052702
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>MSE: 3183.330047035957
+R-squared: 0.13751568541102366
 </pre></div>
 </div>
 </div>
@@ -710,8 +712,8 @@ R-squared: -0.027105564211052702
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/1d0563321f6a2b86ded4cb8e6c1035aab0234f07e9db2f827b7c6ea403da2913.png" src="../_images/1d0563321f6a2b86ded4cb8e6c1035aab0234f07e9db2f827b7c6ea403da2913.png" />
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coefficients for each independent variable: [-0.24544393  0.72516579]
+<img alt="../_images/9bd1031423bef1a2f61f1d89256148d1b71e943953636677f033cd71d2a243d2.png" src="../_images/9bd1031423bef1a2f61f1d89256148d1b71e943953636677f033cd71d2a243d2.png" />
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Coefficients for each independent variable: [34.34198373 55.53651751]
 </pre></div>
 </div>
 </div>
@@ -736,7 +738,7 @@ R-squared: -0.027105564211052702
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>48.57488877753046
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-9.31964941598494
 </pre></div>
 </div>
 </div>
@@ -891,6 +893,10 @@ Name: target, dtype: float64
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="additional-resources">
 <h1>Additional Resources<a class="headerlink" href="#additional-resources" title="Permalink to this heading">#</a></h1>
+<ul class="simple">
+<li><p><strong>Resource 1:</strong> <a class="reference external" href="https://www.nickmccullum.com/multiple-linear-regression-python/">Multiple Linear Regression in Python</a> (Detailed guide on multiple linear regression, including data preparation and model building)</p></li>
+<li><p><strong>Resource 2:</strong> <a class="reference external" href="https://realpython.com/linear-regression-in-python/#multiple-linear-regression">Multivariate Linear Regression Tutorial with Real Python</a> (Explanation of multiple linear regression with an example using Python)</p></li>
+</ul>
 <p><a class="reference external" href="https://www.statology.org/multiple-linear-regression-assumptions/">https://www.statology.org/multiple-linear-regression-assumptions/</a></p>
 </section>
 
@@ -932,6 +938,15 @@ Name: target, dtype: float64
         <p class="prev-next-subtitle">previous</p>
         <p class="prev-next-title">Day 21 - Introduction to Regression Analysis in Python</p>
       </div>
+    </a>
+    <a class="right-next"
+       href="Lesson_23.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Day 23: Advanced Regression Techniques</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
