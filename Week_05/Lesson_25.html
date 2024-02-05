@@ -262,7 +262,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 <li class="toctree-l2"><a class="reference internal" href="Lesson_23.html">Day 23 - Advanced Regression Techniques - Polynomial, Lasso, and Ridge Regression</a></li>
 <li class="toctree-l2"><a class="reference internal" href="Lesson_24.html">Day 24 - Regression Model Evaluation Metrics in Python</a></li>
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Addressing Overfitting and Underfitting in Regression Models</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Day 25 - Addressing Overfitting and Underfitting in Regression Models</a></li>
 </ul>
 </li>
 </ul>
@@ -512,7 +512,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-tradeoff">Bias-Variance Tradeoff</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regularization">Regularization</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overfitting-and-underfitting">Overfitting and Underfitting</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader">Exercise For The Reader</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional Resources</a></li>
 </ul>
@@ -575,57 +574,226 @@ document.write(`
 <li><p>Lasso Regression adds a penalty equal to the absolute value of the magnitude of coefficients (<span class="math notranslate nohighlight">\(\alpha \sum_{i=1}^{n} |\theta_i|\)</span>).</p></li>
 <li><p>Elastic Net is a hybrid of Ridge and Lasso, introducing a penalty term that is a linear combination of their penalties.</p></li>
 </ul>
-<p>By the end of this lesson, readers will have a comprehensive understanding of the symptoms and solutions to overfitting and underfitting in regression models. Utilizing mathematical foundations, theoretical concepts, and Python implementations including visualization techniques and the application of regularization methods, you will be equipped to diagnose, interpret, and rectify issues of model fit in your data, fostering the creation of robust, predictive models adept at handling both current and unforeseen data efficiently.</p>
+<p>Consider this variation of the introduction plot from Lesson 23:</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># overview code</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># overview plot</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span><span class="p">,</span> <span class="n">Lasso</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+
+<span class="c1"># Generating demo data</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># This is the actual equation, so we could check exactly what coefficients our regression found.</span>
+<span class="n">y</span><span class="o">=</span> <span class="o">-</span><span class="mf">3.8</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="mf">3.4</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mf">6.6</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">2.5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Reshape x for sklearn</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+<span class="n">regressors</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">2</span><span class="p">),</span> <span class="n">LinearRegression</span><span class="p">()),</span>
+    <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">6</span><span class="p">),</span> <span class="n">LinearRegression</span><span class="p">()),</span>
+    <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="mi">12</span><span class="p">),</span> <span class="n">LinearRegression</span><span class="p">()),</span>
+<span class="p">]</span>
+
+<span class="n">plot_type</span> <span class="o">=</span> <span class="p">[</span><span class="s2">&quot;Underfit&quot;</span><span class="p">,</span> <span class="s2">&quot;Well-fit&quot;</span><span class="p">,</span> <span class="s2">&quot;Overfit&quot;</span><span class="p">]</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">))</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">reg</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">regressors</span><span class="p">):</span>
+    <span class="n">reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="c1"># predict datapoints&#39; values to evaluate plot</span>
+    
+    <span class="c1"># Generating points for plotting the regression line</span>
+    <span class="n">x_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
+    <span class="c1">#X_plot = x_plot[:, np.newaxis]</span>
+    <span class="n">y_plot</span> <span class="o">=</span> <span class="n">reg</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_plot</span><span class="p">)</span>
+
+    <span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+    <span class="c1"># Plotting the data points and the regression line</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data points&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_plot</span><span class="p">,</span> <span class="n">y_plot</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Regression Line&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Degree = </span><span class="si">{</span><span class="n">reg</span><span class="p">[</span><span class="s2">&quot;polynomialfeatures&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">degree</span><span class="si">}</span><span class="s1">, R^2 = </span><span class="si">{</span><span class="n">r2</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1"> (</span><span class="si">{</span><span class="n">plot_type</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="si">}</span><span class="s1">)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/1999e7335327dbe969b1c8f59af049c5edc2a6f130cec14159940d7c96dedb4e.png" src="../_images/1999e7335327dbe969b1c8f59af049c5edc2a6f130cec14159940d7c96dedb4e.png" />
 </div>
+</div>
+<p>Since the data is defined by an equation that we can see, we know that the true trend of the data is polynomial with degree three. But if we didn’t know that, as is typical with real-world data, how could we determine it?</p>
+<p>We have to try different values and evaluate them.</p>
 </section>
 <section id="bias-variance-tradeoff">
 <h2>Bias-Variance Tradeoff<a class="headerlink" href="#bias-variance-tradeoff" title="Permalink to this heading">#</a></h2>
-<p>asdf</p>
+<p>The example above (fitting directly against the entire data) doesn’t leave us enough separate data for <em>validating</em> our model. It’s not enough to just separate our data into <strong>training</strong> (data for fitting the model) and <strong>testing</strong> (data for giving the model a score with data it hasn’t seen). We also need a separate <strong>validation</strong> data set to set the hyperparameters of the model. Separating the three sets of data and never mixing them is the best approach, as this prevents your model from overfitting to the data points themselves rather than the trends they represent.</p>
+<ul class="simple">
+<li><p><strong>Bias</strong> is the error due to overly simplistic assumptions in the learning algorithm. It can lead to underfitting, where the model fails to capture important patterns in the data. The bias of an estimator is defined as the difference between an estimator’s expected value and the true value of the parameter being estimated. Mathematically, if <span class="math notranslate nohighlight">\(\hat{\theta}\)</span> is an estimator for a parameter <span class="math notranslate nohighlight">\(\theta\)</span>, the bias is given by <span class="math notranslate nohighlight">\( \text{Bias}(\hat{\theta}) = \mathbb{E}[\hat{\theta}] - \theta \)</span>.</p></li>
+<li><p><strong>Variance</strong> refers to the error due to too much complexity in the learning algorithm. It can cause overfitting, where the model captures random noise in the training data rather than the intended outputs. Variance is a measure of how much the estimates of the target function will change if different training data was used. The variance of an estimator is defined as the variability of the model prediction for a given data point. Mathematically, it is <span class="math notranslate nohighlight">\( \text{Variance}(\hat{\theta}) = \mathbb{E}[(\hat{\theta} - \mathbb{E}[\hat{\theta}])^2] \)</span>.</p></li>
+</ul>
+<p>In essence, <strong>bias</strong> is about the strength of assumptions the model makes, and <strong>variance</strong> is about the model’s sensitivity to fluctuations in the training data. The tradeoff is that reducing one of these errors typically increases the other. This is because increasing model complexity (to reduce bias and fit the training data more closely) often leads to increased variance and vice versa. A good model must balance these two types of error to minimize the total error.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># concept 1 code</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+
+<span class="c1"># Generating demo data</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.8</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="mf">3.4</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mf">6.6</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">2.5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Reshape x and y for sklearn</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+<span class="c1"># Split data into training and testing sets</span>
+<span class="n">x_train</span><span class="p">,</span> <span class="n">x_val</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_val</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Range of polynomial degrees to evaluate</span>
+<span class="n">degrees</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">9</span><span class="p">)</span>
+
+<span class="c1"># Prepare to store training and validation errors</span>
+<span class="n">train_errors</span><span class="p">,</span> <span class="n">val_errors</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">degree</span> <span class="ow">in</span> <span class="n">degrees</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="n">degree</span><span class="p">),</span> <span class="n">LinearRegression</span><span class="p">())</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+    <span class="c1"># Predict and calculate error on training set</span>
+    <span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+    <span class="n">train_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">))</span>
+
+    <span class="c1"># Predict and calculate error on validation set</span>
+    <span class="n">y_val_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_val</span><span class="p">)</span>
+    <span class="n">val_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_val_pred</span><span class="p">))</span>
+
+<span class="c1"># Plotting the training and validation errors</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">degrees</span><span class="p">,</span> <span class="n">train_errors</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training Error&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">degrees</span><span class="p">,</span> <span class="n">val_errors</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Validation Error&#39;</span><span class="p">)</span>
+<span class="n">total_error</span> <span class="o">=</span> <span class="p">[</span><span class="n">val_errors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">train_errors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_errors</span><span class="p">))]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">degrees</span><span class="p">,</span> <span class="n">total_error</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Total Error&#39;</span><span class="p">)</span>
+<span class="n">min_error</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">total_error</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">8</span><span class="p">],</span> <span class="p">[</span><span class="n">min_error</span><span class="p">,</span> <span class="n">min_error</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Minimum Total Error&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span> <span class="c1"># Log scale can sometimes make it easier to see the differences</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Degree of Polynomial&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Mean Squared Error&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Bias-Variance Tradeoff&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/cdd641b25f914cda9094434321ffc26d5f808644b776098b2b7754a360c1eb47.png" src="../_images/cdd641b25f914cda9094434321ffc26d5f808644b776098b2b7754a360c1eb47.png" />
 </div>
+</div>
+<p>The Bias-Variance Tradeoff plot shows that as <strong>model complexity</strong> goes up (increasing degree of polynomial, in this case):</p>
+<ul class="simple">
+<li><p>initially validation error goes down, as the model becomes complex enough to represent the underlying unknown distribution of the data.</p></li>
+<li><p>eventually validation error goes up, as the model’s complexity allows for overfitting.</p></li>
+<li><p>Training error starts high, as the model is not complex enough to represent the trends in the data.</p></li>
+<li><p>Training error always continues to get lower, but on its own this is a poor measure of the model’s success.</p></li>
+</ul>
+<p>According to this plot, assuming we want to use a simple linear regression with <code class="docutils literal notranslate"><span class="pre">make_pipeline(PolynomialFeatures(degree=degree),</span> <span class="pre">LinearRegression())</span></code>, we have tuned the hyperparameter <code class="docutils literal notranslate"><span class="pre">degree</span></code> to 6.</p>
 </section>
 <section id="regularization">
 <h2>Regularization<a class="headerlink" href="#regularization" title="Permalink to this heading">#</a></h2>
-<p>asdf</p>
+<p>Regularization prevents overfitting by penalizing models that are too complex. It involves adding a penalty to the loss function that the model is trying to minimize. The key idea behind regularization is the principle of Occam’s Razor: given two models with similar predictive abilities, the simpler model is preferable. Regularization techniques effectively add a complexity cost to the model training process, thereby encouraging simpler models that generalize better to new, unseen data.</p>
+<p>Ridge and Lasso regression, discussed in Lesson 23, are regularization algorithms. Ridge Regression (L2 regularization) adds a penalty equal to the square of the magnitude of coefficients. In Lasso Regression (L1 regularization), the penalty is the absolute value of the coefficients. While Ridge Regression shrinks the coefficients evenly, Lasso Regression can reduce some coefficients to zero, effectively performing feature selection.</p>
+<p>Elastic Net regularization emerges as a hybrid of these two approaches, combining the penalties of Ridge and Lasso. This method includes both the L1 and L2 penalties in the loss function, enabling it to inherit properties from both. It can shrink coefficients like Ridge, while also performing feature selection like Lasso. Elastic Net is particularly useful when there are multiple correlated features; Lasso might arbitrarily select one feature among the correlated ones, but Elastic Net is more likely to select a group of correlated features. This blend of Ridge and Lasso makes Elastic Net a versatile tool, especially in scenarios where the data includes multiple features that are correlated or when the scale of the solution is not well-defined.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># concept 2 code</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span><span class="p">,</span> <span class="n">ElasticNet</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+
+<span class="c1"># Generating demo data</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mf">3.8</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="mf">3.4</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mf">6.6</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">2.5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">60</span><span class="p">)</span>
+
+<span class="c1"># Reshape x and y for sklearn</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+<span class="c1"># Split data into training and testing sets</span>
+<span class="n">x_train</span><span class="p">,</span> <span class="n">x_val</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_val</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Range of polynomial degrees to evaluate</span>
+<span class="n">degrees</span> <span class="o">=</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">15</span><span class="p">)</span>
+
+<span class="c1"># Prepare to store training and validation errors</span>
+<span class="n">train_errors</span><span class="p">,</span> <span class="n">val_errors</span> <span class="o">=</span> <span class="p">[],</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">degree</span> <span class="ow">in</span> <span class="n">degrees</span><span class="p">:</span>
+    <span class="n">model</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="o">=</span><span class="n">degree</span><span class="p">),</span> <span class="n">ElasticNet</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">200_000</span><span class="p">))</span>
+    <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+    <span class="c1"># Predict and calculate error on training set</span>
+    <span class="n">y_train_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_train</span><span class="p">)</span>
+    <span class="n">train_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_train</span><span class="p">,</span> <span class="n">y_train_pred</span><span class="p">))</span>
+
+    <span class="c1"># Predict and calculate error on validation set</span>
+    <span class="n">y_val_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_val</span><span class="p">)</span>
+    <span class="n">val_errors</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_val</span><span class="p">,</span> <span class="n">y_val_pred</span><span class="p">))</span>
+
+<span class="c1"># Plotting the training and validation errors</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">degrees</span><span class="p">,</span> <span class="n">train_errors</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training Error&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">degrees</span><span class="p">,</span> <span class="n">val_errors</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Validation Error&#39;</span><span class="p">)</span>
+<span class="n">total_error</span> <span class="o">=</span> <span class="p">[</span><span class="n">val_errors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="o">+</span><span class="n">train_errors</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">train_errors</span><span class="p">))]</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">degrees</span><span class="p">,</span> <span class="n">total_error</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Total Error&#39;</span><span class="p">)</span>
+<span class="n">min_error</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">total_error</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">14</span><span class="p">],</span> <span class="p">[</span><span class="n">min_error</span><span class="p">,</span> <span class="n">min_error</span><span class="p">],</span> <span class="n">linestyle</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">&quot;Minimum Total Error&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yscale</span><span class="p">(</span><span class="s1">&#39;log&#39;</span><span class="p">)</span> <span class="c1"># Log scale can sometimes make it easier to see the differences</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Degree of Polynomial&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Mean Squared Error&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Bias-Variance Tradeoff (Using ElasticNet Regularization)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
-</div>
-</section>
-<section id="overfitting-and-underfitting">
-<h2>Overfitting and Underfitting<a class="headerlink" href="#overfitting-and-underfitting" title="Permalink to this heading">#</a></h2>
-<p>asdf</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># concept 3 code</span>
-</pre></div>
+<div class="cell_output docutils container">
+<img alt="../_images/43dbe43190dfbfacaac392106120db94c62d16cb395fa860141e9f7889557300.png" src="../_images/43dbe43190dfbfacaac392106120db94c62d16cb395fa860141e9f7889557300.png" />
 </div>
 </div>
-</div>
+<p>Some interesting similarities and differences between this plot and the previous one:</p>
+<ul class="simple">
+<li><p>The degree of the polynomial still looks to be 6, but 7 now matches as well.</p></li>
+<li><p>The validation error rises much more slowly. ElasticNet, like Lasso, has the capability to zero out coefficients, so some of the extra degrees of freedom may be disabled internally.</p></li>
+</ul>
 </section>
 <section id="exercise-for-the-reader">
 <h2>Exercise For The Reader<a class="headerlink" href="#exercise-for-the-reader" title="Permalink to this heading">#</a></h2>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># starter code</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Have a look at your solutions using the <code class="docutils literal notranslate"><span class="pre">diabetes</span></code> and <code class="docutils literal notranslate"><span class="pre">housing</span></code> datasets from the previous lessons, and evaluate your hyperparameter selection with polynomial degree vs. error plots.</p>
+<ul class="simple">
+<li><p>Were your selections optimal?</p></li>
+<li><p>Could using a plot like this streamline your process to come up with an initial model?</p></li>
+</ul>
 <p>Have fun!</p>
 </section>
 <section id="additional-resources">
@@ -694,7 +862,6 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#bias-variance-tradeoff">Bias-Variance Tradeoff</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regularization">Regularization</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#overfitting-and-underfitting">Overfitting and Underfitting</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader">Exercise For The Reader</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional Resources</a></li>
 </ul>

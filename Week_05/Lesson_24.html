@@ -263,7 +263,7 @@ const thebe_selector_output = ".output, .cell_output"
 
 <li class="toctree-l2"><a class="reference internal" href="Lesson_23.html">Day 23 - Advanced Regression Techniques - Polynomial, Lasso, and Ridge Regression</a></li>
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Day 24 - Regression Model Evaluation Metrics in Python</a></li>
-<li class="toctree-l2"><a class="reference internal" href="Lesson_25.html">Addressing Overfitting and Underfitting in Regression Models</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lesson_25.html">Day 25 - Addressing Overfitting and Underfitting in Regression Models</a></li>
 </ul>
 </li>
 </ul>
@@ -513,7 +513,10 @@ document.write(`
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squared-error-mse">Mean Squared Error (MSE)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#root-mean-squared-error-rmse">Root Mean Squared Error (RMSE)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#r-squared-r-2">R-Squared (<span class="math notranslate nohighlight">\(R^2\)</span>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#r-squared-r-2">R-Squared (<span class="math notranslate nohighlight">\(R^2\)</span>)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#negative-r-2-values">Negative <span class="math notranslate nohighlight">\(R^2\)</span> Values</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader">Exercise For The Reader</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional Resources</a></li>
 </ul>
@@ -529,7 +532,6 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="day-24-regression-model-evaluation-metrics-in-python-key-metrics-for-evaluating-regression-models">
 <h1>Day 24:Regression Model Evaluation Metrics in Python - Key metrics for evaluating regression models.<a class="headerlink" href="#day-24-regression-model-evaluation-metrics-in-python-key-metrics-for-evaluating-regression-models" title="Permalink to this heading">#</a></h1>
-<p>Here’s my intro for a lesson on Regression Model Evaluation Metrics in Python. This is being written in Jupyter Notebook, please enclose LaTeX in dollar signs ($) to work in a notebook’s markdown cells.</p>
 <p>Math Focus: Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and R-squared.</p>
 <ul class="simple">
 <li><p><strong>Theoretical Concepts:</strong></p>
@@ -556,28 +558,86 @@ document.write(`
 </ul>
 </li>
 </ul>
-<p>Can you please write an introduction paragraph about metrics, what they tell us, and provide the equations for them? Please explain all terms. What should readers be able to accomplish by the end of the lesson?</p>
 <section id="introduction">
 <h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this heading">#</a></h2>
-<p>In regression analysis, evaluating the performance of a model is crucial for understanding how well it predicts outcomes and for improving its accuracy over time. Among the most common and informative metrics for this purpose are the Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and R-squared (<span class="math notranslate nohighlight">\(R^2\)</span>). These metrics give us insight into the accuracy of our regression model, highlighting different aspects of the model’s predictions relative to the observed actual values.</p>
+<p>In regression analysis, it’s essential to evaluate a model’s performance to understand its predictive accuracy and to identify opportunities for enhancement. Critical metrics such as Mean Squared Error (MSE), Root Mean Squared Error (RMSE), and R-squared (<span class="math notranslate nohighlight">\(R^2\)</span>) provide valuable insights into the model’s prediction quality by comparing the predicted outcomes against actual events. Here’s an intuitive introduction of these metrics:</p>
 <ul class="simple">
-<li><p><strong>Mean Squared Error (MSE)</strong> is calculated as the average of the squares of the errors between what the model predicts for each data point and what the actual outcome is. The formula for MSE is given by:
-$<span class="math notranslate nohighlight">\(MSE = \frac{1}{n}\sum_{i=1}^{n}(Y_i - \hat{Y_i})^2\)</span><span class="math notranslate nohighlight">\(
-where \)</span>n<span class="math notranslate nohighlight">\( is the number of observations, \)</span>Y_i<span class="math notranslate nohighlight">\( is the actual value and \)</span>\hat{Y_i}$ is the predicted value from our model.</p></li>
-<li><p><strong>Root Mean Squared Error (RMSE)</strong> takes the square root of the MSE, thus bringing the error metric back to the same unit as our target variable. It provides a more intuitive measure of the average error. The formula for RMSE is:
-$<span class="math notranslate nohighlight">\(RMSE = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(Y_i - \hat{Y_i})^2}\)</span>$</p></li>
-<li><p><strong>R-squared (<span class="math notranslate nohighlight">\(R^2\)</span>)</strong>, also known as the coefficient of determination, measures the proportion of the variation in the dependent variable that is predictable from the independent variable(s). It is a value between 0 and 1, where a value closer to 1 indicates a better model fit. The formula for <span class="math notranslate nohighlight">\(R^2\)</span> is:
-$<span class="math notranslate nohighlight">\(R^2 = 1 - \frac{\sum_{i=1}^{n}(Y_i - \hat{Y_i})^2}{\sum_{i=1}^{n}(Y_i - \bar{Y})^2}\)</span><span class="math notranslate nohighlight">\(
-where \)</span>\bar{Y}<span class="math notranslate nohighlight">\( is the mean of the actual values \)</span>Y_i$.</p></li>
+<li><p><strong>Mean Squared Error (MSE)</strong> offers a measure of the average squared difference between the actual outcomes and the predictions made by the model. Simply put, it quantifies the average magnitude of the model’s errors. A high MSE indicates that the model’s predictions are far off from the actual values, which could be a result of an oversimplified model failing to capture the complexity of the data.</p></li>
+<li><p><strong>Root Mean Squared Error (RMSE)</strong> similarly measures the average error magnitude but brings it back to the same unit as the outcome variable. It offers a more digestible snapshot of the model’s performance by directly relating to the variable being predicted. A model with high RMSE has not only failed to accurately predict the outcomes but also struggles with consistency in its predictions across the dataset.</p></li>
+<li><p><strong>R-Squared (<span class="math notranslate nohighlight">\(R^2\)</span>)</strong> contrasts the model’s predictions with a very simple model that only uses the mean of the actual outcomes for predictions. It tells us how much of the variation in the dependent variable can be explained by the model’s independent variables. A value near 1 indicates a strong model that closely matches the observed data, while a value near 0 suggests the model performs no better than a naive model. However, <span class="math notranslate nohighlight">\(R^2\)</span> alone can be misleading, especially in cases with high variance or when the model is overly complex, leading to overfitting.</p></li>
 </ul>
-<p>By the end of this lesson, readers will understand the significance of these key metrics in evaluating regression models and how they can be used to interpret model performance. You will learn how to calculate MSE, RMSE, and <span class="math notranslate nohighlight">\(R^2\)</span> in Python using the scikit-learn library, and how to visualize residuals to gain deeper insights into your model’s accuracy and areas for improvement. This comprehensive understanding will empower you to critically assess regression models and make informed decisions on how to refine them for better predictive performance.</p>
+<p>Different scenarios can influence these metrics and their reflection of a model’s performance. For instance, outlier data points can significantly skew MSE and RMSE, suggesting poor model performance even if the model is generally accurate for the majority of cases. Conversely, a high <span class="math notranslate nohighlight">\(R^2\)</span> might not always denote a superior model, as it can result from overfitting, where the model learns the noise in the training data instead of the underlying trend, therefore performing poorly on unseen data.</p>
+<p>Let’s review these individually and test some models with <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># overview visualization</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.pipeline</span> <span class="kn">import</span> <span class="n">make_pipeline</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">PolynomialFeatures</span>
+
+<span class="c1"># Generating demo data</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">x</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="o">-</span><span class="mf">0.8</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">4</span> <span class="o">+</span> <span class="mf">1.4</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">3</span> <span class="o">+</span> <span class="mf">2.6</span> <span class="o">*</span> <span class="n">x</span><span class="o">**</span><span class="mi">2</span> <span class="o">-</span> <span class="mf">2.5</span> <span class="o">*</span> <span class="n">x</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[:,</span> <span class="n">np</span><span class="o">.</span><span class="n">newaxis</span><span class="p">]</span>
+
+<span class="n">degree</span> <span class="o">=</span> <span class="mi">4</span>  <span class="c1"># The degree of the polynomial</span>
+<span class="n">poly</span> <span class="o">=</span> <span class="n">make_pipeline</span><span class="p">(</span><span class="n">PolynomialFeatures</span><span class="p">(</span><span class="n">degree</span><span class="p">),</span> <span class="n">LinearRegression</span><span class="p">())</span>
+<span class="n">poly</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Generating points for plotting the regression line</span>
+<span class="n">x_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="nb">min</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="nb">max</span><span class="p">(</span><span class="n">X</span><span class="p">),</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y_plot</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">x_plot</span><span class="p">)</span>
+
+<span class="c1"># Predicting with the model for the original data points</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">poly</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data points&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_plot</span><span class="p">,</span> <span class="n">y_plot</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Polynomial regression line&#39;</span><span class="p">)</span>
+
+<span class="c1"># Drawing residuals</span>
+<span class="k">for</span> <span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="n">ypi</span> <span class="ow">in</span> <span class="nb">zip</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">vlines</span><span class="p">(</span><span class="n">xi</span><span class="p">,</span> <span class="n">yi</span><span class="p">,</span> <span class="n">ypi</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;gray&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="c1"># Drawing squares for the MSE visualization</span>
+    <span class="k">if</span> <span class="n">yi</span> <span class="o">&gt;</span> <span class="n">ypi</span><span class="p">:</span>
+        <span class="c1"># If the actual value is greater, our square&#39;s bottom-left coordinates start at the predicted value</span>
+        <span class="n">square_bottom_left_x</span> <span class="o">=</span> <span class="n">xi</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">yi</span><span class="o">-</span><span class="n">ypi</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">square_bottom_left_y</span> <span class="o">=</span> <span class="n">ypi</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="c1"># If the predicted value is greater, our square&#39;s bottom-left coordinates start at the actual value</span>
+        <span class="n">square_bottom_left_x</span> <span class="o">=</span> <span class="n">xi</span> <span class="o">-</span> <span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">yi</span><span class="o">-</span><span class="n">ypi</span><span class="p">))</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+        <span class="n">square_bottom_left_y</span> <span class="o">=</span> <span class="n">yi</span>
+    <span class="n">square_height</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">yi</span><span class="o">-</span><span class="n">ypi</span><span class="p">))</span>
+    <span class="n">square_width</span> <span class="o">=</span> <span class="n">square_height</span>
+    <span class="c1"># The &#39;width&#39; and &#39;height&#39; parameters are the size&#39;s sides of the square</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">plt</span><span class="o">.</span><span class="n">Rectangle</span><span class="p">((</span><span class="n">square_bottom_left_x</span><span class="p">,</span> <span class="n">square_bottom_left_y</span><span class="p">),</span> <span class="n">square_width</span><span class="p">,</span> <span class="n">square_height</span><span class="p">,</span> <span class="n">fill</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;x&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Polynomial (degree = 4) regression with residuals&#39;</span><span class="p">)</span>
+<span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">axes</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">axes</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">([</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/2a4a1e324c75b9cef437d96dc54e34dab30d5dcf6223769350ff95df5b0075c7.png" src="../_images/2a4a1e324c75b9cef437d96dc54e34dab30d5dcf6223769350ff95df5b0075c7.png" />
 </div>
+</div>
+<p>the grey dashed lines on this plot are the residuals - the difference between the predicted value (the regression line) and the actual value (that X value’s label from training data).</p>
+<p>The blue squares have a length and width equal to the residual.</p>
+<ul class="simple">
+<li><p>The average area of a square is the MSE.</p></li>
+<li><p>The average length of a square is the RMSE.</p></li>
+<li><p><span class="math notranslate nohighlight">\(R^2\)</span> is a comparison between these squares and the squares that a straight line through the mean Y-value would form.</p></li>
+</ul>
 </section>
 <section id="mean-squared-error-mse">
 <h2>Mean Squared Error (MSE)<a class="headerlink" href="#mean-squared-error-mse" title="Permalink to this heading">#</a></h2>
@@ -587,7 +647,44 @@ where \)</span>\bar{Y}<span class="math notranslate nohighlight">\( is the mean 
 <p>In this equation, <span class="math notranslate nohighlight">\(n\)</span> represents the total number of observations in the dataset, <span class="math notranslate nohighlight">\(Y_i\)</span> denotes the actual values of the dependent variable, and <span class="math notranslate nohighlight">\(\hat{Y_i}\)</span> signifies the predicted values generated by the regression model. A lower MSE value indicates a model that accurately predicts the outcome variable, while a higher MSE value suggests a model that poorly predicts the outcome variable. Understanding and minimizing the MSE is essential in improving the accuracy and predictive performance of regression models.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># concept 1 code</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Educational purposes only. For large datasets, this naive (R)MSE implementation is likely to perform very badly.</span>
+<span class="k">def</span> <span class="nf">calculate_mse</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the mean squared error between the true values and the predicted values.</span>
+<span class="sd">    </span>
+<span class="sd">    :param y_true: The actual values (numpy array).</span>
+<span class="sd">    :param y_pred: The predicted values (numpy array).</span>
+<span class="sd">    :return: The mean squared error.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">n</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>  <span class="c1"># Number of data points</span>
+    <span class="n">mse</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">y_true</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">))</span> <span class="o">/</span> <span class="n">n</span>  <span class="c1"># Summing the squared differences and dividing by n</span>
+    <span class="k">return</span> <span class="n">mse</span>
+
+
+<span class="n">mse_by_hand</span> <span class="o">=</span> <span class="n">calculate_mse</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="c1"># using y and y_pred from the introductory plot</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean Squared Error:&quot;</span><span class="p">,</span> <span class="n">mse_by_hand</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean Squared Error: [0.73102773]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="n">mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="c1"># using y and y_pred from the introductory plot</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Mean Squared Error:&quot;</span><span class="p">,</span> <span class="n">mse</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Mean Squared Error: 0.7310277298281567
 </pre></div>
 </div>
 </div>
@@ -600,9 +697,37 @@ where \)</span>\bar{Y}<span class="math notranslate nohighlight">\( is the mean 
 $<span class="math notranslate nohighlight">\(RMSE = \sqrt{\frac{1}{n}\sum_{i=1}^{n}(Y_i - \hat{Y_i})^2}\)</span><span class="math notranslate nohighlight">\(
 In this formula, \)</span>n<span class="math notranslate nohighlight">\( represents the total number of observations, \)</span>Y_i<span class="math notranslate nohighlight">\( specifies the actual value for the ith observation, and \)</span>\hat{Y_i}$ denotes the predicted value from the model for the ith observation. RMSE provides a straightforward measure of the average magnitude of the model’s prediction errors, making it a crucial metric for evaluating the precision of regression models.</p></li>
 </ul>
+<p><code class="docutils literal notranslate"><span class="pre">sklearn</span></code> does not provide a dedicated RMSE function - just use <code class="docutils literal notranslate"><span class="pre">numpy</span></code>’s <code class="docutils literal notranslate"><span class="pre">sqrt</span></code> function on the MSE.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># concept 2 code</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Educational purposes only. For large datasets, this naive (R)MSE implementation is likely to perform very badly.</span>
+<span class="k">def</span> <span class="nf">calculate_rmse</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mse</span><span class="p">)</span>  <span class="c1"># Taking the square root of MSE</span>
+
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">calculate_rmse</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span> <span class="c1"># using y and y_pred from the introductory plot</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Root Mean Squared Error:&quot;</span><span class="p">,</span> <span class="n">rmse</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Root Mean Squared Error: 0.8550015963892446
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">rmse</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">))</span> <span class="c1"># using y and y_pred from the introductory plot</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Root Mean Squared Error:&quot;</span><span class="p">,</span> <span class="n">rmse</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Root Mean Squared Error: 0.8550015963892446
 </pre></div>
 </div>
 </div>
@@ -611,28 +736,66 @@ In this formula, \)</span>n<span class="math notranslate nohighlight">\( represe
 <section id="r-squared-r-2">
 <h2>R-Squared (<span class="math notranslate nohighlight">\(R^2\)</span>)<a class="headerlink" href="#r-squared-r-2" title="Permalink to this heading">#</a></h2>
 <ul class="simple">
-<li><p><strong>R-squared (<span class="math notranslate nohighlight">\(R^2\)</span>)</strong>, also known as the coefficient of determination, quantifies the fraction of the total variation in the dependent variable that is captured by the independent variable(s) in the regression model. In essence, it provides a measure of how well the observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model. The <span class="math notranslate nohighlight">\(R^2\)</span> value ranges from 0 to 1, where a value of 0 indicates that the model explains none of the variability of the response data around its mean, and a value of 1 indicates that the model explains all the variability of the response data around its mean. Thus, a higher <span class="math notranslate nohighlight">\(R^2\)</span> value indicates a better fit of the model to the data. The formula for calculating <span class="math notranslate nohighlight">\(R^2\)</span> is given by:
-$<span class="math notranslate nohighlight">\(R^2 = 1 - \frac{\sum_{i=1}^{n}(Y_i - \hat{Y_i})^2}{\sum_{i=1}^{n}(Y_i - \bar{Y})^2}\)</span><span class="math notranslate nohighlight">\(
-where \)</span>\sum_{i=1}^{n}(Y_i - \hat{Y_i})^2<span class="math notranslate nohighlight">\( is the sum of squares of the residuals, \)</span>\sum_{i=1}^{n}(Y_i - \bar{Y})^2<span class="math notranslate nohighlight">\( is the total sum of squares, \)</span>Y_i<span class="math notranslate nohighlight">\( are the actual observed values, \)</span>\hat{Y_i}<span class="math notranslate nohighlight">\( are the predicted values by the model, and \)</span>\bar{Y}$ is the mean of the observed values. This metric is crucial for assessing the predictive accuracy of a regression model, as it provides a scaled measure of the proportion of the data’s variance that is accounted for by the model.</p></li>
+<li><p><strong>R-squared (<span class="math notranslate nohighlight">\(R^2\)</span>)</strong>, also known as the coefficient of determination, quantifies the fraction of the total variation in the dependent variable that is captured by the independent variable(s) in the regression model. In essence, it provides a measure of how well the observed outcomes are replicated by the model, based on the proportion of total variation of outcomes explained by the model. The <span class="math notranslate nohighlight">\(R^2\)</span> value ranges from 0 to 1, where a value of 0 indicates that the model explains none of the variability of the response data around its mean, and a value of 1 indicates that the model explains all the variability of the response data around its mean. Thus, a higher <span class="math notranslate nohighlight">\(R^2\)</span> value indicates a better fit of the model to the data.</p></li>
 </ul>
+<p>The formula for calculating <span class="math notranslate nohighlight">\(R^2\)</span> is given by:
+$<span class="math notranslate nohighlight">\(R^2 = 1 - \frac{\sum_{i=1}^{n}(Y_i - \hat{Y_i})^2}{\sum_{i=1}^{n}(Y_i - \bar{Y})^2}\)</span><span class="math notranslate nohighlight">\(
+where \)</span>\sum_{i=1}^{n}(Y_i - \hat{Y_i})^2<span class="math notranslate nohighlight">\( is the sum of squares of the residuals, \)</span>\sum_{i=1}^{n}(Y_i - \bar{Y})^2<span class="math notranslate nohighlight">\( is the total sum of squares, \)</span>Y_i<span class="math notranslate nohighlight">\( are the actual observed values, \)</span>\hat{Y_i}<span class="math notranslate nohighlight">\( are the predicted values by the model, and \)</span>\bar{Y}$ is the mean of the observed values. This metric is crucial for assessing the predictive accuracy of a regression model, as it provides a scaled measure of the proportion of the data’s variance that is accounted for by the model.</p>
+<section id="negative-r-2-values">
+<h3>Negative <span class="math notranslate nohighlight">\(R^2\)</span> Values<a class="headerlink" href="#negative-r-2-values" title="Permalink to this heading">#</a></h3>
+<p>There’s nothing preventing <span class="math notranslate nohighlight">\(R^2\)</span> from being negative: the top term is Residual Sum of Squares (RSS), and the bottom term is “MSE if every data point were the the data’s mean”. If the RSS is larger than that term, we’ll get a fraction larger than 1, and <span class="math notranslate nohighlight">\(R^2\)</span> will be a negative value.</p>
+<p>In that situation, the model fits the data worse than a horizontal line representing the mean of the dependent variable. It suggests that the regression model is not capturing the underlying trend of the data and might be improperly specified or that the assumptions of linear regression are being violated.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># concept 3 code</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Educational purposes only. For large datasets, this naive R^2 is likely to perform very badly.</span>
+<span class="k">def</span> <span class="nf">calculate_r_squared</span><span class="p">(</span><span class="n">y_true</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the R-squared value between the true values and the predicted values.</span>
+<span class="sd">    </span>
+<span class="sd">    :param y_true: The actual values (numpy array).</span>
+<span class="sd">    :param y_pred: The predicted values (numpy array).</span>
+<span class="sd">    :return: The R-squared value.</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="n">ss_res</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">y_true</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_pred</span><span class="p">[</span><span class="n">i</span><span class="p">])</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="p">)))</span>  <span class="c1"># Sum of squares of residuals</span>
+    <span class="n">y_mean</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">y_true</span><span class="p">)</span>
+    <span class="n">ss_tot</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">((</span><span class="n">y_true</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">-</span> <span class="n">y_mean</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">y_true</span><span class="p">)))</span>  <span class="c1"># Total sum of squares</span>
+    <span class="n">r_squared</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">ss_res</span> <span class="o">/</span> <span class="n">ss_tot</span>  <span class="c1"># R-squared calculation</span>
+    <span class="k">return</span> <span class="n">r_squared</span>
+
+<span class="c1"># Usage with your data</span>
+<span class="n">r2</span> <span class="o">=</span> <span class="n">calculate_r_squared</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;R-squared:&quot;</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R-squared: [0.84910783]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+
+<span class="n">r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;R-squared:&quot;</span><span class="p">,</span> <span class="n">r2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>R-squared: 0.8491078258676696
 </pre></div>
 </div>
 </div>
 </div>
 </section>
+</section>
 <section id="exercise-for-the-reader">
 <h2>Exercise For The Reader<a class="headerlink" href="#exercise-for-the-reader" title="Permalink to this heading">#</a></h2>
-<p>asdf</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># starter code</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>Have a look at your solutions using the <code class="docutils literal notranslate"><span class="pre">diabetes</span></code> and <code class="docutils literal notranslate"><span class="pre">housing</span></code> datasets from the previous lessons, and evaluate your predictions with these scores.</p>
 <p>Have fun!</p>
 </section>
 <section id="additional-resources">
@@ -710,7 +873,10 @@ where \)</span>\sum_{i=1}^{n}(Y_i - \hat{Y_i})^2<span class="math notranslate no
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#introduction">Introduction</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mean-squared-error-mse">Mean Squared Error (MSE)</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#root-mean-squared-error-rmse">Root Mean Squared Error (RMSE)</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#r-squared-r-2">R-Squared (<span class="math notranslate nohighlight">\(R^2\)</span>)</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#r-squared-r-2">R-Squared (<span class="math notranslate nohighlight">\(R^2\)</span>)</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#negative-r-2-values">Negative <span class="math notranslate nohighlight">\(R^2\)</span> Values</a></li>
+</ul>
+</li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader">Exercise For The Reader</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#additional-resources">Additional Resources</a></li>
 </ul>
