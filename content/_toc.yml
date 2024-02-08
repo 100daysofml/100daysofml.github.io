@@ -86,11 +86,27 @@ parts:
       sections:
       - file: Week_05/Lesson_21.ipynb
         title: "Day 21 - Introduction to Regression Analysis in Python"
-#     - file: Week_05/Lesson_22.ipynb
-#       title: "Day 22 - Implementing Multiple Linear Regression in Python"
-#     - file: Week_05/Lesson_23.ipynb
-#       title: "Advanced Regression Techniques - Polynomial, Lasso, and Ridge Regression"
-#     - file: Week_05/Lesson_24.ipynb
-#       title: "Day 24 - Regression Model Evaluation Metrics in Python"
-#     - file: Week_05/Lesson_25.ipynb
-#       title: "Addressing Overfitting and Underfitting in Regression Models"
+      - file: Week_05/Lesson_22.ipynb
+        title: "Day 22 - Implementing Multiple Linear Regression in Python"
+      - file: Week_05/Lesson_23.ipynb
+        title: "Day 23 - Advanced Regression Techniques - Polynomial, Lasso, and Ridge Regression"
+      - file: Week_05/Lesson_24.ipynb
+        title: "Day 24 - Regression Model Evaluation Metrics in Python"
+      - file: Week_05/Lesson_25.ipynb
+        title: "Day 25 - Addressing Overfitting and Underfitting in Regression Models"
+
+  - caption: "Week 6: Supervised Learning - Classification"
+    chapters:
+    - file: Week_06/006_Overview.md
+      title: "Week_06: Overview"
+      sections:
+      - file: Week_06/Lesson_26.ipynb
+        title: "Day 26 - Introduction to Classification and Logistic Regression in Python"
+      - file: Week_06/Lesson_27.ipynb
+        title: "Day 27 - K-Nearest Neighbors (K-NN) Algorithm in Python"
+      - file: Week_06/Lesson_28.ipynb
+        title: "Day 28 - Support Vector Machines (SVM) for Linear and Nonlinear Data"
+#      - file: Week_06/Lesson_29.ipynb
+#        title: "Day 29 - Decision Trees and Rule-Based Models in Python"
+#      - file: Week_06/Lesson_30.ipynb
+#        title: "Day 30 - Naive Bayes Classifier Implementation"
