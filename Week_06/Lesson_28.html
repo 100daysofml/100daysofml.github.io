@@ -1,0 +1,1110 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Day 28: Introduction to Support Vector Machines (SVM) &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_06/Lesson_28';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_06/Lesson_28.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Day 27: Introduction to the K-Nearest Neighbors (K-NN) Algorithm" href="Lesson_27.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    100 Days of Machine Learning Challenge
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Daily Challenge Curriculum</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Daily Curriculum Resources</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_01/001_Overview.html">Week_01: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_02/002_Overview.html">Week_02: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_09.html">Day 9 - Calculus - Integrals, Fundamental Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_10.html">Day 10 - Statistics and Probability - Concepts and Relevant Distributions</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_03/003_Overview.html">Week_03: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_11.html">Day 11 - Introduction to Data Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12.html">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12solution.html">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_13.html">Day 13 - Handling Missing Data in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_14.html">Day 14 - Data Normalization and Scaling using Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_15.html">Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications</a></li>
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_04/004_Overview.html">Week_04: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_16.html">Day 16 - Introduction to EDA and Data Visualization in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_17.html">Day 17 - Implementing Descriptive Statistics for EDA in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_18.html">Day 18 - Visualization Techniques for Data Distribution in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_19.html">Day 19: Correlation Analysis using Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_20.html">Day 20: Advanced Feature Selection and Importance in Python - With Iris Dataset</a></li>
+
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5: Supervised Learning - Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_05/005_Overview.html">Week_05: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_21.html">Day 21 - Introduction to Regression Analysis in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_22.html">Day 22: Implementing Multiple Linear Regression in Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_23.html">Day 23 - Advanced Regression Techniques - Polynomial, Lasso, and Ridge Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_24.html">Day 24 - Regression Model Evaluation Metrics in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_25.html">Day 25 - Addressing Overfitting and Underfitting in Regression Models</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6: Supervised Learning - Classification</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="006_Overview.html">Week_06: Overview</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Lesson_26.html">Day 26: Introduction to Classification and Logistic Regression in Python</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="Lesson_27.html">Day 27: Introduction to the K-Nearest Neighbors (K-NN) Algorithm</a></li>
+
+
+
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Day 28: Introduction to Support Vector Machines (SVM)</a></li>
+
+
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-4iw5ztbi/lab/workspaces/auto-e/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_06/Lesson_28.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/github/100daysofml/100daysofml.github.io/blob/master/Week_06/Lesson_28.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_06/Lesson_28.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_06/Lesson_28.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Day 28: Introduction to Support Vector Machines (SVM)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 28: Introduction to Support Vector Machines (SVM)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-support-vector-machine-svm">What is Support Vector Machine (SVM)?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importance">Importance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-and-examples">Applications and Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-higher-dimensions">In Higher Dimensions</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#svm-for-linearly-separable-data">SVM for Linearly Separable Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Definition</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#svm-for-nonlinearly-separable-data">SVM for Nonlinearly Separable Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-kernel-trick">What is the Kernel Trick?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Applications and Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-kernel">Polynomial Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#radial-basis-function-rbf-kernel">Radial Basis Function (RBF) Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sigmoid-kernel">Sigmoid Kernel</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader">Exercise For The Reader</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-1-linear-svm-with-a-toy-dataset">Task 1: Linear SVM with a Toy Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-2-non-linear-svm-using-kernel-trick">Task 2: Non-Linear SVM Using Kernel Trick</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="day-28-introduction-to-support-vector-machines-svm">
+<h1>Day 28: Introduction to Support Vector Machines (SVM)<a class="headerlink" href="#day-28-introduction-to-support-vector-machines-svm" title="Permalink to this heading">#</a></h1>
+<p>Support Vector Machines (SVM) stand as a powerful and versatile method used in the field of machine learning and data science. Developed initially for classification tasks, SVM has been extended to tackle regression problems as well, showcasing its adaptability and strength in handling diverse data types and structures.</p>
+<section id="what-is-support-vector-machine-svm">
+<h2>What is Support Vector Machine (SVM)?<a class="headerlink" href="#what-is-support-vector-machine-svm" title="Permalink to this heading">#</a></h2>
+<section id="definition">
+<h3>Definition<a class="headerlink" href="#definition" title="Permalink to this heading">#</a></h3>
+<p>At its core, a Support Vector Machine is a supervised learning algorithm that can classify data into two or more categories. It achieves this by finding the optimal hyperplane which best separates the data points of different classes. In cases where data is linearly separable, SVM seeks a hyperplane with the maximum margin between the nearest points (support vectors) of the classes.</p>
+<p>The equation of a hyperplane in a two-dimensional space can be represented as <span class="math notranslate nohighlight">\(wx - b = 0\)</span>, where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(w\)</span> is the weight vector,</p></li>
+<li><p><span class="math notranslate nohighlight">\(x\)</span> is the input features, and</p></li>
+<li><p><span class="math notranslate nohighlight">\(b\)</span> is the bias.</p></li>
+</ul>
+<p>For nonlinearly separable data, SVM utilizes the kernel trick to map the input space into a higher-dimensional space where a hyperplane can effectively separate the classes.</p>
+</section>
+<section id="importance">
+<h3>Importance<a class="headerlink" href="#importance" title="Permalink to this heading">#</a></h3>
+<p>The true power of SVM lies in its capability to work effectively on both linear and nonlinear data, making it exceptionally versatile in the realm of classification and regression tasks. Its reliance on support vectors means it is not heavily affected by outliers, and it can handle high-dimensional data efficiently.</p>
+<p>The hinge loss function, an integral part of SVM’s optimization problem, further embodies its robustness. It is formulated as <span class="math notranslate nohighlight">\(\max(0, 1 - y_i(w \cdot x_i - b))\)</span>, where <span class="math notranslate nohighlight">\(y_i\)</span> is the label of the <span class="math notranslate nohighlight">\(i^{th}\)</span> data point, maximizing the margin between different classes while penalizing misclassifications.</p>
+</section>
+</section>
+<section id="applications-and-examples">
+<h2>Applications and Examples<a class="headerlink" href="#applications-and-examples" title="Permalink to this heading">#</a></h2>
+<p>SVM’s flexibility and efficacy find applications across a vast array of fields:</p>
+<ul class="simple">
+<li><p><strong>Bioinformatics:</strong> From classifying proteins to predicting gene expression patterns, SVM helps in understanding complex biological processes.</p></li>
+<li><p><strong>Image Recognition:</strong> SVM can classify images by recognizing patterns and features, playing a crucial role in facial recognition technology and medical imaging analysis.</p></li>
+<li><p><strong>Natural Language Processing (NLP):</strong> It aids in sentiment analysis, categorization of news articles, and spam detection by understanding and classifying text.</p></li>
+</ul>
+<p>The adaptability of SVM, along with its sound mathematical foundation, ensures its position as a cornerstone algorithm in the machine learning landscape, addressing problems ranging from straightforward to highly intricate tasks across multidisciplinary fields.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+
+<span class="c1"># Generate a toy dataset: 2 classes, linearly separable</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">6</span><span class="p">)</span>
+
+<span class="c1"># Fit the SVM model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">1E10</span><span class="p">)</span>  <span class="c1"># High C implies we want no misclassification</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Plot the data points</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;winter&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot the decision function</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+<span class="n">xlim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+<span class="n">ylim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+
+<span class="c1"># Create grid to evaluate model</span>
+<span class="n">xx</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xlim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xlim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">ylim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ylim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">30</span><span class="p">)</span>
+<span class="n">YY</span><span class="p">,</span> <span class="n">XX</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">yy</span><span class="p">,</span> <span class="n">xx</span><span class="p">)</span>
+<span class="n">xy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">XX</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">YY</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span><span class="o">.</span><span class="n">T</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">xy</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">XX</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="c1"># Plot decision boundary and margins</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">XX</span><span class="p">,</span> <span class="n">YY</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+           <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">])</span>
+
+<span class="c1"># Highlight the support vectors</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">support_vectors_</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">model</span><span class="o">.</span><span class="n">support_vectors_</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+           <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Linearly Separable Data with SVM Hyperplane&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Interpretation:</span>
+<span class="c1"># This plot demonstrates how SVM classifies a linearly separable dataset by finding the optimal hyperplane.</span>
+<span class="c1"># The solid line represents the hyperplane (the decision boundary), while the dashed lines mark the margin.</span>
+<span class="c1"># The points circled in black are the support vectors, indicating the nearest points to the hyperplane,</span>
+<span class="c1"># which maximally separate the two classes.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/50d6678c2340e6dfd0b67b10c7d20cc438b68a5e87b7d057ef4ab08198df895a.png" src="../_images/50d6678c2340e6dfd0b67b10c7d20cc438b68a5e87b7d057ef4ab08198df895a.png" />
+</div>
+</div>
+</section>
+<section id="in-higher-dimensions">
+<h2>In Higher Dimensions<a class="headerlink" href="#in-higher-dimensions" title="Permalink to this heading">#</a></h2>
+<p>Remember, to think like a data scientist, you have to be prepared to tack on an extra dimension to spatially visualize the data and how to classify or divide it. SVMs divide the data with a hyperplane, which means we can divide three dimensional (or higher) data into separate volumes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+
+<span class="c1"># Generate synthetic data for visualization</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_features</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_redundant</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_informative</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_clusters_per_class</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+
+<span class="c1"># Fit SVM model on the synthetic data</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">)</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Coefficients for the hyperplane equation</span>
+<span class="n">w</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="c1"># Function to draw hyperplane and margins in 3D feature space</span>
+<span class="k">def</span> <span class="nf">plot_hyperplane_3D</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">ax</span><span class="p">):</span>
+    <span class="c1"># Plot the datapoints</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;autumn&#39;</span><span class="p">)</span>
+    
+    <span class="c1"># Generate grid for hyperplane</span>
+    <span class="n">xlim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+    <span class="n">ylim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+    <span class="n">zlim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_zlim</span><span class="p">()</span>
+    
+    <span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xlim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xlim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">50</span><span class="p">),</span>
+                         <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">ylim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ylim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">50</span><span class="p">))</span>
+    <span class="n">zz</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">w</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">*</span> <span class="n">xx</span> <span class="o">-</span> <span class="n">w</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">yy</span> <span class="o">-</span> <span class="n">b</span><span class="p">)</span> <span class="o">*</span> <span class="mf">1.</span> <span class="o">/</span> <span class="n">w</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span>
+    
+    <span class="c1"># Plot hyperplane</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot_surface</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">zz</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;b&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+    
+    <span class="c1"># Plot support vectors</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">support_vectors_</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> 
+               <span class="n">model</span><span class="o">.</span><span class="n">support_vectors_</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> 
+               <span class="n">model</span><span class="o">.</span><span class="n">support_vectors_</span><span class="p">[:,</span> <span class="mi">2</span><span class="p">],</span> 
+               <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+
+<span class="c1"># Create 3D plot</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">111</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+
+<span class="n">plot_hyperplane_3D</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">w</span><span class="p">,</span> <span class="n">b</span><span class="p">,</span> <span class="n">ax</span><span class="p">)</span>
+
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s1">&#39;Feature 3&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;3D Visualization of Hyperplane Separating Two Classes&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Interpretation:</span>
+<span class="c1"># The 3D plot visualizes a hyperplane separating two classes in a three-dimensional feature space. </span>
+<span class="c1"># The support vectors are highlighted with black circles, emphasizing their role in determining the hyperplane. </span>
+<span class="c1"># The transparent blue plane represents the hyperplane, maximally separating the two classes (red and yellow points).</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/b7a6ce5326c2ce3382117cc76cb1506ed966dce89abd156ab5cf51b1de9e8af6.png" src="../_images/b7a6ce5326c2ce3382117cc76cb1506ed966dce89abd156ab5cf51b1de9e8af6.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="svm-for-linearly-separable-data">
+<h1>SVM for Linearly Separable Data<a class="headerlink" href="#svm-for-linearly-separable-data" title="Permalink to this heading">#</a></h1>
+<p>Support Vector Machine (SVM) is a powerful and versatile supervised machine learning algorithm used for both classification and regression tasks. However, it is most widely recognized for its application in classification problems. When it comes to working with data that is linearly separable, SVM shines by finding the optimal hyperplane that separates the different classes with the maximum margin. This section delves into the underlying principles of SVM when dealing with linearly separable data, focusing on the selection of support vectors for margin maximization, the mathematical formulation of the hinge loss function, and an introduction to the Sequential Minimal Optimization (SMO) algorithm.</p>
+<section id="id1">
+<h2>Definition<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>An SVM algorithm seeks to find the hyperplane that separates the classes of data with the largest possible margin. The support vectors are the closest data points to the hyperplane, and the distance between the support vectors and the hyperplane is the margin. For linearly separable data, the goal is to maximize this margin.</p>
+<p>The hinge loss function, pivotal in calculating the SVM decision function, is mathematically represented as:</p>
+<div class="math notranslate nohighlight">
+\[L(y_i, \boldsymbol{x}_i; \boldsymbol{w}, b) = \max(0, 1 - y_i(\boldsymbol{w}\cdot\boldsymbol{x}_i + b))\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(y_i\)</span> is the target class (either -1 or 1)</p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{x}_i\)</span> is the feature vector</p></li>
+<li><p><span class="math notranslate nohighlight">\(\boldsymbol{w}\)</span> is the weight vector</p></li>
+<li><p><span class="math notranslate nohighlight">\(b\)</span> is the bias</p></li>
+</ul>
+<p>The Sequential Minimal Optimization (SMO) algorithm is used to solve the optimization problem efficiently by breaking it down into 2-dimensional sub-problems that are solved analytically, which significantly reduces the complexity of the optimization process.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Generate a range of values (distance from the decision boundary)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+
+<span class="c1"># Compute the hinge loss for each value</span>
+<span class="c1"># Here, the hinge loss is max(0, 1 - x) since y_i(w.x_i+b) simplifies to just the distance from the margin for this visualization</span>
+<span class="n">hinge_loss</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># Visualization</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">hinge_loss</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Hinge Loss&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Hinge Loss Function&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Distance from Decision Boundary&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Loss&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span><span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">hinge_loss</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">x</span><span class="o">&lt;</span><span class="mi">1</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Penalized Region&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1">#Interpretation: The plot demonstrates how the hinge loss function operates.</span>
+<span class="c1">#Loss is 0 for any point located on the correct side of the margin (distance &gt;= 1).</span>
+<span class="c1">#However, points on the wrong side of the margin (distance &lt; 1), or correctly classified but within the margin, are </span>
+<span class="c1">#penalized linearly based on how far they are from the margin. This visualization helps understand how SVM focuses on </span>
+<span class="c1">#the points near or on the wrong side of the decision boundary and tries to minimize this loss, contributing to </span>
+<span class="c1">#maximizing the margin between classes.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/8a49beb0dc6fc53040ac841eef46c7dbadad37426f79d9a219c1409e585d6ea9.png" src="../_images/8a49beb0dc6fc53040ac841eef46c7dbadad37426f79d9a219c1409e585d6ea9.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="svm-for-nonlinearly-separable-data">
+<h1>SVM for Nonlinearly Separable Data<a class="headerlink" href="#svm-for-nonlinearly-separable-data" title="Permalink to this heading">#</a></h1>
+<p>Support Vector Machines (SVM) are a powerful and versatile class of supervised learning algorithms used for classification, regression, and outlier detection. When dealing with linearly separable data, SVMs can efficiently create a hyperplane that categorically separates different classes. However, real-world datasets often exhibit complex, nonlinear structures that cannot be easily separated by a straight line or a flat hyperplane. This section delves into handling nonlinearly separable data with SVMs, with a focus on the kernel trick, various kernels, and their implementation.</p>
+<section id="what-is-the-kernel-trick">
+<h2>What is the Kernel Trick?<a class="headerlink" href="#what-is-the-kernel-trick" title="Permalink to this heading">#</a></h2>
+<p><strong>Text:</strong> The kernel trick is an ingenious solution that allows Support Vector Machines to operate in a high-dimensional space without explicitly computing the coordinates of data points in that space. This approach effectively enables the SVM algorithm to find separable hyperplanes in a higher-dimensional space, making it possible to deal with nonlinearly separable datasets.</p>
+<p><strong>Definition:</strong> The kernel trick involves transforming the original feature space into a higher-dimensional space using a kernel function. Mathematically, it can be defined as a function <span class="math notranslate nohighlight">\(\kappa(x_i, x_j)\)</span> that computes the dot product of the vectors <span class="math notranslate nohighlight">\(\phi(x_i)\)</span> and <span class="math notranslate nohighlight">\(\phi(x_j)\)</span> in a high-dimensional space, where <span class="math notranslate nohighlight">\(\phi()\)</span> is the transformation function. The beauty of the kernel trick lies in its ability to perform this computation without explicitly mapping data points to this high-dimensional space.</p>
+<p><strong>Importance:</strong> The kernel trick is crucial for extending the applicability of SVMs to nonlinear datasets. It allows SVMs to construct nonlinear decision boundaries by implicitly working in a higher-dimensional feature space. This capability significantly enhances the versatility and effectiveness of SVM algorithms in handling a wide variety of complex, real-world datasets across multiple domains, including image and speech recognition, bioinformatics, and text categorization.</p>
+</section>
+<section id="id2">
+<h2>Applications and Examples<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h2>
+<section id="polynomial-kernel">
+<h3>Polynomial Kernel<a class="headerlink" href="#polynomial-kernel" title="Permalink to this heading">#</a></h3>
+<p>The polynomial kernel allows for the modeling of the interaction between features in the dataset. It is given by the equation:
+[ \kappa(x_i, x_j) = (\gamma x_i^\intercal x_j + r)^d ]
+where <span class="math notranslate nohighlight">\(d\)</span> is the degree of the polynomial, <span class="math notranslate nohighlight">\(\gamma\)</span> is a scale factor, and <span class="math notranslate nohighlight">\(r\)</span> is a coefficient term. This kernel is particularly useful for datasets where the relationship between classes is not only nonlinear but also involves interactions of features.</p>
+</section>
+<section id="radial-basis-function-rbf-kernel">
+<h3>Radial Basis Function (RBF) Kernel<a class="headerlink" href="#radial-basis-function-rbf-kernel" title="Permalink to this heading">#</a></h3>
+<p>The RBF kernel, also known as the Gaussian kernel, maps samples into a higher-dimensional space using the equation:
+[ \kappa(x_i, x_j) = \exp(-\gamma ||x_i - x_j||^2) ]
+where <span class="math notranslate nohighlight">\(||x_i - x_j||^2\)</span> is the squared Euclidean distance between two feature vectors, and <span class="math notranslate nohighlight">\(\gamma\)</span> is a parameter that controls the width of the Gaussian kernel. The RBF kernel is highly versatile and effective in creating complex decision boundaries, making it a popular choice for many nonlinear SVM problems.</p>
+</section>
+<section id="sigmoid-kernel">
+<h3>Sigmoid Kernel<a class="headerlink" href="#sigmoid-kernel" title="Permalink to this heading">#</a></h3>
+<p>The sigmoid kernel, inspired by neural networks, is defined as:
+[ \kappa(x_i, x_j) = \tanh(\gamma x_i^\intercal x_j + r) ]
+where <span class="math notranslate nohighlight">\(\gamma\)</span> is the scale parameter, and <span class="math notranslate nohighlight">\(r\)</span> is the intercept term. This kernel mimics the behavior of neurons and is particularly interesting for certain types of nonlinear problems.</p>
+<p>Implementing nonlinear SVM using scikit-learn in Python involves selecting an appropriate kernel and tuning its parameters such as <span class="math notranslate nohighlight">\(\gamma\)</span> and <span class="math notranslate nohighlight">\(C\)</span>, the penalty parameter. One must also carefully perform cross-validation to select the model that best generalizes to unseen data. The choice of kernel and its parameters significantly affects the model’s accuracy and generalization ability, underscoring the importance of a thoughtful approach to parameter tuning and model evaluation in the SVM learning process.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_circles</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
+
+<span class="c1"># Generating a 2D dataset that is nonlinearly separable</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_circles</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">400</span><span class="p">,</span> <span class="n">factor</span><span class="o">=</span><span class="mf">.3</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mf">.05</span><span class="p">)</span>
+
+<span class="c1"># SVM with the RBF kernel</span>
+<span class="n">svc</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;rbf&#39;</span><span class="p">)</span>
+<span class="n">svc</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span>
+
+<span class="c1"># Transforming the data into a higher-dimensional space (3D) using RBF kernel transformation conceptually</span>
+<span class="c1"># For visualization purposes, we manually create a transformation that emulates the RBF effect</span>
+<span class="c1"># by adding a third dimension based on the distance from the origin point</span>
+<span class="n">R</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">X</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Data visualization</span>
+<span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="c1"># Original 2D data visualization</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Original 2D Nonlinearly Separable Data&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Feature 1&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Feature 2&quot;</span><span class="p">)</span>
+
+<span class="c1"># 3D transformed data visualization</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">projection</span><span class="o">=</span><span class="s1">&#39;3d&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter3D</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">R</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;coolwarm&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Transformed 3D Data Showing Separability&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;Feature 1&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Feature 2&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_zlabel</span><span class="p">(</span><span class="s2">&quot;Transformed Feature&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Interpretation:</span>
+<span class="c1"># The left plot shows the original 2D data that is not linearly separable. In the right plot,</span>
+<span class="c1"># a conceptual kernel transformation is applied, adding a third dimension based on the distance from the origin,</span>
+<span class="c1"># which makes the data linearly separable in this higher-dimensional space. This demonstrates how kernels</span>
+<span class="c1"># like RBF can help SVM handle nonlinearly separable data by implicitly transforming it into a higher-dimensional space.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a87278b601934007bc79e372ee57eedb0e6a93a4044d6c68768d29d9334d8dd0.png" src="../_images/a87278b601934007bc79e372ee57eedb0e6a93a4044d6c68768d29d9334d8dd0.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercise-for-the-reader">
+<h1>Exercise For The Reader<a class="headerlink" href="#exercise-for-the-reader" title="Permalink to this heading">#</a></h1>
+<section id="task-1-linear-svm-with-a-toy-dataset">
+<h2>Task 1: Linear SVM with a Toy Dataset<a class="headerlink" href="#task-1-linear-svm-with-a-toy-dataset" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Dataset:</strong> Begin with a simple 2D dataset (for easier visualization and understanding) where the data points linearly separable.</p></li>
+<li><p><strong>Implementation:</strong> Utilize libraries such as scikit-learn in Python to simplify the SVM model’s implementation. Use <code class="docutils literal notranslate"><span class="pre">SVC</span></code> with the <code class="docutils literal notranslate"><span class="pre">linear</span></code> kernel.</p></li>
+<li><p><strong>Model Tuning:</strong> Adjust the <code class="docutils literal notranslate"><span class="pre">C</span></code> parameter, which controls the margin hardness and the trade-off between correct classification and a maximally large decision boundary.</p></li>
+</ol>
+</section>
+<section id="task-2-non-linear-svm-using-kernel-trick">
+<h2>Task 2: Non-Linear SVM Using Kernel Trick<a class="headerlink" href="#task-2-non-linear-svm-using-kernel-trick" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Kernel Selection:</strong> Explore different kernel options available (e.g., Polynomial, Radial Basis Function (RBF), Sigmoid) and select the one that best fits the non-linearly separable dataset.</p></li>
+<li><p><strong>Hyperparameter Tuning:</strong> Besides choosing the kernel, you’re also invited to tune its parameters (like <code class="docutils literal notranslate"><span class="pre">degree</span></code> for polynomial, <code class="docutils literal notranslate"><span class="pre">gamma</span></code> for RBF) and the regularization parameter <code class="docutils literal notranslate"><span class="pre">C</span></code>.</p></li>
+<li><p><strong>Cross-Validation:</strong> Apply cross-validation (e.g., k-fold cross-validation) to assess the model’s performance accurately. This technique is crucial for avoiding overfitting and ensuring that the model generalizes well to unseen data.</p></li>
+</ol>
+<p><strong>Note:</strong> Remember, the goal of these exercises is not just to build a model that classifies the training data well. The real challenge lies in developing a model that performs well on data it hasn’t seen before. Keep this in mind as you select kernels, adjust parameters, and evaluate your models.</p>
+<p>Happy coding, and may your model’s accuracy be high!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">datasets</span>
+<span class="kn">from</span> <span class="nn">sklearn.svm</span> <span class="kn">import</span> <span class="n">SVC</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># Load a toy dataset</span>
+<span class="c1"># For instance, using the iris dataset and selecting only two classes for simplicity</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">datasets</span><span class="o">.</span><span class="n">load_iris</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span><span class="p">[:,</span> <span class="p">:</span><span class="mi">2</span><span class="p">]</span>  <span class="c1"># Use the first two features for easier visualization</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># Filter to include only two classes (binary classification problem)</span>
+<span class="n">mask</span> <span class="o">=</span> <span class="n">y</span> <span class="o">&lt;</span> <span class="mi">2</span>  <span class="c1"># Create a mask for the classes you want to keep</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">X</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">[</span><span class="n">mask</span><span class="p">]</span>
+
+<span class="c1"># Split the dataset into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Implementing a basic linear SVM model</span>
+<span class="n">svc_linear</span> <span class="o">=</span> <span class="n">SVC</span><span class="p">(</span><span class="n">kernel</span><span class="o">=</span><span class="s1">&#39;linear&#39;</span><span class="p">,</span> <span class="n">C</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>  <span class="c1"># Adjust C for margin hardness</span>
+<span class="n">svc_linear</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Visualization of the decision boundary</span>
+<span class="k">def</span> <span class="nf">plot_svc_decision_function</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">plot_support</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;Plot the decision function for a two-dimensional SVC&quot;&quot;&quot;</span>
+    <span class="k">if</span> <span class="n">ax</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">gca</span><span class="p">()</span>
+    <span class="n">xlim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_xlim</span><span class="p">()</span>
+    <span class="n">ylim</span> <span class="o">=</span> <span class="n">ax</span><span class="o">.</span><span class="n">get_ylim</span><span class="p">()</span>
+    
+    <span class="c1"># Create grid to evaluate model</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">xlim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">xlim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">ylim</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">ylim</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="mi">30</span><span class="p">)</span>
+    <span class="n">Y</span><span class="p">,</span> <span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">y</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
+    <span class="n">xy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">vstack</span><span class="p">([</span><span class="n">X</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">Y</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span><span class="o">.</span><span class="n">T</span>
+    <span class="n">P</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">decision_function</span><span class="p">(</span><span class="n">xy</span><span class="p">)</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+    
+    <span class="c1"># Plot decision boundary and margins</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">contour</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">Y</span><span class="p">,</span> <span class="n">P</span><span class="p">,</span> <span class="n">colors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">levels</span><span class="o">=</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span>
+               <span class="n">linestyles</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="s1">&#39;-&#39;</span><span class="p">,</span> <span class="s1">&#39;--&#39;</span><span class="p">])</span>
+    
+    <span class="c1"># Plot support vectors</span>
+    <span class="k">if</span> <span class="n">plot_support</span><span class="p">:</span>
+        <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">model</span><span class="o">.</span><span class="n">support_vectors_</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span>
+                   <span class="n">model</span><span class="o">.</span><span class="n">support_vectors_</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span>
+                   <span class="n">s</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">facecolors</span><span class="o">=</span><span class="s1">&#39;none&#39;</span><span class="p">,</span> <span class="n">edgecolors</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="n">xlim</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="n">ylim</span><span class="p">)</span>
+
+<span class="c1"># Plotting the data and the decision boundary</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;autumn&#39;</span><span class="p">)</span>
+<span class="n">plot_svc_decision_function</span><span class="p">(</span><span class="n">svc_linear</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Suggesting points for modifying the code</span>
+<span class="c1"># For non-linear kernels, replace &#39;linear&#39; with &#39;poly&#39;, &#39;rbf&#39;, or &#39;sigmoid&#39; in SVC</span>
+<span class="c1"># For example: svc_poly = SVC(kernel=&#39;poly&#39;, degree=3, C=1.0)</span>
+<span class="c1"># Remember to also experiment with the &#39;C&#39;, &#39;degree&#39; (for the polynomial kernel),</span>
+<span class="c1"># and &#39;gamma&#39; (for the rbf kernel) parameters for optimal performance.</span>
+
+<span class="c1"># Example of model evaluation</span>
+<span class="c1"># plot_confusion_matrix(svc_linear, X_test, y_test)  # Uncomment to evaluate model</span>
+<span class="c1"># plt.show()</span>
+
+<span class="c1"># Note: For comprehensive evaluation and hyperparameter tuning, consider using</span>
+<span class="c1"># GridSearchCV or RandomizedSearchCV with cross-validation.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/9c3f370557386626d9e6f82bf10118612a3a59780fac5c32474b859436b2cb42.png" src="../_images/9c3f370557386626d9e6f82bf10118612a3a59780fac5c32474b859436b2cb42.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_06"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson_27.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Day 27: Introduction to the K-Nearest Neighbors (K-NN) Algorithm</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 28: Introduction to Support Vector Machines (SVM)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-support-vector-machine-svm">What is Support Vector Machine (SVM)?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importance">Importance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-and-examples">Applications and Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#in-higher-dimensions">In Higher Dimensions</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#svm-for-linearly-separable-data">SVM for Linearly Separable Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Definition</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#svm-for-nonlinearly-separable-data">SVM for Nonlinearly Separable Data</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-kernel-trick">What is the Kernel Trick?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Applications and Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#polynomial-kernel">Polynomial Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#radial-basis-function-rbf-kernel">Radial Basis Function (RBF) Kernel</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#sigmoid-kernel">Sigmoid Kernel</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader">Exercise For The Reader</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-1-linear-svm-with-a-toy-dataset">Task 1: Linear SVM with a Toy Dataset</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#task-2-non-linear-svm-using-kernel-trick">Task 2: Non-Linear SVM Using Kernel Trick</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

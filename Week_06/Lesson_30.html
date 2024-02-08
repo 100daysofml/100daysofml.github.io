@@ -1,0 +1,1060 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Introduction to Naive Bayes Classification &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_06/Lesson_30';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_06/Lesson_30.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Introduction to Decision Trees" href="Lesson_29.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    100 Days of Machine Learning Challenge
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Daily Challenge Curriculum</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Daily Curriculum Resources</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_01/001_Overview.html">Week_01: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_02/002_Overview.html">Week_02: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_09.html">Day 9 - Calculus - Integrals, Fundamental Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_10.html">Day 10 - Statistics and Probability - Concepts and Relevant Distributions</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_03/003_Overview.html">Week_03: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_11.html">Day 11 - Introduction to Data Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12.html">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12solution.html">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_13.html">Day 13 - Handling Missing Data in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_14.html">Day 14 - Data Normalization and Scaling using Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_15.html">Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications</a></li>
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_04/004_Overview.html">Week_04: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_16.html">Day 16 - Introduction to EDA and Data Visualization in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_17.html">Day 17 - Implementing Descriptive Statistics for EDA in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_18.html">Day 18 - Visualization Techniques for Data Distribution in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_19.html">Day 19: Correlation Analysis using Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_20.html">Day 20: Advanced Feature Selection and Importance in Python - With Iris Dataset</a></li>
+
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5: Supervised Learning - Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_05/005_Overview.html">Week_05: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_21.html">Day 21 - Introduction to Regression Analysis in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_22.html">Day 22: Implementing Multiple Linear Regression in Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_23.html">Day 23 - Advanced Regression Techniques - Polynomial, Lasso, and Ridge Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_24.html">Day 24 - Regression Model Evaluation Metrics in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_25.html">Day 25 - Addressing Overfitting and Underfitting in Regression Models</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6: Supervised Learning - Classification</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="006_Overview.html">Week_06: Overview</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Lesson_26.html">Introduction to Classification and Logistic Regression in Python</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="Lesson_27.html">Implementing K-NN in Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="Lesson_28.html">Fundamentals of Support Vector Machines (SVM)</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="Lesson_29.html">Introduction to Decision Trees</a></li>
+
+
+
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Introduction to Naive Bayes Classification</a></li>
+
+
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-4iw5ztbi/lab/workspaces/auto-e/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_06/Lesson_30.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/github/100daysofml/100daysofml.github.io/blob/master/Week_06/Lesson_30.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_06/Lesson_30.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_06/Lesson_30.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to Naive Bayes Classification</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Naive Bayes Classification</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-naive-bayes-classification">What is Naive Bayes Classification?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition"><strong>Definition:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importance"><strong>Importance:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-and-examples">Applications and Examples</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#foundations-of-probability-in-classification">Foundations of Probability in Classification</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-probability-in-classification">What is Probability in Classification?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Applications and Examples</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#principles-of-naive-bayes-classifier">Principles of Naive Bayes Classifier</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-naive-bayes-classifier">What is the Naive Bayes Classifier?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Importance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Applications and Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-naive-bayes-models">Types of Naive Bayes Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader-implementing-naive-bayes-with-scikit-learn">Exercise For The Reader: Implementing Naive Bayes with Scikit-Learn</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">What is Naive Bayes Classification?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Applications and Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-steps">Exercise Steps</a></li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-naive-bayes-classification">
+<h1>Introduction to Naive Bayes Classification<a class="headerlink" href="#introduction-to-naive-bayes-classification" title="Permalink to this heading">#</a></h1>
+<p>Naive Bayes classification is a simple yet powerful algorithm in the field of machine learning and data science. It falls under the category of supervised learning, where the goal is to learn a mapping from inputs to outputs based on example input-output pairs. Naive Bayes classifiers leverage probability theory to make predictions, making it especially suitable for applications where the dimensionality of the input data is high.</p>
+<section id="what-is-naive-bayes-classification">
+<h2>What is Naive Bayes Classification?<a class="headerlink" href="#what-is-naive-bayes-classification" title="Permalink to this heading">#</a></h2>
+<p>Naive Bayes classification is a probabilistic machine learning model that is used for classification tasks. The ‘naive’ aspect of the model comes from the assumption that the features used to make the classification decision are independent of each other, given the target variable. Despite this simplifying assumption, Naive Bayes classifiers often perform remarkably well and are particularly useful when the dataset is not too large and the assumption of feature independence is reasonable.</p>
+<section id="definition">
+<h3><strong>Definition:</strong><a class="headerlink" href="#definition" title="Permalink to this heading">#</a></h3>
+<p>At its core, Naive Bayes classification applies Bayes’ Theorem with the “naive” assumption of conditional independence between every pair of features given the value of the class variable. Bayes’ Theorem is mathematically represented as:</p>
+<div class="math notranslate nohighlight">
+\[ P(A|B) = \frac{P(B|A) \cdot P(A)}{P(B)} \]</div>
+<p>Where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(A|B)\)</span> is the posterior probability of class A given predictor B,</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(B|A)\)</span> is the likelihood, which is the probability of predictor B given class A,</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(A)\)</span> is the prior probability of class A, and</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(B)\)</span> is the prior probability of predictor B.</p></li>
+</ul>
+<p>For classification, this formula is used to estimate the probability of a particular class given a set of features (predictors).</p>
+</section>
+<section id="importance">
+<h3><strong>Importance:</strong><a class="headerlink" href="#importance" title="Permalink to this heading">#</a></h3>
+<p>Naive Bayes Classification is important because of its simplicity, efficiency, and effectiveness, especially in dealing with categorical data. It performs well in case of text classification tasks like spam filtering and sentiment analysis. Its probabilistic nature allows it to deal with uncertainties and make predictions even with incomplete knowledge, by handling the data attributes independently.</p>
+</section>
+</section>
+<section id="applications-and-examples">
+<h2>Applications and Examples<a class="headerlink" href="#applications-and-examples" title="Permalink to this heading">#</a></h2>
+<p>Naive Bayes Classification has a wide range of applications across various fields:</p>
+<ol class="arabic simple">
+<li><p><strong>Text Classification / Spam Filtering:</strong> By analyzing the frequency of words and their association with spam or non-spam emails, Naive Bayes classifiers can effectively filter out unwanted emails.</p></li>
+<li><p><strong>Sentiment Analysis:</strong> It is used to determine the sentiment expressed in a piece of text, positive or negative, based on the presence and combinations of words.</p></li>
+<li><p><strong>Recommendation Systems:</strong> Naive Bayes can contribute to recommendation systems by classifying items based on user preferences and past user behavior.</p></li>
+<li><p><strong>Medical Diagnosis:</strong> In healthcare, Naive Bayes classifiers can predict the likelihood of a disease given the presence of certain symptoms.</p></li>
+</ol>
+<p>Through these applications, it is evident that despite its simplicity, Naive Bayes Classification continues to play a crucial role in the field of machine learning and artificial intelligence, handling both simple and complex classification tasks efficiently.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># Generate a simple dataset</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">n_classes</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Split the dataset into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Initialize classifiers</span>
+<span class="n">classifiers</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Naive Bayes&#39;</span><span class="p">:</span> <span class="n">GaussianNB</span><span class="p">(),</span>
+    <span class="s1">&#39;Decision Tree&#39;</span><span class="p">:</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">),</span>
+    <span class="s1">&#39;Logistic Regression&#39;</span><span class="p">:</span> <span class="n">LogisticRegression</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">,</span> <span class="n">max_iter</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1"># Dictionary to hold accuracy scores</span>
+<span class="n">accuracy_scores</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="c1"># Fit models and calculate accuracy</span>
+<span class="k">for</span> <span class="n">name</span><span class="p">,</span> <span class="n">clf</span> <span class="ow">in</span> <span class="n">classifiers</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+    <span class="n">accuracy_scores</span><span class="p">[</span><span class="n">name</span><span class="p">]</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+
+<span class="c1"># Data for plotting</span>
+<span class="n">names</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">accuracy_scores</span><span class="o">.</span><span class="n">keys</span><span class="p">())</span>
+<span class="n">values</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="n">accuracy_scores</span><span class="o">.</span><span class="n">values</span><span class="p">())</span>
+
+<span class="c1"># Create bar chart</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">names</span><span class="p">,</span> <span class="n">values</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">,</span> <span class="s1">&#39;red&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Predictive Accuracy Comparison&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Accuracy&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Classifier&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">])</span>  <span class="c1"># Set the limits for the y-axis to have a clear comparison</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">names</span><span class="p">)</span>  <span class="c1"># Ensure classifier names are used as labels on the x-axis</span>
+
+<span class="c1"># Display the bar chart</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Interpretation:</span>
+<span class="c1"># This visualization illustrates the comparative predictive accuracy of Naive Bayes, Decision Tree,</span>
+<span class="c1"># and Logistic Regression classifiers on a simple dataset. Such visual comparisons can help in</span>
+<span class="c1"># selecting an appropriate model based on accuracy for specific applications or datasets.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/0bfbf169350f3c8763f124e37dfd13f1e7660b6a3d0f020832740d077549620c.png" src="../_images/0bfbf169350f3c8763f124e37dfd13f1e7660b6a3d0f020832740d077549620c.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="foundations-of-probability-in-classification">
+<h1>Foundations of Probability in Classification<a class="headerlink" href="#foundations-of-probability-in-classification" title="Permalink to this heading">#</a></h1>
+<p>Probability theory plays a critical role in various aspects of data science and machine learning, particularly in classification tasks. Understanding the foundational concepts of probability is essential for algorithms like the Naive Bayes classifier, which relies heavily on these principles to make predictions. This section delves into the essential probability concepts such as conditional probability, joint probability, and independence, laying the groundwork for understanding how Naive Bayes and similar models function.</p>
+<section id="what-is-probability-in-classification">
+<h2>What is Probability in Classification?<a class="headerlink" href="#what-is-probability-in-classification" title="Permalink to this heading">#</a></h2>
+<p><strong>Text:</strong> In the context of classification, probability helps us quantify the uncertainty regarding the assignment of data points to a particular class or category. It enables us to make informed decisions based on the likelihood of different outcomes.</p>
+<p><strong>Definition:</strong></p>
+<ul class="simple">
+<li><p><strong>Conditional Probability:</strong> Given two events <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, the conditional probability of <span class="math notranslate nohighlight">\(A\)</span> given <span class="math notranslate nohighlight">\(B\)</span> is denoted as <span class="math notranslate nohighlight">\(P(A|B)\)</span> and is calculated using the formula:
+$<span class="math notranslate nohighlight">\(P(A|B) = \frac{P(A \cap B)}{P(B)}\)</span><span class="math notranslate nohighlight">\(
+It represents the probability of event \)</span>A<span class="math notranslate nohighlight">\( occurring given that \)</span>B$ has already occurred.</p></li>
+<li><p><strong>Joint Probability:</strong> The joint probability of two events <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span>, denoted as <span class="math notranslate nohighlight">\(P(A \cap B)\)</span>, represents the probability of both events happening at the same time.</p></li>
+<li><p><strong>Independence:</strong> Two events <span class="math notranslate nohighlight">\(A\)</span> and <span class="math notranslate nohighlight">\(B\)</span> are considered independent if the occurrence of one does not affect the occurrence of the other, mathematically represented as:
+$<span class="math notranslate nohighlight">\(P(A \cap B) = P(A)P(B)\)</span>$</p></li>
+</ul>
+<p><strong>Importance:</strong> These concepts are pivotal for classification algorithms, especially Naive Bayes, which operates under the assumption of feature independence and requires the computation of probabilities to predict the class of a given input. Understanding these foundational concepts allows data scientists to implement, evaluate, and improve models effectively, making them crucial in fields like spam detection, sentiment analysis, and more.</p>
+</section>
+<section id="id1">
+<h2>Applications and Examples<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<ul class="simple">
+<li><p><strong>Spam Detection:</strong> Naive Bayes classifiers are widely used in email spam detection. By calculating the conditional probability of an email being spam given the presence of certain words, the classifier can effectively filter out unwanted messages.</p></li>
+<li><p><strong>Medical Diagnosis:</strong> Probability in classification can assist in medical diagnosis by estimating the likelihood of a disease given various patient symptoms. For instance, a Naive Bayes model might evaluate the probability of a patient having a certain condition based on their symptoms, helping doctors in decision-making.</p></li>
+<li><p><strong>Sentiment Analysis:</strong> In natural language processing, classification models assess the sentiment of text data (e.g., positive, negative, neutral). Using probability, these models can analyze word frequencies and other features to classify the sentiment of user reviews, social media posts, etc.</p></li>
+</ul>
+<p>These examples underscore the ubiquity and importance of probability in classification across different domains. By mastering these foundational concepts, one gains a powerful toolkit for tackling a wide array of data science and machine learning challenges, making probability theory an indispensable part of a data scientist’s education.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import the necessary library for plotting</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">matplotlib_venn</span> <span class="kn">import</span> <span class="n">venn2</span><span class="p">,</span> <span class="n">venn2_circles</span>
+
+<span class="c1"># Set up the figure and axis for the Venn diagram</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Probability Concepts in Classification&quot;</span><span class="p">)</span>
+
+<span class="c1"># Create the Venn diagram to illustrate joint and conditional probabilities</span>
+<span class="c1"># The sizes are symbolic and do not represent actual probabilities</span>
+<span class="n">venn</span> <span class="o">=</span> <span class="n">venn2</span><span class="p">(</span><span class="n">subsets</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="n">set_labels</span><span class="o">=</span><span class="p">(</span><span class="s1">&#39;P(A)&#39;</span><span class="p">,</span> <span class="s1">&#39;P(B)&#39;</span><span class="p">))</span>
+<span class="n">venn_circles</span> <span class="o">=</span> <span class="n">venn2_circles</span><span class="p">(</span><span class="n">subsets</span><span class="o">=</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Annotate for Conditional Probability</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.80</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.70</span><span class="p">,</span> <span class="s2">&quot;P(A|B) = P(A ∩ B) / P(B)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="c1"># Annotate for Joint Probability</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.20</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s2">&quot;P(A ∩ B)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;white&quot;</span><span class="p">)</span>
+
+<span class="c1"># Annotate for Independence</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="o">-</span><span class="mf">0.80</span><span class="p">,</span> <span class="mf">0.50</span><span class="p">,</span> <span class="s2">&quot;If Independent:</span><span class="se">\n</span><span class="s2">P(A ∩ B) = P(A)P(B)&quot;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+
+<span class="c1"># Enhance the visualization</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="s1">&#39;P(A)P(B) = P(A ∩ B)</span><span class="se">\n</span><span class="s1">(A and B are independent)&#39;</span><span class="p">,</span> 
+    <span class="n">xy</span><span class="o">=</span><span class="n">venn</span><span class="o">.</span><span class="n">get_label_by_id</span><span class="p">(</span><span class="s1">&#39;10&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">get_position</span><span class="p">(),</span> 
+    <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mf">1.0</span><span class="p">,</span><span class="o">-</span><span class="mf">0.3</span><span class="p">),</span> 
+    <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">&quot;-&gt;&quot;</span><span class="p">,</span> <span class="n">connectionstyle</span><span class="o">=</span><span class="s2">&quot;arc3,rad=-0.5&quot;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">),</span> 
+    <span class="n">fontsize</span><span class="o">=</span><span class="mi">12</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+    <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/43076473c4cccfaf53c478ab56931333445288e4800292bdfecce2530f5fb8c1.png" src="../_images/43076473c4cccfaf53c478ab56931333445288e4800292bdfecce2530f5fb8c1.png" />
+</div>
+</div>
+<p>This Venn diagram visualizes the relationship between joint probability (<span class="math notranslate nohighlight">\(P(A \cap B)\)</span>), conditional probability (<span class="math notranslate nohighlight">\(P(A|B)\)</span>), and the concept of independence between two events in the context of classification tasks like those performed by Naive Bayes. The diagram illustrates how these fundamental probability concepts interrelate, providing a foundation for understanding how probability informs decision-making in classification algorithms.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="principles-of-naive-bayes-classifier">
+<h1>Principles of Naive Bayes Classifier<a class="headerlink" href="#principles-of-naive-bayes-classifier" title="Permalink to this heading">#</a></h1>
+<p>The Naive Bayes Classifier is a fundamental algorithm in the field of machine learning, known for its simplicity and effectiveness in handling classification problems. Despite its straightforward approach, the Naive Bayes Classifier plays a crucial role in various applications, from spam filtering to sentiment analysis. This lesson will delve into the principles underpinning the Naive Bayes Classifier, the naive assumption of feature independence, and its various types suitable for different data characteristics.</p>
+<section id="what-is-the-naive-bayes-classifier">
+<h2>What is the Naive Bayes Classifier?<a class="headerlink" href="#what-is-the-naive-bayes-classifier" title="Permalink to this heading">#</a></h2>
+<section id="id2">
+<h3>Definition<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>The Naive Bayes Classifier is a probabilistic machine learning model used for classification tasks. It is based on Bayes’ Theorem, which describes the probability of an event, based on prior knowledge of conditions that might be related to the event. In the context of Naive Bayes, the event is the class label (C) of a data point, and the conditions are the features (X) of that data point. The classifier makes the naive assumption that the features are independent of each other given the class label. Mathematically, Bayes’ Theorem can be expressed as:</p>
+<div class="math notranslate nohighlight">
+\[ P(C|X) = \frac{P(X|C) \times P(C)}{P(X)} \]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(P(C|X)\)</span> is the probability of class <span class="math notranslate nohighlight">\(C\)</span> given features <span class="math notranslate nohighlight">\(X\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(X|C)\)</span> is the probability of observing features <span class="math notranslate nohighlight">\(X\)</span> given class <span class="math notranslate nohighlight">\(C\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(C)\)</span> is the prior probability of observing class <span class="math notranslate nohighlight">\(C\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(P(X)\)</span> is the prior probability of observing features <span class="math notranslate nohighlight">\(X\)</span>.</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Importance<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<p>Despite its simplicity, the Naive Bayes Classifier is incredibly powerful, especially in domains where the dimensionality of the data is high. Its assumption of feature independence simplifies the computation, making it highly scalable and efficient for large datasets. Moreover, it performs surprisingly well even when the independence assumption is violated, making it a versatile tool in the machine learning toolkit. The classifier is particularly useful in text classification tasks where features (e.g., words) exhibit high degrees of correlation.</p>
+</section>
+</section>
+<section id="id4">
+<h2>Applications and Examples<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h2>
+<p>The Naive Bayes Classifier finds its applications across numerous fields:</p>
+<ol class="arabic simple">
+<li><p><strong>Spam Detection</strong>: In email clients, Naive Bayes is used to classify emails as spam or ham (not spam) by learning the likelihood of certain words appearing in spam versus legitimate emails.</p></li>
+<li><p><strong>Sentiment Analysis</strong>: It’s applied to analyze social media posts, reviews, or any text data to ascertain the sentiment (positive, negative, or neutral) expressed by the text, based on the presence and combinations of words.</p></li>
+<li><p><strong>Document Classification</strong>: Naive Bayes classifiers are used to automatically categorize documents into predefined topics based on their content, streamlining document management in large organizations.</p></li>
+<li><p><strong>Medical Diagnosis</strong>: By analyzing patient data and the symptoms exhibited, Naive Bayes can help in predicting the likelihood of a patient having a certain disease.</p></li>
+</ol>
+<section id="types-of-naive-bayes-models">
+<h3>Types of Naive Bayes Models<a class="headerlink" href="#types-of-naive-bayes-models" title="Permalink to this heading">#</a></h3>
+<p>The effectiveness of a Naive Bayes Classifier is partly determined by choosing the right model based on the characteristics of the input data:</p>
+<ul class="simple">
+<li><p><strong>Gaussian Naive Bayes</strong>: Assumes the continuous values associated with each feature are distributed according to a Gaussian (normal) distribution. It’s best for data with a continuous or real-valued attributes.</p></li>
+<li><p><strong>Multinomial Naive Bayes</strong>: Particularly used for document classification, it assumes that features (e.g., word counts) follow a multinomial distribution. It’s ideal for data that can be turned into counts or frequency metrics.</p></li>
+<li><p><strong>Bernoulli Naive Bayes</strong>: Assumes binary-valued features and is suitable for making predictions from binary feature vectors.</p></li>
+</ul>
+<p>In practice, the choice among Gaussian, Multinomial, and Bernoulli Naive Bayes depends on the nature of your dataset and the specific requirements of your application.</p>
+<p>In conclusion, the Naive Bayes Classifier’s principles provide a robust foundation for tackling classification problems across a myriad of domains. Its simplicity, coupled with its surprising effectiveness, makes it an invaluable tool for both novice and experienced machine learning practitioners.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Data for plotting</span>
+<span class="n">data_types</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Continuous&#39;</span><span class="p">,</span> <span class="s1">&#39;Count&#39;</span><span class="p">,</span> <span class="s1">&#39;Binary&#39;</span><span class="p">]</span>
+<span class="n">nb_variants</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;Gaussian&#39;</span><span class="p">,</span> <span class="s1">&#39;Multinomial&#39;</span><span class="p">,</span> <span class="s1">&#39;Bernoulli&#39;</span><span class="p">]</span>
+<span class="n">suitability_scores</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;Gaussian&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">],</span>
+    <span class="s1">&#39;Multinomial&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.3</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">,</span> <span class="mf">0.4</span><span class="p">],</span>
+    <span class="s1">&#39;Bernoulli&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="mf">0.7</span><span class="p">,</span> <span class="mf">0.9</span><span class="p">]</span>
+<span class="p">}</span>
+
+<span class="n">bar_width</span> <span class="o">=</span> <span class="mf">0.25</span>
+<span class="n">index</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">data_types</span><span class="p">))</span>
+
+<span class="c1"># Plotting</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+
+<span class="c1"># Creating bars for each Naive Bayes variant</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">variant</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nb_variants</span><span class="p">):</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="n">i</span> <span class="o">*</span> <span class="n">bar_width</span><span class="p">,</span> <span class="n">suitability_scores</span><span class="p">[</span><span class="n">variant</span><span class="p">],</span> <span class="n">width</span><span class="o">=</span><span class="n">bar_width</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">variant</span><span class="p">)</span>
+
+<span class="c1"># Customization</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Data Type&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Suitability Score&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Suitability of Naive Bayes Variants by Data Type&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">(</span><span class="n">index</span> <span class="o">+</span> <span class="n">bar_width</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticklabels</span><span class="p">(</span><span class="n">data_types</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+
+<span class="c1"># Show plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/51ed33f81d816429d2454acaa13e7c45b99e50705d7c95f5203d035198e1e6f4.png" src="../_images/51ed33f81d816429d2454acaa13e7c45b99e50705d7c95f5203d035198e1e6f4.png" />
+</div>
+</div>
+<p>This code generates a comparison graph using a bar chart to show the suitability of different Naive Bayes classifiers (Gaussian, Multinomial, and Bernoulli) for handling various types of data (Continuous, Count, and Binary). Each Naive Bayes variant is assessed on a suitability score (on a scale from 0 to 1) for each data type, demonstrating the effectiveness or preference of using a particular variant for a specific type of data. For instance, Gaussian Naive Bayes is most suitable for continuous data, while Multinomial and Bernoulli are better suited for count and binary data, respectively.</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercise-for-the-reader-implementing-naive-bayes-with-scikit-learn">
+<h1>Exercise For The Reader: Implementing Naive Bayes with Scikit-Learn<a class="headerlink" href="#exercise-for-the-reader-implementing-naive-bayes-with-scikit-learn" title="Permalink to this heading">#</a></h1>
+<p>In this section, we will walk through an exercise designed to give you hands-on experience with Naive Bayes classification, one of the simplest yet effective algorithms in the realm of supervised learning. By using the Python library <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>, we will tackle a simple dataset, guiding you from data preparation to model evaluation. This practical exercise aims to solidify your understanding of Naive Bayes and demonstrate its efficacy in classification tasks.</p>
+<section id="id5">
+<h2>What is Naive Bayes Classification?<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h2>
+<p><strong>Text:</strong> Naive Bayes classifiers are a family of simple “probabilistic classifiers” based on applying Bayes’ theorem with strong (naive) independence assumptions between the features. They are remarkably straightforward and efficient, requiring a small amount of training data to estimate the necessary parameters to make predictions about the data.</p>
+<p><strong>Definition:</strong> Naive Bayes classification assumes all the features to be independent of each other to predict the probability that a given sample belongs to a certain class. The model is represented mathematically as:</p>
+<div class="math notranslate nohighlight">
+\[ P(C_k | x_1, ..., x_n) = \frac{P(C_k) P(x_1, ..., x_n | C_k)}{P(x_1, ..., x_n)} \]</div>
+<p>where <span class="math notranslate nohighlight">\(C_k\)</span> is a class variable, <span class="math notranslate nohighlight">\(x_1, ..., x_n\)</span> are feature variables, <span class="math notranslate nohighlight">\(P(C_k | x_1, ..., x_n)\)</span> is the posterior probability of class <span class="math notranslate nohighlight">\(C_k\)</span> given predictors <span class="math notranslate nohighlight">\(x_1, ..., x_n\)</span>.</p>
+<p><strong>Importance:</strong> Naive Bayes classifiers work extremely well in many real-world situations, famously for document classification and spam filtering. They require a small amount of training data to estimate the test data’s parameters. Furthermore, Naive Bayes can be scaled to large datasets and works well with categorical and numerical data.</p>
+</section>
+<section id="id6">
+<h2>Applications and Examples<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<p>Naive Bayes classifiers find applications in various fields:</p>
+<ul class="simple">
+<li><p><strong>Email Spam Detection:</strong> Classifying emails as spam or not spam based on the frequency of words used.</p></li>
+<li><p><strong>Document Classification:</strong> Categorizing news articles into predefined topics based on the text content.</p></li>
+<li><p><strong>Sentiment Analysis:</strong> Analyzing social media text to determine the sentiment expressed (positive, negative, or neutral).</p></li>
+<li><p><strong>Medical Diagnosis:</strong> Predicting the likelihood of a disease given the symptoms and patient data.</p></li>
+</ul>
+</section>
+<section id="exercise-steps">
+<h2>Exercise Steps<a class="headerlink" href="#exercise-steps" title="Permalink to this heading">#</a></h2>
+<ol class="arabic simple">
+<li><p><strong>Loading the Dataset:</strong> Our first step will be to import a dataset. We will work with a simple dataset like the Iris dataset, which is readily available in <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>.</p></li>
+<li><p><strong>Splitting Dataset:</strong> We will split our dataset into training and testing sets to prepare our data for the model.</p></li>
+<li><p><strong>Model Fitting:</strong> We will create a Naive Bayes classifier and fit it to our training data. This involves learning the parameters which make our model ready to make predictions.</p></li>
+<li><p><strong>Making Predictions:</strong> With the trained model, we will make predictions on our testing set.</p></li>
+<li><p><strong>Model Evaluation:</strong> Finally, we will evaluate the performance of our Naive Bayes classifier using metrics such as accuracy, precision, recall, and the confusion matrix.</p></li>
+</ol>
+<p>Through this exercise, you will gain a practical understanding of preparing data, fitting a model, making predictions, and evaluating a classifier’s performance. This hands-on experience is invaluable for grasping the nuances of Naive Bayes classification and its implementation using <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>.</p>
+<p>Embarking on this exercise will demonstrate the simplicity and power of Naive Bayes classifiers and will equip you with the knowledge to apply this model to your datasets. Let’s dive in and explore the world of Naive Bayes through this interactive exercise!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.naive_bayes</span> <span class="kn">import</span> <span class="n">GaussianNB</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">confusion_matrix</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span>
+
+<span class="c1"># Load the Iris dataset</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># Split dataset into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># TODO: Fit the Naive Bayes model</span>
+<span class="c1"># Use GaussianNB() to create a Gaussian Naive Bayes classifier</span>
+<span class="c1"># Fit the classifier to the training data</span>
+
+<span class="c1"># Example:</span>
+<span class="c1"># model = GaussianNB()</span>
+<span class="c1"># model.fit(X_train, y_train)</span>
+
+<span class="c1"># TODO: Make predictions</span>
+<span class="c1"># Use the trained model to make predictions on the test set</span>
+
+<span class="c1"># Example:</span>
+<span class="c1"># predictions = model.predict(X_test)</span>
+
+<span class="c1"># TODO: Evaluate the model</span>
+<span class="c1"># Calculate and print the accuracy, precision, recall, and confusion matrix using the true labels and your predictions</span>
+
+<span class="c1"># Example:</span>
+<span class="c1"># accuracy = accuracy_score(y_test, predictions)</span>
+<span class="c1"># precision = precision_score(y_test, predictions, average=&#39;micro&#39;)</span>
+<span class="c1"># recall = recall_score(y_test, predictions, average=&#39;micro&#39;)</span>
+<span class="c1"># conf_matrix = confusion_matrix(y_test, predictions)</span>
+<span class="c1"># print(f&quot;Accuracy: {accuracy}\nPrecision: {precision}\nRecall: {recall}\nConfusion Matrix:\n{conf_matrix}&quot;)</span>
+
+<span class="c1"># Fill in the above TODOs to complete the exercise on implementing and evaluating a Naive Bayes classifier.</span>
+</pre></div>
+</div>
+</div>
+</div>
+<p>This starter code sets up the initial steps for implementing a Naive Bayes classifier using the Iris dataset. The TODO comments guide you through fitting the model, making predictions, and evaluating its performance. This approach allows learners to engage directly with the key steps necessary for applying Naive Bayes classification to a dataset.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_06"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson_29.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Introduction to Decision Trees</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Naive Bayes Classification</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-naive-bayes-classification">What is Naive Bayes Classification?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition"><strong>Definition:</strong></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importance"><strong>Importance:</strong></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-and-examples">Applications and Examples</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#foundations-of-probability-in-classification">Foundations of Probability in Classification</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-probability-in-classification">What is Probability in Classification?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Applications and Examples</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#principles-of-naive-bayes-classifier">Principles of Naive Bayes Classifier</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-naive-bayes-classifier">What is the Naive Bayes Classifier?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Importance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Applications and Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#types-of-naive-bayes-models">Types of Naive Bayes Models</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader-implementing-naive-bayes-with-scikit-learn">Exercise For The Reader: Implementing Naive Bayes with Scikit-Learn</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">What is Naive Bayes Classification?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Applications and Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-steps">Exercise Steps</a></li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

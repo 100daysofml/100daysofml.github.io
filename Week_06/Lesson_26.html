@@ -1,0 +1,1061 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Day 26: Introduction to Classification and Logistic Regression in Python &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_06/Lesson_26';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_06/Lesson_26.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Day 27: Introduction to the K-Nearest Neighbors (K-NN) Algorithm" href="Lesson_27.html" />
+    <link rel="prev" title="Course Structure" href="006_Overview.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    100 Days of Machine Learning Challenge
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Daily Challenge Curriculum</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Daily Curriculum Resources</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_01/001_Overview.html">Week_01: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_02/002_Overview.html">Week_02: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_09.html">Day 9 - Calculus - Integrals, Fundamental Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_10.html">Day 10 - Statistics and Probability - Concepts and Relevant Distributions</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_03/003_Overview.html">Week_03: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_11.html">Day 11 - Introduction to Data Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12.html">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12solution.html">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_13.html">Day 13 - Handling Missing Data in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_14.html">Day 14 - Data Normalization and Scaling using Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_15.html">Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications</a></li>
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_04/004_Overview.html">Week_04: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_16.html">Day 16 - Introduction to EDA and Data Visualization in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_17.html">Day 17 - Implementing Descriptive Statistics for EDA in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_18.html">Day 18 - Visualization Techniques for Data Distribution in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_19.html">Day 19: Correlation Analysis using Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_20.html">Day 20: Advanced Feature Selection and Importance in Python - With Iris Dataset</a></li>
+
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5: Supervised Learning - Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_05/005_Overview.html">Week_05: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_21.html">Day 21 - Introduction to Regression Analysis in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_22.html">Day 22: Implementing Multiple Linear Regression in Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_23.html">Day 23 - Advanced Regression Techniques - Polynomial, Lasso, and Ridge Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_24.html">Day 24 - Regression Model Evaluation Metrics in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_25.html">Day 25 - Addressing Overfitting and Underfitting in Regression Models</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6: Supervised Learning - Classification</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="006_Overview.html">Week_06: Overview</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Day 26: Introduction to Classification and Logistic Regression in Python</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="Lesson_27.html">Day 27: Introduction to the K-Nearest Neighbors (K-NN) Algorithm</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="Lesson_28.html">Day 28: Introduction to Support Vector Machines (SVM)</a></li>
+
+
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-4iw5ztbi/lab/workspaces/auto-e/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_06/Lesson_26.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/github/100daysofml/100daysofml.github.io/blob/master/Week_06/Lesson_26.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_06/Lesson_26.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_06/Lesson_26.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Day 26: Introduction to Classification and Logistic Regression in Python</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 26: Introduction to Classification and Logistic Regression in Python</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-classification">What is Classification?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-and-examples">Applications and Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-classification-vs-multi-class-classification">Binary Classification vs. Multi-Class Classification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-learning-vs-unsupervised-learning">Supervised Learning vs. Unsupervised Learning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-logistic-function-sigmoid-function">The Logistic Function (Sigmoid Function)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-logistic-function">What is the Logistic Function?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importance">Importance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Applications and Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#financial-sector">Financial Sector</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#healthcare">Healthcare</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#social-sciences">Social Sciences</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hey-how-does-that-curvy-thing-draw-straight-lines-through-my-data">Hey, How Does That Curvy Thing Draw Straight Lines Through My Data?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader-implementing-a-less-simple-logistic-regression-model">Exercise For The Reader: Implementing a (Less) Simple Logistic Regression Model</a></li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="day-26-introduction-to-classification-and-logistic-regression-in-python">
+<h1>Day 26: Introduction to Classification and Logistic Regression in Python<a class="headerlink" href="#day-26-introduction-to-classification-and-logistic-regression-in-python" title="Permalink to this heading">#</a></h1>
+<p>Let’s build a <strong>classifier</strong>. If we have examples of items that go into our desired categories, we can train a model to guess the label of new data we encounter.</p>
+<section id="what-is-classification">
+<h2>What is Classification?<a class="headerlink" href="#what-is-classification" title="Permalink to this heading">#</a></h2>
+<p>Classification in machine learning is a type of supervised learning where the goal is to predict the categorical labels of new observations based on past observations for which the labels are known. These categories can be binary, like determining whether an email is spam or not spam, or multi-class, like classifying a set of images into different categories such as dogs, cats, or birds.</p>
+<p>At its core, <strong>classification</strong> aims to map input variables (features) to discrete outputs, generally represented as categories or classes. The function that performs this mapping is trained on a dataset containing inputs and the correct outputs. Mathematically, if we represent our input data as <span class="math notranslate nohighlight">\(X\)</span> and the categories as <span class="math notranslate nohighlight">\(Y\)</span>, classification predicts <span class="math notranslate nohighlight">\(Y\)</span> based on <span class="math notranslate nohighlight">\(X\)</span>.</p>
+<p>Classification is paramount in numerous fields because it enables us to categorize data into distinct classes, facilitating easier analysis and decision-making. Its applications range from email filtering (spam vs. non-spam) to medical diagnosis (identifying diseases based on symptoms or scans). Accurate classification is crucial because it directly affects the efficiency and reliability of automated decisions in various industries, including finance, healthcare, and security.</p>
+</section>
+<section id="applications-and-examples">
+<h2>Applications and Examples<a class="headerlink" href="#applications-and-examples" title="Permalink to this heading">#</a></h2>
+<p>Classification techniques are applied in a multitude of domains. Here are a few noteworthy examples:</p>
+<ol class="arabic simple">
+<li><p><strong>Spam Detection</strong>: Email services use classification to filter out unwanted emails from users’ inboxes, ensuring that only relevant messages reach the recipient.</p></li>
+<li><p><strong>Medical Diagnosis</strong>: Machine learning models, trained with historical patient data, can classify whether a new patient’s symptoms are indicative of a particular disease.</p></li>
+<li><p><strong>Financial Fraud Detection</strong>: Classification algorithms can detect patterns typical of fraudulent transactions, helping financial institutions prevent unauthorized access to accounts.</p></li>
+<li><p><strong>Customer Sentiment Analysis</strong>: Companies analyze customer feedback and classify them into positive, negative, or neutral sentiments to gauge overall customer satisfaction.</p></li>
+</ol>
+<p>One prevalent method for tackling binary classification problems is called <strong>Logistic Regression</strong>.</p>
+</section>
+<section id="logistic-regression">
+<h2>Logistic Regression<a class="headerlink" href="#logistic-regression" title="Permalink to this heading">#</a></h2>
+<p>Logistic regression is a statistical and machine learning technique used for binary classification. Unlike linear regression, which outputs continuous values, logistic regression aims to predict a binary outcome (e.g., yes/no, 0/1).</p>
+<p>The mathematical core of logistic regression is that it stays at a low, constant Y value until very rapidly switching to a high, constant Y value. This transition allows us to “divide” the X-axis between two labels (and isn’t limited to two dimensions, but my visualizations mostly are).</p>
+<p>This functionality allows logistic regression to estimate the probability that a given input belongs to a particular category (class 1), and by extension, not the other (class 0). Based on a threshold (usually 0.5), the model classifies each instance accordingly.</p>
+<section id="binary-classification-vs-multi-class-classification">
+<h3>Binary Classification vs. Multi-Class Classification<a class="headerlink" href="#binary-classification-vs-multi-class-classification" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Binary Classification</strong> is the simplest form of classification that deals with two distinct classes. The output label <span class="math notranslate nohighlight">\(y\)</span> in binary classification is typically represented as 0 or 1, where each number corresponds to a class. Logistic regression is distinctly applicable for binary classification, but every multi-class classifier is capable of labeling just two classes as well.</p></li>
+<li><p><strong>Multi-Class Classification</strong> involves categorizing data into more than two classes. In this case, the model’s output layer must have as many neurons as there are classes, with each neuron representing a class. For example, a fruit classification model could distinguish among ‘Apple’, ‘Banana’, and ‘Cherry’.</p></li>
+</ul>
+</section>
+<section id="supervised-learning-vs-unsupervised-learning">
+<h3>Supervised Learning vs. Unsupervised Learning<a class="headerlink" href="#supervised-learning-vs-unsupervised-learning" title="Permalink to this heading">#</a></h3>
+<ul class="simple">
+<li><p><strong>Supervised Classification</strong> involves training a model on a labeled dataset, where the correct output is known for each input data. The model learns to predict the output from the input data during the training process. This method is used for tasks like regression and classification, where the goal is to predict a continuous value or to categorize data into predefined labels, respectively. Examples of supervised learning algorithms include Linear Regression for regression tasks and Support Vector Machines for classification tasks.</p></li>
+<li><p><strong>Unsupervised Classification</strong> does not rely on a labeled dataset for training. Instead, it aims to identify patterns or structures within the data without prior knowledge of the outcome. This method is used for clustering and association tasks, where the goal is to group similar data points together or to find rules that describe large portions of the data. Examples of unsupervised learning algorithms include K-means for clustering tasks and Apriori algorithm for association rule learning tasks.</p></li>
+</ul>
+<p>Observe in this code example how different <em>classes</em> of synthetic data are created. We’re randomizing “blobs” so we can test classifier algorithms on data with a known number of classes.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+
+<span class="c1"># Generating synthetic data for binary classification</span>
+<span class="n">X_binary</span><span class="p">,</span> <span class="n">y_binary</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="c1"># Generating synthetic data for multi-class classification</span>
+<span class="n">X_multi</span><span class="p">,</span> <span class="n">y_multi</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Creating a figure with two subplots</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Plotting binary classification data</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_binary</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_binary</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_binary</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Class&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Binary Classification&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plotting multi-class classification data</span>
+<span class="n">scatter</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_multi</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_multi</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_multi</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">viridis</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Class&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Multi-Class Classification&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+
+<span class="c1"># Adding a legend for the multi-class plot</span>
+<span class="n">legend1</span> <span class="o">=</span> <span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="o">*</span><span class="n">scatter</span><span class="o">.</span><span class="n">legend_elements</span><span class="p">(),</span> <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Classes&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">add_artist</span><span class="p">(</span><span class="n">legend1</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Interpretation</span>
+<span class="c1"># The left subplot illustrates a binary classification dataset with two distinct classes,</span>
+<span class="c1"># shown by the two colors. Points represent data points, classified into one of the two classes.</span>
+<span class="c1"># The right subplot shows a multi-class classification dataset with three distinct classes. </span>
+<span class="c1"># Similar to binary classification, each color represents a different class. However, in this </span>
+<span class="c1"># case, there are more than two classes, highlighting the complexity and variety in multi-class scenarios.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/3cd73ac5e16021ea5becd7f71d6bf5db0c484fb910df8e789dd1bf51c197b19f.png" src="../_images/3cd73ac5e16021ea5becd7f71d6bf5db0c484fb910df8e789dd1bf51c197b19f.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="the-logistic-function-sigmoid-function">
+<h1>The Logistic Function (Sigmoid Function)<a class="headerlink" href="#the-logistic-function-sigmoid-function" title="Permalink to this heading">#</a></h1>
+<p>The Logistic Function, also known as the Sigmoid Function, forms the cornerstone of certain models in statistics and machine learning, particularly in logistic regression. It is renowned for its ability to map any real-valued number into a value between 0 and 1, making it suitable for applications that require probability estimations.</p>
+<section id="what-is-the-logistic-function">
+<h2>What is the Logistic Function?<a class="headerlink" href="#what-is-the-logistic-function" title="Permalink to this heading">#</a></h2>
+<p>The logistic function is a mathematical function having a characteristic “S”-shaped curve (sigmoid curve). It is formally defined by the formula:</p>
+<div class="math notranslate nohighlight">
+\[\sigma(z) = \frac{1}{1 + e^{-z}}\]</div>
+<p>Here, <span class="math notranslate nohighlight">\(z\)</span> represents any real number, <span class="math notranslate nohighlight">\(e\)</span> is the base of the natural logarithm (approximately equal to 2.71828), and <span class="math notranslate nohighlight">\(\sigma(z)\)</span> is the output value bounded between 0 and 1.</p>
+<section id="definition">
+<h3>Definition<a class="headerlink" href="#definition" title="Permalink to this heading">#</a></h3>
+<p>At its core, the logistic function can be understood as a method of converting linear combinations of variables into values that lie between 0 and 1. This conversion is pivotal when dealing with probabilities, as probabilities are inherently restricted to values within this range.</p>
+</section>
+<section id="importance">
+<h3>Importance<a class="headerlink" href="#importance" title="Permalink to this heading">#</a></h3>
+<p>The logistic function’s importance stems from its ability to model probabilities. In fields such as statistics and machine learning, predicting outcomes is often binary, such as ‘yes or no,’ ‘true or false,’ or ‘success or failure.’ The logistic function enables the prediction of the probability that a given input point belongs to a particular category.</p>
+<p>By outputting values between 0 and 1, the logistic function’s results can be directly interpreted as probabilities. For example, if <span class="math notranslate nohighlight">\(\sigma(z) = 0.75\)</span> for a specific data point in a binary classification problem, it suggests a 75% probability of this point belonging to the ‘1’ or ‘positive’ category. This interpretability is crucial for making decisions in various applications across fields such as finance, healthcare, and social sciences, where understanding the likelihood of an event is more meaningful than merely predicting its occurrence.</p>
+</section>
+</section>
+<section id="id1">
+<h2>Applications and Examples<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h2>
+<p>The logistic function is the mathematical core of logistic regression models, used for binary classification problems. In such models, the logistic function takes a linear combination of input features and maps this value to a probability score indicating the likelihood of the instance being in the positive class (often denoted as ‘1’).</p>
+<section id="financial-sector">
+<h3>Financial Sector<a class="headerlink" href="#financial-sector" title="Permalink to this heading">#</a></h3>
+<p>In finance, the logistic function helps in credit scoring models to estimate the probability of a borrower defaulting on a loan. By inputting factors such as income, debt ratio, and credit history into a logistic regression model, lenders can predict the likelihood of default. A score closer to 1 indicates a higher chance of default, aiding in risk assessment and decision-making about loan approvals.</p>
+</section>
+<section id="healthcare">
+<h3>Healthcare<a class="headerlink" href="#healthcare" title="Permalink to this heading">#</a></h3>
+<p>In healthcare, logistic regression models employing the logistic function can predict patient outcomes. For instance, by analyzing patient data like age, gender, and medical history, these models can estimate the probability of a patient developing a particular disease. This assists doctors in diagnosing and planning treatment strategies more effectively.</p>
+</section>
+<section id="social-sciences">
+<h3>Social Sciences<a class="headerlink" href="#social-sciences" title="Permalink to this heading">#</a></h3>
+<p>In the realm of social sciences, researchers use logistic regression to understand behavior and outcomes. For example, by studying data on educational background, socioeconomic status, and test scores, a model can predict the likelihood of a student’s success in college.</p>
+<p>In summary, the logistic or sigmoid function is vital for transforming linear relationships into probabilities. This transformation is especially beneficial in domain-specific applications where outcomes are binary, and understanding the odds or likelihood of those outcomes is crucial for making informed decisions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Data generation: Generating an array of values from -10 to 10 for input variable z</span>
+<span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># Logistic Function/Sigmoid Function Implementation</span>
+<span class="k">def</span> <span class="nf">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">z</span><span class="p">))</span>
+
+<span class="c1"># Applying the logistic function to each value in our input variable array</span>
+<span class="n">sigma_z</span> <span class="o">=</span> <span class="n">sigmoid</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+
+<span class="c1"># Visualization: Plotting the Logistic Function</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">z</span><span class="p">,</span> <span class="n">sigma_z</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Logistic Function $\sigma(z) = </span><span class="se">\\</span><span class="s1">frac</span><span class="si">{1}</span><span class="s1">{1 + e^{-z}}$&#39;</span><span class="p">)</span>
+
+<span class="c1"># Enhancing the plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;The Logistic (Sigmoid) Function&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Input Variable (z)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Logistic Function Output ($\sigma(z)$)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>  <span class="c1"># X-axis</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>  <span class="c1"># Horizontal line at y=1</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;-&#39;</span><span class="p">)</span>  <span class="c1"># Y-axis</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Interpretation: This visualization shows the S-shaped curve of the Logistic Function, </span>
+<span class="c1"># highlighting how it effectively maps input values (z) to a range between 0 and 1, </span>
+<span class="c1"># making it suitable for probability estimation in binary classification problems.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/15d8d90e05e4f5439f792c57e13dc749296df6078cedeae5c56aa36a1a4c1109.png" src="../_images/15d8d90e05e4f5439f792c57e13dc749296df6078cedeae5c56aa36a1a4c1109.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="hey-how-does-that-curvy-thing-draw-straight-lines-through-my-data">
+<h2>Hey, How Does That Curvy Thing Draw Straight Lines Through My Data?<a class="headerlink" href="#hey-how-does-that-curvy-thing-draw-straight-lines-through-my-data" title="Permalink to this heading">#</a></h2>
+<p>The sigmoid curve here is being drawn on <strong>One Dimensional data</strong> that’s divided into <strong>binary categories</strong>. We often visualize the class of a data point as a zero or one, which puts the data points on the 0.0 line of the Y-axis, or the 1.0 line. But without the labels, the data you see when putting your model into inference, would just be <em>unlabeled, one-dimensional numbers along the number line</em>.</p>
+<p>The curve you see is logistic regression’s determination of the probability of being in the “<span class="math notranslate nohighlight">\(y=1.0\)</span>” class. The class determination it makes is an additional dimension to the data. While the labels are discrete (zero or one), the probability is continuous. This is why we need the cutoff value (<span class="math notranslate nohighlight">\(0.5\)</span>) to determine the difference between our two classes.</p>
+<p>Now let’s move to two dimensions. In that case, our data is not a number line, it’s a plane (<span class="math notranslate nohighlight">\(X_1\)</span> and <span class="math notranslate nohighlight">\(X_2\)</span>). The logistic regression uses both of these as input, and adds an additional dimension: a bottom plane and a top plane for our class labels. The continuous probability curve is still present: but it transitions along a straight line from one class to the other (where the probability curve passes the threshold of <span class="math notranslate nohighlight">\(0.5\)</span>).</p>
+</section>
+<section id="example">
+<h2>Example<a class="headerlink" href="#example" title="Permalink to this heading">#</a></h2>
+<p>In this example, we will:</p>
+<ul class="simple">
+<li><p>Generate 1D synthetic data</p></li>
+<li><p>Fit an logistic regression model to it</p></li>
+<li><p>plot the data points and the logistic curve of our model</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_blobs</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># Generate binary classification dataset</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_blobs</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">centers</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Split dataset into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Initialize and train logistic regression model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Predict on testing set</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Evaluate model performance (of course it&#39;s good, this is clean, synthetic data!)</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 1.00
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Plot the data points</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> 
+            <span class="p">[</span><span class="mf">1.0</span> <span class="k">if</span> <span class="bp">cls</span> <span class="k">else</span> <span class="mf">0.0</span> <span class="k">for</span> <span class="bp">cls</span> <span class="ow">in</span> <span class="n">y</span><span class="p">],</span> <span class="c1"># Our 1D data needs a &quot;1.0&quot; or &quot;0.0&quot; y-value based on its class.</span>
+            <span class="n">c</span><span class="o">=</span><span class="n">y</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;viridis&#39;</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="n">intercept</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">intercept_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">coefficients</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">coef_</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Intercept:&quot;</span><span class="p">,</span> <span class="n">intercept</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Coefficients:&quot;</span><span class="p">,</span> <span class="n">coefficients</span><span class="p">)</span>
+
+<span class="c1"># Logistic regression line: 500 points in our data&#39;s range, and a prediction for each one</span>
+<span class="n">x_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">min</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]),</span> <span class="n">np</span><span class="o">.</span><span class="n">max</span><span class="p">(</span><span class="n">X</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]),</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">y_values</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict_proba</span><span class="p">(</span><span class="n">x_values</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))[:,</span> <span class="mi">1</span><span class="p">]</span>
+
+<span class="c1"># Plot the decision boundary</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">y_values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Decision Boundary&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Class Label&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Intercept: -3.3542282703242288
+Coefficients: [1.09648581]
+</pre></div>
+</div>
+<img alt="../_images/bc472c30de794d9a8009a7d2d0156298bc29fa351e9c96c2d8b81bf6e988d4dd.png" src="../_images/bc472c30de794d9a8009a7d2d0156298bc29fa351e9c96c2d8b81bf6e988d4dd.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercise-for-the-reader-implementing-a-less-simple-logistic-regression-model">
+<h1>Exercise For The Reader: Implementing a (Less) Simple Logistic Regression Model<a class="headerlink" href="#exercise-for-the-reader-implementing-a-less-simple-logistic-regression-model" title="Permalink to this heading">#</a></h1>
+<p>The 1D example above demonstrate the principle of Logistic Regression. But most data is above one dimension. Take this starter code and run with it: attempt to apply it to a dataset.</p>
+<p><strong>Exercise Overview:</strong></p>
+<ol class="arabic simple">
+<li><p><strong>Load a Dataset:</strong> You will use a pre-processed dataset provided for this exercise. The dataset will include features (independent variables) and a target binary variable indicating the category to which each record belongs.</p></li>
+<li><p><strong>Data Preprocessing:</strong> Before fitting the model, you may need to perform some data preprocessing steps such as splitting the dataset into training and test sets, and possibly normalizing or standardizing the features.</p></li>
+<li><p><strong>Model Fitting:</strong> You will use the <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> class from <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> to fit the model to your training data.</p></li>
+<li><p><strong>Prediction:</strong> After fitting the model, you will use it to predict the outcomes (categories) of the test set.</p></li>
+<li><p><strong>Performance Evaluation:</strong> Finally, you’ll evaluate the model’s performance using metrics such as accuracy, precision, recall, and the F1 score.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_classification</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LogisticRegression</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span><span class="p">,</span> <span class="n">precision_score</span><span class="p">,</span> <span class="n">recall_score</span><span class="p">,</span> <span class="n">confusion_matrix</span>
+<span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
+
+<span class="c1"># Generate a synthetic binary classification dataset</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_classification</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">n_redundant</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">n_clusters_per_class</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">weights</span><span class="o">=</span><span class="p">[</span><span class="mf">0.5</span><span class="p">],</span> <span class="n">flip_y</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Split the dataset into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Standardizing features</span>
+<span class="n">scaler</span> <span class="o">=</span> <span class="n">StandardScaler</span><span class="p">()</span>
+<span class="n">X_train</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">fit_transform</span><span class="p">(</span><span class="n">X_train</span><span class="p">)</span>
+<span class="n">X_test</span> <span class="o">=</span> <span class="n">scaler</span><span class="o">.</span><span class="n">transform</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Fit the Logistic Regression model</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">LogisticRegression</span><span class="p">()</span>
+<span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Predict the test set</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Evaluate the model</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+<span class="n">precision</span> <span class="o">=</span> <span class="n">precision_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+<span class="n">recall</span> <span class="o">=</span> <span class="n">recall_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+<span class="n">conf_matrix</span> <span class="o">=</span> <span class="n">confusion_matrix</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">predictions</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Precision: </span><span class="si">{</span><span class="n">precision</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Recall: </span><span class="si">{</span><span class="n">recall</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Confusion Matrix:</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">,</span> <span class="n">conf_matrix</span><span class="p">)</span>
+
+<span class="c1"># Visualization</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Plot the decision boundary. For that, we will assign a color to each</span>
+<span class="c1"># point in the mesh [x_min, x_max]x[y_min, y_max].</span>
+<span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">min</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span><span class="p">,</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span> <span class="o">+</span> <span class="mi">1</span>
+<span class="n">xx</span><span class="p">,</span> <span class="n">yy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">x_min</span><span class="p">,</span> <span class="n">x_max</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">),</span>
+                     <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="n">y_min</span><span class="p">,</span> <span class="n">y_max</span><span class="p">,</span> <span class="mf">0.02</span><span class="p">))</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">c_</span><span class="p">[</span><span class="n">xx</span><span class="o">.</span><span class="n">ravel</span><span class="p">(),</span> <span class="n">yy</span><span class="o">.</span><span class="n">ravel</span><span class="p">()])</span>
+<span class="n">Z</span> <span class="o">=</span> <span class="n">Z</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="n">xx</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">xx</span><span class="p">,</span> <span class="n">yy</span><span class="p">,</span> <span class="n">Z</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X_train</span><span class="p">[:,</span> <span class="mi">0</span><span class="p">],</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">c</span><span class="o">=</span><span class="n">y_train</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">edgecolor</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Logistic Regression (Training set)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Feature 1&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Feature 2&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 0.905
+Precision: 0.968421052631579
+Recall: 0.8518518518518519
+Confusion Matrix:
+ [[89  3]
+ [16 92]]
+</pre></div>
+</div>
+<img alt="../_images/7913baa48ecdf41057dc7c9da979dd7dfce3885243bde6fd15d29a57c146314b.png" src="../_images/7913baa48ecdf41057dc7c9da979dd7dfce3885243bde6fd15d29a57c146314b.png" />
+</div>
+</div>
+<p>This code segments perform the following tasks:</p>
+<ol class="arabic simple">
+<li><p><strong>Data Generation/Loading</strong>: Generates a synthetic dataset suitable for binary classification using <code class="docutils literal notranslate"><span class="pre">make_classification</span></code> from <code class="docutils literal notranslate"><span class="pre">sklearn.datasets</span></code>.</p></li>
+<li><p><strong>Data Preprocessing</strong>: Splits the dataset into training and testing sets, and standardizes the features for optimal performance.</p></li>
+<li><p><strong>Model Fitting</strong>: Fits a logistic regression model using <code class="docutils literal notranslate"><span class="pre">LogisticRegression</span></code> from <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> on the training data.</p></li>
+<li><p><strong>Prediction and Evaluation</strong>: Uses the fitted model to predict the outcomes of the test data and evaluates the performance using accuracy, precision, recall, and confusion matrix.</p></li>
+<li><p><strong>Visualization</strong>: Plots the training data and the decision boundary of the trained logistic regression model to visually interpret how well the model has learned to separate the two classes.</p></li>
+</ol>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_06"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="006_Overview.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Course Structure</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lesson_27.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Day 27: Introduction to the K-Nearest Neighbors (K-NN) Algorithm</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 26: Introduction to Classification and Logistic Regression in Python</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-classification">What is Classification?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-and-examples">Applications and Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#logistic-regression">Logistic Regression</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#binary-classification-vs-multi-class-classification">Binary Classification vs. Multi-Class Classification</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#supervised-learning-vs-unsupervised-learning">Supervised Learning vs. Unsupervised Learning</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-logistic-function-sigmoid-function">The Logistic Function (Sigmoid Function)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-the-logistic-function">What is the Logistic Function?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importance">Importance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Applications and Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#financial-sector">Financial Sector</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#healthcare">Healthcare</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#social-sciences">Social Sciences</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hey-how-does-that-curvy-thing-draw-straight-lines-through-my-data">Hey, How Does That Curvy Thing Draw Straight Lines Through My Data?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader-implementing-a-less-simple-logistic-regression-model">Exercise For The Reader: Implementing a (Less) Simple Logistic Regression Model</a></li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

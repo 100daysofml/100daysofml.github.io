@@ -1,0 +1,1166 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Introduction to Decision Trees &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_06/Lesson_29';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_06/Lesson_29.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Introduction to Naive Bayes Classification" href="Lesson_30.html" />
+    <link rel="prev" title="Fundamentals of Support Vector Machines (SVM)" href="Lesson_28.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    100 Days of Machine Learning Challenge
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Daily Challenge Curriculum</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Daily Curriculum Resources</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_01/001_Overview.html">Week_01: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_02/002_Overview.html">Week_02: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_09.html">Day 9 - Calculus - Integrals, Fundamental Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_10.html">Day 10 - Statistics and Probability - Concepts and Relevant Distributions</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_03/003_Overview.html">Week_03: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_11.html">Day 11 - Introduction to Data Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12.html">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12solution.html">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_13.html">Day 13 - Handling Missing Data in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_14.html">Day 14 - Data Normalization and Scaling using Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_15.html">Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications</a></li>
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_04/004_Overview.html">Week_04: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_16.html">Day 16 - Introduction to EDA and Data Visualization in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_17.html">Day 17 - Implementing Descriptive Statistics for EDA in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_18.html">Day 18 - Visualization Techniques for Data Distribution in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_19.html">Day 19: Correlation Analysis using Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_20.html">Day 20: Advanced Feature Selection and Importance in Python - With Iris Dataset</a></li>
+
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5: Supervised Learning - Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_05/005_Overview.html">Week_05: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_21.html">Day 21 - Introduction to Regression Analysis in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_22.html">Day 22: Implementing Multiple Linear Regression in Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_23.html">Day 23 - Advanced Regression Techniques - Polynomial, Lasso, and Ridge Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_24.html">Day 24 - Regression Model Evaluation Metrics in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_25.html">Day 25 - Addressing Overfitting and Underfitting in Regression Models</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6: Supervised Learning - Classification</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="006_Overview.html">Week_06: Overview</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Lesson_26.html">Introduction to Classification and Logistic Regression in Python</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="Lesson_27.html">Implementing K-NN in Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="Lesson_28.html">Fundamentals of Support Vector Machines (SVM)</a></li>
+
+
+
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Introduction to Decision Trees</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="Lesson_30.html">Introduction to Naive Bayes Classification</a></li>
+
+
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-4iw5ztbi/lab/workspaces/auto-e/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_06/Lesson_29.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/github/100daysofml/100daysofml.github.io/blob/master/Week_06/Lesson_29.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_06/Lesson_29.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_06/Lesson_29.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Introduction to Decision Trees</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Decision Trees</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-decision-tree">What is a Decision Tree?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importance">Importance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-and-examples">Applications and Examples</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy-and-information-gain-in-decision-trees">Entropy and Information Gain in Decision Trees</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-entropy">What is Entropy?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text">Text</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Importance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-information-gain">What is Information Gain?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Text</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Importance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Applications and Examples</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#building-and-interpreting-decision-trees-in-python">Building and Interpreting Decision Trees in Python</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">What is a Decision Tree?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Applications and Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finance-credit-scoring">Finance: Credit Scoring</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#healthcare-diagnosing-diseases">Healthcare: Diagnosing Diseases</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#marketing-customer-segmentation">Marketing: Customer Segmentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-and-tackling-overfitting">Understanding and Tackling Overfitting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader-building-and-visualizing-a-decision-tree-model">Exercise For The Reader: Building and Visualizing a Decision Tree Model</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">What is a Decision Tree?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Applications and Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-instructions">Exercise Instructions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-decision-trees">
+<h1>Introduction to Decision Trees<a class="headerlink" href="#introduction-to-decision-trees" title="Permalink to this heading">#</a></h1>
+<p>Decision Trees are a fundamental machine learning algorithm that finds extensive use in both classification and regression tasks. They serve as an indispensable tool for predictive modeling, offering clear visualization of decision-making processes and straightforward interpretation of data. Decision Trees mimic human decision-making processes, making them an intuitive option for solving complex problems by breaking them down into smaller, manageable parts.</p>
+<section id="what-is-a-decision-tree">
+<h2>What is a Decision Tree?<a class="headerlink" href="#what-is-a-decision-tree" title="Permalink to this heading">#</a></h2>
+<p>A Decision Tree is a flowchart-like structure where each internal node represents a “decision” on an attribute, each branch represents an outcome of the decision, and each leaf node represents a class label (decision taken after computing all attributes). The paths from root to leaf represent classification rules.</p>
+<section id="definition">
+<h3>Definition<a class="headerlink" href="#definition" title="Permalink to this heading">#</a></h3>
+<p>Formally, a Decision Tree is a binary tree where each internal node splits the dataset into two groups based on the feature that results in the most significant information gain (IG). Information gain is calculated using metrics like Gini impurity or entropy.</p>
+<p>In mathematical terms, if we denote a dataset as <span class="math notranslate nohighlight">\(D\)</span> which consists of instances <span class="math notranslate nohighlight">\((x_i, y_i), i=1,2,...,N\)</span>, where <span class="math notranslate nohighlight">\(x_i\)</span> is the feature vector and <span class="math notranslate nohighlight">\(y_i\)</span> is the target label, then the goal of the Decision Tree is to partition <span class="math notranslate nohighlight">\(D\)</span> into subsets <span class="math notranslate nohighlight">\(D_1, D_2, ... , D_k\)</span> based on feature values that optimize a given objective criterion (e.g., maximizing information gain).</p>
+</section>
+<section id="importance">
+<h3>Importance<a class="headerlink" href="#importance" title="Permalink to this heading">#</a></h3>
+<p>Decision Trees are important for several reasons:</p>
+<ol class="arabic simple">
+<li><p><strong>Simplicity:</strong> They are easy to understand and interpret, making them accessible to people with non-technical backgrounds.</p></li>
+<li><p><strong>Versatility:</strong> They can handle both numerical and categorical data and can be used for both regression and classification tasks.</p></li>
+<li><p><strong>Feature Importance:</strong> They inherently perform feature selection, indicating which features are most important for prediction.</p></li>
+<li><p><strong>Visualization:</strong> The tree structure can be easily visualized, allowing for a straightforward inspection of decision paths.</p></li>
+</ol>
+</section>
+</section>
+<section id="applications-and-examples">
+<h2>Applications and Examples<a class="headerlink" href="#applications-and-examples" title="Permalink to this heading">#</a></h2>
+<p>Decision Trees find applications across diverse fields due to their simplicity and versatility.</p>
+<ul class="simple">
+<li><p><strong>Finance:</strong> For credit scoring by analyzing customer data to predict their likelihood of defaulting on loans.</p></li>
+<li><p><strong>Healthcare:</strong> For diagnosing patients based on their symptoms and medical history.</p></li>
+<li><p><strong>Marketing:</strong> To identify potential customer segments and target them with specific marketing strategies.</p></li>
+<li><p><strong>Manufacturing:</strong> For predicting equipment failures by analyzing operation data.</p></li>
+<li><p><strong>Computer Science:</strong> In the development of recommendation systems that suggest products or content based on user preferences and past behavior.</p></li>
+</ul>
+<p>For example, in the healthcare field, a Decision Tree might be used to diagnose a disease based on patient symptoms. The root node could represent the most significant symptom, with branches leading to nodes representing secondary symptoms, and leaf nodes representing possible diagnoses.</p>
+<p>In summary, Decision Trees play a crucial role in the fields of machine learning and artificial intelligence. They provide an effective approach for both data classification and regression, with the added benefits of simplicity, interpretability, and application in a wide range of disciplines.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Create a basic diagram of a decision tree structure</span>
+
+<span class="c1"># Create figure and axis</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># Coordinates of each node</span>
+<span class="n">nodes</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;Root&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span>
+    <span class="s2">&quot;Decision 1&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="s2">&quot;Decision 2&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span>
+    <span class="s2">&quot;Leaf 1&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="s2">&quot;Leaf 2&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="s2">&quot;Leaf 3&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">3</span><span class="p">),</span>
+    <span class="s2">&quot;Leaf 4&quot;</span><span class="p">:</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+<span class="p">}</span>
+
+<span class="c1"># Lines connecting nodes to simulate branches</span>
+<span class="n">edges</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">(</span><span class="s2">&quot;Root&quot;</span><span class="p">,</span> <span class="s2">&quot;Decision 1&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Root&quot;</span><span class="p">,</span> <span class="s2">&quot;Decision 2&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Decision 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Leaf 1&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Decision 1&quot;</span><span class="p">,</span> <span class="s2">&quot;Leaf 2&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Decision 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Leaf 3&quot;</span><span class="p">),</span>
+    <span class="p">(</span><span class="s2">&quot;Decision 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Leaf 4&quot;</span><span class="p">)</span>
+<span class="p">]</span>
+
+<span class="c1"># Plot nodes</span>
+<span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">nodes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+
+<span class="c1"># Plot edges (branches)</span>
+<span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
+    <span class="n">start_x</span><span class="p">,</span> <span class="n">start_y</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">start</span><span class="p">]</span>
+    <span class="n">end_x</span><span class="p">,</span> <span class="n">end_y</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">end</span><span class="p">]</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">start_x</span><span class="p">,</span> <span class="n">end_x</span><span class="p">],</span> <span class="p">[</span><span class="n">start_y</span><span class="p">,</span> <span class="n">end_y</span><span class="p">],</span> <span class="s1">&#39;k-&#39;</span><span class="p">)</span>
+
+<span class="c1"># Hide axes</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
+
+<span class="c1"># Title</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Example Decision Tree Structure&quot;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/2f7cebd848df230fd7d6f4b87c5eeb86cdb082d22468dafb12e46797f2da2d88.png" src="../_images/2f7cebd848df230fd7d6f4b87c5eeb86cdb082d22468dafb12e46797f2da2d88.png" />
+</div>
+</div>
+<p>This visualization provides a simple representation of a Decision Tree with one root node, two decision nodes, and four leaf nodes. It illustrates how data is split at each node until it reaches a decision (leaf nodes). The root node is the starting point, decision nodes represent the branching based on certain conditions, and leaf nodes represent the final decision or prediction.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="entropy-and-information-gain-in-decision-trees">
+<h1>Entropy and Information Gain in Decision Trees<a class="headerlink" href="#entropy-and-information-gain-in-decision-trees" title="Permalink to this heading">#</a></h1>
+<p>Decision Trees are a popular machine learning method used for both classification and regression tasks. At their core, they model decisions and their possible consequences, including chance event outcomes, resource costs, and utility. Two fundamental concepts that guide the construction of a decision tree are Entropy and Information Gain. Understanding these concepts is crucial for grasifying how decision trees decide where to split the data.</p>
+<section id="what-is-entropy">
+<h2>What is Entropy?<a class="headerlink" href="#what-is-entropy" title="Permalink to this heading">#</a></h2>
+<section id="text">
+<h3>Text<a class="headerlink" href="#text" title="Permalink to this heading">#</a></h3>
+<p>Entropy is a measure borrowed from physics and information theory that represents the degree of disorder, randomness, or uncertainty in a dataset. In the context of machine learning, and more specifically in decision trees, it plays a pivotal role in determining how a dataset can be split in the most informative way.</p>
+</section>
+<section id="id1">
+<h3>Definition<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
+<p>In a classification problem, entropy can be mathematically expressed as:</p>
+<div class="math notranslate nohighlight">
+\[
+- \sum_{i=1}^{n} p_i \log_2(p_i)
+\]</div>
+<p>where <span class="math notranslate nohighlight">\(n\)</span> is the number of classes and <span class="math notranslate nohighlight">\(p_i\)</span> is the probability of class <span class="math notranslate nohighlight">\(i\)</span> within the subset. For each class, it multiplies the probability of class <span class="math notranslate nohighlight">\(i\)</span> (<span class="math notranslate nohighlight">\(p_i\)</span>) by the log base 2 of <span class="math notranslate nohighlight">\(p_i\)</span>, sums across all classes, and takes the negative of that sum.</p>
+</section>
+<section id="id2">
+<h3>Importance<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
+<p>Entropy serves as a measure of purity or homogeneity in a dataset. In the context of decision trees, it’s employed to determine how a dataset should be split at each node. High entropy in a dataset means more disorder—it indicates that the data is more mixed (contains a higher variety of classes). Conversely, low entropy suggests a more orderly distribution of data, or that most elements belong to the same class. Therefore, decreasing entropy through splits allows the model to make more accurate predictions, as nodes become increasingly homogeneous.</p>
+</section>
+</section>
+<section id="what-is-information-gain">
+<h2>What is Information Gain?<a class="headerlink" href="#what-is-information-gain" title="Permalink to this heading">#</a></h2>
+<section id="id3">
+<h3>Text<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
+<p>Following the concept of entropy, Information Gain measures the reduction in entropy or disorder in a dataset after a split. It quantifies how much information a feature gives us about the class.</p>
+</section>
+<section id="id4">
+<h3>Definition<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
+<p>Information Gain is calculated as the difference between the initial entropy of the entire dataset and the weighted entropy after splitting the dataset based on an attribute. Mathematically, it’s represented as:</p>
+<div class="math notranslate nohighlight">
+\[
+IG(D, A) = Entropy(D) - \sum_{v \in Values(A)} \frac{|D_v|}{|D|} Entropy(D_v)
+\]</div>
+<p>where:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(IG(D, A)\)</span> is the information gain of dataset <span class="math notranslate nohighlight">\(D\)</span> after being split based on attribute <span class="math notranslate nohighlight">\(A\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(Entropy(D)\)</span> is the original entropy of the dataset,</p></li>
+<li><p><span class="math notranslate nohighlight">\(Values(A)\)</span> are the different values of attribute <span class="math notranslate nohighlight">\(A\)</span>,</p></li>
+<li><p><span class="math notranslate nohighlight">\(|D_v|\)</span> is the number of instances in <span class="math notranslate nohighlight">\(D\)</span> that have value <span class="math notranslate nohighlight">\(v\)</span> for attribute <span class="math notranslate nohighlight">\(A\)</span>,</p></li>
+<li><p>and <span class="math notranslate nohighlight">\(Entropy(D_v)\)</span> is the entropy of the subset of <span class="math notranslate nohighlight">\(D\)</span> that has value <span class="math notranslate nohighlight">\(v\)</span> for attribute <span class="math notranslate nohighlight">\(A\)</span>.</p></li>
+</ul>
+</section>
+<section id="id5">
+<h3>Importance<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
+<p>Information gain is used in decision trees to select the attribute that best splits the dataset at each node. An attribute with higher information gain will result in a purer child node—or, in other words, nodes with lower entropy. Therefore, maximizing information gain at each step of building a tree ensures that the model asks the most informative questions first, leading to a faster reduction in uncertainty or disorder in the dataset.</p>
+</section>
+</section>
+<section id="id6">
+<h2>Applications and Examples<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
+<p>Decision trees, guided by principles of entropy and information gain, are widely applicable in various fields for classification and regression tasks. For example:</p>
+<ul class="simple">
+<li><p><strong>In medicine,</strong> they can help diagnose diseases based on a series of symptoms and patient data, efficiently narrowing down possible conditions.</p></li>
+<li><p><strong>In finance,</strong> decision trees are used for credit scoring, identifying which variables and customer features influence credit risk the most.</p></li>
+<li><p><strong>In marketing,</strong> these models can help predict customer behavior and segment customers based on their likelihood to purchase a product.</p></li>
+</ul>
+<p>Each of these applications involves making decisions based on the data’s attributes, where understanding and managing uncertainty and disorder through entropy and information gain become crucial to building effective models.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Sample dataset before and after split</span>
+<span class="c1"># Suppose we have a binary classification problem with &#39;Red&#39; and &#39;Blue&#39; as classes</span>
+<span class="c1"># Initially, the dataset is mixed: 6 Red and 6 Blue points</span>
+<span class="c1"># After a split (for example, based on a certain feature), we get two subsets:</span>
+<span class="c1"># Subset 1: 5 Red and 1 Blue, Subset 2: 1 Red and 5 Blue</span>
+
+<span class="c1"># Function to calculate entropy</span>
+<span class="k">def</span> <span class="nf">entropy</span><span class="p">(</span><span class="n">elements</span><span class="p">):</span>
+    <span class="n">total</span> <span class="o">=</span> <span class="nb">sum</span><span class="p">(</span><span class="n">elements</span><span class="p">)</span>
+    <span class="k">return</span> <span class="o">-</span><span class="nb">sum</span><span class="p">((</span><span class="n">p</span><span class="o">/</span><span class="n">total</span><span class="p">)</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p</span><span class="o">/</span><span class="n">total</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">elements</span> <span class="k">if</span> <span class="n">p</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># Initial entropy</span>
+<span class="n">initial_entropy</span> <span class="o">=</span> <span class="n">entropy</span><span class="p">([</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">])</span>
+
+<span class="c1"># Entropy after split</span>
+<span class="n">entropy_subset1</span> <span class="o">=</span> <span class="n">entropy</span><span class="p">([</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+<span class="n">entropy_subset2</span> <span class="o">=</span> <span class="n">entropy</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">])</span>
+
+<span class="c1"># Weighted entropy after split</span>
+<span class="n">weighted_entropy</span> <span class="o">=</span> <span class="p">(</span><span class="mi">6</span><span class="o">/</span><span class="mi">12</span><span class="p">)</span> <span class="o">*</span> <span class="n">entropy_subset1</span> <span class="o">+</span> <span class="p">(</span><span class="mi">6</span><span class="o">/</span><span class="mi">12</span><span class="p">)</span> <span class="o">*</span> <span class="n">entropy_subset2</span>
+
+<span class="c1"># Information Gain</span>
+<span class="n">information_gain</span> <span class="o">=</span> <span class="n">initial_entropy</span> <span class="o">-</span> <span class="n">weighted_entropy</span>
+
+<span class="c1"># Visualization</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">18</span><span class="p">,</span> <span class="mi">5</span><span class="p">),</span> <span class="n">sharey</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="c1"># Initial dataset</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">([</span><span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">6</span><span class="p">,</span> <span class="mi">6</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Initial Dataset</span><span class="se">\n</span><span class="s1">Entropy = </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">initial_entropy</span><span class="p">))</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span>
+
+<span class="c1"># Subset 1</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">([</span><span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">5</span><span class="p">,</span> <span class="mi">1</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Subset 1 After Split</span><span class="se">\n</span><span class="s1">Entropy = </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entropy_subset1</span><span class="p">))</span>
+
+<span class="c1"># Subset 2</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">([</span><span class="s1">&#39;Red&#39;</span><span class="p">,</span> <span class="s1">&#39;Blue&#39;</span><span class="p">],</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">5</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="s1">&#39;blue&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Subset 2 After Split</span><span class="se">\n</span><span class="s1">Entropy = </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">entropy_subset2</span><span class="p">))</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Entropy and Information Gain from a Split&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">16</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figtext</span><span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="s1">&#39;Information Gain = </span><span class="si">{:.2f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">information_gain</span><span class="p">),</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">(</span><span class="n">rect</span><span class="o">=</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mf">0.03</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.95</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f047e04096c50c1ccb98904fce4345081063970c0d647519a5a9d4843fb1758a.png" src="../_images/f047e04096c50c1ccb98904fce4345081063970c0d647519a5a9d4843fb1758a.png" />
+</div>
+</div>
+<p>This Python script visualizes a simple dataset before and after a hypothetical split, illustrating the concept of entropy and information gain as discussed. Initially, the dataset is evenly split between two classes (‘Red’ and ‘Blue’). After splitting based on a specific attribute, we obtain two subsets with differing compositions. The script calculates and displays the entropy for each subset and the dataset before splitting, as well as the overall information gain achieved by the split. The visual representation supports the explanation by showing how a split affects the composition of the subsets, aiming to reduce entropy and thereby increasing information gain—key principles in the construction of decision trees.</p>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="building-and-interpreting-decision-trees-in-python">
+<h1>Building and Interpreting Decision Trees in Python<a class="headerlink" href="#building-and-interpreting-decision-trees-in-python" title="Permalink to this heading">#</a></h1>
+<p>In this section, we embark on the journey of understanding and implementing Decision Trees using Python’s very own toolkit, scikit-learn. Not just a powerful predictive model, Decision Trees also offer the rare capability of being quite interpretable. We will also delve into visualizing how these models make decisions, thereby offering insights into their inner workings.</p>
+<section id="id7">
+<h2>What is a Decision Tree?<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
+<p><strong>Text</strong>: A Decision Tree is akin to a flowchart where each internal node represents a “test” or “decision” on an attribute, each branch represents the outcome of the test, and each leaf node represents a class label (a decision taken after computing all attributes). The paths from root to leaf represent classification rules.</p>
+<p><strong>Definition</strong>: Mathematically, a decision tree is a model that recursively splits data into subsets based on the value of input features. This process can be represented as:</p>
+<ul class="simple">
+<li><p>Given a dataset <span class="math notranslate nohighlight">\(D\)</span>, a decision tree splits it into subsets <span class="math notranslate nohighlight">\(\{D_1, D_2, ..., D_k\}\)</span> using some feature <span class="math notranslate nohighlight">\(X\)</span>, where <span class="math notranslate nohighlight">\(k\)</span> is determined by the unique values of <span class="math notranslate nohighlight">\(X\)</span> in <span class="math notranslate nohighlight">\(D\)</span> if <span class="math notranslate nohighlight">\(X\)</span> is categorical, or a threshold if <span class="math notranslate nohighlight">\(X\)</span> is numerical.</p></li>
+<li><p>This process repeats at each node with the subsets, till a stopping criterion is met.</p></li>
+</ul>
+<p>The objective function that measures the quality of a split varies; common ones include Gini impurity <span class="math notranslate nohighlight">\(G(D) = 1 - \sum_{i=1}^{n}{p_i}^2\)</span> and entropy <span class="math notranslate nohighlight">\(H(D) = - \sum_{i=1}^{n}p_i \log_{2}p_i\)</span>, where <span class="math notranslate nohighlight">\(p_i\)</span> is the probability of class <span class="math notranslate nohighlight">\(i\)</span> in the dataset <span class="math notranslate nohighlight">\(D\)</span>.</p>
+<p><strong>Importance</strong>: Decision Trees are crucial for various reasons. Their ability to break down complex decision-making processes into simpler, understandable rules is invaluable for transparency and interpretability. Furthermore, they are versatile, being applicable for both classification and regression tasks. In fields ranging from finance for credit scoring to healthcare for diagnosing diseases, their simplicity in concept yet profound utility in application cannot be overstated.</p>
+</section>
+<section id="id8">
+<h2>Applications and Examples<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
+<section id="finance-credit-scoring">
+<h3>Finance: Credit Scoring<a class="headerlink" href="#finance-credit-scoring" title="Permalink to this heading">#</a></h3>
+<p>In the finance industry, decision trees can evaluate potential borrowers’ creditworthiness by analyzing various attributes such as income, debt-to-income ratio, and credit history. For instance, a decision tree might classify applicants into ‘low risk’ and ‘high risk’ categories, optimizing the lending process.</p>
+</section>
+<section id="healthcare-diagnosing-diseases">
+<h3>Healthcare: Diagnosing Diseases<a class="headerlink" href="#healthcare-diagnosing-diseases" title="Permalink to this heading">#</a></h3>
+<p>Decision trees have proven exceptionally useful in the healthcare sector, where they help diagnose diseases by systematically assessing symptoms and test results. A well-crafted decision tree could help distinguish between different types of illnesses based on input variables such as age, temperature, blood pressure, etc.</p>
+</section>
+<section id="marketing-customer-segmentation">
+<h3>Marketing: Customer Segmentation<a class="headerlink" href="#marketing-customer-segmentation" title="Permalink to this heading">#</a></h3>
+<p>Marketing teams use decision trees to segment customers based on behaviors and preferences. This segmentation allows for targeted marketing campaigns, where a decision tree might help identify which segments are more likely to respond to a specific advertising strategy.</p>
+</section>
+<section id="understanding-and-tackling-overfitting">
+<h3>Understanding and Tackling Overfitting<a class="headerlink" href="#understanding-and-tackling-overfitting" title="Permalink to this heading">#</a></h3>
+<p>While decision trees are powerful, they are prone to overfitting, especially in scenarios with complex datasets or when the trees are allowed to grow without constraints. Overfitting happens when the model learns the noise in the training data, reducing its ability to generalize to new data.</p>
+<p>To mitigate overfitting, we employ techniques like pruning. Pruning can be done in two ways:</p>
+<ul class="simple">
+<li><p><strong>Pre-pruning</strong>: Limiting the growth of trees by setting parameters such as <code class="docutils literal notranslate"><span class="pre">max_depth</span></code>, <code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>, etc.</p></li>
+<li><p><strong>Post-pruning</strong>: Allowing the tree to grow fully and then removing insignificant branches.</p></li>
+</ul>
+<p>Both techniques are crucial in enhancing the model’s generalization capabilities.</p>
+<p>In the following sections, we’ll dive into the practical steps of setting up, visualizing, and optimizing Decision Trees using Python’s scikit-learn, matplotlib, and graphviz libraries, ensuring a balance between model complexity and generalization.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">plot_tree</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+
+<span class="c1"># Load the Iris dataset</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># Split the dataset into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Decision Tree fitting with different max_depth values to illustrate overfitting and pruning</span>
+<span class="n">depth_values</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="kc">None</span><span class="p">]</span> <span class="c1"># None implies full growth of the tree (potential overfitting)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">axes</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">nrows</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">ncols</span><span class="o">=</span><span class="nb">len</span><span class="p">(</span><span class="n">depth_values</span><span class="p">),</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">dpi</span><span class="o">=</span><span class="mi">300</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">max_depth</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">depth_values</span><span class="p">):</span>
+    <span class="c1"># Fit the Decision Tree model</span>
+    <span class="n">dt_clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="n">max_depth</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+    <span class="n">dt_clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    
+    <span class="c1"># Plot the trained Decision Tree</span>
+    <span class="n">plot_title</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;Decision Tree with max_depth = </span><span class="si">{</span><span class="n">max_depth</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">if</span> <span class="n">max_depth</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="s2">&quot;Decision Tree (No Pruning)&quot;</span>
+    <span class="n">plot_tree</span><span class="p">(</span><span class="n">dt_clf</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axes</span><span class="p">[</span><span class="n">index</span><span class="p">],</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">axes</span><span class="p">[</span><span class="n">index</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="n">plot_title</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Interpretation: </span>
+<span class="c1"># The first tree (max_depth=1) is an example of underfitting - too simple to capture patterns.</span>
+<span class="c1"># The second tree (max_depth=3) may represent a balanced model - a good middle ground.</span>
+<span class="c1"># The third tree with no pruning (max_depth=None) may overfit the data by learning too much detail, including noise.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/9f5d750120dcaa768f428968775044524db4dd8376f010aec9c5a44beba5f25c.png" src="../_images/9f5d750120dcaa768f428968775044524db4dd8376f010aec9c5a44beba5f25c.png" />
+</div>
+</div>
+<p>This code snippet demonstrates fitting a Decision Tree model to the Iris dataset with scikit-learn and how the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter affects the model’s complexity and potential for overfitting. By visualizing trees with different <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> values (including without a limit, leading to full growth), we illustrate the concept of pruning and its role in preventing overfitting. Through these visualized trees, one can observe how limiting the depth of the tree (pruning) can help in making the model simpler and potentially more generalizable to unseen data, balancing between underfitting and overfitting.</p>
+</section>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercise-for-the-reader-building-and-visualizing-a-decision-tree-model">
+<h1>Exercise For The Reader: Building and Visualizing a Decision Tree Model<a class="headerlink" href="#exercise-for-the-reader-building-and-visualizing-a-decision-tree-model" title="Permalink to this heading">#</a></h1>
+<p>In this exercise, we’ll embark on the exciting journey of applying your newfound knowledge in machine learning by building and interpreting a decision tree model. This hands-on task will not only solidify your understanding of decision trees but also introduce you to the essential steps of working with real datasets.</p>
+<section id="id9">
+<h2>What is a Decision Tree?<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
+<p>A decision tree is one of the most intuitive and widespread machine learning algorithms used for both classification and regression tasks.</p>
+<p><strong>Definition:</strong> A decision tree is a flowchart-like tree structure, where an internal node represents a feature(or attribute), the branch represents a decision rule, and each leaf node represents the outcome. The topmost node in a tree is known as the root node. It learns to partition on the basis of the attribute value. It partitions the tree in recursively manner called recursive partitioning. This flowchart-like structure helps in decision making. Its visualization helps in easily understanding the model.</p>
+<div class="math notranslate nohighlight">
+\[
+\text{Information Gain} = \text{Entropy(parent)} - \left(\frac{\text{Number of samples in left node}}{\text{Total samples in parent}}\times \text{Entropy(left node)} + \frac{\text{Number of samples in right node}}{\text{Total samples in parent}}\times \text{Entropy(right node)}\right)
+\]</div>
+<p><strong>Importance:</strong> The simplicity of decision trees is their biggest advantage. They easily handle categorical variables and do not require any data preprocessing like normalization or standardization. Being a non-parametric method, they are considered quite robust to outliers. Decision trees can easily visualize and interpret the model’s decisions, making them vital in sectors requiring transparency and explainability, such as finance and healthcare.</p>
+</section>
+<section id="id10">
+<h2>Applications and Examples<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
+<p>Decision trees are versatile and can be applied in various domains:</p>
+<ul class="simple">
+<li><p><strong>Banking:</strong> For assessing the creditworthiness of applicants.</p></li>
+<li><p><strong>Medicine:</strong> For diagnosing patients based on their symptoms.</p></li>
+<li><p><strong>Manufacturing:</strong> For predicting the failure times of machines or equipment.</p></li>
+<li><p><strong>E-commerce:</strong> For recommending products based on user behavior.</p></li>
+</ul>
+<section id="exercise-instructions">
+<h3>Exercise Instructions<a class="headerlink" href="#exercise-instructions" title="Permalink to this heading">#</a></h3>
+<p>Your task is to apply decision tree algorithms on a provided dataset, following these steps:</p>
+<ol class="arabic simple">
+<li><p><strong>Preprocessing the Dataset:</strong></p>
+<ul class="simple">
+<li><p>Begin by loading the dataset.</p></li>
+<li><p>Perform necessary preprocessing steps such as dealing with missing values, encoding categorical variables, and splitting the dataset into training and testing sets.</p></li>
+</ul>
+</li>
+<li><p><strong>Building the Decision Tree:</strong></p>
+<ul class="simple">
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> to fit a decision tree model to the training data.</p></li>
+<li><p>Experiment with different parameters such as <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> and <code class="docutils literal notranslate"><span class="pre">min_samples_split</span></code> to observe how they affect overfitting and the complexity of the tree.</p></li>
+</ul>
+</li>
+<li><p><strong>Visualizing the Decision Tree:</strong></p>
+<ul class="simple">
+<li><p>Utilize tools such as <code class="docutils literal notranslate"><span class="pre">graphviz</span></code> or <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> to visualize the tree.</p></li>
+<li><p>Interpret and understand the decision-making process of the model by examining the visualized tree.</p></li>
+</ul>
+</li>
+<li><p><strong>Experimentation:</strong></p>
+<ul class="simple">
+<li><p>Adjust the parameters of the model to explore the trade-offs between model complexity and generalizability.</p></li>
+<li><p>Reflect on the impact of changes in parameters on the performance of the model on the training and testing sets.</p></li>
+</ul>
+</li>
+</ol>
+<p>As you work through this exercise, think about the decision tree’s structure and how altering its parameters affects its ability to generalize from the training data to unseen data. This exercise is an excellent opportunity for you to explore the practical aspects of building and tuning machine learning models.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">plot_tree</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+
+<span class="c1"># Load sample dataset (Iris dataset)</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># Preprocessing the dataset</span>
+<span class="c1"># Step 1: Splitting the dataset into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Building the Decision Tree</span>
+<span class="c1"># Step 2: Initialize the Decision Tree Classifier</span>
+<span class="c1"># Note: The reader can experiment with different parameters e.g., &#39;max_depth&#39;, &#39;min_samples_split&#39; here.</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Step 3: Fit the model to the training data</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Step 4: Make predictions on the test set</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+
+<span class="c1"># Evaluating the model</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># Visualizing the Decision Tree</span>
+<span class="c1"># Step 5: Plotting the tree structure</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">plot_tree</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">target_names</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Decision Tree - Iris Dataset&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Interpretation:</span>
+<span class="c1"># The visualization above shows the tree structure of the decision tree model trained on the Iris dataset.</span>
+<span class="c1"># Each node in the tree represents a decision rule based on one of the features, and the leaves represent the outcomes.</span>
+<span class="c1"># Experiment with different model parameters to see how the structure and performance of the tree change.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 1.00
+</pre></div>
+</div>
+<img alt="../_images/fc7c4bb58fb0d720466f63977231a844143b324dd972b93a698f7d3d31aba04c.png" src="../_images/fc7c4bb58fb0d720466f63977231a844143b324dd972b93a698f7d3d31aba04c.png" />
+</div>
+</div>
+<p>This code provides a basic framework for loading a sample dataset, preprocessing it, fitting a decision tree model, assessing its accuracy, and visualizing the tree structure. It is intended for educational purposes, allowing readers to experiment with different parameters and understand their effects on the model.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_06"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson_28.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Fundamentals of Support Vector Machines (SVM)</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="Lesson_30.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Introduction to Naive Bayes Classification</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Decision Trees</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-decision-tree">What is a Decision Tree?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importance">Importance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-and-examples">Applications and Examples</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy-and-information-gain-in-decision-trees">Entropy and Information Gain in Decision Trees</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-entropy">What is Entropy?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text">Text</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Importance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-information-gain">What is Information Gain?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Text</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Definition</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Importance</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Applications and Examples</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#building-and-interpreting-decision-trees-in-python">Building and Interpreting Decision Trees in Python</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">What is a Decision Tree?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Applications and Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finance-credit-scoring">Finance: Credit Scoring</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#healthcare-diagnosing-diseases">Healthcare: Diagnosing Diseases</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#marketing-customer-segmentation">Marketing: Customer Segmentation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-and-tackling-overfitting">Understanding and Tackling Overfitting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader-building-and-visualizing-a-decision-tree-model">Exercise For The Reader: Building and Visualizing a Decision Tree Model</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">What is a Decision Tree?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Applications and Examples</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-instructions">Exercise Instructions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
