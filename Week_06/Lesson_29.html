@@ -69,8 +69,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="shortcut icon" href="../_static/100days.ico"/>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Introduction to Naive Bayes Classification" href="Lesson_30.html" />
-    <link rel="prev" title="Fundamentals of Support Vector Machines (SVM)" href="Lesson_28.html" />
+    <link rel="prev" title="Day 28: Introduction to Support Vector Machines (SVM)" href="Lesson_28.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -270,22 +269,18 @@ const thebe_selector_output = ".output, .cell_output"
 <p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6: Supervised Learning - Classification</span></p>
 <ul class="current nav bd-sidenav">
 <li class="toctree-l1 current active has-children"><a class="reference internal" href="006_Overview.html">Week_06: Overview</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
-<li class="toctree-l2"><a class="reference internal" href="Lesson_26.html">Introduction to Classification and Logistic Regression in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lesson_26.html">Day 26: Introduction to Classification and Logistic Regression in Python</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="Lesson_27.html">Day 27: Introduction to the K-Nearest Neighbors (K-NN) Algorithm</a></li>
 
 
 
-<li class="toctree-l2"><a class="reference internal" href="Lesson_27.html">Implementing K-NN in Python</a></li>
-
-<li class="toctree-l2"><a class="reference internal" href="Lesson_28.html">Fundamentals of Support Vector Machines (SVM)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="Lesson_28.html">Day 28: Introduction to Support Vector Machines (SVM)</a></li>
 
 
 
 <li class="toctree-l2 current active"><a class="current reference internal" href="#">Introduction to Decision Trees</a></li>
-
-
-
-<li class="toctree-l2"><a class="reference internal" href="Lesson_30.html">Introduction to Naive Bayes Classification</a></li>
-
 
 
 </ul>
@@ -535,47 +530,20 @@ document.write(`
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Decision Trees</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-decision-tree">What is a Decision Tree?</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importance">Importance</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-and-examples">Applications and Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#components-of-decision-trees">Components of Decision Trees</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functioning-of-decision-trees">Functioning of Decision Trees</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy-and-information-gain-in-decision-trees">Entropy and Information Gain in Decision Trees</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-entropy">What is Entropy?</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text">Text</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Definition</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Importance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-entropy">What is Entropy?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-information-gain">What is Information Gain?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition-through-example-plots">Intuition Through Example Plots</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-information-gain">What is Information Gain?</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Text</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Definition</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Importance</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Applications and Examples</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#building-and-interpreting-decision-trees-in-python">Building and Interpreting Decision Trees in Python</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">What is a Decision Tree?</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Applications and Examples</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finance-credit-scoring">Finance: Credit Scoring</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#healthcare-diagnosing-diseases">Healthcare: Diagnosing Diseases</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#marketing-customer-segmentation">Marketing: Customer Segmentation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-and-tackling-overfitting">Understanding and Tackling Overfitting</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader-building-and-visualizing-a-decision-tree-model">Exercise For The Reader: Building and Visualizing a Decision Tree Model</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">What is a Decision Tree?</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Applications and Examples</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-instructions">Exercise Instructions</a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-decision-trees-in-python">Implementing Decision Trees in Python:</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scikit-learn-for-decision-trees">Scikit-learn For Decision Trees</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#brief-note-on-under-over-fitting">Brief Note on Under/Over Fitting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader">Exercise For The Reader</a></li>
 </ul>
 </li>
 </ul>
@@ -592,44 +560,34 @@ document.write(`
                   
   <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-decision-trees">
 <h1>Introduction to Decision Trees<a class="headerlink" href="#introduction-to-decision-trees" title="Permalink to this heading">#</a></h1>
-<p>Decision Trees are a fundamental machine learning algorithm that finds extensive use in both classification and regression tasks. They serve as an indispensable tool for predictive modeling, offering clear visualization of decision-making processes and straightforward interpretation of data. Decision Trees mimic human decision-making processes, making them an intuitive option for solving complex problems by breaking them down into smaller, manageable parts.</p>
-<section id="what-is-a-decision-tree">
-<h2>What is a Decision Tree?<a class="headerlink" href="#what-is-a-decision-tree" title="Permalink to this heading">#</a></h2>
+<p>A decision tree is a flow chart for classifying data into a class. It’s a flow chart, but reverse engineered from examples rather than being built directly from known rules.</p>
+<section id="components-of-decision-trees">
+<h2>Components of Decision Trees<a class="headerlink" href="#components-of-decision-trees" title="Permalink to this heading">#</a></h2>
 <p>A Decision Tree is a flowchart-like structure where each internal node represents a “decision” on an attribute, each branch represents an outcome of the decision, and each leaf node represents a class label (decision taken after computing all attributes). The paths from root to leaf represent classification rules.</p>
-<section id="definition">
-<h3>Definition<a class="headerlink" href="#definition" title="Permalink to this heading">#</a></h3>
-<p>Formally, a Decision Tree is a binary tree where each internal node splits the dataset into two groups based on the feature that results in the most significant information gain (IG). Information gain is calculated using metrics like Gini impurity or entropy.</p>
-<p>In mathematical terms, if we denote a dataset as <span class="math notranslate nohighlight">\(D\)</span> which consists of instances <span class="math notranslate nohighlight">\((x_i, y_i), i=1,2,...,N\)</span>, where <span class="math notranslate nohighlight">\(x_i\)</span> is the feature vector and <span class="math notranslate nohighlight">\(y_i\)</span> is the target label, then the goal of the Decision Tree is to partition <span class="math notranslate nohighlight">\(D\)</span> into subsets <span class="math notranslate nohighlight">\(D_1, D_2, ... , D_k\)</span> based on feature values that optimize a given objective criterion (e.g., maximizing information gain).</p>
-</section>
-<section id="importance">
-<h3>Importance<a class="headerlink" href="#importance" title="Permalink to this heading">#</a></h3>
-<p>Decision Trees are important for several reasons:</p>
-<ol class="arabic simple">
-<li><p><strong>Simplicity:</strong> They are easy to understand and interpret, making them accessible to people with non-technical backgrounds.</p></li>
-<li><p><strong>Versatility:</strong> They can handle both numerical and categorical data and can be used for both regression and classification tasks.</p></li>
-<li><p><strong>Feature Importance:</strong> They inherently perform feature selection, indicating which features are most important for prediction.</p></li>
-<li><p><strong>Visualization:</strong> The tree structure can be easily visualized, allowing for a straightforward inspection of decision paths.</p></li>
-</ol>
-</section>
-</section>
-<section id="applications-and-examples">
-<h2>Applications and Examples<a class="headerlink" href="#applications-and-examples" title="Permalink to this heading">#</a></h2>
-<p>Decision Trees find applications across diverse fields due to their simplicity and versatility.</p>
 <ul class="simple">
-<li><p><strong>Finance:</strong> For credit scoring by analyzing customer data to predict their likelihood of defaulting on loans.</p></li>
-<li><p><strong>Healthcare:</strong> For diagnosing patients based on their symptoms and medical history.</p></li>
-<li><p><strong>Marketing:</strong> To identify potential customer segments and target them with specific marketing strategies.</p></li>
-<li><p><strong>Manufacturing:</strong> For predicting equipment failures by analyzing operation data.</p></li>
-<li><p><strong>Computer Science:</strong> In the development of recommendation systems that suggest products or content based on user preferences and past behavior.</p></li>
+<li><p><strong>Decision Nodes</strong>: Each decision node represents a test on an attribute, essentially asking a question about the data that divides the dataset into smaller subsets. The root decision node is the tree’s starting point.</p></li>
+<li><p><strong>Branches</strong>: Branches are the outcomes of the tests conducted at decision nodes. They represent the path from one question to the next or to a conclusion, depending on the tree’s depth at that point.</p></li>
+<li><p><strong>Leaf Nodes</strong>: Leaf nodes, or terminal nodes, represent the final decision or output of the decision process for a given subset of the dataset. In classification tasks, a leaf node corresponds to a class label. In regression tasks, it represents a continuous value.</p></li>
 </ul>
-<p>For example, in the healthcare field, a Decision Tree might be used to diagnose a disease based on patient symptoms. The root node could represent the most significant symptom, with branches leading to nodes representing secondary symptoms, and leaf nodes representing possible diagnoses.</p>
-<p>In summary, Decision Trees play a crucial role in the fields of machine learning and artificial intelligence. They provide an effective approach for both data classification and regression, with the added benefits of simplicity, interpretability, and application in a wide range of disciplines.</p>
+</section>
+<section id="functioning-of-decision-trees">
+<h2>Functioning of Decision Trees<a class="headerlink" href="#functioning-of-decision-trees" title="Permalink to this heading">#</a></h2>
+<p>The process of building a decision tree involves selecting the best attribute to split the data at each step, aiming to increase the homogeneity of resultant subsets. This selection is generally based on metrics like entropy and information gain for classification tasks or variance reduction for regression.</p>
+<ol class="arabic simple">
+<li><p><strong>Beginning at the root</strong>, the dataset is split based on the attribute that results in the highest information gain (for classification) or the greatest variance reduction (for regression).</p></li>
+<li><p><strong>For each split</strong>, the algorithm recursively repeats the process for the resulting subsets. Each subset becomes associated with a new decision node in the tree. This recursive splitting continues until one of the stopping criteria is met, which could be a maximum tree depth, a minimum number of samples in a leaf, or a threshold for an increase in impurity measure.</p></li>
+<li><p><strong>Classification Rules and Regression Paths</strong>:</p>
+<ul class="simple">
+<li><p>In classification, the path from the root node to a leaf node represents a set of conditions based on the attributes that lead to a specific class label.</p></li>
+<li><p>In regression, this path represents conditions that lead to a continuous value prediction.</p></li>
+</ul>
+</li>
+</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
 <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-
-<span class="c1"># Create a basic diagram of a decision tree structure</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">mpatches</span>
 
 <span class="c1"># Create figure and axis</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
@@ -655,16 +613,23 @@ document.write(`
     <span class="p">(</span><span class="s2">&quot;Decision 2&quot;</span><span class="p">,</span> <span class="s2">&quot;Leaf 4&quot;</span><span class="p">)</span>
 <span class="p">]</span>
 
-<span class="c1"># Plot nodes</span>
-<span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">nodes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span> <span class="n">c</span><span class="o">=</span><span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
-
 <span class="c1"># Plot edges (branches)</span>
 <span class="k">for</span> <span class="n">start</span><span class="p">,</span> <span class="n">end</span> <span class="ow">in</span> <span class="n">edges</span><span class="p">:</span>
     <span class="n">start_x</span><span class="p">,</span> <span class="n">start_y</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">start</span><span class="p">]</span>
     <span class="n">end_x</span><span class="p">,</span> <span class="n">end_y</span> <span class="o">=</span> <span class="n">nodes</span><span class="p">[</span><span class="n">end</span><span class="p">]</span>
-    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">start_x</span><span class="p">,</span> <span class="n">end_x</span><span class="p">],</span> <span class="p">[</span><span class="n">start_y</span><span class="p">,</span> <span class="n">end_y</span><span class="p">],</span> <span class="s1">&#39;k-&#39;</span><span class="p">)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">start_x</span><span class="p">,</span> <span class="n">end_x</span><span class="p">],</span> <span class="p">[</span><span class="n">start_y</span><span class="p">,</span> <span class="n">end_y</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">&quot;lightgrey&quot;</span><span class="p">)</span>
+
+<span class="n">bwidth</span><span class="p">,</span> <span class="n">bheight</span> <span class="o">=</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+<span class="c1"># Plot nodes</span>
+<span class="k">for</span> <span class="n">node</span><span class="p">,</span> <span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">)</span> <span class="ow">in</span> <span class="n">nodes</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+    <span class="c1">#ax.scatter(x, y, s=1000, c=&#39;skyblue&#39;)</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">text</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">ha</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">,</span> <span class="n">va</span><span class="o">=</span><span class="s1">&#39;center&#39;</span><span class="p">)</span>
+    <span class="k">if</span> <span class="s2">&quot;Leaf&quot;</span> <span class="ow">in</span> <span class="n">node</span><span class="p">:</span>
+        <span class="n">fc</span> <span class="o">=</span> <span class="s2">&quot;#C4F3A1&quot;</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">fc</span> <span class="o">=</span> <span class="s2">&quot;#FFDDC1&quot;</span>
+    <span class="n">ax</span><span class="o">.</span><span class="n">add_patch</span><span class="p">(</span><span class="n">mpatches</span><span class="o">.</span><span class="n">FancyBboxPatch</span><span class="p">((</span><span class="n">x</span><span class="o">-</span><span class="n">bwidth</span><span class="o">/</span><span class="mi">2</span><span class="p">,</span> <span class="n">y</span><span class="o">-</span><span class="n">bheight</span><span class="o">*</span><span class="mf">0.4</span><span class="p">),</span> <span class="n">bwidth</span><span class="p">,</span> <span class="n">bheight</span><span class="p">,</span> <span class="n">boxstyle</span><span class="o">=</span><span class="s2">&quot;round,pad=0.05&quot;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span> <span class="n">fc</span><span class="o">=</span><span class="n">fc</span><span class="p">))</span>
+
 
 <span class="c1"># Hide axes</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_axis_off</span><span class="p">()</span>
@@ -677,10 +642,9 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../_images/2f7cebd848df230fd7d6f4b87c5eeb86cdb082d22468dafb12e46797f2da2d88.png" src="../_images/2f7cebd848df230fd7d6f4b87c5eeb86cdb082d22468dafb12e46797f2da2d88.png" />
+<img alt="../_images/1e60f3cdf0074dca502bd86247633329c111f242dbb63f6006a5db925867f9e8.png" src="../_images/1e60f3cdf0074dca502bd86247633329c111f242dbb63f6006a5db925867f9e8.png" />
 </div>
 </div>
-<p>This visualization provides a simple representation of a Decision Tree with one root node, two decision nodes, and four leaf nodes. It illustrates how data is split at each node until it reaches a decision (leaf nodes). The root node is the starting point, decision nodes represent the branching based on certain conditions, and leaf nodes represent the final decision or prediction.</p>
 </section>
 </section>
 <section class="tex2jax_ignore mathjax_ignore" id="entropy-and-information-gain-in-decision-trees">
@@ -688,37 +652,21 @@ document.write(`
 <p>Decision Trees are a popular machine learning method used for both classification and regression tasks. At their core, they model decisions and their possible consequences, including chance event outcomes, resource costs, and utility. Two fundamental concepts that guide the construction of a decision tree are Entropy and Information Gain. Understanding these concepts is crucial for grasifying how decision trees decide where to split the data.</p>
 <section id="what-is-entropy">
 <h2>What is Entropy?<a class="headerlink" href="#what-is-entropy" title="Permalink to this heading">#</a></h2>
-<section id="text">
-<h3>Text<a class="headerlink" href="#text" title="Permalink to this heading">#</a></h3>
+<p>Formally, a Decision Tree is a binary tree where each internal node splits the dataset into two groups based on the feature that results in the most significant information gain (IG). Information gain is calculated using metrics like Gini impurity or entropy.</p>
+<p>In mathematical terms, if we denote a dataset as <span class="math notranslate nohighlight">\(D\)</span> which consists of instances <span class="math notranslate nohighlight">\((x_i, y_i), i=1,2,...,N\)</span>, where <span class="math notranslate nohighlight">\(x_i\)</span> is the feature vector and <span class="math notranslate nohighlight">\(y_i\)</span> is the target label, then the goal of the Decision Tree is to partition <span class="math notranslate nohighlight">\(D\)</span> into subsets <span class="math notranslate nohighlight">\(D_1, D_2, ... , D_k\)</span> based on feature values that optimize a given objective criterion (e.g., maximizing information gain).</p>
+<p><strong>Entropy</strong> is a concept borrowed from information theory, representing the degree of uncertainty or impurity present within a dataset. It is mathematically expressed as <span class="math notranslate nohighlight">\(H(X) = -\sum_{i=1}^{n} P(x_i) \log_2 P(x_i)\)</span>, where <span class="math notranslate nohighlight">\(P(x_i)\)</span> stands for the probability of occurrence of class <span class="math notranslate nohighlight">\(x_i\)</span>.</p>
+<p><strong>Information gain</strong> is then calculated as the reduction in entropy before and after a dataset is divided on an attribute. It guides the decision-tree algorithm in choosing the attribute that accomplishes the most significant reduction in uncertainty. Its formula is <span class="math notranslate nohighlight">\(IG(A, S) = H(S) - \sum_{t \in T} P(t) H(t)\)</span>, where <span class="math notranslate nohighlight">\(A\)</span> is the attribute, <span class="math notranslate nohighlight">\(S\)</span> is the dataset, <span class="math notranslate nohighlight">\(T\)</span> represents the subsets created from splitting <span class="math notranslate nohighlight">\(S\)</span> by attribute <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(H(S)\)</span> is the entropy of set <span class="math notranslate nohighlight">\(S\)</span>, and <span class="math notranslate nohighlight">\(P(t)\)</span> is the proportion of the number of elements in subset <span class="math notranslate nohighlight">\(t\)</span> to the number of elements in set <span class="math notranslate nohighlight">\(S\)</span>.</p>
 <p>Entropy is a measure borrowed from physics and information theory that represents the degree of disorder, randomness, or uncertainty in a dataset. In the context of machine learning, and more specifically in decision trees, it plays a pivotal role in determining how a dataset can be split in the most informative way.</p>
-</section>
-<section id="id1">
-<h3>Definition<a class="headerlink" href="#id1" title="Permalink to this heading">#</a></h3>
 <p>In a classification problem, entropy can be mathematically expressed as:</p>
 <div class="math notranslate nohighlight">
-\[
-- \sum_{i=1}^{n} p_i \log_2(p_i)
-\]</div>
+\[ - \sum_{i=1}^{n} p_i \log_2(p_i) \]</div>
 <p>where <span class="math notranslate nohighlight">\(n\)</span> is the number of classes and <span class="math notranslate nohighlight">\(p_i\)</span> is the probability of class <span class="math notranslate nohighlight">\(i\)</span> within the subset. For each class, it multiplies the probability of class <span class="math notranslate nohighlight">\(i\)</span> (<span class="math notranslate nohighlight">\(p_i\)</span>) by the log base 2 of <span class="math notranslate nohighlight">\(p_i\)</span>, sums across all classes, and takes the negative of that sum.</p>
-</section>
-<section id="id2">
-<h3>Importance<a class="headerlink" href="#id2" title="Permalink to this heading">#</a></h3>
-<p>Entropy serves as a measure of purity or homogeneity in a dataset. In the context of decision trees, it’s employed to determine how a dataset should be split at each node. High entropy in a dataset means more disorder—it indicates that the data is more mixed (contains a higher variety of classes). Conversely, low entropy suggests a more orderly distribution of data, or that most elements belong to the same class. Therefore, decreasing entropy through splits allows the model to make more accurate predictions, as nodes become increasingly homogeneous.</p>
-</section>
 </section>
 <section id="what-is-information-gain">
 <h2>What is Information Gain?<a class="headerlink" href="#what-is-information-gain" title="Permalink to this heading">#</a></h2>
-<section id="id3">
-<h3>Text<a class="headerlink" href="#id3" title="Permalink to this heading">#</a></h3>
-<p>Following the concept of entropy, Information Gain measures the reduction in entropy or disorder in a dataset after a split. It quantifies how much information a feature gives us about the class.</p>
-</section>
-<section id="id4">
-<h3>Definition<a class="headerlink" href="#id4" title="Permalink to this heading">#</a></h3>
 <p>Information Gain is calculated as the difference between the initial entropy of the entire dataset and the weighted entropy after splitting the dataset based on an attribute. Mathematically, it’s represented as:</p>
 <div class="math notranslate nohighlight">
-\[
-IG(D, A) = Entropy(D) - \sum_{v \in Values(A)} \frac{|D_v|}{|D|} Entropy(D_v)
-\]</div>
+\[ IG(D, A) = Entropy(D) - \sum_{v \in Values(A)} \frac{|D_v|}{|D|} Entropy(D_v) \]</div>
 <p>where:</p>
 <ul class="simple">
 <li><p><span class="math notranslate nohighlight">\(IG(D, A)\)</span> is the information gain of dataset <span class="math notranslate nohighlight">\(D\)</span> after being split based on attribute <span class="math notranslate nohighlight">\(A\)</span>,</p></li>
@@ -728,20 +676,12 @@ IG(D, A) = Entropy(D) - \sum_{v \in Values(A)} \frac{|D_v|}{|D|} Entropy(D_v)
 <li><p>and <span class="math notranslate nohighlight">\(Entropy(D_v)\)</span> is the entropy of the subset of <span class="math notranslate nohighlight">\(D\)</span> that has value <span class="math notranslate nohighlight">\(v\)</span> for attribute <span class="math notranslate nohighlight">\(A\)</span>.</p></li>
 </ul>
 </section>
-<section id="id5">
-<h3>Importance<a class="headerlink" href="#id5" title="Permalink to this heading">#</a></h3>
-<p>Information gain is used in decision trees to select the attribute that best splits the dataset at each node. An attribute with higher information gain will result in a purer child node—or, in other words, nodes with lower entropy. Therefore, maximizing information gain at each step of building a tree ensures that the model asks the most informative questions first, leading to a faster reduction in uncertainty or disorder in the dataset.</p>
-</section>
-</section>
-<section id="id6">
-<h2>Applications and Examples<a class="headerlink" href="#id6" title="Permalink to this heading">#</a></h2>
-<p>Decision trees, guided by principles of entropy and information gain, are widely applicable in various fields for classification and regression tasks. For example:</p>
-<ul class="simple">
-<li><p><strong>In medicine,</strong> they can help diagnose diseases based on a series of symptoms and patient data, efficiently narrowing down possible conditions.</p></li>
-<li><p><strong>In finance,</strong> decision trees are used for credit scoring, identifying which variables and customer features influence credit risk the most.</p></li>
-<li><p><strong>In marketing,</strong> these models can help predict customer behavior and segment customers based on their likelihood to purchase a product.</p></li>
-</ul>
-<p>Each of these applications involves making decisions based on the data’s attributes, where understanding and managing uncertainty and disorder through entropy and information gain become crucial to building effective models.</p>
+<section id="intuition-through-example-plots">
+<h2>Intuition Through Example Plots<a class="headerlink" href="#intuition-through-example-plots" title="Permalink to this heading">#</a></h2>
+<p>Entropy is a very heady and abstract topic, made all the more confusing by the various and <em>equally valid</em> ways to understand or interpret it.</p>
+<p>Entropy is connected with uncertainty. A fair coin flip has maximum entropy, because all outcomes are equal and there’s nothing you can do to increase your knowledge or make a better guess. After the coin flip, the entropy is zero, because your knowledge is complete and the system is in a known state with certainty.</p>
+<p>Let’s go with a <strong>bag of marbles</strong> analogy. if “red” and “blue” are our target classes, and there’s an equal number of both, then we would have maximum entropy - a fair coin flip to guess the right label. But if we could split the bag of marbles based on some other information, we can gain information and make better guesses about the contents after that decision.</p>
+<p>This is precisely what a decision tree does at each node: new decisions are added based on what would add the most information, so that the two sides of the node have less entropy.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
@@ -798,47 +738,102 @@ IG(D, A) = Entropy(D) - \sum_{v \in Values(A)} \frac{|D_v|}{|D|} Entropy(D_v)
 <img alt="../_images/f047e04096c50c1ccb98904fce4345081063970c0d647519a5a9d4843fb1758a.png" src="../_images/f047e04096c50c1ccb98904fce4345081063970c0d647519a5a9d4843fb1758a.png" />
 </div>
 </div>
-<p>This Python script visualizes a simple dataset before and after a hypothetical split, illustrating the concept of entropy and information gain as discussed. Initially, the dataset is evenly split between two classes (‘Red’ and ‘Blue’). After splitting based on a specific attribute, we obtain two subsets with differing compositions. The script calculates and displays the entropy for each subset and the dataset before splitting, as well as the overall information gain achieved by the split. The visual representation supports the explanation by showing how a split affects the composition of the subsets, aiming to reduce entropy and thereby increasing information gain—key principles in the construction of decision trees.</p>
+<p>More abstractly, entropy is at a peak when we have an equal chance of all outcomes, and at a minimum when we know for certain what the outcome will be:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Function to calculate entropy</span>
+<span class="k">def</span> <span class="nf">calculate_entropy</span><span class="p">(</span><span class="n">p</span><span class="p">):</span>
+<span class="w">    </span><span class="sd">&quot;&quot;&quot;</span>
+<span class="sd">    Calculate the binary entropy of a dataset given the probability of class 1</span>
+<span class="sd">    :param p: Probability of class 1</span>
+<span class="sd">    :return: Entropy of the dataset</span>
+<span class="sd">    &quot;&quot;&quot;</span>
+    <span class="c1"># Handle the case where probability is 0 or 1, as log(0) is undefined</span>
+    <span class="k">if</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">0</span> <span class="ow">or</span> <span class="n">p</span> <span class="o">==</span> <span class="mi">1</span><span class="p">:</span>
+        <span class="k">return</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="o">-</span><span class="p">(</span><span class="n">p</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">+</span> <span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">log2</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">))</span>
+
+<span class="c1"># Generate probabilities from 0 to 1</span>
+<span class="n">probabilities</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="c1"># Calculate entropy for each probability</span>
+<span class="n">entropies</span> <span class="o">=</span> <span class="p">[</span><span class="n">calculate_entropy</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">probabilities</span><span class="p">]</span>
+
+<span class="c1"># Plotting</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">probabilities</span><span class="p">,</span> <span class="n">entropies</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Entropy&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Entropy of a Binary Dataset&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Probability of Class 1 (p)&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Entropy&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">which</span><span class="o">=</span><span class="s1">&#39;both&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/d2621820b3c48f53218cb11633a5f1a8025a5d616db35771e26b57fca0cfe65d.png" src="../_images/d2621820b3c48f53218cb11633a5f1a8025a5d616db35771e26b57fca0cfe65d.png" />
+</div>
+</div>
 </section>
 </section>
-<section class="tex2jax_ignore mathjax_ignore" id="building-and-interpreting-decision-trees-in-python">
-<h1>Building and Interpreting Decision Trees in Python<a class="headerlink" href="#building-and-interpreting-decision-trees-in-python" title="Permalink to this heading">#</a></h1>
-<p>In this section, we embark on the journey of understanding and implementing Decision Trees using Python’s very own toolkit, scikit-learn. Not just a powerful predictive model, Decision Trees also offer the rare capability of being quite interpretable. We will also delve into visualizing how these models make decisions, thereby offering insights into their inner workings.</p>
-<section id="id7">
-<h2>What is a Decision Tree?<a class="headerlink" href="#id7" title="Permalink to this heading">#</a></h2>
-<p><strong>Text</strong>: A Decision Tree is akin to a flowchart where each internal node represents a “test” or “decision” on an attribute, each branch represents the outcome of the test, and each leaf node represents a class label (a decision taken after computing all attributes). The paths from root to leaf represent classification rules.</p>
-<p><strong>Definition</strong>: Mathematically, a decision tree is a model that recursively splits data into subsets based on the value of input features. This process can be represented as:</p>
-<ul class="simple">
-<li><p>Given a dataset <span class="math notranslate nohighlight">\(D\)</span>, a decision tree splits it into subsets <span class="math notranslate nohighlight">\(\{D_1, D_2, ..., D_k\}\)</span> using some feature <span class="math notranslate nohighlight">\(X\)</span>, where <span class="math notranslate nohighlight">\(k\)</span> is determined by the unique values of <span class="math notranslate nohighlight">\(X\)</span> in <span class="math notranslate nohighlight">\(D\)</span> if <span class="math notranslate nohighlight">\(X\)</span> is categorical, or a threshold if <span class="math notranslate nohighlight">\(X\)</span> is numerical.</p></li>
-<li><p>This process repeats at each node with the subsets, till a stopping criterion is met.</p></li>
-</ul>
-<p>The objective function that measures the quality of a split varies; common ones include Gini impurity <span class="math notranslate nohighlight">\(G(D) = 1 - \sum_{i=1}^{n}{p_i}^2\)</span> and entropy <span class="math notranslate nohighlight">\(H(D) = - \sum_{i=1}^{n}p_i \log_{2}p_i\)</span>, where <span class="math notranslate nohighlight">\(p_i\)</span> is the probability of class <span class="math notranslate nohighlight">\(i\)</span> in the dataset <span class="math notranslate nohighlight">\(D\)</span>.</p>
-<p><strong>Importance</strong>: Decision Trees are crucial for various reasons. Their ability to break down complex decision-making processes into simpler, understandable rules is invaluable for transparency and interpretability. Furthermore, they are versatile, being applicable for both classification and regression tasks. In fields ranging from finance for credit scoring to healthcare for diagnosing diseases, their simplicity in concept yet profound utility in application cannot be overstated.</p>
+<section class="tex2jax_ignore mathjax_ignore" id="implementing-decision-trees-in-python">
+<h1>Implementing Decision Trees in Python:<a class="headerlink" href="#implementing-decision-trees-in-python" title="Permalink to this heading">#</a></h1>
+<p>In the previous sections, we delved into the theoretical underpinnings of decision trees and explored key concepts such as entropy and information gain, which are crucial for optimizing the creation and performance of decision trees. As we transition from theory to practice, this section will guide you through implementing decision trees in Python, leveraging the widely-used <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> library. Here, we’ll focus on practical steps necessary for data preprocessing, model fitting, prediction, and evaluation within the context of <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code>. Furthermore, we’ll discuss how to interpret the results generated by decision tree models and adjust significant parameters, such as maximum depth (<code class="docutils literal notranslate"><span class="pre">max_depth</span></code>) and the criterion for splitting, to optimize model performance. Lastly, we’ll touch upon strategies for model complexity management, like pruning, which helps in preventing overfitting and improves the model’s generalizability.</p>
+<section id="scikit-learn-for-decision-trees">
+<h2>Scikit-learn For Decision Trees<a class="headerlink" href="#scikit-learn-for-decision-trees" title="Permalink to this heading">#</a></h2>
+<p><code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> offers a straightforward and consistent API for implementing decision trees for both classification (<code class="docutils literal notranslate"><span class="pre">DecisionTreeClassifier</span></code>) and regression (<code class="docutils literal notranslate"><span class="pre">DecisionTreeRegressor</span></code>) tasks. We’ll use functions like <code class="docutils literal notranslate"><span class="pre">fit()</span></code> for training the model on our data and <code class="docutils literal notranslate"><span class="pre">predict()</span></code> for making predictions. I</p>
+<p><code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> internally handles many of the complexities associated with decision trees, such as calculating entropy and information gain, making our job much simpler. We will also utilize other libraries like <code class="docutils literal notranslate"><span class="pre">pandas</span></code> for data manipulation and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> (possibly with <code class="docutils literal notranslate"><span class="pre">graphviz</span></code>) for visualizing the decision tree structure.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import required libraries</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn</span> <span class="kn">import</span> <span class="n">tree</span>
+
+<span class="c1"># Load the iris dataset</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># Split the dataset into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Initialize the Decision Tree Classifier with parameters emphasizing important aspects:</span>
+<span class="c1"># - criterion: The function to measure the quality of a split. &quot;gini&quot; for Gini Impurity and &quot;entropy&quot; for Information Gain.</span>
+<span class="c1"># - max_depth: The maximum depth of the tree. Limiting this can help prevent overfitting.</span>
+<span class="c1"># - random_state: Controls the randomness of the estimator. Useful for reproducibility.</span>
+<span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">criterion</span><span class="o">=</span><span class="s2">&quot;gini&quot;</span><span class="p">,</span> <span class="n">max_depth</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Fit the model with the training data</span>
+<span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Plot the decision tree</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">tree</span><span class="o">.</span><span class="n">plot_tree</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">target_names</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">&quot;Decision Tree visualization&quot;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># The visualization helps in understanding how the decision tree makes splits</span>
+<span class="c1"># It provides insights into the feature importance and decision-making process of the model.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/f20902e909ec192469d12a3c7c28798d2979b9875ab038efb8199511fb0700c3.png" src="../_images/f20902e909ec192469d12a3c7c28798d2979b9875ab038efb8199511fb0700c3.png" />
+</div>
+</div>
 </section>
-<section id="id8">
-<h2>Applications and Examples<a class="headerlink" href="#id8" title="Permalink to this heading">#</a></h2>
-<section id="finance-credit-scoring">
-<h3>Finance: Credit Scoring<a class="headerlink" href="#finance-credit-scoring" title="Permalink to this heading">#</a></h3>
-<p>In the finance industry, decision trees can evaluate potential borrowers’ creditworthiness by analyzing various attributes such as income, debt-to-income ratio, and credit history. For instance, a decision tree might classify applicants into ‘low risk’ and ‘high risk’ categories, optimizing the lending process.</p>
-</section>
-<section id="healthcare-diagnosing-diseases">
-<h3>Healthcare: Diagnosing Diseases<a class="headerlink" href="#healthcare-diagnosing-diseases" title="Permalink to this heading">#</a></h3>
-<p>Decision trees have proven exceptionally useful in the healthcare sector, where they help diagnose diseases by systematically assessing symptoms and test results. A well-crafted decision tree could help distinguish between different types of illnesses based on input variables such as age, temperature, blood pressure, etc.</p>
-</section>
-<section id="marketing-customer-segmentation">
-<h3>Marketing: Customer Segmentation<a class="headerlink" href="#marketing-customer-segmentation" title="Permalink to this heading">#</a></h3>
-<p>Marketing teams use decision trees to segment customers based on behaviors and preferences. This segmentation allows for targeted marketing campaigns, where a decision tree might help identify which segments are more likely to respond to a specific advertising strategy.</p>
-</section>
-<section id="understanding-and-tackling-overfitting">
-<h3>Understanding and Tackling Overfitting<a class="headerlink" href="#understanding-and-tackling-overfitting" title="Permalink to this heading">#</a></h3>
-<p>While decision trees are powerful, they are prone to overfitting, especially in scenarios with complex datasets or when the trees are allowed to grow without constraints. Overfitting happens when the model learns the noise in the training data, reducing its ability to generalize to new data.</p>
-<p>To mitigate overfitting, we employ techniques like pruning. Pruning can be done in two ways:</p>
-<ul class="simple">
-<li><p><strong>Pre-pruning</strong>: Limiting the growth of trees by setting parameters such as <code class="docutils literal notranslate"><span class="pre">max_depth</span></code>, <code class="docutils literal notranslate"><span class="pre">min_samples_leaf</span></code>, etc.</p></li>
-<li><p><strong>Post-pruning</strong>: Allowing the tree to grow fully and then removing insignificant branches.</p></li>
-</ul>
-<p>Both techniques are crucial in enhancing the model’s generalization capabilities.</p>
-<p>In the following sections, we’ll dive into the practical steps of setting up, visualizing, and optimizing Decision Trees using Python’s scikit-learn, matplotlib, and graphviz libraries, ensuring a balance between model complexity and generalization.</p>
+<section id="brief-note-on-under-over-fitting">
+<h2>Brief Note on Under/Over Fitting<a class="headerlink" href="#brief-note-on-under-over-fitting" title="Permalink to this heading">#</a></h2>
+<p>You should be aware that decision trees can overfit just like any model. For example, if you had one decision node for every data point in the test set, you could easily sort them with 100% accuracy. But how does that reflect the relationships the data samples from? We want a tree large enough to capture meaning, without being so large that it’s only memorizing.</p>
+<p><strong>max depth</strong> limits the maximum number of decisions your tree can contain. This is sort of a blunt instrument for keeping the size of the tree down, but it works. In reality, different sides of the tree may have different needs for complexity, so “depth” and “useful complexity” do not have a perfect correlation.</p>
+<p><strong>cost complexity pruning</strong> is the use of a hyperparameter <span class="math notranslate nohighlight">\(\alpha\)</span> (alpha) which penalizes a tree’s complexity. Read more about the concept at <a class="reference external" href="https://scikit-learn.org/stable/auto_examples/tree/plot_cost_complexity_pruning.html">scikit-learn’s documentation</a>. This lesson has already gone on long enough without delving into tuning <code class="docutils literal notranslate"><span class="pre">ccp_alpha</span></code>, but you should <em>definitely</em> try it yourself.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
@@ -886,118 +881,77 @@ IG(D, A) = Entropy(D) - \sum_{v \in Values(A)} \frac{|D_v|}{|D|} Entropy(D_v)
 </div>
 <p>This code snippet demonstrates fitting a Decision Tree model to the Iris dataset with scikit-learn and how the <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> parameter affects the model’s complexity and potential for overfitting. By visualizing trees with different <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> values (including without a limit, leading to full growth), we illustrate the concept of pruning and its role in preventing overfitting. Through these visualized trees, one can observe how limiting the depth of the tree (pruning) can help in making the model simpler and potentially more generalizable to unseen data, balancing between underfitting and overfitting.</p>
 </section>
-</section>
-</section>
-<section class="tex2jax_ignore mathjax_ignore" id="exercise-for-the-reader-building-and-visualizing-a-decision-tree-model">
-<h1>Exercise For The Reader: Building and Visualizing a Decision Tree Model<a class="headerlink" href="#exercise-for-the-reader-building-and-visualizing-a-decision-tree-model" title="Permalink to this heading">#</a></h1>
-<p>In this exercise, we’ll embark on the exciting journey of applying your newfound knowledge in machine learning by building and interpreting a decision tree model. This hands-on task will not only solidify your understanding of decision trees but also introduce you to the essential steps of working with real datasets.</p>
-<section id="id9">
-<h2>What is a Decision Tree?<a class="headerlink" href="#id9" title="Permalink to this heading">#</a></h2>
-<p>A decision tree is one of the most intuitive and widespread machine learning algorithms used for both classification and regression tasks.</p>
-<p><strong>Definition:</strong> A decision tree is a flowchart-like tree structure, where an internal node represents a feature(or attribute), the branch represents a decision rule, and each leaf node represents the outcome. The topmost node in a tree is known as the root node. It learns to partition on the basis of the attribute value. It partitions the tree in recursively manner called recursive partitioning. This flowchart-like structure helps in decision making. Its visualization helps in easily understanding the model.</p>
-<div class="math notranslate nohighlight">
-\[
-\text{Information Gain} = \text{Entropy(parent)} - \left(\frac{\text{Number of samples in left node}}{\text{Total samples in parent}}\times \text{Entropy(left node)} + \frac{\text{Number of samples in right node}}{\text{Total samples in parent}}\times \text{Entropy(right node)}\right)
-\]</div>
-<p><strong>Importance:</strong> The simplicity of decision trees is their biggest advantage. They easily handle categorical variables and do not require any data preprocessing like normalization or standardization. Being a non-parametric method, they are considered quite robust to outliers. Decision trees can easily visualize and interpret the model’s decisions, making them vital in sectors requiring transparency and explainability, such as finance and healthcare.</p>
-</section>
-<section id="id10">
-<h2>Applications and Examples<a class="headerlink" href="#id10" title="Permalink to this heading">#</a></h2>
-<p>Decision trees are versatile and can be applied in various domains:</p>
-<ul class="simple">
-<li><p><strong>Banking:</strong> For assessing the creditworthiness of applicants.</p></li>
-<li><p><strong>Medicine:</strong> For diagnosing patients based on their symptoms.</p></li>
-<li><p><strong>Manufacturing:</strong> For predicting the failure times of machines or equipment.</p></li>
-<li><p><strong>E-commerce:</strong> For recommending products based on user behavior.</p></li>
-</ul>
-<section id="exercise-instructions">
-<h3>Exercise Instructions<a class="headerlink" href="#exercise-instructions" title="Permalink to this heading">#</a></h3>
-<p>Your task is to apply decision tree algorithms on a provided dataset, following these steps:</p>
-<ol class="arabic simple">
-<li><p><strong>Preprocessing the Dataset:</strong></p>
-<ul class="simple">
-<li><p>Begin by loading the dataset.</p></li>
-<li><p>Perform necessary preprocessing steps such as dealing with missing values, encoding categorical variables, and splitting the dataset into training and testing sets.</p></li>
-</ul>
-</li>
-<li><p><strong>Building the Decision Tree:</strong></p>
-<ul class="simple">
-<li><p>Use <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> to fit a decision tree model to the training data.</p></li>
-<li><p>Experiment with different parameters such as <code class="docutils literal notranslate"><span class="pre">max_depth</span></code> and <code class="docutils literal notranslate"><span class="pre">min_samples_split</span></code> to observe how they affect overfitting and the complexity of the tree.</p></li>
-</ul>
-</li>
-<li><p><strong>Visualizing the Decision Tree:</strong></p>
-<ul class="simple">
-<li><p>Utilize tools such as <code class="docutils literal notranslate"><span class="pre">graphviz</span></code> or <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> to visualize the tree.</p></li>
-<li><p>Interpret and understand the decision-making process of the model by examining the visualized tree.</p></li>
-</ul>
-</li>
-<li><p><strong>Experimentation:</strong></p>
-<ul class="simple">
-<li><p>Adjust the parameters of the model to explore the trade-offs between model complexity and generalizability.</p></li>
-<li><p>Reflect on the impact of changes in parameters on the performance of the model on the training and testing sets.</p></li>
-</ul>
-</li>
-</ol>
-<p>As you work through this exercise, think about the decision tree’s structure and how altering its parameters affects its ability to generalize from the training data to unseen data. This exercise is an excellent opportunity for you to explore the practical aspects of building and tuning machine learning models.</p>
+<section id="exercise-for-the-reader">
+<h2>Exercise For The Reader<a class="headerlink" href="#exercise-for-the-reader" title="Permalink to this heading">#</a></h2>
+<p>Iris dataset - let’s classify with a decision tree. The example below is pretty complete: if you’re feeling confident, attempt the same techniques on <a class="reference external" href="https://scikit-learn.org/stable/datasets/toy_dataset.html">other scikit-learn toy datasets</a>.</p>
+<p>This dataset includes various attributes such as sepal length, sepal width, petal length, and petal width, alongside the species of the flower, which serves as the label for our classification task. Using the scikit-learn library, your task consists of loading the dataset, splitting it into training and test sets, creating a decision tree classifier, training the model on the dataset, evaluating its performance, and calculating information gain for insights into the decision-making process.</p>
+<p><strong>Data Loading</strong>
+Start by importing necessary libraries such as <code class="docutils literal notranslate"><span class="pre">pandas</span></code> for data manipulation, <code class="docutils literal notranslate"><span class="pre">scikit-learn</span></code> for machine learning models and functions, and <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> or similar libraries for visualization. Use scikit-learn’s <code class="docutils literal notranslate"><span class="pre">load_iris</span></code> function to import the Iris dataset into your working environment.</p>
+<p><strong>Dataset Splitting</strong>
+Divide your dataset into two parts: one for training the model and the other for testing its performance. Tools like <code class="docutils literal notranslate"><span class="pre">train_test_split</span></code> from scikit-learn will be crucial here. Remember to specify a size for the test set and a random state for reproducibility.</p>
+<p><strong>Creating and Training the Decision Tree</strong>
+Definition: A decision tree classifier operates by creating a model that predicts the value of a target variable by learning simple decision rules inferred from the data features. Initialize a DecisionTreeClassifier from scikit-learn and use the <code class="docutils literal notranslate"><span class="pre">.fit()</span></code> method with your training data to train the model.</p>
+<p><strong>Model Evaluation</strong>
+Evaluate the accuracy of your model by using the <code class="docutils literal notranslate"><span class="pre">.score()</span></code> method with your test data. Additionally, leverage the <code class="docutils literal notranslate"><span class="pre">classification_report</span></code> and <code class="docutils literal notranslate"><span class="pre">confusion_matrix</span></code> for a detailed performance analysis.</p>
+<p><strong>Calculating Information Gain</strong>
+Definition: Information gain, as previously discussed, measures the change in entropy before and after splitting a dataset based on an attribute. Although scikit-learn’s DecisionTreeClassifier does not directly expose information gain for each split, you can utilize the <code class="docutils literal notranslate"><span class="pre">tree_</span></code> attribute of the trained model to explore the tree structure, including the features (attributes) and their importance scores. The feature importance scores can provide insights related to the information gain, with higher scores indicating attributes that contribute more significantly to partitioning the data.</p>
+<p><strong>Visualization</strong>
+Beyond numerical analysis, visualize the decision tree using tools like <code class="docutils literal notranslate"><span class="pre">plot_tree</span></code> from scikit-learn or external libraries like Graphviz. This will aid in understanding how the model makes decisions, showcasing the beauty and intuition of decision trees.</p>
+<p>By completing this exercise, you will have practically explored the creation, application, and evaluation of a decision tree classifier, reinforcing the theoretical insights gained from the lesson and gaining hands-on experience with a popular Python library for machine learning.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_iris</span>
-<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">plot_tree</span>
 <span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
-<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">accuracy_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeClassifier</span><span class="p">,</span> <span class="n">plot_tree</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 
-<span class="c1"># Load sample dataset (Iris dataset)</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
-<span class="n">X</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">data</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">target</span>
+<span class="c1"># Data loading</span>
+<span class="n">iris</span> <span class="o">=</span> <span class="n">load_iris</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">iris</span><span class="o">.</span><span class="n">target</span>
 
-<span class="c1"># Preprocessing the dataset</span>
-<span class="c1"># Step 1: Splitting the dataset into training and testing sets</span>
+<span class="c1"># Dataset splitting</span>
 <span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-<span class="c1"># Building the Decision Tree</span>
-<span class="c1"># Step 2: Initialize the Decision Tree Classifier</span>
-<span class="c1"># Note: The reader can experiment with different parameters e.g., &#39;max_depth&#39;, &#39;min_samples_split&#39; here.</span>
+<span class="c1"># Initializing the decision tree model</span>
 <span class="n">clf</span> <span class="o">=</span> <span class="n">DecisionTreeClassifier</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
 
-<span class="c1"># Step 3: Fit the model to the training data</span>
+<span class="c1"># Fitting the model to the data</span>
 <span class="n">clf</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
 
-<span class="c1"># Step 4: Make predictions on the test set</span>
-<span class="n">y_pred</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="c1"># Model evaluation</span>
+<span class="n">accuracy</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Model accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s1">.2f</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
 
-<span class="c1"># Evaluating the model</span>
-<span class="n">accuracy</span> <span class="o">=</span> <span class="n">accuracy_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">y_pred</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Accuracy: </span><span class="si">{</span><span class="n">accuracy</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="c1"># Visualizing the Decision Tree</span>
-<span class="c1"># Step 5: Plotting the tree structure</span>
+<span class="c1"># Visualization: Plotting the decision tree</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
-<span class="n">plot_tree</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">target_names</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Decision Tree - Iris Dataset&#39;</span><span class="p">)</span>
+<span class="n">plot_tree</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">filled</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">feature_names</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">,</span> <span class="n">class_names</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">target_names</span><span class="p">,</span> <span class="n">rounded</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 
-<span class="c1"># Interpretation:</span>
-<span class="c1"># The visualization above shows the tree structure of the decision tree model trained on the Iris dataset.</span>
-<span class="c1"># Each node in the tree represents a decision rule based on one of the features, and the leaves represent the outcomes.</span>
-<span class="c1"># Experiment with different model parameters to see how the structure and performance of the tree change.</span>
+<span class="c1"># Information Gain - Feature Importance visualization</span>
+<span class="n">feature_importances</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">feature_importances_</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">barh</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">feature_importances</span><span class="p">)),</span> <span class="n">feature_importances</span><span class="p">,</span> <span class="n">tick_label</span><span class="o">=</span><span class="n">iris</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Information Gain&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Feature Importances based on Information Gain&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Interpretation</span>
+<span class="c1"># The first plot visualizes the constructed decision tree, showing how the model makes decisions.</span>
+<span class="c1"># The second chart highlights the importance of each attribute in classification, indicating their respective information gain.</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Accuracy: 1.00
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Model accuracy: 1.00
 </pre></div>
 </div>
-<img alt="../_images/fc7c4bb58fb0d720466f63977231a844143b324dd972b93a698f7d3d31aba04c.png" src="../_images/fc7c4bb58fb0d720466f63977231a844143b324dd972b93a698f7d3d31aba04c.png" />
+<img alt="../_images/5129310acfbcfe179ec57cd1d968d4a6cf57a377df748b8b73d3a0ea47a9f782.png" src="../_images/5129310acfbcfe179ec57cd1d968d4a6cf57a377df748b8b73d3a0ea47a9f782.png" />
+<img alt="../_images/a1e1b214674a85dfddf1d04b494a7749f57c6d74dd7c8cae7f03a3307acdf9ed.png" src="../_images/a1e1b214674a85dfddf1d04b494a7749f57c6d74dd7c8cae7f03a3307acdf9ed.png" />
 </div>
 </div>
-<p>This code provides a basic framework for loading a sample dataset, preprocessing it, fitting a decision tree model, assessing its accuracy, and visualizing the tree structure. It is intended for educational purposes, allowing readers to experiment with different parameters and understand their effects on the model.</p>
-</section>
 </section>
 </section>
 
@@ -1037,17 +991,8 @@ IG(D, A) = Entropy(D) - \sum_{v \in Values(A)} \frac{|D_v|}{|D|} Entropy(D_v)
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Fundamentals of Support Vector Machines (SVM)</p>
+        <p class="prev-next-title">Day 28: Introduction to Support Vector Machines (SVM)</p>
       </div>
-    </a>
-    <a class="right-next"
-       href="Lesson_30.html"
-       title="next page">
-      <div class="prev-next-info">
-        <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Introduction to Naive Bayes Classification</p>
-      </div>
-      <i class="fa-solid fa-angle-right"></i>
     </a>
 </div>
                 </footer>
@@ -1065,47 +1010,20 @@ IG(D, A) = Entropy(D) - \sum_{v \in Values(A)} \frac{|D_v|}{|D|} Entropy(D_v)
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Decision Trees</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-a-decision-tree">What is a Decision Tree?</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#importance">Importance</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications-and-examples">Applications and Examples</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#components-of-decision-trees">Components of Decision Trees</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#functioning-of-decision-trees">Functioning of Decision Trees</a></li>
 </ul>
 </li>
 <li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#entropy-and-information-gain-in-decision-trees">Entropy and Information Gain in Decision Trees</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-entropy">What is Entropy?</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#text">Text</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Definition</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Importance</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-entropy">What is Entropy?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-information-gain">What is Information Gain?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intuition-through-example-plots">Intuition Through Example Plots</a></li>
 </ul>
 </li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-information-gain">What is Information Gain?</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Text</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id4">Definition</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id5">Importance</a></li>
-</ul>
-</li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id6">Applications and Examples</a></li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#building-and-interpreting-decision-trees-in-python">Building and Interpreting Decision Trees in Python</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id7">What is a Decision Tree?</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id8">Applications and Examples</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#finance-credit-scoring">Finance: Credit Scoring</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#healthcare-diagnosing-diseases">Healthcare: Diagnosing Diseases</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#marketing-customer-segmentation">Marketing: Customer Segmentation</a></li>
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-and-tackling-overfitting">Understanding and Tackling Overfitting</a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader-building-and-visualizing-a-decision-tree-model">Exercise For The Reader: Building and Visualizing a Decision Tree Model</a><ul class="visible nav section-nav flex-column">
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id9">What is a Decision Tree?</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#id10">Applications and Examples</a><ul class="nav section-nav flex-column">
-<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-instructions">Exercise Instructions</a></li>
-</ul>
-</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#implementing-decision-trees-in-python">Implementing Decision Trees in Python:</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#scikit-learn-for-decision-trees">Scikit-learn For Decision Trees</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#brief-note-on-under-over-fitting">Brief Note on Under/Over Fitting</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader">Exercise For The Reader</a></li>
 </ul>
 </li>
 </ul>
