@@ -106,7 +106,23 @@ parts:
         title: "Day 27 - K-Nearest Neighbors (K-NN) Algorithm in Python"
       - file: Week_06/Lesson_28.ipynb
         title: "Day 28 - Support Vector Machines (SVM) for Linear and Nonlinear Data"
-#      - file: Week_06/Lesson_29.ipynb
-#        title: "Day 29 - Decision Trees and Rule-Based Models in Python"
-#      - file: Week_06/Lesson_30.ipynb
-#        title: "Day 30 - Naive Bayes Classifier Implementation"
+      - file: Week_06/Lesson_29.ipynb
+        title: "Day 29 - Decision Trees and Rule-Based Models in Python"
+      - file: Week_06/Lesson_30.ipynb
+        title: "Day 30 - Naive Bayes Classifier Implementation"
+
+#  - caption: "Week 7: Ensemble Methods"
+#    chapters:
+#    - file: Week_07/007_Overview.md
+#      title: "Week_07: Overview"
+#      sections:
+#      - file: Week_07/Lesson_31.ipynb
+#        title: "Day 31 - Introduction to Ensemble Learning Techniques"
+#      - file: Week_07/Lesson_32.ipynb
+#        title: "Day 32 - Bagging and Random Forests"
+#      - file: Week_07/Lesson_33.ipynb
+#        title: "Day 33 - Boosting Algorithms - AdaBoost"
+#      - file: Week_07/Lesson_34.ipynb
+#        title: "Day 34 - Gradient Boosting Machines (GBM) and XGBoost"
+#      - file: Week_07/Lesson_35.ipynb
+#        title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
