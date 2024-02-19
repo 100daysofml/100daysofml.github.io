@@ -1,0 +1,1113 @@
+
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+    <title>Day 34: Introduction to Gradient Boosting Machines (GBM) and Extreme Gradient Boosting (XGBoost) &#8212; 100 Days of Machine Learning</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "light";
+  </script>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/bootstrap.css?digest=5b4479735964841361fd" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=5b4479735964841361fd" rel="stylesheet" />
+
+  
+  <link href="../_static/vendor/fontawesome/6.1.2/css/all.min.css?digest=5b4479735964841361fd" rel="stylesheet" />
+  <link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-solid-900.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-brands-400.woff2" />
+<link rel="preload" as="font" type="font/woff2" crossorigin href="../_static/vendor/fontawesome/6.1.2/webfonts/fa-regular-400.woff2" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=14f4ca6b54d191a8c7657f6c759bf11a5fb86285" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.4045f2051d55cab465a707391d5b2007.min.css" />
+  
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd" />
+  <script src="../_static/vendor/fontawesome/6.1.2/js/all.min.js?digest=5b4479735964841361fd"></script>
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=5a5c038af52cf7bc1a1ec88eea08e6366ee68824"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'Week_07/Lesson_34';</script>
+    <link rel="canonical" href="https://100daysofml.com/Week_07/Lesson_34.html" />
+    <link rel="shortcut icon" href="../_static/100days.ico"/>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="prev" title="Day 33: Introduction to AdaBoost" href="Lesson_33.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  </head>
+  
+  
+  <body data-bs-spy="scroll" data-bs-target=".bd-toc-nav" data-offset="180" data-bs-root-margin="0px 0px -60%" data-default-mode="">
+
+  
+  
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  
+  <div id="pst-scroll-pixel-helper"></div>
+
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>
+    Back to top
+  </button>
+
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__primary"
+          id="__primary"/>
+  <label class="overlay overlay-primary" for="__primary"></label>
+  
+  <input type="checkbox"
+          class="sidebar-toggle"
+          name="__secondary"
+          id="__secondary"/>
+  <label class="overlay overlay-secondary" for="__secondary"></label>
+  
+  <div class="search-button__wrapper">
+    <div class="search-button__overlay"></div>
+    <div class="search-button__search-container">
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         id="search-input"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form></div>
+  </div>
+  
+    <nav class="bd-header navbar navbar-expand-lg bd-navbar">
+    </nav>
+  
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      <div class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+
+<a class="navbar-brand logo" href="../index.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/100days_circle.jpg" class="logo__image only-light" alt="100 Days of Machine Learning - Home"/>
+    <script>document.write(`<img src="../_static/100days_circle.jpg" class="logo__image only-dark" alt="100 Days of Machine Learning - Home"/>`);</script>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item"><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../index.html">
+                    100 Days of Machine Learning Challenge
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Preface</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_00/00_Overview.html">Welcome: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-1"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00a_DailyChallenge.html">Daily Challenge Curriculum</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/00b_DailyResources.html"><strong>Daily Curriculum Resources</strong></a></li>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_00/01_Errata.html">Errata: Corrections History</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 1 - Introduction to Python Basics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_01/001_Overview.html">Week_01: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-2"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_01.html">Day 1 - Python Basics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_02.html">Day 2 - Python Data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_03.html">Day 3 - Control Structures in Python: Loops</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_04.html">Day 4 - Control Structures in Python: Conditional Statements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_01/Lesson_05.html">Day 5 - Functions and Modules</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 2 - Introduction to Machine Learning Mathematics</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_02/002_Overview.html">Week_02: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-3"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_06.html">Day 6 - Linear Algebra - Vectors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_07.html">Day 7 - Linear Algebra - Matrices and Matrix Operations</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_08.html">Day 8 - Calculus - Derivatives, Concept and Application</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_09.html">Day 9 - Calculus - Integrals, Fundamental Theorems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_02/Lesson_10.html">Day 10 - Statistics and Probability - Concepts and Relevant Distributions</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 3 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_03/003_Overview.html">Week_03: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-4"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_11.html">Day 11 - Introduction to Data Preprocessing</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12.html">Day 12: In-Depth Exploration of Data Splitting Techniques in Python with Cross-Validation</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_12solution.html">Day 12: In-Depth Exploration of Data Splitting Techniques - Solution</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_13.html">Day 13 - Handling Missing Data in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_14.html">Day 14 - Data Normalization and Scaling using Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_03/Lesson_15.html">Day 15: Encoding Categorical Data in Python - Expanded with Mathematical Implications</a></li>
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 4 - Data Preprocessing</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_04/004_Overview.html">Week_04: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-5"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_16.html">Day 16 - Introduction to EDA and Data Visualization in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_17.html">Day 17 - Implementing Descriptive Statistics for EDA in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_18.html">Day 18 - Visualization Techniques for Data Distribution in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_19.html">Day 19: Correlation Analysis using Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_04/Lesson_20.html">Day 20: Advanced Feature Selection and Importance in Python - With Iris Dataset</a></li>
+
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 5: Supervised Learning - Regression</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_05/005_Overview.html">Week_05: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-6"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_21.html">Day 21 - Introduction to Regression Analysis in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_22.html">Day 22: Implementing Multiple Linear Regression in Python</a></li>
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_23.html">Day 23 - Advanced Regression Techniques - Polynomial, Lasso, and Ridge Regression</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_24.html">Day 24 - Regression Model Evaluation Metrics in Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../Week_05/Lesson_25.html">Day 25 - Addressing Overfitting and Underfitting in Regression Models</a></li>
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 6: Supervised Learning - Classification</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../Week_06/006_Overview.html">Week_06: Overview</a><input class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-7"><i class="fa-solid fa-chevron-down"></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../Week_06/Lesson_26.html">Day 26: Introduction to Classification and Logistic Regression in Python</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_06/Lesson_27.html">Day 27: Introduction to the K-Nearest Neighbors (K-NN) Algorithm</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_06/Lesson_28.html">Day 28: Introduction to Support Vector Machines (SVM)</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_06/Lesson_29.html">Day 29: Introduction to Decision Trees</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_06/Lesson_30.html">Introduction to Naive Bayes Classifier</a></li>
+
+
+</ul>
+</li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Week 7: Ensemble Methods</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="007_Overview.html">Week_07: Overview</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" type="checkbox"/><label class="toctree-toggle" for="toctree-checkbox-8"><i class="fa-solid fa-chevron-down"></i></label><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="Lesson_31.html">Day 31: Introduction to Ensemble Learning Techniques</a></li>
+
+
+<li class="toctree-l2"><a class="reference internal" href="Lesson_32.html">Day 32: Introduction to Bagging and Random Forests</a></li>
+
+
+
+<li class="toctree-l2"><a class="reference internal" href="Lesson_33.html">Day 33: Introduction to AdaBoost</a></li>
+
+
+
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Day 34: Introduction to Gradient Boosting Machines (GBM) and Extreme Gradient Boosting (XGBoost)</a></li>
+
+
+
+</ul>
+</li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+  </div>
+  
+  <div id="rtd-footer-container"></div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><label class="sidebar-toggle primary-toggle btn btn-sm" for="__primary" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</label></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-launch-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Launch interactive content">
+    <i class="fas fa-rocket"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://notebooks.gesis.org/binder/jupyter/user/100daysofml-100-sofml.github.io-4iw5ztbi/lab/workspaces/auto-e/v2/gh/100daysofml/100daysofml.github.io/master?urlpath=tree/Week_07/Lesson_34.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onBinder"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="btn__text-container">Binder</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://colab.research.google.com/github/100daysofml/100daysofml.github.io/github/100daysofml/100daysofml.github.io/blob/master/Week_07/Lesson_34.ipynb" target="_blank"
+   class="btn btn-sm dropdown-item"
+   title="Launch onColab"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="btn__text-container">Colab</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-source-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Source repositories">
+    <i class="fab fa-github"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io" target="_blank"
+   class="btn btn-sm btn-source-repository-button dropdown-item"
+   title="Source repository"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="btn__text-container">Repository</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li><a href="https://github.com/100daysofml/100daysofml.github.io/edit/master/Week_07/Lesson_34.ipynb" target="_blank"
+   class="btn btn-sm btn-source-edit-button dropdown-item"
+   title="Suggest edit"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="btn__text-container">Suggest edit</span>
+</a>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/Week_07/Lesson_34.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn theme-switch-button" title="light/dark" aria-label="light/dark" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="theme-switch nav-link" data-mode="light"><i class="fa-solid fa-sun fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="dark"><i class="fa-solid fa-moon fa-lg"></i></span>
+    <span class="theme-switch nav-link" data-mode="auto"><i class="fa-solid fa-circle-half-stroke fa-lg"></i></span>
+  </button>
+`);
+</script>
+
+
+<script>
+document.write(`
+  <button class="btn btn-sm navbar-btn search-button search-button__button" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+  </button>
+`);
+</script>
+<label class="sidebar-toggle secondary-toggle btn btn-sm" for="__secondary"title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</label>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Day 34: Introduction to Gradient Boosting Machines (GBM) and Extreme Gradient Boosting (XGBoost)</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 34: Introduction to Gradient Boosting Machines (GBM) and Extreme Gradient Boosting (XGBoost)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-gradient-descent-in-boosting">The Role of Gradient Descent in Boosting</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-xgboost-and-its-regularization-techniques">Exploring XGBoost and Its Regularization Techniques</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader">Exercise For The Reader</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-regression-problem">Definition: Regression Problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-data-preparation">Step 1: Data Preparation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-model-implementation-and-evaluation">Step 2: Model Implementation and Evaluation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-hyperparameter-tuning-and-regularization">Step 3: Hyperparameter Tuning and Regularization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article" role="main">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="day-34-introduction-to-gradient-boosting-machines-gbm-and-extreme-gradient-boosting-xgboost">
+<h1>Day 34: Introduction to Gradient Boosting Machines (GBM) and Extreme Gradient Boosting (XGBoost)<a class="headerlink" href="#day-34-introduction-to-gradient-boosting-machines-gbm-and-extreme-gradient-boosting-xgboost" title="Permalink to this heading">#</a></h1>
+<p>In this lesson, we embark on a journey through the realms of Gradient Boosting Machines (GBM) and Extreme Gradient Boosting (XGBoost), two of the most powerful and widely used machine learning algorithms in the arsenal of data scientists today. As we venture into the intricacies of these algorithms, we will uncover the principles that enable them to tackle regression and classification problems with remarkable accuracy. Our exploration will span from the foundational mathematics that drive these algorithms to practical applications that demonstrate their versatility and strength.</p>
+<p><strong>Definition:</strong></p>
+<ul class="simple">
+<li><p><strong>Gradient Boosting Machines (GBM):</strong> GBM is a machine learning technique used for both regression and classification problems. It builds model in a stage-wise fashion like other boosting methods, but it generalizes them by allowing optimization of an arbitrary differentiable loss function.</p></li>
+<li><p><strong>Extreme Gradient Boosting (XGBoost):</strong> An optimized distributed gradient boosting library designed to be highly efficient, flexible, and portable. It implements machine learning algorithms under the Gradient Boosting framework, incorporating regularizations to prevent overfitting, thereby enhancing its performance.</p></li>
+</ul>
+<p><strong>Understanding Gradient Boosting Machines</strong></p>
+<p>Gradient Boosting Machines (GBM) powerfully combine multiple weak learning models to create a more accurate and robust predictive model. The essence of GBM lies in its ability to sequentially correct errors of the weak learners, gradually converging to a strong predictive model. In this section, we dissect the core mathematics and strategy behind GBM, setting the stage for its practical implementation and optimization in real-world scenarios.</p>
+<section id="definition">
+<h2>Definition<a class="headerlink" href="#definition" title="Permalink to this heading">#</a></h2>
+<ul>
+<li><p><strong>GBM Formulation</strong>: At its core, GBM involves three key ingredients: weak learners (typically decision trees), a loss function that measures the discrepancy between the actual and predicted values, and an optimization protocol using gradient descent.</p>
+<p>Let <span class="math notranslate nohighlight">\(L(y, F(x))\)</span> be the loss function where <span class="math notranslate nohighlight">\(y\)</span> is the true value, and <span class="math notranslate nohighlight">\(F(x)\)</span> is the prediction. GBM aims to find the best function <span class="math notranslate nohighlight">\(F\)</span> that minimizes <span class="math notranslate nohighlight">\(L\)</span> over all training data points. The process involves iteratively adding weak learners that nudge the overall model towards the minimum of <span class="math notranslate nohighlight">\(L\)</span>. Mathematically, the update rule at each step <span class="math notranslate nohighlight">\(t\)</span> is given by:
+$<span class="math notranslate nohighlight">\(
+F_{t}(x) = F_{t-1}(x) + \rho_t h_t(x)
+\)</span><span class="math notranslate nohighlight">\(
+where \)</span>h_t(x)<span class="math notranslate nohighlight">\( is the weak learner added at step \)</span>t<span class="math notranslate nohighlight">\(, and \)</span>\rho_t$ is the learning rate.</p>
+</li>
+<li><p><strong>Gradient Descent Aspects</strong>: To minimize the loss, GBM uses gradient descent, where at each step, it moves in the direction of the negative gradient of the loss function. In practice, this means constructing a new weak learner to model the negative gradient by the data points. Therefore, each new learner <span class="math notranslate nohighlight">\(h_t(x)\)</span> is fitted to predict the residual errors of the previous model <span class="math notranslate nohighlight">\(F_{t-1}(x)\)</span>.</p></li>
+</ul>
+</section>
+<section id="applications">
+<h2>Applications<a class="headerlink" href="#applications" title="Permalink to this heading">#</a></h2>
+<p>The versatility of GBM allows it to be effective across a variety of tasks:</p>
+<ul class="simple">
+<li><p><strong>Predictive Modeling</strong>: Whether it’s forecasting sales in retail, predicting stock movements in finance, or estimating game outcomes in sports analytics, GBM’s ability to model complex nonlinear relationships is invaluable.</p></li>
+<li><p><strong>Classification Problems</strong>: From binary decisions like spam detection to multi-class problems like identifying hand-written digits, GBM classifiers provide high accuracy by optimizing for specific loss functions (e.g., log loss for classification).</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_regression</span>
+<span class="kn">from</span> <span class="nn">sklearn.tree</span> <span class="kn">import</span> <span class="n">DecisionTreeRegressor</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+
+<span class="c1"># Data generation/loading</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_regression</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">n_features</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">noise</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">X_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">X</span><span class="o">.</span><span class="n">max</span><span class="p">(),</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># Initializing variables for GBM steps</span>
+<span class="n">n_estimators</span> <span class="o">=</span> <span class="mi">3</span>  <span class="c1"># Number of trees</span>
+<span class="n">y_pred</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">y</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>  <span class="c1"># Initial prediction is 0</span>
+<span class="n">trees</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">predictions</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Sequentially adding weak learners</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_estimators</span><span class="p">):</span>
+    <span class="c1"># Fit a tree to the residuals</span>
+    <span class="n">tree</span> <span class="o">=</span> <span class="n">DecisionTreeRegressor</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">residuals</span> <span class="o">=</span> <span class="n">y</span> <span class="o">-</span> <span class="n">y_pred</span>
+    <span class="n">tree</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">residuals</span><span class="p">)</span>
+    <span class="n">trees</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">tree</span><span class="p">)</span>
+    
+    <span class="c1"># Update the predictions</span>
+    <span class="n">y_pred</span> <span class="o">+=</span> <span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+    <span class="n">preds_plot</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span><span class="n">tree</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_plot</span><span class="o">.</span><span class="n">reshape</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">))</span> <span class="k">for</span> <span class="n">tree</span> <span class="ow">in</span> <span class="n">trees</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+    <span class="n">predictions</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">preds_plot</span><span class="p">)</span>
+    
+    <span class="c1"># Plotting</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">y</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Data&#39;</span><span class="p">)</span>
+    <span class="k">for</span> <span class="n">t</span><span class="p">,</span> <span class="n">p</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">predictions</span><span class="p">):</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">X_plot</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s1">&#39;Iteration </span><span class="si">{</span><span class="n">t</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;GBM Predictions after </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1"> trees&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    
+    <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">flatten</span><span class="p">(),</span> <span class="n">residuals</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Residuals&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;Residuals after </span><span class="si">{</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="si">}</span><span class="s1"> trees&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Interpretation:</span>
+<span class="c1"># The left plot shows the cumulative predictions of the GBM model as more trees are added. </span>
+<span class="c1"># Each new tree aims to correct the residuals (depicted in the right plot) left by its predecessors.</span>
+<span class="c1"># As we iterate, the model gradually improves, fitting the data better with each addition.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/e58c5a604136f9bae8074af978da1b3ddff04480b228e5c6b9a31efac1a04c69.png" src="../_images/e58c5a604136f9bae8074af978da1b3ddff04480b228e5c6b9a31efac1a04c69.png" />
+<img alt="../_images/a837930370928fc74934d7649e5dae50835819aa4e94a037d2998aa7ee1457ca.png" src="../_images/a837930370928fc74934d7649e5dae50835819aa4e94a037d2998aa7ee1457ca.png" />
+<img alt="../_images/5c367bc4dd789c5a927aaaa2ba58f8eacb46391a3b6638b018a0cd8991af0a06.png" src="../_images/5c367bc4dd789c5a927aaaa2ba58f8eacb46391a3b6638b018a0cd8991af0a06.png" />
+</div>
+</div>
+</section>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="the-role-of-gradient-descent-in-boosting">
+<h1>The Role of Gradient Descent in Boosting<a class="headerlink" href="#the-role-of-gradient-descent-in-boosting" title="Permalink to this heading">#</a></h1>
+<p>Gradient Descent plays a pivotal role in the field of machine learning, especially within the realms of Gradient Boosting Machines (GBM) and Extreme Gradient Boosting (XGBoost). Its utility lies in the optimization of loss functions, which is fundamental to the training of models. By understanding this mechanism, one can appreciate how boosting algorithms iteratively improve model predictions through minimization of errors.</p>
+<ul class="simple">
+<li><p>The gradient descent algorithm is a first-order iterative optimization algorithm for finding the minimum of a function. In the context of GBM and XGBoost, it is used to minimize the loss function (<span class="math notranslate nohighlight">\(L(y, \hat{y})\)</span>), where <span class="math notranslate nohighlight">\(y\)</span> is the true value and <span class="math notranslate nohighlight">\(\hat{y}\)</span> is the predicted value from the model. The algorithm updates the parameters of the model in the opposite direction of the gradient of the loss function with respect to the parameters.</p></li>
+</ul>
+<p>The process involves:</p>
+<ol class="arabic simple">
+<li><p><strong>Initialization:</strong> Start with initial values for the parameters <span class="math notranslate nohighlight">\(\theta\)</span>.</p></li>
+<li><p><strong>Gradient Computation:</strong> Compute the gradient (partial derivatives) of the loss function with respect to the parameters, <span class="math notranslate nohighlight">\(\nabla_\theta L(y, \hat{y})\)</span>.</p></li>
+<li><p><strong>Update Parameters:</strong> Adjust the parameters in the direction that reduces the loss, usually with <span class="math notranslate nohighlight">\(\theta = \theta - \eta \nabla_\theta L(y, \hat{y})\)</span>, where <span class="math notranslate nohighlight">\(\eta\)</span> is the learning rate.</p></li>
+<li><p><strong>Iteration:</strong> Repeat steps 2 and 3 until the loss function converges to a minimum value.</p></li>
+</ol>
+<p><strong>Applications:</strong></p>
+<ul class="simple">
+<li><p>In GBM, gradient descent is utilized to find the optimal set of weights for the learners by minimizing the loss function. This includes fitting weak learners on the residual errors of the predictions.</p></li>
+<li><p>XGBoost builds upon GBM by introducing regularizations and an efficient tree learning algorithm. It uses a more refined version of gradient descent, which can handle sparse data and has a more flexible loss function.</p></li>
+</ul>
+<p>Understanding the role of gradient descent provides insight into how boosting methods progressively reduce errors by focusing on difficult predictions. This foundational knowledge is crucial for customizing loss functions and tuning parameters to achieve better performance in various machine learning tasks.</p>
+<p>Let’s use the <code class="docutils literal notranslate"><span class="pre">xgboost</span></code> package to demonstrate the practical steps of training a model, including setting up a loss function, choosing a learning rate, and iteratively updating the model with gradient descent.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># Define the loss function and its derivative</span>
+<span class="c1"># Here, we use a simple quadratic function as an example: f(x) = (x-3)^2</span>
+<span class="k">def</span> <span class="nf">loss_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="k">def</span> <span class="nf">derivative_loss_function</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mi">2</span> <span class="o">*</span> <span class="p">(</span><span class="n">x</span> <span class="o">-</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="c1"># Gradient Descent Algorithm</span>
+<span class="k">def</span> <span class="nf">gradient_descent</span><span class="p">(</span><span class="n">starting_point</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">iterations</span><span class="p">):</span>
+    <span class="n">x</span> <span class="o">=</span> <span class="n">starting_point</span>
+    <span class="n">trajectory</span> <span class="o">=</span> <span class="p">[</span><span class="n">x</span><span class="p">]</span>
+    <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">iterations</span><span class="p">):</span>
+        <span class="n">grad</span> <span class="o">=</span> <span class="n">derivative_loss_function</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">-</span> <span class="n">learning_rate</span> <span class="o">*</span> <span class="n">grad</span>
+        <span class="n">trajectory</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">trajectory</span><span class="p">)</span>
+
+<span class="c1"># Parameters for gradient descent</span>
+<span class="n">starting_point</span> <span class="o">=</span> <span class="o">-</span><span class="mi">4</span> <span class="c1"># Initial parameter value</span>
+<span class="n">learning_rate</span> <span class="o">=</span> <span class="mf">0.1</span> <span class="c1"># Step size for each iteration</span>
+<span class="n">iterations</span> <span class="o">=</span> <span class="mi">20</span> <span class="c1"># Number of iterations</span>
+
+<span class="c1"># Run gradient descent</span>
+<span class="n">trajectory</span> <span class="o">=</span> <span class="n">gradient_descent</span><span class="p">(</span><span class="n">starting_point</span><span class="p">,</span> <span class="n">learning_rate</span><span class="p">,</span> <span class="n">iterations</span><span class="p">)</span>
+
+<span class="c1"># Visualization</span>
+<span class="n">x_values</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">5</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+<span class="n">y_values</span> <span class="o">=</span> <span class="n">loss_function</span><span class="p">(</span><span class="n">x_values</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_values</span><span class="p">,</span> <span class="n">y_values</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Loss Function&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">trajectory</span><span class="p">,</span> <span class="n">loss_function</span><span class="p">(</span><span class="n">trajectory</span><span class="p">),</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">,</span> <span class="n">marker</span><span class="o">=</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="n">s</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Gradient Descent Path&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Gradient Descent Path Towards Minimum of the Loss Function&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Parameter value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Loss function value&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Interpretation:</span>
+<span class="c1"># This visualization demonstrates the path taken by gradient descent in minimizing the loss function.</span>
+<span class="c1"># Starting from an initial parameter value of -4, we see the iterative updates gradually moving towards</span>
+<span class="c1"># the minimum of the loss function at x=3. The red &#39;x&#39; marks represent the trajectory of the parameter values</span>
+<span class="c1"># as gradient descent progresses. This illustrates the essential concept of how gradient descent optimizes</span>
+<span class="c1"># parameters to reduce loss, a fundamental process in GBM and XGBoost algorithms.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/737ff6a49fd01e72699894d8a5e05e23c5b7cc6db9b0d343d6257d8422721adb.png" src="../_images/737ff6a49fd01e72699894d8a5e05e23c5b7cc6db9b0d343d6257d8422721adb.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exploring-xgboost-and-its-regularization-techniques">
+<h1>Exploring XGBoost and Its Regularization Techniques<a class="headerlink" href="#exploring-xgboost-and-its-regularization-techniques" title="Permalink to this heading">#</a></h1>
+<p><strong>Text:</strong><br />
+In the realm of machine learning, one of Extreme Gradient Boosting’s standout features is its built-in regularization. This lesson focuses on understanding the regularization techniques employed by XGBoost to combat overfitting, thereby ensuring that the models it creates are not only accurate but also generalizable. We will unveil how XGBoost incorporates L1 and L2 regularization into its algorithm and the mathematical principles underlying these techniques.</p>
+<p><strong>Definition:</strong></p>
+<ul class="simple">
+<li><p><strong>Regularization:</strong> Regularization is a technique used to prevent overfitting by penalizing high-valued coefficients in the model. It helps to simplify the model, ensuring it performs well not just on the training data but also on unseen data. There are primarily two types of regularization:</p>
+<ul>
+<li><p><strong>L1 Regularization (Lasso Regression):</strong> This technique adds the absolute value of the magnitude of coefficients to the loss function. It’s defined as <span class="math notranslate nohighlight">\(L1 = \lambda |w|\)</span>, where <span class="math notranslate nohighlight">\(|w|\)</span> represents the absolute values of coefficients and <span class="math notranslate nohighlight">\(\lambda\)</span> is the regularization strength.</p></li>
+<li><p><strong>L2 Regularization (Ridge Regression):</strong> This technique adds the squared magnitude of coefficients to the loss function. The L2 regularization term is given by <span class="math notranslate nohighlight">\(L2 = \lambda w^2\)</span>, where <span class="math notranslate nohighlight">\(w^2\)</span> represents the squared values of coefficients and <span class="math notranslate nohighlight">\(\lambda\)</span> is the regularization strength.</p></li>
+</ul>
+</li>
+</ul>
+<p>XGBoost incorporates both of these regularization techniques into its loss function, which is defined as <span class="math notranslate nohighlight">\(Obj = L + \lambda |w| + \alpha w^2\)</span>. Here, <span class="math notranslate nohighlight">\(L\)</span> represents the traditional loss function (e.g., MSE for regression, log loss for classification), <span class="math notranslate nohighlight">\(|w|\)</span> and <span class="math notranslate nohighlight">\(w^2\)</span> are the L1 and L2 regularization terms respectively, and <span class="math notranslate nohighlight">\(\lambda\)</span> and <span class="math notranslate nohighlight">\(\alpha\)</span> are hyperparameters that control the strength of L1 and L2 regularization, respectively.</p>
+<p><strong>Applications:</strong></p>
+<p>The regularization feature of XGBoost makes it highly effective in a wide range of predictive modeling tasks. Regularization helps in:</p>
+<ol class="arabic simple">
+<li><p><strong>Preventing Overfitting:</strong> By keeping the model simpler and avoiding too much dependency on any single or a combination of features, thereby enhancing the model’s generalizability to new data.</p></li>
+<li><p><strong>Feature Selection (L1 Regularization):</strong> L1 regularization can shrink some of the model’s coefficients to zero, effectively performing feature selection by keeping only the most significant features in the final model.</p></li>
+<li><p><strong>Stabilizing Predictions (L2 Regularization):</strong> L2 regularization helps in handling multicollinearity (high correlation between predictor variables) by making the model less sensitive to small changes in the data, thus stabilizing predictions.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">make_regression</span>
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.linear_model</span> <span class="kn">import</span> <span class="n">LinearRegression</span><span class="p">,</span> <span class="n">Lasso</span><span class="p">,</span> <span class="n">Ridge</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">r2_score</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># Generate synthetic data with multiple features</span>
+<span class="n">X</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">make_regression</span><span class="p">(</span><span class="n">n_samples</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>  <span class="c1"># Increased number of samples</span>
+                           <span class="n">n_features</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span>
+                           <span class="n">effective_rank</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+                           <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="c1"># Split data into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Initialize arrays to store performance metrics</span>
+<span class="n">features_count</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">21</span><span class="p">)</span>  <span class="c1"># Assuming we increase complexity by adding features one by one</span>
+<span class="n">training_performance</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">testing_performance_no_reg</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">testing_performance_l1_reg</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="n">testing_performance_l2_reg</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="c1"># Iterate over the number of features to simulate adding complexity</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">features_count</span><span class="p">:</span>
+    <span class="c1"># Use only i features</span>
+    <span class="n">X_train_i</span> <span class="o">=</span> <span class="n">X_train</span><span class="p">[:,</span> <span class="p">:</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">X_test_i</span> <span class="o">=</span> <span class="n">X_test</span><span class="p">[:,</span> <span class="p">:</span><span class="n">i</span><span class="p">]</span>
+    
+    <span class="c1"># No Regularization</span>
+    <span class="n">model_no_reg</span> <span class="o">=</span> <span class="n">LinearRegression</span><span class="p">()</span>
+    <span class="n">model_no_reg</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_i</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">training_performance</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model_no_reg</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_train_i</span><span class="p">,</span> <span class="n">y_train</span><span class="p">))</span>
+    <span class="n">testing_performance_no_reg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model_no_reg</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_i</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
+    
+    <span class="c1"># L1 Regularization (Lasso)</span>
+    <span class="n">model_l1</span> <span class="o">=</span> <span class="n">Lasso</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+    <span class="n">model_l1</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_i</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">testing_performance_l1_reg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model_l1</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_i</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
+    
+    <span class="c1"># L2 Regularization (Ridge)</span>
+    <span class="n">model_l2</span> <span class="o">=</span> <span class="n">Ridge</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.05</span><span class="p">)</span>
+    <span class="n">model_l2</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train_i</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+    <span class="n">testing_performance_l2_reg</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">model_l2</span><span class="o">.</span><span class="n">score</span><span class="p">(</span><span class="n">X_test_i</span><span class="p">,</span> <span class="n">y_test</span><span class="p">))</span>
+
+<span class="c1"># Prepare the results for visualization</span>
+<span class="n">results</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;features_count&quot;</span><span class="p">:</span> <span class="n">features_count</span><span class="p">,</span>
+    <span class="s2">&quot;training_performance&quot;</span><span class="p">:</span> <span class="n">training_performance</span><span class="p">,</span>
+    <span class="s2">&quot;testing_performance_no_reg&quot;</span><span class="p">:</span> <span class="n">testing_performance_no_reg</span><span class="p">,</span>
+    <span class="s2">&quot;testing_performance_l1_reg&quot;</span><span class="p">:</span> <span class="n">testing_performance_l1_reg</span><span class="p">,</span>
+    <span class="s2">&quot;testing_performance_l2_reg&quot;</span><span class="p">:</span> <span class="n">testing_performance_l2_reg</span>
+<span class="p">}</span>
+
+<span class="c1"># see the data in `results` for by-feature-count scores for each model</span>
+<span class="c1"># Visualization</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">features_count</span><span class="p">,</span> <span class="n">training_performance</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Training Performance&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">&#39;--&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">features_count</span><span class="p">,</span> <span class="n">testing_performance_no_reg</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Testing Performance (No Regularization)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">features_count</span><span class="p">,</span> <span class="n">testing_performance_l1_reg</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Testing Performance (L1 Regularization)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">features_count</span><span class="p">,</span> <span class="n">testing_performance_l2_reg</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">&#39;Testing Performance (L2 Regularization)&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;purple&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Number of Features&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Model Performance&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;Impact of L1 and L2 Regularization on Model Performance&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/6a8ceaba32f89ac2e8418e669b2c3197b87264ed3f509b7d40a40aff16b7156d.png" src="../_images/6a8ceaba32f89ac2e8418e669b2c3197b87264ed3f509b7d40a40aff16b7156d.png" />
+</div>
+</div>
+</section>
+<section class="tex2jax_ignore mathjax_ignore" id="exercise-for-the-reader">
+<h1>Exercise For The Reader<a class="headerlink" href="#exercise-for-the-reader" title="Permalink to this heading">#</a></h1>
+<p>In this practical exercise, you will have the opportunity to apply the theory learned about Gradient Boosting Machines (GBM) and Extreme Gradient Boosting (XGBoost) by working on a regression problem. You will use the Boston Housing dataset, a popular dataset for regression tasks, which contains information about various housing features in the Boston suburbs, such as the average number of rooms, property tax rates, etc., along with the median value of homes. The goal is to predict the median value of homes based on these features.</p>
+<section id="definition-regression-problem">
+<h2>Definition: Regression Problem<a class="headerlink" href="#definition-regression-problem" title="Permalink to this heading">#</a></h2>
+<p>A regression problem involves predicting a continuous outcome variable (<span class="math notranslate nohighlight">\(y\)</span>) based on one or more predictor variables (<span class="math notranslate nohighlight">\(X\)</span>). In the context of GBM and XGBoost, the algorithms iteratively train a series of weak models in an additive manner to minimize a continuous loss function, thereby improving the accuracy of the predictions.</p>
+<section id="step-1-data-preparation">
+<h3>Step 1: Data Preparation<a class="headerlink" href="#step-1-data-preparation" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Load Dataset:</strong> Import the Boston Housing dataset. Split it into features (<span class="math notranslate nohighlight">\(X\)</span>) and the target variable (<span class="math notranslate nohighlight">\(y\)</span>), which is the median value of homes.</p></li>
+<li><p><strong>Split Data:</strong> Split the dataset into a training set and a testing set using a 70:30 ratio or a similar proportion. This allows for effective model training and evaluation.</p></li>
+</ol>
+</section>
+<section id="step-2-model-implementation-and-evaluation">
+<h3>Step 2: Model Implementation and Evaluation<a class="headerlink" href="#step-2-model-implementation-and-evaluation" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>GBM Model:</strong> Implement a GBM model using the training set. Utilize <code class="docutils literal notranslate"><span class="pre">sklearn</span></code>’s <code class="docutils literal notranslate"><span class="pre">GradientBoostingRegressor</span></code> as a starting point.</p></li>
+<li><p><strong>XGBoost Model:</strong> Implement an XGBoost model using the training data. The <code class="docutils literal notranslate"><span class="pre">xgboost</span></code> library’s <code class="docutils literal notranslate"><span class="pre">XGBRegressor</span></code> can be used here.</p></li>
+<li><p><strong>Evaluation:</strong> Evaluate both models on the test set using metrics suitable for regression, such as Mean Absolute Error (MAE), Mean Squared Error (MSE), or <span class="math notranslate nohighlight">\(R^2\)</span> score. Compare the performance of the two models to understand their effectiveness in this regression task.</p></li>
+</ol>
+</section>
+<section id="step-3-hyperparameter-tuning-and-regularization">
+<h3>Step 3: Hyperparameter Tuning and Regularization<a class="headerlink" href="#step-3-hyperparameter-tuning-and-regularization" title="Permalink to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Tuning:</strong> Experiment with different hyperparameters for each model. For GBM, you might adjust the learning rate, number of estimators, and maximum depth. For XGBoost, in addition to these, you could also tune the regularization parameters (<code class="docutils literal notranslate"><span class="pre">alpha</span></code> for L1 regularization, <code class="docutils literal notranslate"><span class="pre">lambda</span></code> for L2 regularization) to prevent overfitting.</p></li>
+<li><p><strong>Observation:</strong> Record how changes in hyperparameters impact the model’s performance. Identify the set of parameters that yields the best results.</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip<span class="w"> </span>install<span class="w"> </span>xgboost
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: xgboost in /home/john/Development/book_100daysml/venv/lib/python3.11/site-packages (2.0.3)
+Requirement already satisfied: numpy in /home/john/Development/book_100daysml/venv/lib/python3.11/site-packages (from xgboost) (1.26.3)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: scipy in /home/john/Development/book_100daysml/venv/lib/python3.11/site-packages (from xgboost) (1.12.0)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span><span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> A new release of pip is available: <span class=" -Color -Color-Red">23.3.2</span> -&gt; <span class=" -Color -Color-Green">24.0</span>
+<span class=" -Color -Color-Bold">[</span><span class=" -Color -Color-Blue">notice</span><span class=" -Color -Color-Bold">]</span> To update, run: <span class=" -Color -Color-Green">pip install --upgrade pip</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Import necessary libraries</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="c1"># dataset removed for ethical issues</span>
+<span class="c1">#from sklearn.datasets import load_boston</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">fetch_california_housing</span>
+    
+<span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span><span class="p">,</span> <span class="n">r2_score</span>
+<span class="kn">from</span> <span class="nn">sklearn.ensemble</span> <span class="kn">import</span> <span class="n">GradientBoostingRegressor</span>
+<span class="kn">from</span> <span class="nn">xgboost</span> <span class="kn">import</span> <span class="n">XGBRegressor</span>
+
+<span class="c1"># Load the Boston Housing dataset</span>
+<span class="c1">#boston = load_boston()</span>
+
+<span class="n">housing</span> <span class="o">=</span> <span class="n">fetch_california_housing</span><span class="p">()</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">housing</span><span class="o">.</span><span class="n">data</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">housing</span><span class="o">.</span><span class="n">target</span>
+
+<span class="c1"># Split the dataset into training and testing sets</span>
+<span class="n">X_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">y_test</span> <span class="o">=</span> <span class="n">train_test_split</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">y</span><span class="p">,</span> <span class="n">test_size</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+
+<span class="c1"># Placeholder for models&#39; MSE and R2 scores for plotting</span>
+<span class="n">models_mse</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;GBM&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;XGBoost&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+<span class="n">models_r2</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;GBM&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;XGBoost&#39;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+
+<span class="c1"># -------- GBM Model --------</span>
+<span class="c1"># Initialize and train the model</span>
+<span class="n">gbm_model</span> <span class="o">=</span> <span class="n">GradientBoostingRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">gbm_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Predict and evaluate</span>
+<span class="n">gbm_predictions</span> <span class="o">=</span> <span class="n">gbm_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">gbm_mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">gbm_predictions</span><span class="p">)</span>
+<span class="n">gbm_r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">gbm_predictions</span><span class="p">)</span>
+
+<span class="c1"># Save results for later visualization</span>
+<span class="n">models_mse</span><span class="p">[</span><span class="s1">&#39;GBM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gbm_mse</span>
+<span class="n">models_r2</span><span class="p">[</span><span class="s1">&#39;GBM&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">gbm_r2</span>
+
+<span class="c1"># -------- XGBoost Model --------</span>
+<span class="c1"># Initialize and train the model</span>
+<span class="n">xgb_model</span> <span class="o">=</span> <span class="n">XGBRegressor</span><span class="p">(</span><span class="n">random_state</span><span class="o">=</span><span class="mi">42</span><span class="p">)</span>
+<span class="n">xgb_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+
+<span class="c1"># Predict and evaluate</span>
+<span class="n">xgb_predictions</span> <span class="o">=</span> <span class="n">xgb_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">)</span>
+<span class="n">xgb_mse</span> <span class="o">=</span> <span class="n">mean_squared_error</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">xgb_predictions</span><span class="p">)</span>
+<span class="n">xgb_r2</span> <span class="o">=</span> <span class="n">r2_score</span><span class="p">(</span><span class="n">y_test</span><span class="p">,</span> <span class="n">xgb_predictions</span><span class="p">)</span>
+
+<span class="c1"># Save results for later visualization</span>
+<span class="n">models_mse</span><span class="p">[</span><span class="s1">&#39;XGBoost&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xgb_mse</span>
+<span class="n">models_r2</span><span class="p">[</span><span class="s1">&#39;XGBoost&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">xgb_r2</span>
+
+<span class="c1"># Visualization</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">14</span><span class="p">,</span> <span class="mi">6</span><span class="p">))</span>
+
+<span class="c1"># MSE comparison</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">models_mse</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">models_mse</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;MSE of GBM vs XGBoost&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Mean Squared Error&#39;</span><span class="p">)</span>
+
+<span class="c1"># R2 score comparison</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">bar</span><span class="p">(</span><span class="n">models_r2</span><span class="o">.</span><span class="n">keys</span><span class="p">(),</span> <span class="n">models_r2</span><span class="o">.</span><span class="n">values</span><span class="p">(),</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;blue&#39;</span><span class="p">,</span> <span class="s1">&#39;green&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;R2 Score of GBM vs XGBoost&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;R2 Score&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># Interpretation</span>
+<span class="c1"># At this stage, the visualization shows the comparison between the GBM and XGBoost models in terms of MSE and R2 score.</span>
+<span class="c1"># Generally, lower MSE and higher R2 score indicate better performance.</span>
+<span class="c1"># Students are encouraged to explore different hyperparameters to see how they affect the model&#39;s performance.</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../_images/a0c41168ddf6d5ff2cd0bb6e69c0ef660ca4ea661b3635c424f89b3da7b9031e.png" src="../_images/a0c41168ddf6d5ff2cd0bb6e69c0ef660ca4ea661b3635c424f89b3da7b9031e.png" />
+</div>
+</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./Week_07"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="Lesson_33.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Day 33: Introduction to AdaBoost</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 34: Introduction to Gradient Boosting Machines (GBM) and Extreme Gradient Boosting (XGBoost)</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition">Definition</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#applications">Applications</a></li>
+</ul>
+</li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#the-role-of-gradient-descent-in-boosting">The Role of Gradient Descent in Boosting</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exploring-xgboost-and-its-regularization-techniques">Exploring XGBoost and Its Regularization Techniques</a></li>
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#exercise-for-the-reader">Exercise For The Reader</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#definition-regression-problem">Definition: Regression Problem</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-1-data-preparation">Step 1: Data Preparation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-2-model-implementation-and-evaluation">Step 2: Model Implementation and Evaluation</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#step-3-hyperparameter-tuning-and-regularization">Step 3: Hyperparameter Tuning and Regularization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Aaron S. & John M.
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/bootstrap.js?digest=5b4479735964841361fd"></script>
+<script src="../_static/scripts/pydata-sphinx-theme.js?digest=5b4479735964841361fd"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
