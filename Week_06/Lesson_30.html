@@ -9,7 +9,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
-    <title>Introduction to Naive Bayes Classifier &#8212; 100 Days of Machine Learning</title>
+    <title>Day 30: Introduction to Naive Bayes Classifier &#8212; 100 Days of Machine Learning</title>
   
   
   
@@ -284,7 +284,7 @@ const thebe_selector_output = ".output, .cell_output"
 <li class="toctree-l2"><a class="reference internal" href="Lesson_29.html">Day 29: Introduction to Decision Trees</a></li>
 
 
-<li class="toctree-l2 current active"><a class="current reference internal" href="#">Introduction to Naive Bayes Classifier</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Day 30: Introduction to Naive Bayes Classifier</a></li>
 
 
 </ul>
@@ -306,6 +306,9 @@ const thebe_selector_output = ".output, .cell_output"
 
 <li class="toctree-l2"><a class="reference internal" href="../Week_07/Lesson_34.html">Day 34: Introduction to Gradient Boosting Machines (GBM) and Extreme Gradient Boosting (XGBoost)</a></li>
 
+
+
+<li class="toctree-l2"><a class="reference internal" href="../Week_07/Lesson_35.html">Day 35: Advanced Ensemble Techniques: Stacking and Blending</a></li>
 
 
 </ul>
@@ -544,7 +547,7 @@ document.write(`
               
 
 <div id="jb-print-docs-body" class="onlyprint">
-    <h1>Introduction to Naive Bayes Classifier</h1>
+    <h1>Day 30: Introduction to Naive Bayes Classifier</h1>
     <!-- Table of contents -->
     <div id="print-main-content">
         <div id="jb-print-toc">
@@ -554,7 +557,7 @@ document.write(`
             </div>
             <nav aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Naive Bayes Classifier</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 30: Introduction to Naive Bayes Classifier</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-bayes-theorem-and-conditional-probability">Understanding Bayes’ Theorem and Conditional Probability</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-probability">Conditional Probability</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a><ul class="nav section-nav flex-column">
@@ -586,8 +589,8 @@ document.write(`
 <div id="searchbox"></div>
                 <article class="bd-article" role="main">
                   
-  <section class="tex2jax_ignore mathjax_ignore" id="introduction-to-naive-bayes-classifier">
-<h1>Introduction to Naive Bayes Classifier<a class="headerlink" href="#introduction-to-naive-bayes-classifier" title="Permalink to this heading">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="day-30-introduction-to-naive-bayes-classifier">
+<h1>Day 30: Introduction to Naive Bayes Classifier<a class="headerlink" href="#day-30-introduction-to-naive-bayes-classifier" title="Permalink to this heading">#</a></h1>
 <p>The Naive Bayes Classifier stands as a cornerstone in the field of machine learning, offering a simplistic yet powerful approach to solving classification problems. By leveraging the principles of probability, this model aids in predicting the category of a given sample based on its attributes. Its name stems from the naïve assumption that all features are independent of each other, an assumption that simplifies calculations without significantly compromising performance in many cases. This lesson embarks on a journey to unravel the mechanics behind the Naive Bayes Classifier, including its theoretical foundations and practical applications, illustrating its significant role in the analytics and data science arena.</p>
 <section id="understanding-bayes-theorem-and-conditional-probability">
 <h2>Understanding Bayes’ Theorem and Conditional Probability<a class="headerlink" href="#understanding-bayes-theorem-and-conditional-probability" title="Permalink to this heading">#</a></h2>
@@ -731,24 +734,7 @@ P(B|A) = \frac{P(A \cap B)}{P(A)}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">statsmodels.graphics.mosaicplot</span> <span class="kn">import</span> <span class="n">mosaic</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># Sample data: Weather Conditions vs. Playing a Sport</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="c1"># This simulates a situation where the probability of playing a sport may depend on the weather condition.</span>
-<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">data</span> <span class="o">=</span> <span class="p">{</span>
-<span class="g g-Whitespace">      </span><span class="mi">9</span>     <span class="p">(</span><span class="s1">&#39;Sunny&#39;</span><span class="p">,</span> <span class="s1">&#39;Play&#39;</span><span class="p">):</span> <span class="mi">30</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">10</span>     <span class="p">(</span><span class="s1">&#39;Sunny&#39;</span><span class="p">,</span> <span class="s1">&#39;No Play&#39;</span><span class="p">):</span> <span class="mi">10</span><span class="p">,</span>
-   <span class="p">(</span><span class="o">...</span><span class="p">)</span>
-<span class="g g-Whitespace">     </span><span class="mi">14</span>     <span class="p">(</span><span class="s1">&#39;Cloudy&#39;</span><span class="p">,</span> <span class="s1">&#39;No Play&#39;</span><span class="p">):</span> <span class="mi">20</span><span class="p">,</span>
-<span class="g g-Whitespace">     </span><span class="mi">15</span> <span class="p">}</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;statsmodels&#39;
-</pre></div>
-</div>
+<img alt="../_images/7f0d5cbef902052d4cd91c457ba6b4b36871d77242492fe15e83c7e73aa60d1a.png" src="../_images/7f0d5cbef902052d4cd91c457ba6b4b36871d77242492fe15e83c7e73aa60d1a.png" />
 </div>
 </div>
 </section>
@@ -915,18 +901,21 @@ P(Disease|Features) = \frac{P(Features|Disease) \cdot P(Disease)}{P(Features)}
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">3</span><span class="p">],</span> <span class="n">line</span> <span class="mi">4</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="kn">from</span> <span class="nn">statsmodels.graphics.mosaicplot</span> <span class="kn">import</span> <span class="n">mosaic</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="c1"># Load the dataset</span>
-<span class="g g-Whitespace">      </span><span class="mi">7</span> <span class="n">df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;health_dataset.csv&#39;</span><span class="p">)</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;statsmodels&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              smoker  disease
+count           1000     1000
+unique             3        4
+top     never smoked  healthy
+freq             417      660
+disease
+healthy       660
+bronchitis    224
+cancer         74
+both           42
+Name: count, dtype: int64
+Conditional probability (placeholder) for condition {&#39;smoker&#39;: &#39;never smoked&#39;}: 0.0
 </pre></div>
 </div>
+<img alt="../_images/e95a0c17358c062f9b035d5b51737b254ea60e4fa6a8f3d5bd2f56366039c576.png" src="../_images/e95a0c17358c062f9b035d5b51737b254ea60e4fa6a8f3d5bd2f56366039c576.png" />
 </div>
 </div>
 <p>Good luck and happy analyzing!</p>
@@ -997,7 +986,7 @@ P(Disease|Features) = \frac{P(Features|Disease) \cdot P(Disease)}{P(Features)}
   </div>
   <nav class="bd-toc-nav page-toc">
     <ul class="visible nav section-nav flex-column">
-<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Introduction to Naive Bayes Classifier</a><ul class="visible nav section-nav flex-column">
+<li class="toc-h1 nav-item toc-entry"><a class="reference internal nav-link" href="#">Day 30: Introduction to Naive Bayes Classifier</a><ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#understanding-bayes-theorem-and-conditional-probability">Understanding Bayes’ Theorem and Conditional Probability</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#conditional-probability">Conditional Probability</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#interpretation">Interpretation</a><ul class="nav section-nav flex-column">
