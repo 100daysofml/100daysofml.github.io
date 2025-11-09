@@ -126,3 +126,11 @@ parts:
         title: "Day 34 - Gradient Boosting Machines (GBM) and XGBoost"
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
+
+  - caption: "Week 17: Practical Aspects of ML - Transformers"
+    chapters:
+    - file: Week_17/017_Overview.md
+      title: "Week_17: Overview"
+      sections:
+      - file: Week_17/Lesson_83.ipynb
+        title: "Day 83 - Introduction to Transformers and Attention Mechanisms"
