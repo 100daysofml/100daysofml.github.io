@@ -126,3 +126,11 @@ parts:
         title: "Day 34 - Gradient Boosting Machines (GBM) and XGBoost"
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
+
+  - caption: "Week 15: Introduction to MLOps and Data Pipelines"
+    chapters:
+    - file: Week_15/015_Overview.md
+      title: "Week_15: Overview"
+      sections:
+      - file: Week_15/Lesson_73.ipynb
+        title: "Day 73 - ETL Processes and Data Pipelines in Machine Learning"
