@@ -126,3 +126,8 @@ parts:
         title: "Day 34 - Gradient Boosting Machines (GBM) and XGBoost"
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
+
+  - caption: "Week 10: Deep Learning Foundations"
+    chapters:
+    - file: Week_10/Lesson_48.ipynb
+      title: "Day 48 - Training Neural Networks: Activation Functions and Optimizers"
