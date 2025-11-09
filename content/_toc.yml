@@ -126,3 +126,11 @@ parts:
         title: "Day 34 - Gradient Boosting Machines (GBM) and XGBoost"
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
+
+  - caption: "Week 13: Reinforcement Learning"
+    chapters:
+    - file: Week_13/013_Overview.md
+      title: "Week_13: Overview"
+      sections:
+      - file: Week_13/Lesson_62.ipynb
+        title: "Day 62 - Markov Decision Processes in Reinforcement Learning"
