@@ -126,3 +126,11 @@ parts:
         title: "Day 34 - Gradient Boosting Machines (GBM) and XGBoost"
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
+
+  - caption: "Week 11: Convolutional Neural Networks"
+    chapters:
+    - file: Week_11/011_Overview.md
+      title: "Week_11: Overview"
+      sections:
+      - file: Week_11/Lesson_51.ipynb
+        title: "Day 51 - Introduction to Convolutional Neural Networks (CNNs)"
