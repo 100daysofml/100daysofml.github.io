@@ -126,3 +126,11 @@ parts:
         title: "Day 34 - Gradient Boosting Machines (GBM) and XGBoost"
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
+
+  - caption: "Week 10: Introduction to Deep Learning and CNNs"
+    chapters:
+    - file: Week_10/010_Overview.md
+      title: "Week_10: Overview"
+      sections:
+      - file: Week_10/Lesson_49.ipynb
+        title: "Day 49 - Implementing CNNs for Image Classification"
