@@ -126,3 +126,11 @@ parts:
         title: "Day 34 - Gradient Boosting Machines (GBM) and XGBoost"
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
+
+  - caption: "Week 14: Advanced Topics and Current Trends"
+    chapters:
+    - file: Week_14/014_Overview.md
+      title: "Week_14: Overview"
+      sections:
+      - file: Week_14/Lesson_69.ipynb
+        title: "Day 69 - Autoencoders and Their Applications"
