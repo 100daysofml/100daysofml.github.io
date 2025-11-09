@@ -126,3 +126,11 @@ parts:
         title: "Day 34 - Gradient Boosting Machines (GBM) and XGBoost"
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
+
+  - caption: "Week 9: Dimensionality Reduction Techniques"
+    chapters:
+    - file: Week_09/009_Overview.md
+      title: "Week_09: Overview"
+      sections:
+      - file: Week_09/Lesson_44.ipynb
+        title: "Day 44 - t-SNE: t-distributed Stochastic Neighbor Embedding"
