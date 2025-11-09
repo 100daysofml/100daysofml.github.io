@@ -126,3 +126,11 @@ parts:
         title: "Day 34 - Gradient Boosting Machines (GBM) and XGBoost"
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
+
+  - caption: "Week 15: MLOps - Machine Learning Operations"
+    chapters:
+    - file: Week_15/015_Overview.md
+      title: "Week_15: Overview"
+      sections:
+      - file: Week_15/Lesson_75.ipynb
+        title: "Day 75 - Overview of MLOps Tools and Platforms"
