@@ -126,3 +126,8 @@ parts:
         title: "Day 34 - Gradient Boosting Machines (GBM) and XGBoost"
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
+
+  - caption: "Week 13: Advanced Machine Learning"
+    chapters:
+    - file: Week_13/Lesson_65.ipynb
+      title: "Day 65 - Transfer Learning with Pre-trained Models"
