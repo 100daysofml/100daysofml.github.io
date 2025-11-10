@@ -2,25 +2,25 @@
 
  ## Module 8: Applied AI and Ethical Considerations (Weeks 18-19)
 - Focus: Application of AI in various industries and ethical considerations.
-- Topics include AI applications in healthcare, finance, retail, manufacturing, and AI ethics.
+- Topics include AI in healthcare, finance, retail, manufacturing, and AI ethics.
 
 ### Week 18: Applied AI in Industry
-- **Lesson 86:** Introduction to Applied AI in Healthcare
-  - Overview of AI applications in healthcare industry.
-  - Math Focus: Understanding healthcare data and predictive modeling.
+- **Lesson 86:** Introduction to Applied AI and Real-World Applications
+  - Overview of applied AI across different industries and sectors.
+  - Math Focus: Understanding model deployment metrics and performance evaluation in production.
 
-- **Lesson 87:** AI in Finance and Algorithmic Trading
-  - Exploring AI applications in financial services and trading.
-  - Math Focus: Time series analysis and risk modeling.
+- **Lesson 87:** AI in Healthcare - Diagnostics and Predictive Medicine
+  - Implementing AI models for medical diagnosis and patient outcome prediction.
+  - Math Focus: Sensitivity, specificity, and ROC curves for medical applications.
 
-- **Lesson 88:** AI in Retail and Recommendation Systems
-  - Understanding AI-powered recommendation engines and customer analytics.
-  - Math Focus: Collaborative filtering and similarity metrics.
+- **Lesson 88:** AI in Finance - Fraud Detection and Risk Assessment
+  - Building machine learning models for fraud detection and credit risk analysis.
+  - Math Focus: Anomaly detection algorithms and probability-based risk scoring.
 
-- **Lesson 89:** AI in Manufacturing and Predictive Maintenance
-  - Implementing AI for quality control and predictive maintenance.
-  - Math Focus: Anomaly detection and time-to-failure prediction.
+- **Lesson 89:** AI in Retail and E-Commerce - Recommendation Systems
+  - Understanding and implementing recommendation systems for personalized shopping.
+  - Math Focus: Collaborative filtering, cosine similarity, and matrix factorization.
 
-- **Lesson 90:** Case Studies in Applied AI
-  - Real-world case studies of successful AI implementations.
-  - Math Focus: End-to-end pipeline development and evaluation.
+- **Lesson 90:** AI Ethics and Responsible AI Practices
+  - Exploring ethical considerations, bias, fairness, and accountability in AI systems.
+  - Math Focus: Fairness metrics and bias detection in machine learning models.
