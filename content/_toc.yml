@@ -143,10 +143,12 @@ parts:
       - file: Week_08/Lesson_40.ipynb
         title: "Day 40 - Gaussian Mixture Models (GMM) and Expectation-Maximization"
 
-  - caption: "Week 9: Dimensionality Reduction"
+  - caption: "Week 9: Dimensionality Reduction Techniques"
     chapters:
     - file: Week_09/009_Overview.md
       title: "Week_09: Overview"
       sections:
       - file: Week_09/Lesson_41.ipynb
         title: "Day 41 - Introduction to Dimensionality Reduction and PCA Basics"
+      - file: Week_09/Lesson_42.ipynb
+        title: "Day 42 - Principal Component Analysis (PCA)"
