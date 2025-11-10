@@ -166,3 +166,6 @@ content/_build
 *.swp
 *.swo
 
+
+# Machine learning model files
+*.pkl
