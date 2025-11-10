@@ -1,26 +1,26 @@
   # Course Structure
 
  ## Module 7: Practical Aspects of Machine Learning (Weeks 15-17)
-- Focus: Operationalizing machine learning models and understanding practical ML workflows.
-- Topics include MLOps, ETL processes, data pipelines, model deployment, and monitoring.
+- Focus: Operationalizing machine learning models and understanding transformers.
+- Topics include MLOps, ETL processes, and transformer models.
 
-### Week 15: Introduction to MLOps and Data Pipelines
-- **Lesson 71:** Introduction to MLOps - ML Lifecycle and Production Systems
-  - Overview of MLOps principles and the machine learning lifecycle.
-  - Math Focus: Understanding ML system design and workflow orchestration.
+### Week 15: Introduction to MLOps and Model Deployment
+- **Lesson 71:** Introduction to MLOps and Model Lifecycle Management
+  - Overview of MLOps principles and practices.
+  - Math Focus: Understanding model versioning and reproducibility.
 
-- **Lesson 72:** ML Workflows and Pipeline Orchestration
-  - Introduction to ML workflows and pipeline automation.
-  - Math Focus: Directed Acyclic Graphs (DAGs) and workflow dependencies.
+- **Lesson 72:** Model Serving and REST APIs
+  - Building and deploying ML models as REST APIs using Flask and FastAPI.
+  - Math Focus: Understanding prediction inference and batch vs. real-time scoring.
 
-- **Lesson 73:** ETL Processes and Data Pipelines in Machine Learning
-  - Understanding Extract, Transform, Load (ETL) processes in ML.
-  - Math Focus: Data transformations, feature engineering pipelines, and data quality metrics.
+- **Lesson 73:** Model Monitoring and Performance Tracking
+  - Implementing monitoring systems for deployed ML models.
+  - Math Focus: Statistical process control and drift detection metrics.
 
-- **Lesson 74:** Model Versioning and Experiment Tracking
-  - Implementing model versioning and tracking experiments.
-  - Math Focus: Metrics tracking, model comparison, and performance monitoring.
+- **Lesson 74:** CI/CD for Machine Learning Pipelines
+  - Setting up continuous integration and deployment for ML workflows.
+  - Math Focus: Validation metrics and automated testing strategies.
 
-- **Lesson 75:** Model Deployment and Serving Patterns
-  - Deploying ML models and understanding serving architectures.
-  - Math Focus: Latency, throughput, and resource optimization.
+- **Lesson 75:** Experiment Tracking and Model Versioning
+  - Using tools like MLflow and Weights & Biases for experiment management.
+  - Math Focus: Hyperparameter optimization and model comparison metrics.

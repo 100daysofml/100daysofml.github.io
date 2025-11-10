@@ -127,10 +127,10 @@ parts:
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
 
-  - caption: "Week 14: Transfer Learning and Advanced Deep Learning"
+  - caption: "Week 15: Introduction to MLOps and Model Deployment"
     chapters:
-    - file: Week_14/014_Overview.md
-      title: "Week_14: Overview"
+    - file: Week_15/015_Overview.md
+      title: "Week_15: Overview"
       sections:
-      - file: Week_14/Lesson_66.ipynb
-        title: "Day 66 - Introduction to Transfer Learning"
+      - file: Week_15/Lesson_72.ipynb
+        title: "Day 72 - Model Serving and REST APIs"
