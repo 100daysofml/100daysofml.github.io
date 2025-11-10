@@ -126,3 +126,11 @@ parts:
         title: "Day 34 - Gradient Boosting Machines (GBM) and XGBoost"
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
+
+  - caption: "Week 8: Unsupervised Learning"
+    chapters:
+    - file: Week_08/008_Overview.md
+      title: "Week_08: Overview"
+      sections:
+      - file: Week_08/Lesson_36.ipynb
+        title: "Day 36 - Introduction to Unsupervised Learning and Clustering Basics"
