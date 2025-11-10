@@ -24,3 +24,4 @@
 - **Lesson 40:** Gaussian Mixture Models (GMM) and Expectation-Maximization
   - Introduction to GMM and its implementation.
   - Math Focus: Probability distributions and the expectation-maximization algorithm.
+
