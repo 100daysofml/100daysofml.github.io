@@ -1,6 +1,6 @@
-  # Course Structure
+# Course Structure
 
- ## Module 6: Advanced Machine Learning and Current Trends (Weeks 13-14)
+## Module 6: Advanced Machine Learning and Current Trends (Weeks 13-14)
 - Focus: Advanced topics and emerging trends in machine learning.
 - Topics include reinforcement learning, transfer learning, GANs, attention mechanisms, and modern deep learning techniques.
 
