@@ -1,26 +1,26 @@
-  # Course Structure
+# Course Structure
 
 ## Module 5: Deep Learning Foundations (Weeks 10-12)
 - Focus: Core concepts and architectures in deep learning.
 - Topics include neural networks, CNNs, RNNs, image and sequence processing.
 
-### Week 11: Recurrent Neural Networks and Sequence Processing
-- **Lesson 51:** Introduction to Sequence Modeling and Time Series Data
-  - Overview of sequential data and its importance in machine learning.
-  - Math Focus: Temporal dependencies and autocorrelation in sequences.
+### Week 11: Convolutional Neural Networks
+- **Lesson 51:** Introduction to Convolutional Neural Networks (CNNs)
+  - Overview of CNNs and their importance in computer vision.
+  - Math Focus: Convolution operations, feature maps, and spatial hierarchies.
 
-- **Lesson 52:** Recurrent Neural Networks (RNNs) - Architecture and Theory
-  - Understanding the architecture and mathematical foundations of RNNs.
-  - Math Focus: Hidden states, backpropagation through time (BPTT).
+- **Lesson 52:** CNN Building Blocks - Convolution and Pooling Layers
+  - Understanding convolution, pooling, and activation layers in detail.
+  - Math Focus: Kernel operations, stride, padding, and pooling mathematics.
 
-- **Lesson 53:** Long Short-Term Memory (LSTM) Networks
-  - Implementing LSTM networks to address vanishing gradient problems.
-  - Math Focus: Gates mechanism (forget, input, output gates) and cell states.
+- **Lesson 53:** Building and Training CNN Architectures
+  - Implementing complete CNN architectures from scratch.
+  - Math Focus: Backpropagation in CNNs and gradient flow through conv layers.
 
-- **Lesson 54:** Gated Recurrent Units (GRU) and Advanced RNN Architectures
-  - Learning about GRUs and bidirectional RNNs.
-  - Math Focus: Simplified gating mechanisms and bidirectional processing.
+- **Lesson 54:** Advanced CNN Architectures - AlexNet, VGG, ResNet
+  - Exploring landmark CNN architectures and their innovations.
+  - Math Focus: Skip connections, batch normalization, and deep network training.
 
-- **Lesson 55:** Practical Applications of RNNs - Text and Time Series
-  - Applying RNNs to real-world text generation and time series prediction tasks.
-  - Math Focus: Sequence-to-sequence models and attention mechanisms introduction.
+- **Lesson 55:** Transfer Learning and Fine-Tuning CNNs
+  - Applying pre-trained models to new tasks and datasets.
+  - Math Focus: Feature extraction vs fine-tuning, learning rate scheduling.

@@ -127,10 +127,10 @@ parts:
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
 
-  - caption: "Week 20: Capstone Project - Building End-to-End ML Systems"
+  - caption: "Week 11: Convolutional Neural Networks"
     chapters:
-    - file: Week_20/020_Overview.md
-      title: "Week_20: Overview"
+    - file: Week_11/011_Overview.md
+      title: "Week_11: Overview"
       sections:
-      - file: Week_20/Lesson_98.ipynb
-        title: "Day 98 - Building and Deploying Complete ML Pipelines"
+      - file: Week_11/Lesson_51.ipynb
+        title: "Day 51 - Introduction to Convolutional Neural Networks (CNNs)"
