@@ -127,10 +127,10 @@ parts:
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
 
-  - caption: "Week 19: AI in Industry Applications"
+  - caption: "Week 20: Capstone Project - End-to-End ML Development"
     chapters:
-    - file: Week_19/019_Overview.md
-      title: "Week_19: Overview"
+    - file: Week_20/020_Overview.md
+      title: "Week_20: Overview"
       sections:
-      - file: Week_19/Lesson_92.ipynb
-        title: "Day 92 - AI in Finance and Fintech Applications"
+      - file: Week_20/Lesson_97.ipynb
+        title: "Day 97 - Exploratory Data Analysis and Advanced Feature Engineering"
