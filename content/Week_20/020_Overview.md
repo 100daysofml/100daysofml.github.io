@@ -2,25 +2,28 @@
 
 ## Module 9: Capstone Project (Weeks 20-21)
 - Focus: Application of learned concepts in a comprehensive project.
-- Topics include data analysis, model building, evaluation, and deployment.
+- Topics: Data analysis, model building, deployment, and evaluation.
 
-### Week 20: End-to-End Machine Learning Project Development
-- **Lesson 96:** Introduction to Capstone Projects and Problem Definition
-  - Overview of project planning and problem formulation in machine learning.
-  - Math Focus: Problem formulation and success metrics.
+### Week 20: Building End-to-End Machine Learning Systems
 
-- **Lesson 97:** Exploratory Data Analysis and Advanced Feature Engineering
-  - Comprehensive EDA techniques and advanced feature engineering strategies.
-  - Math Focus: Statistical analysis, correlation, and feature transformation techniques.
+This week focuses on integrating all the concepts learned throughout the 100 Days of ML challenge into comprehensive, production-ready machine learning systems.
 
-- **Lesson 98:** Model Selection, Training, and Hyperparameter Tuning
-  - Choosing appropriate models and optimizing hyperparameters for the project.
-  - Math Focus: Cross-validation, grid search, and optimization techniques.
+- **Lesson 96:** Project Planning and Problem Formulation
+  - Understanding business requirements and translating them into ML problems.
+  - Math Focus: Problem decomposition and success metrics definition.
 
-- **Lesson 99:** Model Evaluation, Validation, and Error Analysis
-  - Comprehensive evaluation strategies and diagnosing model performance.
-  - Math Focus: Evaluation metrics, ROC curves, and error analysis.
+- **Lesson 97:** Advanced Feature Engineering for Real-World Projects
+  - Creating sophisticated features from raw data.
+  - Math Focus: Feature transformations, dimensionality considerations, and feature importance metrics.
 
-- **Lesson 100:** Model Deployment and Project Presentation
-  - Deploying models to production and presenting project results.
-  - Math Focus: Model serving, API design, and performance monitoring.
+- **Lesson 98:** Building and Deploying Complete ML Pipelines
+  - Constructing end-to-end ML pipelines with proper preprocessing, training, and evaluation.
+  - Math Focus: Pipeline composition, cross-validation mathematics, and hyperparameter optimization.
+
+- **Lesson 99:** Model Monitoring and Maintenance in Production
+  - Implementing monitoring systems and handling model drift.
+  - Math Focus: Statistical process control, distribution drift detection, and performance metrics tracking.
+
+- **Lesson 100:** Capstone Project Completion and Best Practices
+  - Final project presentation and review of ML best practices.
+  - Math Focus: Comprehensive review of mathematical foundations across all topics.
