@@ -2,25 +2,25 @@
 
 ## Module 4: Unsupervised Learning and Dimensionality Reduction (Weeks 7-9)
 - Focus: Unsupervised learning techniques and reducing data complexity.
-- Topics include clustering, Gaussian Mixture Models, PCA, and t-SNE.
+- Topics include clustering, Gaussian Mixture Models, PCA, t-SNE, and SVD.
 
 ### Week 9: Dimensionality Reduction Techniques
-- **Lesson 41:** Introduction to Dimensionality Reduction
-  - Understanding the curse of dimensionality and the need for dimensionality reduction.
-  - Math Focus: Concept of feature space compression and variance preservation.
+- **Lesson 41:** Introduction to Dimensionality Reduction and PCA Basics
+  - Fundamentals of dimensionality reduction and principal component analysis (PCA).
+  - Math Focus: Understanding covariance matrix, eigenvalues, and eigenvectors.
 
-- **Lesson 42:** Principal Component Analysis (PCA)
-  - Learning PCA theory and implementing it for dimensionality reduction.
-  - Math Focus: Eigenvalues, eigenvectors, and covariance matrices.
+- **Lesson 42:** Implementing PCA in Python
+  - Practical application of PCA using Python.
+  - Math Focus: Steps involved in PCA computation.
 
-- **Lesson 43:** Advanced PCA Applications and Variants
-  - Exploring kernel PCA and incremental PCA for large datasets.
-  - Math Focus: Kernel trick and online learning for PCA.
+- **Lesson 43:** Singular Value Decomposition (SVD) and Its Applications
+  - Understanding and implementing SVD.
+  - Math Focus: Concepts of matrix decomposition and its applications.
 
-- **Lesson 44:** t-SNE for High-Dimensional Data Visualization
-  - Understanding and implementing t-SNE for visualization.
-  - Math Focus: Probability distributions and gradient descent in t-SNE.
+- **Lesson 44:** t-SNE Technique for Dimensionality Reduction
+  - Learning about t-SNE and its implementation for high-dimensional data.
+  - Math Focus: t-Distributed Stochastic Neighbor Embedding algorithm.
 
-- **Lesson 45:** Other Dimensionality Reduction Techniques
-  - Exploring LDA, autoencoders, and modern techniques.
-  - Math Focus: Linear discriminant analysis and neural network-based compression.
+- **Lesson 45:** Other Techniques in Dimensionality Reduction
+  - Exploring additional dimensionality reduction techniques like LDA, autoencoders.
+  - Math Focus: Mathematical principles behind these techniques and their use-cases.

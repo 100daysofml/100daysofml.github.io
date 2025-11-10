@@ -152,3 +152,5 @@ parts:
         title: "Day 41 - Introduction to Dimensionality Reduction and PCA Basics"
       - file: Week_09/Lesson_42.ipynb
         title: "Day 42 - Principal Component Analysis (PCA)"
+      - file: Week_09/Lesson_43.ipynb
+        title: "Day 43 - Singular Value Decomposition (SVD) and Its Applications"
