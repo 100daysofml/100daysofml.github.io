@@ -156,3 +156,13 @@ parts:
         title: "Day 43 - Singular Value Decomposition (SVD) and Its Applications"
       - file: Week_09/Lesson_44.ipynb
         title: "Day 44 - t-SNE: t-distributed Stochastic Neighbor Embedding"
+      - file: Week_09/Lesson_45.ipynb
+        title: "Day 45 - Advanced Dimensionality Reduction Techniques"
+
+  - caption: "Week 10: Introduction to Neural Networks and Deep Learning"
+    chapters:
+    - file: Week_10/008_Overview.md
+      title: "Week_10: Overview"
+      sections:
+      - file: Week_10/Lesson_46.ipynb
+        title: "Day 46 - Introduction to Neural Networks and Deep Learning"
