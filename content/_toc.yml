@@ -127,10 +127,10 @@ parts:
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
 
-  - caption: "Week 10: Introduction to Neural Networks"
+  - caption: "Week 11: Convolutional Neural Networks"
     chapters:
-    - file: Week_10/010_Overview.md
-      title: "Week_10: Overview"
+    - file: Week_11/011_Overview.md
+      title: "Week_11: Overview"
       sections:
-      - file: Week_10/Lesson_50.ipynb
-        title: "Day 50 - Evaluating and Tuning Neural Network Performance"
+      - file: Week_11/Lesson_53.ipynb
+        title: "Day 53 - Building and Training CNNs for Image Classification"
