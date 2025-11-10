@@ -127,7 +127,10 @@ parts:
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
 
-  - caption: "Week 10: Deep Learning Foundations"
+  - caption: "Week 10: Introduction to Deep Learning and CNNs"
     chapters:
-    - file: Week_10/Lesson_48.ipynb
-      title: "Day 48 - Training Neural Networks: Activation Functions and Optimizers"
+    - file: Week_10/010_Overview.md
+      title: "Week_10: Overview"
+      sections:
+      - file: Week_10/Lesson_49.ipynb
+        title: "Day 49 - Implementing CNNs for Image Classification"
