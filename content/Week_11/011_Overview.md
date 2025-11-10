@@ -1,26 +1,26 @@
   # Course Structure
 
- ## Module 5: Deep Learning Foundations (Weeks 10-12)
+## Module 5: Deep Learning Foundations (Weeks 10-12)
 - Focus: Core concepts and architectures in deep learning.
-- Topics include neural networks, CNNs, RNNs, and image and sequence processing.
+- Topics include neural networks, CNNs, RNNs, image and sequence processing.
 
-### Week 11: Convolutional Neural Networks (CNNs)
-- **Lesson 51:** Introduction to CNNs and Convolutional Layers
-  - Understanding convolutional neural networks and their components.
-  - Math Focus: Convolution operations, filters, and feature maps.
+### Week 11: Recurrent Neural Networks and Sequence Processing
+- **Lesson 51:** Introduction to Sequence Modeling and Time Series Data
+  - Overview of sequential data and its importance in machine learning.
+  - Math Focus: Temporal dependencies and autocorrelation in sequences.
 
-- **Lesson 52:** Pooling Layers and CNN Architectures
-  - Implementing pooling layers and understanding common CNN architectures.
-  - Math Focus: Max pooling, average pooling, and stride calculations.
+- **Lesson 52:** Recurrent Neural Networks (RNNs) - Architecture and Theory
+  - Understanding the architecture and mathematical foundations of RNNs.
+  - Math Focus: Hidden states, backpropagation through time (BPTT).
 
-- **Lesson 53:** Building and Training CNNs for Image Classification
-  - Practical implementation of CNNs for image classification tasks.
-  - Math Focus: Backpropagation in CNNs, loss functions, and optimization.
+- **Lesson 53:** Long Short-Term Memory (LSTM) Networks
+  - Implementing LSTM networks to address vanishing gradient problems.
+  - Math Focus: Gates mechanism (forget, input, output gates) and cell states.
 
-- **Lesson 54:** Transfer Learning with Pre-trained CNNs
-  - Leveraging pre-trained models for new image classification tasks.
-  - Math Focus: Fine-tuning, feature extraction, and model adaptation.
+- **Lesson 54:** Gated Recurrent Units (GRU) and Advanced RNN Architectures
+  - Learning about GRUs and bidirectional RNNs.
+  - Math Focus: Simplified gating mechanisms and bidirectional processing.
 
-- **Lesson 55:** Advanced CNN Applications and Techniques
-  - Exploring object detection, image segmentation, and data augmentation.
-  - Math Focus: Region proposals, intersection over union (IoU), and augmentation techniques.
+- **Lesson 55:** Practical Applications of RNNs - Text and Time Series
+  - Applying RNNs to real-world text generation and time series prediction tasks.
+  - Math Focus: Sequence-to-sequence models and attention mechanisms introduction.
