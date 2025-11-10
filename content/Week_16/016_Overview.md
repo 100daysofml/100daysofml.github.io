@@ -4,23 +4,23 @@
 - Focus: Operationalizing machine learning models and understanding transformers.
 - Topics include MLOps, ETL processes, and transformer models.
 
-### Week 16: Transformer Models and Applications
-- **Lesson 76:** Introduction to Attention Mechanisms
-  - Understanding the attention mechanism and its role in deep learning.
-  - Math Focus: Scaled dot-product attention and multi-head attention.
+### Week 16: ETL Processes
+- **Lesson 76:** Introduction to ETL and Data Extraction Techniques
+  - Basics of Extract, Transform, Load (ETL) processes and data extraction.
+  - Math Focus: Query optimization and data extraction methods.
 
-- **Lesson 77:** Transformer Architecture Deep Dive
-  - Exploring the complete transformer architecture from "Attention is All You Need".
-  - Math Focus: Positional encoding, layer normalization, and feed-forward networks.
+- **Lesson 77:** Data Transformation Techniques
+  - Techniques for transforming data in ETL processes.
+  - Math Focus: Algorithmic approaches to data transformation.
 
-- **Lesson 78:** Pre-trained Language Models: BERT and GPT
-  - Understanding pre-training strategies and transfer learning in NLP.
-  - Math Focus: Masked language modeling and autoregressive prediction.
+- **Lesson 78:** Data Loading and Database Management
+  - Understanding the data loading phase and database management.
+  - Math Focus: Load balancing and database theory.
 
-- **Lesson 79:** Fine-tuning Pre-trained Transformers
-  - Implementing transfer learning with pre-trained transformer models.
-  - Math Focus: Gradient-based fine-tuning and task-specific adaptation.
+- **Lesson 79:** Building an ETL Pipeline
+  - Practical steps in building an ETL pipeline.
+  - Math Focus: Workflow optimization and pipeline efficiency.
 
-- **Lesson 80:** Advanced Transformer Applications
-  - Exploring real-world applications of transformers across domains.
-  - Math Focus: Multi-modal transformers and attention visualization.
+- **Lesson 80:** ETL Tools and Technologies
+  - Overview of tools and technologies used in ETL processes.
+  - Math Focus: Evaluating technology based on performance metrics.
