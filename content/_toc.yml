@@ -127,10 +127,10 @@ parts:
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
 
-  - caption: "Week 18: Applied AI in Industry"
+  - caption: "Week 19: AI in Industry Applications"
     chapters:
-    - file: Week_18/018_Overview.md
-      title: "Week_18: Overview"
+    - file: Week_19/019_Overview.md
+      title: "Week_19: Overview"
       sections:
-      - file: Week_18/Lesson_86.ipynb
-        title: "Day 86 - Introduction to Applied AI in Healthcare"
+      - file: Week_19/Lesson_92.ipynb
+        title: "Day 92 - AI in Finance and Fintech Applications"
