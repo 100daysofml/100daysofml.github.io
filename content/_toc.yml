@@ -127,42 +127,10 @@ parts:
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
 
-  - caption: "Week 8: Unsupervised Learning"
+  - caption: "Week 10: Introduction to Neural Networks"
     chapters:
-    - file: Week_08/008_Overview.md
-      title: "Week_08: Overview"
-      sections:
-      - file: Week_08/Lesson_36.ipynb
-        title: "Day 36 - Introduction to Unsupervised Learning and Clustering Basics"
-      - file: Week_08/Lesson_37.ipynb
-        title: "Day 37 - Implementing K-Means Clustering for Different Data Types"
-      - file: Week_08/Lesson_38.ipynb
-        title: "Day 38 - Hierarchical Clustering Techniques"
-      - file: Week_08/Lesson_39.ipynb
-        title: "Day 39 - Density-Based Clustering with DBSCAN"
-      - file: Week_08/Lesson_40.ipynb
-        title: "Day 40 - Gaussian Mixture Models (GMM) and Expectation-Maximization"
-
-  - caption: "Week 9: Dimensionality Reduction Techniques"
-    chapters:
-    - file: Week_09/009_Overview.md
-      title: "Week_09: Overview"
-      sections:
-      - file: Week_09/Lesson_41.ipynb
-        title: "Day 41 - Introduction to Dimensionality Reduction and PCA Basics"
-      - file: Week_09/Lesson_42.ipynb
-        title: "Day 42 - Principal Component Analysis (PCA)"
-      - file: Week_09/Lesson_43.ipynb
-        title: "Day 43 - Singular Value Decomposition (SVD) and Its Applications"
-      - file: Week_09/Lesson_44.ipynb
-        title: "Day 44 - t-SNE: t-distributed Stochastic Neighbor Embedding"
-      - file: Week_09/Lesson_45.ipynb
-        title: "Day 45 - Advanced Dimensionality Reduction Techniques"
-
-  - caption: "Week 10: Introduction to Neural Networks and Deep Learning"
-    chapters:
-    - file: Week_10/008_Overview.md
+    - file: Week_10/010_Overview.md
       title: "Week_10: Overview"
       sections:
-      - file: Week_10/Lesson_46.ipynb
-        title: "Day 46 - Introduction to Neural Networks and Deep Learning"
+      - file: Week_10/Lesson_47.ipynb
+        title: "Day 47 - Feedforward Neural Networks and Activation Functions"
