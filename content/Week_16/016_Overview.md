@@ -1,6 +1,6 @@
-# Course Structure
+  # Course Structure
 
-## Module 7: Practical Aspects of Machine Learning (Weeks 15-17)
+ ## Module 7: Practical Aspects of Machine Learning (Weeks 15-17)
 - Focus: Operationalizing machine learning models and understanding transformers.
 - Topics include MLOps, ETL processes, and transformer models.
 
