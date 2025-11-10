@@ -127,10 +127,10 @@ parts:
       - file: Week_07/Lesson_35.ipynb
         title: "Day 35 - Advanced Ensemble Techniques and Their Applications"
 
-  - caption: "Week 11: Recurrent Neural Networks and Sequence Processing"
+  - caption: "Week 12: Recurrent Neural Networks and Sequence Processing"
     chapters:
-    - file: Week_11/011_Overview.md
-      title: "Week_11: Overview"
+    - file: Week_12/012_Overview.md
+      title: "Week_12: Overview"
       sections:
-      - file: Week_11/Lesson_55.ipynb
-        title: "Day 55 - Practical Applications of RNNs - Text and Time Series"
+      - file: Week_12/Lesson_56.ipynb
+        title: "Day 56 - Introduction to Recurrent Neural Networks (RNNs)"
