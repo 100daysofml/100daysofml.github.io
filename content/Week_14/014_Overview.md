@@ -1,26 +1,26 @@
 # Course Structure
 
 ## Module 6: Advanced Machine Learning and Current Trends (Weeks 13-14)
-- Focus: Advanced topics and emerging trends in machine learning.
-- Topics include reinforcement learning, transfer learning, GANs, attention mechanisms, and modern deep learning techniques.
+- Focus: Advanced deep learning techniques and modern machine learning paradigms.
+- Topics include reinforcement learning, transfer learning, GANs, and attention mechanisms.
 
-### Week 14: Transfer Learning and Advanced Neural Network Architectures
-* Lesson 66: Introduction to Transfer Learning
- - Understanding the concept of transfer learning and its importance in modern ML.
- - Math Focus: Feature extraction and fine-tuning in neural networks.
+### Week 14: Transfer Learning and Advanced Deep Learning
+- **Lesson 66:** Introduction to Transfer Learning
+  - Understanding transfer learning fundamentals and why it's effective.
+  - Math Focus: Domain adaptation, feature extraction vs. fine-tuning, and transfer loss formulation.
 
-* Lesson 67: Implementing Transfer Learning with Pre-trained Models
- - Practical implementation of transfer learning using popular pre-trained models.
- - Math Focus: Weight initialization, layer freezing, and gradient flow in transfer learning.
+- **Lesson 67:** Pre-trained Models and Feature Extraction
+  - Learning to use pre-trained models as feature extractors for custom tasks.
+  - Math Focus: Hierarchical feature representations and frozen vs. trainable parameters.
 
-* Lesson 68: Introduction to Generative Adversarial Networks (GANs)
- - Understanding GAN architecture and training dynamics.
- - Math Focus: Minimax game theory and adversarial loss functions.
+- **Lesson 68:** Fine-Tuning Strategies and Best Practices
+  - Implementing fine-tuning techniques for optimal performance on target tasks.
+  - Math Focus: Learning rate scheduling, layer-wise adaptation, and regularization in transfer learning.
 
-* Lesson 69: Attention Mechanisms and Transformers
- - Learning about attention mechanisms and their role in modern deep learning.
- - Math Focus: Self-attention, multi-head attention, and positional encoding.
+- **Lesson 69:** Domain Adaptation and Multi-Task Learning
+  - Exploring advanced transfer learning scenarios with domain shift and multiple tasks.
+  - Math Focus: Domain adaptation theory, task similarity metrics, and multi-task optimization.
 
-* Lesson 70: Advanced Topics in Deep Learning
- - Exploring cutting-edge topics and future directions in machine learning.
- - Math Focus: Advanced optimization techniques and model architectures.
+- **Lesson 70:** Transfer Learning Applications and Case Studies
+  - Real-world applications of transfer learning across different domains.
+  - Math Focus: Performance metrics, data efficiency analysis, and computational trade-offs.
