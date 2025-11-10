@@ -1,6 +1,6 @@
-  # Course Structure
+# Course Structure
 
- ## Module 4: Unsupervised Learning and Dimensionality Reduction (Weeks 7-9)
+## Module 4: Unsupervised Learning and Dimensionality Reduction (Weeks 7-9)
 - Focus: Unsupervised learning techniques and reducing data complexity.
 - Topics include clustering, Gaussian Mixture Models, PCA, and t-SNE.
 

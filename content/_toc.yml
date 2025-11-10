@@ -134,3 +134,11 @@ parts:
       sections:
       - file: Week_08/Lesson_36.ipynb
         title: "Day 36 - Introduction to Unsupervised Learning and Clustering Basics"
+      - file: Week_08/Lesson_37.ipynb
+        title: "Day 37 - Implementing K-Means Clustering for Different Data Types"
+      - file: Week_08/Lesson_38.ipynb
+        title: "Day 38 - Hierarchical Clustering Techniques"
+      - file: Week_08/Lesson_39.ipynb
+        title: "Day 39 - Density-Based Clustering with DBSCAN"
+      - file: Week_08/Lesson_40.ipynb
+        title: "Day 40 - Gaussian Mixture Models (GMM) and Expectation-Maximization"
