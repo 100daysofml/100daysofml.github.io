@@ -161,8 +161,12 @@ cython_debug/
 
 # Jupyter Book build dir
 content/_build
+_build/
 
 # my vim temp files
 *.swp
 *.swo
 
+
+# Machine learning model files
+*.pkl

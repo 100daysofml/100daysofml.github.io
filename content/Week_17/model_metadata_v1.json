@@ -1,0 +1,51 @@
+{
+    "model_name": "Logistic Regression",
+    "model_type": "LogisticRegression",
+    "version": "1.0.0",
+    "created_at": "2025-11-09 13:47:40",
+    "parameters": {
+        "classifier__C": 0.1,
+        "classifier__penalty": "l2",
+        "classifier__solver": "liblinear"
+    },
+    "metrics": {
+        "test_accuracy": 0.9824561403508771,
+        "validation_accuracy": 0.978021978021978,
+        "cv_mean": 0.9780441400304414,
+        "roc_auc": 0.996031746031746
+    },
+    "training_samples": 364,
+    "features": [
+        "mean radius",
+        "mean texture",
+        "mean perimeter",
+        "mean area",
+        "mean smoothness",
+        "mean compactness",
+        "mean concavity",
+        "mean concave points",
+        "mean symmetry",
+        "mean fractal dimension",
+        "radius error",
+        "texture error",
+        "perimeter error",
+        "area error",
+        "smoothness error",
+        "compactness error",
+        "concavity error",
+        "concave points error",
+        "symmetry error",
+        "fractal dimension error",
+        "worst radius",
+        "worst texture",
+        "worst perimeter",
+        "worst area",
+        "worst smoothness",
+        "worst compactness",
+        "worst concavity",
+        "worst concave points",
+        "worst symmetry",
+        "worst fractal dimension"
+    ],
+    "n_features": 30
+}
