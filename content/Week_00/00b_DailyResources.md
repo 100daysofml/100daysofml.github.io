@@ -651,7 +651,7 @@ Overview of the latest research and trends in machine learning and artificial in
 For an introduction to various MLOps tools and platforms:
 
 -   **Resource 1:** DataCamp's article on [17 Top MLOps Tools](https://www.datacamp.com/community/tutorials/ensemble-learning) provides an overview of key MLOps tools, including their features and applications.
--   **Resource 2:** Neptune.ai's [MLOps Landscape in 2023](https://neptune.ai/blog/mlops-landscape-in-2023-top-tools-and-platforms) discusses a range of MLOps platforms, offering insights into their core features and how they cater to different aspects of machine learning workflows.
+-   **Resource 2:** Neptune.ai's [MLOps Landscape in 2023](https://web.archive.org/web/20251006160541/https://neptune.ai/blog/mlops-tools-platforms-landscape) discusses a range of MLOps platforms, offering insights into their core features and how they cater to different aspects of machine learning workflows.
 -   **Math Application:**
     -   Understand the considerations for scalability and efficiency in the deployment and management of machine learning models.
     -   Explore the mathematical principles that support various MLOps tools and platforms, enhancing the overall machine learning process.
